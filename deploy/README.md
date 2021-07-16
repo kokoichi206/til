@@ -25,3 +25,8 @@ module.exports = {
     publicPath: './'
 }
 ```
+
+- 何か表示はしてくれてるけど、画像と一部jsが表示されない...
+  - スタートpage: NAME.github.io/REPOSITORY_NAME/index.html
+  - Homeのページ: NAME.github.io/
+  - になってるのが問題っぽい？ → Vueの問題！ 
