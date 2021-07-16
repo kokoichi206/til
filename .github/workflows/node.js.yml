@@ -46,4 +46,8 @@ jobs:
     - name: Check
       run: |
         cd ${{ env.working-dir }}
+        ls -l
+    - name: Check-dist
+      run: |
+        cd ${{ env.working-dir }}
         ls dist
