@@ -22,7 +22,7 @@ jobs:
 
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
-      
+
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
@@ -38,17 +38,9 @@ jobs:
         cd ${{ env.working-dir }}
         npm ci
         npm run build --if-present
-    - name: Setup Hugo
-      uses: peaceiris/actions-hugo@v2
-      with:
-        hugo-version: '0.85.0'
-
-    - name: Build
-      run: hugo --minify
 
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
-      if: github.ref == 'refs/heads/main'
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./deploy/dist
