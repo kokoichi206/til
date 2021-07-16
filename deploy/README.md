@@ -14,3 +14,4 @@
 ## ciを用いてdeploy
 - [gh-pages](https://github.com/peaceiris/actions-gh-pages)
 - [githubのsetting方法](https://github.com/peaceiris/actions-gh-pages#%EF%B8%8F-first-deployment-with-github_token)
+  - Sourceは、`Branch:gh-pages`の`folder: /(root)`にする
