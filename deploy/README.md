@@ -15,3 +15,13 @@
 - [gh-pages](https://github.com/peaceiris/actions-gh-pages)
 - [githubのsetting方法](https://github.com/peaceiris/actions-gh-pages#%EF%B8%8F-first-deployment-with-github_token)
   - Sourceは、`Branch:gh-pages`の`folder: /(root)`にする
+
+## deployできたけど画面が真っ白
+- `vue.config.js`のファイルを作り、以下を記述
+
+```
+module.exports = {
+    outputDir: './dist/',
+    publicPath: './'
+}
+```
