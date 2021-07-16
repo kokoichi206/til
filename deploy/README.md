@@ -10,3 +10,7 @@
 - packege-lock.jsonがなかったっぽい！
 - [インストールする](https://codehero.jp/node.js/46653833/is-there-a-way-to-force-npm-to-generate-package-lock-json)
   - `npm install --package-lock`
+
+## ciを用いてdeploy
+- [gh-pages](https://github.com/peaceiris/actions-gh-pages)
+- [githubのsetting方法](https://github.com/peaceiris/actions-gh-pages#%EF%B8%8F-first-deployment-with-github_token)
