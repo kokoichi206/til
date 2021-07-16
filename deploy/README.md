@@ -5,3 +5,8 @@
 
 ## ハマったところ
 - cdコマンドは使えるが、毎回WorkingDir（TOP）に戻るらしい
+
+## npm ciでこける
+- packege-lock.jsonがなかったっぽい！
+- [インストールする](https://codehero.jp/node.js/46653833/is-there-a-way-to-force-npm-to-generate-package-lock-json)
+  - `npm install --package-lock`
