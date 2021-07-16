@@ -1,29 +1,7 @@
-# deploy
+# deplpy
+- Github Actionsを使ってCIしたい！
+  - vueのbuild
+  - 静的ファイルを然るべき場所に配置してgithub pagesに公開
 
-## Project setup
-```
-yarn install
-```
-
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
-
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Run your unit tests
-```
-yarn test:unit
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## ハマったところ
+- cdコマンドは使えるが、毎回WorkingDir（TOP）に戻るらしい
