@@ -27,6 +27,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+        path: ./deploy/.npm
     - run: npm ci
       working-directory: ${{ env.working-dir }}
     - run: npm run build --if-present
