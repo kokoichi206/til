@@ -12,6 +12,9 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    env:
+      working-dir: ./deploy
+
     strategy:
       matrix:
         node-version: [16.x]
@@ -19,7 +22,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - run: cd deploy
+    - run: pwd
+    - run: cd ${{ working-dir }}
+    - run: pwd
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
       with:
