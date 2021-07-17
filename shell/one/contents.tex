@@ -1,0 +1,192 @@
+\chapter{近藤絶縁体}\label{sec:Kondo_ins}
+前章で紹介したように、近藤格子は$c-f$混成の結果、新たなバンドを形成しギャップを開けるが、フェルミ面がギャップの中にあるときその物質は近藤絶縁体とよばれる。
+以下では代表的な近藤絶縁体SmB$_{6}$とYbB$_{12}$について、その類似点や相似点も含め簡単に紹介する。
+\section{SmB\texorpdfstring{$_{6}$}{Lg}}
+SmB$_{6}$は50年以上前にみつかった最初の近藤絶縁体であるが\cite{first_KondoIns_smb6}、トポロジカル的性質も最近明らかにされるなど今尚活発に研究が行われている物質である。
+% 結晶構造とバンド図とかいれる？？？
+以下にSmB$_6$の結晶構造とバンド図を示す\cite{kang2015band}（\autoref{fig:smb6_band}）。結晶構造は\autoref{fig:smb6_band}AのようなCsCl型の立方晶であり、ブリルアンゾーンは\autoref{fig:smb6_band}Bである。SmB$_6$中において、Sm$^{2+}[(4\rm{f})^6]$とSm$^{3+}[(4\rm{f})^5(5\rm{d})^1]$の状態が混成しており、平均の価数は室温で2.7程度である\cite{smb6_valence}。また、スピン軌道相互作用（SOC）を取り入れた一般化勾配近似（GGA）による第一原理計算の結果からは、\autoref{fig:smb6_band}Cのようなバンド図が得られている。X点のフェルミ面付近において、Smの4fとSmの5dが$c-f$混成を起こしギャップを開けている。さらに、4fと5dでパリティの異なるバンド間でバンド反転が起きているため、$\mathbb{Z}_2$指数によって特徴付けられるトポロジカル絶縁体に属することが予想される。
+\begin{figure*}[!thb]
+	\begin{center}
+		\includegraphics[width=13cm]{Figure/smb6_band.png}
+\caption{SmB$_6$における結晶構造とバンド図の数値計算\cite{kang2015band}。A. SmB$_6$の結晶構造。立方晶の形をしている。B.バルクと表面のブリルアンゾーン。C. GGA+SOCによるバンド図。第一原理計算の結果から、X点付近でパリティの異なるバンド反転がおきており、トポロジカル絶縁体であることが示唆される。}
+\label{fig:smb6_band}
+    \end{center}
+\end{figure*}
+
+\subsection{電気抵抗}
+電気抵抗率測定の結果を\autoref{fig:smb6_resistivity}に示す。低温で近藤効果によりギャップを開け、電気抵抗が指数関数的に上昇する絶縁体的振る舞いが観測された。絶縁体領域で
+\begin{equation}\label{eq:insulator}
+    \frac{1}{\rho}=\frac{1}{\rho_0}\exp{\left(-\frac{\Delta}{{\rm{k_B}}T}\right)}
+\end{equation}
+の振る舞いを仮定して見積もったギャップサイズ$\Delta$は4 meV程度である。
+4 K以下での電気抵抗率のサチュレーションは長い間理論的に謎であったが、試料作成技術の向上により表面状態の寄与であることが確認された。
+最近、この金属的性質は系がトポロジカル絶縁体であることに由来する表面状態であるという提案がなされ、それをサポートする実験事実もある。例えば、磁性をもつGdをドープして時間反転対称性を破った物質に対しては電気抵抗はサチュレーションを起こさないことが観測されており（図\ref{fig:smb6_resistivity}下）、これはサチュレーションを起こす電気伝導の寄与が時間反転対称性を持つトポロジカル絶縁体に由来するという解釈と矛盾しない。
+他にもトポロジカル的性質を示唆するものとして、表面状態に由来するホール抵抗があげられる（図\ref{fig:smb6_Hall}）。抵抗の大きさは試料の厚さに依存しているが、サチュレーションを起こす範囲での抵抗の大きさは厚さに依存しない。\par
+\begin{figure}[htbp]
+    \begin{tabular}{cc}
+      %---- 最初の図 ---------------------------
+      \begin{minipage}[t]{0.45\hsize}
+        \centering
+        \includegraphics[keepaspectratio, scale=0.5]{Figure/SmB6_resistivity.PNG}
+        \caption{\small{SmB$_6$の電気抵抗率（上）とGdを3\%ドープした試料の電気抵抗率（下）\cite{SmB6_resistivity_paper}。SmB$_{6}$は低温でギャップをもち絶縁体化する。}}
+        \label{fig:smb6_resistivity}
+      \end{minipage} &
+      %---- 2番目の図 --------------------------
+      \begin{minipage}[t]{0.45\hsize}
+        \centering
+        \includegraphics[keepaspectratio, scale=0.43]{Figure/SmB6_Hall_voltage.png}
+        \caption{\small{様々な厚さにおけるSmB$_{6}$のホール抵抗\cite{smb6_Hall_voltage}。3 K以下において、試料の厚さに依存しない表面ホール抵抗が得らる。}}
+        \label{fig:smb6_Hall}
+      \end{minipage}
+      %---- 図はここまで ----------------------
+    \end{tabular}
+\end{figure}
+
+% 電気抵抗は不純物によらない、さちるところ変わってていい？https://www.pnas.org/content/pnas/early/2019/06/07/1901245116.full.pdf
+前章で紹介したように、近藤格子は$c-f$混成の結果、新たなバンドを形成しギャップを開けるが、フェルミ面がギャップの中にあるときその物質は近藤絶縁体とよばれる。
+以下では代表的な近藤絶縁体SmB$_{6}$とYbB$_{12}$について、その類似点や相似点も含め簡単に紹介する。
+
+\subsection{量子振動}
+フェルミ面をもつ金属中では伝導電子のエネルギーが磁場化でランダウ量子化され、エネルギーがとびとびの値を取るようになる。磁場を増大させると準位間の間隔が変わることでフェルミ面の状態密度が磁場の逆数（$1/B$）に対し周期的に極大を示し、それが原因で様々な物理量の値が$1/B$に対し周期的に変化する「量子振動」という現象が起こる（付録\ref{sec:ochillations}参照）。磁化率における量子振動をde Haas-van Alphen（dHvA）振動とよび、電気抵抗率における量子振動をShubnikov-de Haas（SdH）振動とよんでいる。
+金属的性質以外が引き起す量子振動については実験的な発見が進んでいないが、2015年に近藤絶縁体SmB$_6$においてdHvA効果が観測され注目をあつめている。
+しかしSmB$_6$のdHvA効果は、絶縁体的な三次元バルクに由来するか\cite{smb6_quantum_oscillation}（\autoref{fig:smb6_quantum_oscillation}）金属的な二次元表面に由来するか\cite{SmB6_byLi}（\autoref{fig:smb6_quantum_oscillation_2d}）決着がついていない。
+さらに量子振動の振幅の温度依存性は、1 K 以下からLK公式（フェルミ液体の予想する振る舞い）とは大きくかけ離れた振る舞いをしている\cite{smb6_quantum_oscillation}（\autoref{fig:smb6_quantum_oscillation}E）。
+また、SmB$_6$においてSdHは観測されていないという事実もあり興味深い\cite{smb6_noSdH}。
+この絶縁体におけるdHvA効果を説明しようと、中性フェルミオン・スキルミオン・複合エキシトンなどを用いた様々な理論が提案されているが、どれも決定的なコンセンサスは得られていない。
+\begin{figure*}[!thb]
+	\begin{center}
+		\includegraphics[width=11cm]{Figure/smb6_quantum_oscillation_torque.png}
+\caption{\small{SmB$_6$の磁気トルクにおける量子振動(A-D)と電気抵抗の磁場依存性\cite{smb6_quantum_oscillation}。A.トルクの磁場依存性。磁場の二次の項に加えて振動項が乗っている。B.振動成分のみを取り出したもの。C.磁場の逆数をに対しランダウ指数をプロットしたもの。D.振動数の磁場角度依存性。三次元的なバルクに由来した依存性がみられる。E.量子振動の振幅の温度依存性。挿入図の赤線はLK公式の予想を示すが、1 K以下からLKと異なる振る舞いを示す。}}
+\label{fig:smb6_quantum_oscillation}
+    \end{center}
+\end{figure*}
+
+\begin{figure*}[!thb]
+	\begin{center}
+		\includegraphics[width=11cm]{Figure/smb6_quantum_oscillation_torque_2d.png}
+\caption{\small{A.\,SmB$_6$の磁気トルクにおける量子振動\cite{SmB6_byLi}。B.振動数の角度依存性。二次元フェルミ面に由来した発散的な振る舞いがみられる。}}
+\label{fig:smb6_quantum_oscillation_2d}
+    \end{center}
+\end{figure*}
+
+\begin{comment}
+----- MAYBE -------------
+電気抵抗の磁場依存性のやつは、SdHがないことの説明なんじゃないの？？？其れ入れるか？？
+\end{comment}
+
+
+\subsection{比熱および熱伝導率}
+% SmB$_6$の比熱測定において$T\to0$で$C/T$が有限となる温度依存性が観測されており、このような$C/T$の残留項はフェルミオン励起が存在することを示す。一方で、熱伝導率測定からはゼロ磁場でのそのようなフェルミオン励起を示す有限の（$\kappa_0/T$ $(=\kappa/T$ $(T\to0)$））は観測されていない。
+SmB$_6$の比熱測定において、$T$線形な温度依存性の寄与が低温で観測されており、このことはフェルミオン励起が存在することを示す。一方で、熱伝導率測定からはゼロ磁場においてそのような線形な温度依存性は観測されていない。
+また、磁場中での熱伝導率の振る舞いについては共通の見解は得られていない(\autoref{fig:smb6_transport}B-D)。中性フェルミオンが励起され熱伝導率が増大されたという報告がある一方で\cite{smb6_transport}、熱伝導率の増大はフォノンで解釈できるという報告もある\cite{PhysRevB_97_245141}。SmB$_6$の遍歴準粒子については決着が付いておらず、dHvAの起源は謎のままである。\par
+
+\begin{comment}
+---------- 疑問QQQ --------------\\
+比熱の磁場依存性はどうなってるん？LaB6は何て比較するため？\\
+\end{comment}
+
+\begin{figure*}[!thb]
+	\begin{center}
+		\includegraphics[width=0.8\linewidth]{Figure/smb6_transport.png}
+\caption{SmB$_6$における比熱と熱伝導率の測定結果。A.比熱の温度依存性。有限の線形項が観測されている。B-D熱伝導率の温度依存性。B.磁場により中性フェルミオンが励起され、熱伝導率が増加する\cite{smb6_transport}。C.磁場によりフォノンの傾きが変わり、熱伝導率の増加を示す\cite{PhysRevB_97_245141}。D.有意な磁場依存性は観測されていない\cite{PhysRevLett}。}
+\label{fig:smb6_transport}
+    \end{center}
+\end{figure*}
+
+
+\clearpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{YbB\texorpdfstring{$_{12}$}{Lg}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+YbB$_{12}$はYb系としては初めての近藤絶縁体であり、1998年に単結晶が作成されてから活発に実験が行われている\cite{IGA1998337}。
+以下にYbB$_{12}$の結晶構造とバンド図を示す\cite{ybb12_band}（\autoref{fig:ybb12_band}）。結晶構造は\autoref{fig:ybb12_band}AのようなNaCl型の立方晶であり、ブリルアンゾーンは\autoref{fig:ybb12_band}Bである。YbB$_{12}$中において、Yb$^{2+}[(4\rm{f})^{14}]$とYb$^{3+}[(4\rm{f})^{13}(5\rm{d})^1]$の状態が混成しており、平均の価数は室温で2.9程度である\cite{ybb12_valence}。また、スピン軌道相互作用（SOC）を取り入れた局所密度近似（LDA）による第一原理計算の結果からは、\autoref{fig:ybb12_band}Cのようなバンド図が得られている。X点のフェルミ面付近において$c-f$混成を起こしギャップを開けているが、各X点付近において2か所（偶数回）で反転が起きているため、YbB$_{12}$においてトポロジカル絶縁体の秩序を区別する$\mathbb{Z}_2$指数は自明な値をとる。しかし、ミラーチャーン数で特徴付けられるトポロジカル結晶絶縁体に属することが期待されているなど非常に興味深い系である\cite{ybb12_band}。
+\begin{figure*}[!thb]
+	\begin{center}
+		\includegraphics[width=13cm]{Figure/ybb12_band.png}
+\caption{SmB$_6$における結晶構造とバンド図の数値計算\cite{ybb12_band}。A. YbB$_{12}$の結晶構造。B.バルクと表面のブリルアンゾーン。C. LDA+SOCによるバンド図。第一原理計算の結果から、X点付近でパリティの異なるバンド反転が2回起きている。}
+\label{fig:ybb12_band}
+    \end{center}
+\end{figure*}
+
+\subsection{電気抵抗}
+電気抵抗の測定から見積もられたギャップサイズの大きさは4-5 meVでありSmB$_6$と同じオーダーである（\autoref{fig:smb6_transport}A）。YbB$_{12}$についてもSmB$_6$と同様に、角度分解光電子分光（ARPES）などの実験によりトポロジカル的性質と矛盾しない実験的証拠がみつかっている\cite{ybb12_ALPES}。
+
+\begin{figure*}[!thb]
+	\begin{center}
+		\includegraphics[width=0.8\linewidth]{Figure/ybb12_resistivity.png}
+\caption{YbB$_{12}$での電気抵抗測定の結果\cite{sato2019unconventional}。A.絶縁体であるが、表面状態によるサチュレーションが存在する。B.高磁場でSdHが観測されている。}
+\label{fig:smb6_transport}
+    \end{center}
+\end{figure*}
+
+% \begin{figure}[htbp]
+%     \centering
+%     \begin{subfigure}{0.42\columnwidth}
+%         \centering
+%         \includegraphics[width=\columnwidth]{Figure/ybb12_resistivity_ins.PNG}
+%         \caption{絶縁体であるが、表面状態によるサチュレーションが存在する。}
+%         \label{insulator}
+%       \end{subfigure}
+%       %---- 2番目の図 --------------------------
+%     \begin{subfigure}{0.4\columnwidth}
+%         \centering
+%         \includegraphics[width=\columnwidth]{Figure/ybb12_resistivity_qo.PNG}
+%         \caption{高磁場で電気抵抗の量子振動（SdH）が観測されている。}    
+%         \label{quantum_oscillation}
+%       \end{subfigure}
+%     \caption{YbB$_{12}$での電気抵抗測定の結果\cite{sato2019unconventional}}
+% \end{figure}
+
+
+\subsection{量子振動}
+YbB$_{12}$においてもSmB$_6$と同様にdHvA効果が観測されている（\autoref{fig:ybb12_qo_dhva}）。また、SmB$_6$と異なる特徴として電気抵抗における量子振動が観測されており（\autoref{fig:smb6_transport}B）、SmB$_6$との違いとともに大変注目されている\cite{YbB12_byXiang65}。
+\autoref{fig:ybb12_qo_dhva}Bに示す量子振動の角度依存性から、SdH振動ではM字の振る舞いをみせ3次元的な状態からの寄与を示している。これは、絶縁体的バルク中に量子振動を示す励起があることを意味している。 
+また、YbB$_{12}$における量子振動はLK公式によく従い、フェルミ流体的振る舞いを示していると考えられる。
+通常絶縁体中では量子振動を起こさないため、絶縁体であるバルクからの寄与が観測されたことは興味深い。
+
+\begin{figure*}[!thb]
+	\begin{center}
+		\includegraphics[width=11cm]{Figure/ybb12_quantum_oscillation_torque.png}
+\caption{YbB$_{12}$における量子振動\cite{YbB12_byXiang65}。A.磁気トルクの量子振動。高磁場（40 T付近）で明瞭な振動が観測できる。B. YbB$_{12}$におけるSdHとdHvAでの量子振動の振幅の角度依存性。}
+\label{fig:ybb12_qo_dhva}
+    \end{center}
+\end{figure*}
+
+
+\subsection{比熱および熱伝導率}
+量子振動が観測されたバルク中での励起の性質を調べるため、比熱や熱伝導率の測定も行われた。その結果、比熱$C$と熱伝導率$\kappa$のどちらにおいても$T$線形の温度依存性を示す項が観測された（図\ref{fig:ybb12_transport}）。これはフェルミオン励起による寄与を反映してるが、興味深いことにSmB$_6$の熱伝導率ではそのような寄与は観測されていない。熱伝導率には遍歴的な励起のみが寄与するため、YbB$_{12}$には遍歴的なフェルミオン励起が存在することがわかる。\par
+ここで、電気抵抗率$\rho$と熱伝導率$\kappa$を用いて定義したローレンツ数$L$ $（\coloneqq{\rho\kappa/T}）$は、金属の場合極低温で次の定数値$L_0$をとることが知られている。
+$$
+L=\rho\kappa/T=\frac{\pi^2}{3}\left(\frac{k_B}{e}\right)^2\eqqcolon{L_0}
+$$
+これはウィーデマン・フランツ（WF）の法則として知られ、同一の粒子が熱と電気の両方を運ぶ場合に常に成り立つ。
+いま、YbB$_{12}$で観測された有限の熱伝導率の残留項と電気伝導率の飽和する値$\rho_0$から計算されるローレンツ数は$L=\rho_0\kappa_0/T\sim10^5$ $L_0$となり、WF
+則が完全に破綻してることを意味している。つまりYbB$_{12}$の低温での熱伝導率への寄与は、電気的には絶縁体であるが熱的には金属であるような状態になっている。以上のことから、YbB$_{12}$において遍歴中性フェルミオン励起の存在が確認された。
+\begin{figure*}[!thb]
+	\begin{center}
+		\includegraphics[width=12cm]{Figure/YbB12_transport.png}
+\caption{YbB$_{12}$に対する（A）比熱測定と（B）熱伝導率の結果\cite{sato2019unconventional}。SmB$_6$と異なりどちらの物理量でもフェルミオンの寄与を示す温度の線形項が観測されている。特に熱伝導率における温度の線形項は、遍歴的なフェルミオン励起の存在を示す。}
+\label{fig:ybb12_transport}
+    \end{center}
+\end{figure*}
+
+
+以上の違いを表にまとめると以下のようになる。
+SmB$_6$とYbB$_{12}$におけるこれらの違いや、YbB$_{12}$で観測された遍歴中性フェルミオン励起の性質について詳しく調べることは、近藤絶縁体を理解する上で非常に重要となる。
+
+\begin{table}[htb]
+  \begin{center}
+    \caption{諸実験でのSmB$_6$とYbB$_{12}$の結果}
+    \begin{tabular}{|l||c|c|c|c|c|} \hline
+       & dHvA & SdH & LK & $C/T$の残留項 & $\kappa/T$の残留項 \\ \hline \hline
+      SmB$_6$ & ◯ & × & ×（従わない） & ◯ & △ \\
+      YbB$_{12}$ & ◯ & ◯ & ◯（従う）& ◯ & ◯ \\ \hline
+    \end{tabular}
+    \label{tab:difference}
+  \end{center}
+\end{table}
+
+
+
+以上の違いを表にまとめると以下のようになる。
+SmB$_6$とYbB$_{12}$におけるこれらの違いや、YbB$_{12}$で観測された遍歴中性フェルミオン励起の性質について詳しく調べることは、近藤絶縁体を理解する上で非常に重要となる。

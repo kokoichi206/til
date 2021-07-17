@@ -1,0 +1,1001 @@
+  146  code two_layer_net.py
+  147  cd ..
+  148  mkdir ch5
+  149  cd ch5
+  150  code layer_naive.py
+  151  code buy_apple.py
+  152  python buy_apple.py 
+  153  cd ..
+  154  code dqn.md
+  155  cp haarcascade_* hard/
+  156  ls
+  157  cp -r Picture/ hard/
+  158  cd hard/
+  159  ls
+  160  cd ..
+  161  cp faceEye.py hard/faceDetect.py
+  162  cd hard/
+  163  ls
+  164  code faceDetect.py 
+  165  python faceDetect.py 
+  166  cd ..
+  167  ls
+  168  code getPic.py 
+  169  cd hard/
+  170  python faceDetect.py 
+  171  python
+  172  python faceDetect.py 
+  173  cd ..
+  174  ls
+  175  code faceEye.py 
+  176  cd hard/
+  177  ls
+  178  python faceDetect.py 
+  179  ls
+  180  cd FacePicture/
+  181  eog akimotomanatsu.jpeg.png 
+  182  cd ..
+  183  ls
+  184  cd ..
+  185  ls
+  186  code getPic.py 
+  187  code faceEye.py 
+  188  cd hard/
+  189  python faceDetect.py 
+  190  ls
+  191  eog EyePicture/akimotomanatsu.jpeg.png 
+  192  ls
+  193  cd FacePicture/
+  194  ls
+  195  cd ..
+  196  ls
+  197  rm -r EyePicture/
+  198  python faceDetect.py
+  199  ls
+  200  cd ..
+  201  ls
+  202  cp names.txt ha
+  203  ls
+  204  rm ha
+  205  cp names.txt hard/
+  206  cd hard/
+  207  ;ls
+  208  ls
+  209  cat names.txt 
+  210  python faceDetect.py 
+  211  ls
+  212  cat names.txt 
+  213  python faceDetect.py 
+  214  ls
+  215  cat eyeNames.txt 
+  216  code eyeNames.txt 
+  217  ls
+  218  cat EyePicture/
+  219  ls EyePicture/
+  220  python faceDetect.py 
+  221  ls
+  222  mkdir git
+  223  cd git/
+  224  git clone https://github.com/kokoichi206/django-website-test.git
+  225  ls
+  226  cd ..
+  227  ls
+  228  cd git/
+  229  ls
+  230  cd django-website-test/
+  231  ls
+  232  git add *
+  233  git commit 'hardQuiz'
+  234  git commit -m 'hardQuiz'
+  235  ls
+  236  git push origin main
+  237  git add *
+  238  git commit -m 'hardQuiz'
+  239  git push origin main
+  240  git add *
+  241  git commit -m 'hardQuiz'
+  242  git push origin main
+  243  git add *
+  244  git commit -m 'hardQuiz'
+  245  git push origin main
+  246  git add *
+  247  git commit -m 'hardQuiz'
+  248  git push origin main
+  249  git add *
+  250  git commit -m 'hardQuiz'
+  251  git push origin main
+  252  git add *
+  253  git commit -m 'hardQuiz'
+  254  git push origin main
+  255  git add *
+  256  git commit -m 'hardQuiz'
+  257  git push origin main
+  258  git add *
+  259  git commit -m 'hardQuiz'
+  260  git push origin main
+  261  ls
+  262  cd..
+  263  cd
+  264  cd master/diary/
+  265  ls
+  266  cd book/
+  267  cd html5/
+  268  ls
+  269  cd seito/
+  270  ls
+  271  cd picture/
+  272  ls
+  273  cd hard/
+  274  ls
+  275  cd git/
+  276  git clone https://github.com/kokoichi206/quiz-practice.git
+  277  cd ..
+  278  ls
+  279  cd git/
+  280  ls
+  281  cd ls
+  282  cd quiz-practice/
+  283  ls
+  284  git add *
+  285  git commit -m 'hardQuiz'
+  286  git push origin main
+  287  ls
+  288  cd ..
+  289  ls
+  290  rm -r git/
+  291  rm -r git/ -y
+  292  ls
+  293  cd ..
+  294  ls
+  295  mkdir login
+  296  cd login/
+  297  ls
+  298  code login.html
+  299  code info.html
+  300  code sample.html
+  301  ls
+  302  code login.css
+  303  code info.html 
+  304  ls
+  305  mkdir git
+  306  cd git/
+  307  git clone https://github.com/kokoichi206/django-website-test.git
+  308  ls
+  309  git add *
+  310  cd django-website-test/
+  311  git add *
+  312  git commit 'login'
+  313  git commit -m 'login'
+  314  git push origin main
+  315  git commit 'login'
+  316  git add *
+  317  git commit -m 'login'
+  318  git push origin main
+  319  git add *
+  320  git commit -m 'login'
+  321  git push origin main
+  322  git add *
+  323  git commit -m 'login'
+  324  git push origin main
+  325  git add *
+  326  git commit -m 'login'
+  327  git push origin main
+  328  git add *
+  329  git commit -m 'login'
+  330  git push origin main
+  331  git add *
+  332  git commit -m 'login'
+  333  git push origin main
+  334  git add *
+  335  git commit -m 'login'
+  336  git push origin main
+  337  git add *
+  338  git commit -m 'login'
+  339  git push origin main
+  340  pwd
+  341  git add *
+  342  git commit -m 'login'
+  343  git push origin main
+  344  git add *
+  345  git commit -m 'login'
+  346  git push origin main
+  347  git add *
+  348  git commit -m 'login'
+  349  git push origin main
+  350  git add *
+  351  git commit -m 'login'
+  352  git add *
+  353  git commit -m 'login'
+  354  git push origin main
+  355  git add *
+  356  git commit -m 'login'
+  357  git push origin main
+  358  git add *
+  359  git commit -m 'login'
+  360  git push origin main
+  361  git add *
+  362  git commit -m 'login'
+  363  git push origin main
+  364  git commit -m 'login'
+  365  git add *
+  366  git commit -m 'login'
+  367  git push origin main
+  368  git add *
+  369  git commit -m 'login'
+  370  git push origin main
+  371  git add *
+  372  git commit -m 'login'
+  373  git push origin main
+  374  git add *
+  375  git commit -m 'login'
+  376  git push origin main
+  377  ls
+  378  cd ..
+  379  ls
+  380  cd ..
+  381  ls
+  382  code getName.py 
+  383  ls
+  384  cd ..
+  385  cd picture/
+  386  ls
+  387  cd login/
+  388  ls
+  389  cd git/
+  390  ls
+  391  cd django-website-test/
+  392  git add*
+  393  git add *
+  394  git commit -m 'login'
+  395  git push origin main()
+  396  git push origin main
+  397  git add *
+  398  git commit -m 'login'
+  399  git push origin main()
+  400  git push origin main
+  401  git add *
+  402  git commit -m 'login'
+  403  git push origin main
+  404  git add *
+  405  git commit -m 'login'
+  406  git push origin main
+  407  git add *
+  408  git commit -m 'login'
+  409  git push origin main
+  410  git add *
+  411  git commit -m 'login'
+  412  git push origin main
+  413  git add *
+  414  git commit -m 'login'
+  415  git push origin main
+  416  git add *
+  417  git commit -m 'login'
+  418  git push origin main
+  419  git add *
+  420  git commit -m 'login'
+  421  git push origin main
+  422  git add *
+  423  git commit -m 'login'
+  424  git push origin main
+  425  git add *
+  426  git commit -m 'login'
+  427  git push origin main
+  428  git add *
+  429  git commit -m 'login'
+  430  git push origin main
+  431  git add *
+  432  git commit -m 'login'
+  433  git push origin main
+  434  git add *
+  435  git commit -m 'login'
+  436  git push origin main
+  437  git add *
+  438  git commit -m 'login'
+  439  git push origin main
+  440  git add *
+  441  git commit -m 'login'
+  442  git push origin main
+  443  ls
+  444  pwd
+  445  cd 
+  446  cd master/diary/
+  447  ls
+  448  vim February.md 
+  449  bash record_weight.sh 761
+  450  ls
+  451  eog all_
+  452  eog all_weight_from_1225.png 
+  453  absh record_weight.sh 763
+  454  bash record_weight.sh 763
+  455  cd ..
+  456  cd s
+  457  cd su_doku/
+  458  ls
+  459  code README.md
+  460  code main.py 
+  461  git init
+  462  git add main.py internet.py solve_1page.py 
+  463  git commit -m 'hoge'
+  464  git branch -M main
+  465  git remote add origin https://github.com/kokoichi206/su-doku.git
+  466  git push -u origin main
+  467  ls
+  468  cd ..
+  469  cd book/html5/
+  470  ls
+  471  cd seito/
+  472  ls
+  473  cd picture/
+  474  ls
+  475  cd git/
+  476  ls
+  477  git init
+  478  git add *
+  479  git commit -m "first commit"
+  480  git branch -M main
+  481  git remote add origin https://github.com/kokoichi206/quiz-practice.git
+  482  git push -u origin main
+  483  ls
+  484  cd ..
+  485  ls
+  486  cd deeplearning/
+  487  ls
+  488  cat mnist
+  489  cat mnist.py
+  490  ls
+  491  cd ..
+  492  ls
+  493  cd auto/
+  494  ls
+  495  cd pic/
+  496  ls
+  497  code recognition.py 
+  498  code minami
+  499  code minami.py 
+  500  ls
+  501  sudo yum -y install epel-release
+  502  rpm -Uvh http://li.nux.ro/download/nux/dextop/el7/x86_64/nux-dextop-release-0-1.el7.nux.noarch.rpm
+  503  su
+  504  code findAns.py
+  505  python fi
+  506  python findAns.py 
+  507  ls
+  508  cd ..
+  509  ls
+  510  cd timer/
+  511  ls
+  512  mkdir git
+  513  cd git/
+  514  cd ..
+  515  ls
+  516  rm -r git/
+  517  git clone https://github.com/kokoichi206/django-website-test.git
+  518  ls
+  519  git add *
+  520  ls
+  521  cd django-website-test/
+  522  git add *
+  523  git commit -m 'timer'
+  524  git push origin main
+  525  git add *
+  526  git commit -m 'timer'
+  527  git push origin main
+  528  git add *
+  529  git commit -m 'timer'
+  530  git push origin main
+  531  git add *
+  532  git commit -m 'timer'
+  533  git push origin main
+  534  git add *
+  535  git commit -m 'timer'
+  536  git push origin main
+  537  git add *
+  538  git commit -m 'timer'
+  539  git push origin main
+  540  git add *
+  541  git commit -m 'timer'
+  542  git push origin main
+  543  ls
+  544  git add *
+  545  git clone -m 'timer +alpha'
+  546  git clone -m 'timerAlpha'
+  547  git commit -m 'timer +alpha'
+  548  git push origin main
+  549  pwd
+  550  git add *
+  551  git commit -m 'timer +alpha'
+  552  git push origin main
+  553  git add *
+  554  git commit -m 'timer +alpha']
+  555  git push origin main
+  556  git add *
+  557  git commit -m 'timer +alpha']
+  558  git push origin main
+  559  git add *
+  560  git commit -m 'timer +alpha'
+  561  git commit -m 'timer +alpha']
+  562  git push origin main
+  563  git commit -m 'timer +alpha']
+  564  git commit -m 'timer +alpha'
+  565  git add *
+  566  git commit -m 'timer +alpha'
+  567  git push origin main
+  568  git add *
+  569  git commit -m 'timer +alpha'
+  570  git push origin main
+  571  git add *
+  572  git commit -m 'timer +alpha'
+  573  git push origin main
+  574  git add *
+  575  git commit -m 'timer +alpha'
+  576  git push origin main
+  577  git add *
+  578  git commit -m 'timer +alpha'
+  579  git push origin main
+  580  git add *
+  581  git commit -m 'timer +alpha'
+  582  git push origin main
+  583  git add *
+  584  git commit -m 'timer +alpha'
+  585  git push origin main
+  586  git add *
+  587  git commit -m 'timer +alpha'
+  588  git push origin main
+  589  git add *
+  590  git commit -m 'timer +alpha'
+  591  git push origin main
+  592  git add *
+  593  git commit -m 'timer +alpha'
+  594  git push origin main
+  595  git add *
+  596  git commit -m 'timer +alpha'
+  597  git push origin main
+  598  '/home/TT/master/diary/timer/django-website-test/website/static/timer/timerMusic (copy).html' a
+  599  cd ..
+  600  ls
+  601  code index.html 
+  602  cd book/html5/
+  603  ls
+  604  cd seito/
+  605  ls
+  606  cd picture/
+  607  ls
+  608  mkdir birthday
+  609  cd birthday/
+  610  cd ..
+  611  code getName.py 
+  612  cp getName.py birthday/
+  613  cd birthday/
+  614  code getName.py 
+  615  python getName.py 
+  616  ls
+  617  mv getName.py getDetail.py
+  618  code getDetail.py 
+  619  python getName.py 
+  620  ls
+  621  python getDetail.py 
+  622  cd ..
+  623  ls
+  624  cd hard/
+  625  ls
+  626  cp index.html app_hard.js ../birthday/
+  627  cd ..
+  628  cd birthday/
+  629  ls
+  630  mv app_hard.js index.js
+  631  code index.html 
+  632  ls
+  633  code index.js 
+  634  python getDetail.py 
+  635  cd ..
+  636  cd hard/
+  637  code index.html 
+  638  code app_hard.js 
+  639  cd ..
+  640  ls
+  641  code app.js 
+  642  ls
+  643  cd birthday/
+  644  ls
+  645  git clone https://github.com/kokoichi206/django-website-test.git
+  646  cd django-website-test/
+  647  l
+  648  ls
+  649  git add *
+  650  git commit -m 'profile quiz'
+  651  git push origin main
+  652  git add *
+  653  git commit -m 'profile quiz'
+  654  git push origin main
+  655  git add *
+  656  git commit -m 'profile quiz'
+  657  git push origin main
+  658  git add *
+  659  git commit -m 'profile quiz'
+  660  git push origin main
+  661  git add *
+  662  git commit -m 'profile quiz'
+  663  git push origin main
+  664  git add *
+  665  git commit -m 'profile quiz'
+  666  git push origin main
+  667  git add *
+  668  git commit -m 'profile quiz'
+  669  git push origin main
+  670  git add *
+  671  git commit -m 'profile quiz'
+  672  git push origin main
+  673  git add *
+  674  git commit -m 'profile quiz'
+  675  git push origin main
+  676  git add *
+  677  git commit -m 'profile quiz'
+  678  git push origin main
+  679  git add *
+  680  git commit -m 'profile quiz'
+  681  git push origin main
+  682  git add *
+  683  git commit -m 'profile quiz'
+  684  git push origin main
+  685  git add *
+  686  git commit -m 'profile quiz'
+  687  git push origin main
+  688  git add *
+  689  git commit -m 'profile quiz'
+  690  git push origin main
+  691  git add *
+  692  git commit -m 'profile quiz'
+  693  git push origin main
+  694  git add *
+  695  git commit -m 'profile quiz'
+  696  git push origin main
+  697  git commit -m 'profile quiz'
+  698  git add *
+  699  git push origin main
+  700  git add *
+  701  git commit -m 'profile quiz'
+  702  git push origin main
+  703  git add *
+  704  git commit -m 'profile quiz'
+  705  git push origin main
+  706  git add *
+  707  git commit -m 'profile quiz'
+  708  git push origin main
+  709  git add *
+  710  git commit -m 'profile quiz'
+  711  git push origin main
+  712  git add *
+  713  git commit -m 'profile quiz'
+  714  git push origin main
+  715  git add *
+  716  git commit -m 'profile quiz'
+  717  git push origin main
+  718  git add *
+  719  git commit -m 'profile quiz'
+  720  git push origin main
+  721  git add *
+  722  git commit -m 'profile quiz'
+  723  git push origin main
+  724  git add *
+  725  git commit -m 'profile quiz'
+  726  git push origin main
+  727  git add *
+  728  git commit -m 'profile quiz'
+  729  git push origin main
+  730  git add *
+  731  git commit -m 'profile quiz'
+  732  git push origin main
+  733  git add *
+  734  git commit -m 'profile quiz'
+  735  git push origin main
+  736  git add *
+  737  git commit -m 'profile quiz'
+  738  git push origin main
+  739  ls
+  740  cd ..
+  741  ls
+  742  rm -r django-website-test/
+  743  ls
+  744  rm -r django-website-test/ -y
+  745  rm -r -y django-website-test/
+  746  rm -r django-website-test/
+  747  cd master/diary/
+  748  vim February.md 
+  749  ls
+  750  bash record_weight.sh 755
+  751  ls
+  752  cat weight.txt 
+  753  ls
+  754  cat fil.txt 
+  755  ls
+  756  cd su_doku/
+  757  ls
+  758  code solve_1page.py 
+  759  python solve_1page.py 
+  760  cd ..
+  761  cd reversi/kivy/button/oth/
+  762  ls
+  763  code reversi.kv 
+  764  ls
+  765  cd ..
+  766  ls
+  767  cd book/deeplearning/
+  768  ls
+  769  cd reversi/
+  770  ls
+  771  python learning.py 
+  772  pip install tqdm
+  773  python learning.py 
+  774  pip install ipywidgets
+  775  python learning.py 
+  776  ls
+  777  code learning.py 
+  778  python learning.py 
+  779  ls
+  780  code play_reversi.py
+  781  python play_reversi.py 
+  782  cd ..
+  783  ls
+  784  cd deeplearning/
+  785  ls
+  786  cd ch
+  787  cd ch5
+  788  ls
+  789  cd ..
+  790  ls
+  791  cd deeplearning/
+  792  ls
+  793  python
+  794  pip install torch torchvision torchaudio
+  795  pip install https://github.com/TadaoYamaoka/creversi/releases/download/v0.0.0/creversi-0.0.0-cp36-cp36m-linux_x86_64.whl
+  796  code model.py
+  797  ls
+  798  mkdir reversi
+  799  mv model.py reversi/
+  800  cd reversi/
+  801  ls
+  802  mkdir check
+  803  mv model.py check/
+  804  cd check/
+  805  code save.py
+  806  code load.py
+  807  python save.py 
+  808  nvidia-smi
+  809  cd ..
+  810  ls
+  811  code learning.py
+  812  python learning.py 
+  813  sudo find / -name libstdc++.so
+  814  strings /usr/lib/gcc/arm-linux-gnueabihf/4.9/libstdc++.so | grep GLIBC
+  815  strings /usr/lib/gcc/arm-linux-gnueabihf/4.8/libstdc++.so | grep GLIBC
+  816  strings /usr/lib/gcc/x86_64-redhat-linux/4.8.5/libstdc++.so  | grep GLIBC
+  817  sudo yum install gmp-devel mpfr-devel libmpc-devel
+  818  sudo yum install glibc-devel.i686
+  819  mkdir -p ~/src
+  820  cd ~/src
+  821  curl -LO http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-4.8.4/gcc-4.8.4.tar.gz
+  822  tar fxz gcc-4.8.4.tar.gz
+  823  curl -LO http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-7.5.0/gcc-7.5.0.tar.gz
+  824  tar fxz gcc-7.5.0.tar.gz
+  825  ./configure
+  826  ls
+  827  rm -r gcc-4.8.4*
+  828  la
+  829  ls
+  830  cd gcc-7.5.0/
+  831  ./configure
+  832  make
+  833  ls -ls /usr/lib64/libstdc++.so.6
+  834  sudo cp ~/src/gcc-7.5.0/x86_64-pc-linux-gnu/libstdc++-v3/src/.libs/libstdc++.so.6.0.24 /usr/lib64/
+  835  cd /usr/lib64/
+  836  sudo ln -s libstdc++.so.6.0.24 libstdc++.so.6
+  837  ls -l /usr/lib64/libstdc++.so.6
+  838  sudo ln -s libstdc++.so.6.0.24 libstdc++.so.6
+  839  strings /usr/lib64/libstdc++.so.6 | grep GLIBCXX
+  840  sudo ln -f -n -s libstdc++.so.6.0.24 libstdc++.so.6
+  841  strings /usr/lib64/libstdc++.so.6 | grep GLIBCXX
+  842  python
+  843  cd ..
+  844  ls
+  845  cd reversi/
+  846  ls
+  847  cd git/
+  848  ls
+  849  cd ..
+  850  cd kivy/
+  851  ls
+  852  cd button/
+  853  ls
+  854  cd oth/
+  855  ls
+  856  python reversi.py 
+  857  cd ..
+  858  ls
+  859  cd ..
+  860  ls
+  861  cd ..
+  862  ls
+  863  cd su_doku/
+  864  ls
+  865  cd ..
+  866  ls
+  867  cd reversi/
+  868  ls
+  869  cd kivy/button/oth/
+  870  ls
+  871  python reversi.py 
+  872  cd 
+  873  cd master/diary/
+  874  ls
+  875  bash record_weight.sh 762
+  876  s
+  877  ls
+  878  cd pic/
+  879  ls
+  880  eog Many.png 
+  881  cd venv/
+  882  ls
+  883  cd ..
+  884  ls
+  885  cd ..
+  886  ls
+  887  ls
+  888  cd master/diary/
+  889  ls
+  890  cd su_doku/
+  891  ls
+  892  python solve_1page.py 
+  893  cd ..
+  894  ls
+  895  cd reversi/
+  896  ls
+  897  cd kivy/
+  898  ls
+  899  cd button/
+  900  ls
+  901  cd oth/
+  902  ls
+  903  python reversi.py 
+  904  ls
+  905  cd ..
+  906  ls
+  907  code main.py 
+  908  python main.py 
+  909  ls
+  910  code solve_1page.py 
+  911  ls
+  912  cd ..
+  913  ls
+  914  cd book/
+  915  ls
+  916  evince cracking
+  917  evince crackingcodeswithpython.pdf 
+  918  evince DeepLearning.pdf 
+  919  cd auto/
+  920  ls
+  921  evince automate-the-boring-stuff-with-python-2015-.pdf 
+  922  cd ..
+  923  cd su_doku/
+  924  ls
+  925  code solve_1page.py 
+  926  ls
+  927  python internet.py
+  928  cd ..
+  929  cd book/deeplearning/
+  930  ls
+  931  cd reversi/
+  932  ls
+  933  python play_reversi.py 
+  934  ls
+  935  code play_reversi.py 
+  936  code learning.py 
+  937  python play_reversi.py 
+  938  ls
+  939  code learning.py 
+  940  ls
+  941  rm model.pt 
+  942  ks
+  943  python learning.py 
+  944  cd
+  945  cd master/diary/
+  946  bash record_weight.sh 756
+  947  bash record_weight.sh 753
+  948  ls
+  949  mkdir freeCodeCamp
+  950  cd freeCodeCamp/
+  951  ls
+  952  mkdir python
+  953  cd python/
+  954  code memo.md
+  955  ls
+  956  cd ..
+  957  ls
+  958  cd ..
+  959  cd diary/
+  960  cd book/
+  961  ls
+  962  cd auto/
+  963  ls
+  964  code me
+  965  code memo.md 
+  966  cd ..
+  967  cd cracking/
+  968  ls
+  969  code memo.md 
+  970  cd ..
+  971  ls
+  972  cd ..
+  973  vim February.md 
+  974  ;s
+  975  cd master/diary/
+  976  ls
+  977  cd book/deeplearning/
+  978  ls
+  979  cd reversi/
+  980  ls
+  981  cd ..
+  982  ls
+  983  code dqn.md 
+  984  mv dqn.md reversi/
+  985  cd reversi/
+  986  ls
+  987  code dqn.md 
+  988  python learning.py 
+  989  code learningPara.py
+  990  python learningPara.py 
+  991  ls
+  992  cp model.pt modelCopy.pt 
+  993  python play_reversi.py 
+  994  ls
+  995  code play_reversi.py 
+  996  python play_reversi.py 
+  997  cd..
+  998  cd ..
+  999  vim February.md 
+ 1000  bash record_weight.sh 753
+ 1001  cd master/diary/
+ 1002  ls
+ 1003  cd reversi/
+ 1004  ls
+ 1005  mv reversi book
+ 1006  ls
+ 1007  cd kivy/
+ 1008  ls
+ 1009  cd button/
+ 1010  ls
+ 1011  cd oth/
+ 1012  ls
+ 1013  code play_reversi.k
+ 1014  rm play_reversi.k
+ 1015  code reversi.kv 
+ 1016  cp reversi.kv reversi_old.kv
+ 1017  python reversi.py 
+ 1018  ls
+ 1019  code reversi.py 
+ 1020  python reversi.py 
+ 1021  code memo.md 
+ 1022  python reversi.py 
+ 1023  ls
+ 1024  cd reversi/
+ 1025  ls
+ 1026  cd ..
+ 1027  ls
+ 1028  cd ..
+ 1029  ls
+ 1030  cd oth/
+ 1031  ls
+ 1032  cd book/
+ 1033  ls
+ 1034  code play_reversi.py 
+ 1035  python play_reversi.py 
+ 1036  pyrthon play_reversi.py 
+ 1037  python play_reversi.py 
+ 1038  ls
+ 1039  cp play_reversi.py ../play_reversi_hard.py 
+ 1040  cd ..
+ 1041  ls
+ 1042  code reversi.kv 
+ 1043  python reversi.py 
+ 1044  ls
+ 1045  code play_reversi.py 
+ 1046  code play_reversi_hard.py 
+ 1047  python reversi.py 
+ 1048  ls
+ 1049  cd book/
+ 1050  ls
+ 1051  cp model ../
+ 1052  cp model.pt 
+ 1053  cp model.pt ../
+ 1054  cd ..
+ 1055  python reversi.py 
+ 1056  cd ..
+ 1057  cd oth/
+ 1058  ls
+ 1059  python reversi.py 
+ 1060  ls
+ 1061  cd ..
+ 1062  ls
+ 1063  cd oth/
+ 1064  ls
+ 1065  git clone https://github.com/kokoichi206/reversi.git
+ 1066  ls
+ 1067  cd reversi/
+ 1068  ls
+ 1069  cd ..
+ 1070  ls
+ 1071  cd reversi/
+ 1072  git clone https://github.com/kokoichi206/reversi.git
+ 1073  ls
+ 1074  cd reversi/
+ 1075  ls
+ 1076  git add *
+ 1077  git commit -m 'cpu-hard'
+ 1078  git push origin main
+ 1079  git add *
+ 1080  git commit -m 'cpu-hard'
+ 1081  git push origin main
+ 1082  git add *
+ 1083  git commit -m 'cpu-hard'
+ 1084  git push origin main
+ 1085  d ..
+ 1086  cd ..
+ 1087  ls
+ 1088  rm -r reversi/
+ 1089  rm -r reversi/ -
+ 1090  rm -r reversi/ -y
+ 1091  rm -r -y reversi/
+ 1092  rm -ry reversi/
+ 1093  rm -r reversi/
+ 1094  yes | rm -r reversi/
+ 1095  ls
+ 1096  cd ..
+ 1097  ls
+ 1098  cd ..
+ 1099  cd book/test/
+ 1100  ls
+ 1101  code memo.md
+ 1102  bssh reco758
+ 1103  ls
+ 1104  cd ..
+ 1105  ls
+ 1106  mkdir shell
+ 1107  cd shell/
+ 1108  ls
+ 1109  mkdir youtube
+ 1110  cd youtube/'
+'
+ 1111  cd youtube/
+ 1112  cd ..
+ 1113  cd youtube/
+ 1114  ls
+ 1115  code myscript.sh
+ 1116  which bash
+ 1117  code memo.md
+ 1118  bashc myscript.sh 
+ 1119  bash myscript.sh 
+ 1120  touch text.txt
+ 1121  bash myscript.sh 
+ 1122  rm text.txt 
+ 1123  bash myscript.sh 
+ 1124  touch 1.txt 2.txt 3.txt
+ 1125  bash myscript.sh 
+ 1126  ls
+ 1127  vim new-1.txt 
+ 1128  bash myscript.sh 
+ 1129  ls
+ 1130  cat hello/world.txt 
+ 1131  man pushed
+ 1132  pushed help
+ 1133  help pushed
+ 1134  file .ssr
+ 1135  locate new-1.txt
+ 1136  ls
+ 1137  locate hello
+ 1138  locate new-1.
+ 1139  locate new-1
+ 1140  locate fstab
+ 1141  which cal
+ 1142  cal
+ 1143  history
+ 1144  apropos time
+ 1145  history | less
