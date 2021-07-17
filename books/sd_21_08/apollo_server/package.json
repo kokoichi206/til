@@ -1,0 +1,16 @@
+{
+  "name": "apollo_server",
+  "version": "1.0.0",
+  "description": "- GraphQLサーバサイド実装の代表 - Node.js環境で動作し、デフォルトではWebフレームワークのExpressの上で動作する",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "^3.0.1",
+    "graphql": "^15.5.1"
+  }
+}
