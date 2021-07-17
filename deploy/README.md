@@ -1,7 +1,8 @@
 # deplpy
 - Github Actionsを使ってCIしたい！
   - vueのbuild
-  - 静的ファイルを然るべき場所に配置してgithub pagesに公開
+  - 静的ファイルを然るべき場所に配置して[github pagesに公開](https://kokoichi206.github.io/til/)
+  - [まとめ？](https://koko206.hatenablog.com/entry/2021/07/17/093644)
 
 ## ハマったところ
 - cdコマンドは使えるが、毎回WorkingDir（TOP）に戻るらしい
