@@ -36,7 +36,7 @@ while True:
 
     #バッファ滞留カメラ画像を読み飛ばし最新画像をframeに読み込む
     for i in range(CAMERA_BUF_FLUSH_NUM):
-      ret, frame = cap.read()
+        ret, frame = cap.read()
     
     # 画像縦横比を維持し幅を500ピクセルに縮小
     ratio = 500 / frame.shape[1]
