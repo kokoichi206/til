@@ -55,3 +55,7 @@ def plot_wave(dat, is_wide=True):
 
 if __name__ == "__main__":
     dat = read_dat(EEG_FILE_NAME)
+
+    dat_h = signal.lfilter(bh, ah, dat) # ハイパスフィルタ適用
+    dat_l = signal.lfilter(bl, al, dat) # ローパスフィルタ適用
+    dat_n = signal.lfilter(bn, an, dat) # ノッチフィルタ適用
