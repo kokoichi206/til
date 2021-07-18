@@ -171,10 +171,17 @@ query organizationWithRepositories {
 }
 ```
 
-
 ### クエリ言語
 - トップレベル
   - Query: 取得系
   - Mutation: 更新系
   - Subscription: サーバープッシュ型のリアルタイム通信
 
+
+## Terraform
+- IaC(Infrastructure as Code)を実現するツール
+- インフラの構成をコードで宣言し実行できる
+- local or Terraform Cloud
+
+
+## Ansible-Lint 5
