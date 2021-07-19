@@ -49,6 +49,34 @@ $ echo hoge | awk '{print substr($1, length($1), length($1))}'
 $ echo 1234 | awk '{print substr($1, length($1), length($1))}'
 ```
 
+awk内部でシェルコマンドを使いたい！（system.）
+```bash
+yes '*'| awk 'BEGIN{a="*"}{print a;a=a$1};system("sleep 1")' | xargs -I@ echo @
+```
+
+
+### grep
+
+#### options
+- -L, --files-without-match
+
+
+### tac, rs
+- tac - concatenate and print files in reverse
+- rs - reshape
+
+```bash
+$ echo -e 'a b\nc d'       
+a b
+c d
+$ echo -e 'a b\nc d' | tac
+c d
+a b
+$ echo -e 'a b\nc d' | rs -T
+a  c
+b  d
+```
+
 
 ## 問題！
 [Q]
@@ -82,3 +110,15 @@ $ cat /dev/random | gtr -dc 0-9 | gfold -b4 | sed 's@^0*@@'
 $ cat /dev/random | gtr -dc 0-9 | gfold -b4 | sed 's@^0*@@' | head -n 10000 \
 | awk 'BEGIN{for(i=0;i<=9;i++){a[i]=0}}{v=substr($1,length($1),length($1)); a[v]=a[v]+1}END{for(i=0;i<=9;i++){print i" "a[i]}}'
 ```
+
+[Q]
+下のような入力から、抜けた数字の行は飛ばして出力させる
+```bash
+echo 14679
+```
+
+[A]
+```bash
+echo 147679 | sed 's/./&\n/g' | awk '{a[$1]=$1}END{for(i=0;i<=9;i++){print a[i]}}'
+```
+
