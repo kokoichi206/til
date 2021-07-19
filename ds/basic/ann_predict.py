@@ -11,6 +11,7 @@ b1 = np.zeros(M)
 W2 = np.random.randn(M, K)
 b2 = np.zeros(K)
 
+
 def softmax(a):
     expA = np.exp(a)
     return expA / expA.sum(axis=1, keepdims=True)
@@ -20,7 +21,9 @@ def forward(X, W1, b1, W2, b2):
     return softmax(Z.dot(W2) + b2)
 
 P_Y_given_X = forward(X, W1, b1, W2, b2)
-predictions = np.argmax(P_Y_given_X)
+print("P_Y_given_X.shape:", P_Y_given_X.shape)
+predictions = np.argmax(P_Y_given_X, axis=1)
+print(predictions.shape)
 
 def classificatino_rate(Y, P):
     return np.mean(Y == P)
