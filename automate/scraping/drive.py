@@ -23,8 +23,9 @@ def get_pdf_names(url=DEFAULT_URL, doesUseBrowser=False):
     print(btn_to_list)
     btn_to_list.click()
 
+    #
     # FIXME
-    # DOMレンダリング完了後、に変更する
+    # 待つ時間を、DOMレンダリング完了後、までに変更する
     time.sleep(15)
     print('get HTML start')
     html = driver.page_source.encode('utf-8')
@@ -33,6 +34,7 @@ def get_pdf_names(url=DEFAULT_URL, doesUseBrowser=False):
     BASE_URL = "https://drive.google.com/file/d/"
     SUFFIX = "/view?usp=sharing"
 
+    # 
     # FIXME
     # もっといいやり方ありそう...
     # divだけにしておくと、その子要素のspanが取れない

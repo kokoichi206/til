@@ -4,17 +4,17 @@ import json
 
 import config
 
+# config.py のなかに、"API_SECRET", "DATABASE_ID"の２つの変数を用意しておく
+notion_api_key = config.API_SECRET
+databases_id = config.DATABASE_ID
+headers = {"Authorization": f"Bearer {notion_api_key}",
+        "Content-Type": "application/json",
+        "Notion-Version": "2021-05-13"}
+
 def get_request_url(end_point):
     return f'https://api.notion.com/v1/{end_point}'
 
 def get_db_check():
-    # config.py のなかに、"API_SECRET", "DATABASE_ID"の２つの変数を用意しておく
-    notion_api_key = config.API_SECRET
-    databases_id = config.DATABASE_ID
-    headers = {"Authorization": f"Bearer {notion_api_key}",
-            "Content-Type": "application/json",
-            "Notion-Version": "2021-05-13"}
-
     response = requests.request('GET', url=get_request_url(f'databases/{databases_id}'), headers=headers)
 
     pprint(response.json())
@@ -40,8 +40,13 @@ def make_post_body(key, value):
             }
         }}
 
-def post_field(key, value):
+def post_example(key, value):
     response = requests.request('POST', url=get_request_url('pages'), headers=headers, data=json.dumps(make_post_body(key, value)))
+    pprint(response.json())
+
+# bodyは他で作る必要がある
+def post_field(body):
+    response = requests.request('POST', url=get_request_url('pages'), headers=headers, data=json.dumps(body))
     pprint(response.json())
 
 if __name__ == "__main__":
