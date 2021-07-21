@@ -1,5 +1,4 @@
-# 今回これはcreated_atなのか？
-# この辺も変数でもたす？
+# テスト用データ
 MOCK_PDF_INFOS = [
     {
         "title": "いたずら.pdf",
@@ -96,8 +95,10 @@ def make_query_body(pdf_info):
 
 if __name__ == "__main__":
     get_only_new_since("07/21", MOCK_PDF_INFOS)
-    body = make_query_body(MOCK_PDF_INFOS[0])
-    print(body)
-    print("-----------------")
-    import notion_api
-    notion_api.post_field(body)
+    pdf_infos = MOCK_PDF_INFOS
+    for pdf_info in pdf_infos:
+        body = make_query_body(MOCK_PDF_INFOS[0])
+        print(body)
+        print("-----------------")
+        import notion_api
+        notion_api.post_field(body)
