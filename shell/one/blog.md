@@ -122,3 +122,12 @@ echo 14679
 echo 147679 | sed 's/./&\n/g' | awk '{a[$1]=$1}END{for(i=0;i<=9;i++){print a[i]}}'
 ```
 
+[Q]
+8128が完全数であることを確認してください
+
+[A]
+```sh
+seq 2 8128 | awk '{print 8128/$1}' | grep -Fv . | tr '\n' + | sed 's@\+$@\n@'| bc
+```
+
+

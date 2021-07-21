@@ -8,6 +8,7 @@ def get_request_url(end_point):
     return f'https://api.notion.com/v1/{end_point}'
 
 def get_db_check():
+    # config.py のなかに、"API_SECRET", "DATABASE_ID"の２つの変数を用意しておく
     notion_api_key = config.API_SECRET
     databases_id = config.DATABASE_ID
     headers = {"Authorization": f"Bearer {notion_api_key}",

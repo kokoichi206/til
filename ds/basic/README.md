@@ -22,4 +22,15 @@ $$
 - You know we like batch operations
 - You now know how to do them
 
+### How to train
+1. Define the cost J
+2. Find dJ/dw, will give us some expression for updating w
+3. Implement (2) in code
 
+
+
+
+## English
+see the forest for the trees
+
+This stuff looks totally crazy to me!
