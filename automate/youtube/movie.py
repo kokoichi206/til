@@ -24,6 +24,7 @@ response = youtube.search().list(q=SEARCH_TEXT, part='id,snippet', maxResults=25
 
 dict_list = []
 for item in response.get('items', []):
+    
     if item['id']['kind'] != 'youtube#video':
         continue
     new_dict = {}
