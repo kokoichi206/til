@@ -110,3 +110,22 @@ $ sudo modprobe -r lp
 $ sudo rmmod lp
 ```
 
+
+## sec3
+
+### 3.1 
+ソースコードのままでは稼働できず、稼働させるには、システムアーキテクチャに合わせたバイナリー形式に変換する必要がある。この変換作業のことを「ビルド」と呼ぶ
+
+### 3.3
+stableカーネルの中から、長期間メンテナンスをする「longterm」カーネルが年に一つ程度の感覚で選出される。
+
+```sh
+$ mkdir tmp
+$ cd tmp
+$ wget https://mirrors.edge.kernel.org/pub/linux/kernel/v5.x/linux-5.10.30.tar.xz
+$ tar xvf linux-5.10.30.tar.xz
+```
+
+![](img/sourcetree.png)
+
+## sec4
