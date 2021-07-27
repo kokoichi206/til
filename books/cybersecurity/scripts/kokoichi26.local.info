@@ -1,0 +1,12 @@
+<systeminfo host="kokoichi26.local" type="macOS" date="2021-07-27" time="23:55:47">
+4
+hoge
+# Linux Command | MSWin Bash | XML tag | Purpose # ---------------+------------+---------+--------- uname -a |uname -a |uname |O.S. version etc cat /proc/cupinfo|systeminfo |sysinfo |system hardware and related info
+4
+<uname>
+Darwin kokoichi26.local 20.5.0 Darwin Kernel Version 20.5.0: Sat May  8 05:10:33 PDT 2021; root:xnu-7195.121.3~9/RELEASE_X86_64 x86_64
+</uname>
+<sysinfo>
+cat: /proc/cupinfo: No such file or directory
+</sysinfo>
+</systeminfo>

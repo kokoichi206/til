@@ -1,0 +1,4 @@
+# Linux Command  | MSWin Bash | XML tag | Purpose
+# ---------------+------------+---------+---------
+uname -a         |uname -a    |uname    |O.S. version etc
+cat /proc/cupinfo|systeminfo  |sysinfo  |system hardware and related info
