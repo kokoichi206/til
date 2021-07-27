@@ -70,3 +70,22 @@ $ find / -type f -exec ls -s '{}' \; | sort -n -r | head -5
 
 !! のコマンドで、最後に実行されたコマンドを呼び出すことができる！！
 
+
+## sec6
+CSV, JSON, XMLの解析ができるようになる
+
+```sh
+# tail -n +2で、2行目からの出力を行う
+$ cut -d',' -f1 csvex.txt | tr -d '"' | tail -n +2
+```
+
+<span style="color:red">
+複数行にわたる、XMLやHTMlの検索！
+</span>
+
+```sh
+# -z: 改行文字を一般の文字と同じように扱う
+# -P: (?s),パール固有のパターンマッチで、メタもじ.が改行にもマッチするようになる
+$ grep -Pzo '(?s)<author>.*?</author>' book.xml
+```
+
