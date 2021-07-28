@@ -89,3 +89,15 @@ $ cut -d',' -f1 csvex.txt | tr -d '"' | tail -n +2
 $ grep -Pzo '(?s)<author>.*?</author>' book.xml
 ```
 
+
+## sec7
+```sh
+$ cat file1.txt
+12/05 192.168.10.14
+12/25 192.168.10.185
+
+# ２番目のオクテットだけでソート
+$ sort -k 2.5,2.7 file1.txt
+```
+
+
