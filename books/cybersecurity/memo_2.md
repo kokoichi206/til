@@ -100,4 +100,43 @@ $ cat file1.txt
 $ sort -k 2.5,2.7 file1.txt
 ```
 
+Webアクセスろぐの解析
+```sh
+$ awk '$9 == 404 {print $1}' access_log | bash countem.sh
+
+$ cut -d' ' -f 1,10 access_log | bash summer.sh | sort -k 2.1 -n
+
+$ cut -d' ' -f1,10 access_log | bash summer.sh | bash histogram.sh
+
+$ bash pagereq.sh 45.146.164.110 < access_log | sort -rn
+
+$ bash useragents.sh < access_log
+```
+
+ユーザーエージェント文字列
+
+式評価で正規表現を用いたい！
+
+- if文はブラケット（大カッコ）を二重にする
+- 演算子は"=~"
+- 正規表現はクォーテーションで括らない（正規表現で特別扱いの文字がバックスラッシュでエスケープされるため）
+- 後方参照（カッコで囲った部分）は ${BASH_REMATCH[1]} で取得（複数ある場合、[2][3]…で取得）
+
+```sh
+#!/bin/bash
+ 
+foo=abc123efg
+ 
+if [[ ${foo} =~ ^[a-z]+([0-9]+).*$ ]]; then
+    echo ${BASH_REMATCH[1]}
+fi
+```
+
+```sh
+# オプションをつけたりした
+
+$ cut -d' ' -f1,10 access_log | bash summer.sh | bash histogram.sh -s 25
+
+$ bash useragents.sh -f testtest < access_log
+```
 
