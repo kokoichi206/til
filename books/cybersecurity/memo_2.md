@@ -284,3 +284,42 @@ $ sha1sum -c --quiet baseline.txt
 $ find / -type f > filelist.txt
 ```
 
+
+## sec11
+```sh
+# xxd
+# -b: binary, not hex
+# -l: n byte length
+# -s: from n byte 
+$ xxd -s 35 -l 50 somefile.txt
+```
+
+```sh
+# printfを用いて16->10
+$ printf "%d" 0x41
+65
+$ printf "%x" 65
+
+# ASCII <=> 16
+$ printf 'A' | xxd
+00000000: 41
+$ pritnf 0x41 | xxd -r
+A
+```
+
+```sh
+# 先頭から４バイトのマジックナンバーを見ている
+$ xxd -s 0 -l 4 helloworld
+00000000: 7f45 4c46                                .ELF
+# 5バイト目は、実行ファイルが32バイトか64バイトかを判断する
+$ xxd -s 4 -l 1 helloworld
+00000004: 02  
+# 6バイト目は、リトルエンディアンかビックエンディアンか
+$ xxd -s 5 -l 1 helloworld
+00000005: 01                                       .
+
+# 64ビットELF形式のファイルのオフセット0x20からの8バイトは、
+# プログラムヘッダのオフセットを意味する
+$ xxd -s 0x20 -l 8 helloworld
+```
+
