@@ -20,6 +20,7 @@ def main(is_debug):
     fetcher = FetchPdfNames(driver_path=driver_path)
     notion_user = NotionAPI(api_key=api_key, database_id=database_id)
     
+    # main function
     if not is_debug:
         release_mode(fetcher, notion_user)
     else:
