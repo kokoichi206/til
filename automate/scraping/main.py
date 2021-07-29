@@ -46,7 +46,7 @@ def get_last_updated_date():
         lines = f.readlines()
 
     # 後ろから1行だけ返す
-    return lines[-1:]
+    return lines[-1]
 
 def update_date_file():
     with open(DATE_FILE_PATH, mode='a') as f:
