@@ -2,14 +2,14 @@ import requests
 from pprint import pprint
 import json
 
-import config
+
 
 
 class NotionAPI():
-    def __init__(self):
+    def __init__(self, api_key, database_id):
         # config.py のなかに、"API_SECRET", "DATABASE_ID"の２つの変数を用意しておく
-        self.notion_api_key = config.API_SECRET
-        self.database_id = config.DATABASE_ID
+        self.notion_api_key = api_key
+        self.database_id = database_id
         self.headers = {"Authorization": f"Bearer {self.notion_api_key}",
                 "Content-Type": "application/json",
                 "Notion-Version": "2021-05-13"}
@@ -88,7 +88,8 @@ class NotionAPI():
 
 
 if __name__ == "__main__":
-    apiUser = NotionAPI()
+    import config
+    apiUser = NotionAPI(api_key=config.API_SECRET, database_id=config.DATABASE_ID)
     apiUser.get_db_check()
 
     # テスト用データ

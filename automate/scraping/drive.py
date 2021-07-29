@@ -3,12 +3,10 @@ from selenium import webdriver
 from bs4 import BeautifulSoup
 from datetime import datetime
 
-import config
-
 
 class FetchPdfNames():
-    def __init__(self):
-        self.DRIVER_PATH = config.DRIVER_PATH
+    def __init__(self, driver_path):
+        self.DRIVER_PATH = driver_path
         # Webページを取得して解析する
         self.DEFAULT_URL = "https://drive.google.com/drive/folders/12CQH0j9-MHLMDUL-Ku-BV15lqy_SlVrn"
 
@@ -116,7 +114,9 @@ class FetchPdfNames():
 
 
 if __name__ == "__main__":
-    fetcher = FetchPdfNames()
+    import config
+
+    fetcher = FetchPdfNames(driver_path=config.DRIVER_PATH)
     # res = fetcher.get_pdf_names(url=fetcher.DEFAULT_URL, doesUseBrowser=False)
     res = fetcher.get_new_pdf_infos_since("2021/07/07")
     print(res)
