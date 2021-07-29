@@ -202,3 +202,55 @@ trap cleanup EXIT
 # http://linuxjm.osdn.jp/html/GNU_bash/man1/bash.1.html
 ```
 
+
+## sec9
+ネットワーク監視
+
+Nmap Ndiffなどでも同様のことが可能
+
+```sh
+$ crontab
+# option
+# -e: cronテーブルを編集する
+# -l: cronテーブルを一覧する
+# -r: cronテーブルを削除する
+
+## windでは schtasks で行える
+```
+
+ポートスキャナの作成
+
+TCP接続を特定ホストの特定ポートに行うことができればよい
+
+`/dev/tcp`というbashのファイルディスクリプタを用いると実現可能
+
+システムコールstrftime
+
+```sh
+$ man strftime
+```
+
+printfは`-v`をつけると、出力の代わりに変数に格納される
+
+```sh
+$ printf -v TODAY 'scan_%(%F)T' -1
+```
+
+`/dev/tcp`など、存在しない？
+
+```sh
+# 以下のようなコマンドで調べると良い？これはbashの機能
+$ man bash | grep tcp -C15
+```
+
+
+新規にポートがオープンもしくはクローズしたことを確認できたら、それが適切な変更か、悪意を持った活動の兆候かを確認する
+
+
+2つの異なるストリームからの読み取りのために、ファイルディスクリプタ4,5などを用いる
+
+```sh
+# &をつけることでファイルディスクリプタを表す
+read aline <&4 || break     # at EOF
+```
+
