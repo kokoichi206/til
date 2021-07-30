@@ -323,3 +323,8 @@ $ xxd -s 5 -l 1 helloworld
 $ xxd -s 0x20 -l 8 helloworld
 ```
 
+
+## sec12
+データと情報は、ユーザから見て見やすい形に整形されて初めて有用なものとなる。
+
+
