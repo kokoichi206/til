@@ -66,3 +66,59 @@ $ read -s word
 ### shift
 shiftにより、引数が削除され、次の引数があれば、それが先頭の引数$1として参照されるようになる
 
+
+## sec 15
+ファジングは、実行ファイル、プロトコル、システムなどに内在された潜在的な脆弱性を特定するために用いられる手法である。
+
+## sec17
+```sh
+# ACLなどを確認するコマンド
+
+$ getfacl fd2.sh 
+# file: fd2.sh
+# owner: ubuntu
+# group: ubuntu
+user::rw-
+group::r--
+other::r--
+```
+
+## sec18
+ログの書き込み
+
+適切なログエントリの条件
+
+- 一貫した命名規則及び構文が使われている
+- コンテキスト（Who, Where, When）が記述されている
+- 具体的である（What）
+
+方法
+
+- eventcreate（windows）
+- logger(linux)
+
+### logger
+- syslogにイベントを書き込む際に用いられる
+- 通常/var/log/messagesに格納される
+  - systemにより異なる
+  - ラズパイのubuntuでは、/var/log/syslog
+
+```sh
+$ logger 'This is an event'
+```
+
+## sec19
+
+### ping
+pingコマンドはICMP(Internet Cntrol and Messaging Protocol)を用いてリモートのシステムが利用可能かどうかを確認する
+
+> ICMPトラフィックはネットワーク上のファイアウォールなどの機器によってブロックされていることがある。機器へのpingが無反応だった場合に、機器が稼働していないと決めつけてはいけない。ICMPパケットがフィルタされていただけということもありうる。
+
+pingを通して、起動確認
+
+```sh
+$ bash pingmonitor.sh monitor.txt 10
+```
+
+
+
