@@ -12,3 +12,14 @@
 ### TDDが機械的に示せない２大トピック
 - セキュリティ
 - 並行性
+
+
+## Javaの実行環境構築
+```sh
+$ brew install java
+$ java --version
+# なんかシンボリックリンクを貼る必要がある
+$ sudo ln -sfn $(brew --prefix)/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
+$ java --version
+```
+
