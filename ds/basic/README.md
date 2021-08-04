@@ -28,6 +28,13 @@ $$
 3. Implement (2) in code
 
 
+### backpropagation
+The Typical Approach
+
+- Right approach:
+  - Being able to take the derivative
+  - Doing it clearly enough that you see/understand the pattern that emerges from it.
+  - 
 
 
 ## English

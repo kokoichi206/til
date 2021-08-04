@@ -28,12 +28,23 @@ def derivative_w2(Z, T, Y):
     M = Z.shape[1]
 
     # slow
-    ret1 = np.zeros((M, K))
-    for n in range(N):
-        for m in range(M):
-            for k in range(K):
-                ret1[m,k] += (T[n,k] - Y[n,k])*Z[n,m]
-    return ret1
+    # ret1 = np.zeros((M, K))
+    # for n in range(N):
+    #     for m in range(M):
+    #         for k in range(K):
+    #             ret1[m,k] += (T[n,k] - Y[n,k])*Z[n,m]
+    # ret2 = np.zeros((M,K))
+    # for n in range(N):
+    #     for k in range(K):
+    #         ret2[:,k] += (T[n,k] - Y[n,k])*Z[n,:]
+    # assert(np.abs(ret1 - ret2).sum() < 10e-10)
+
+    # ret3 = np.zeros((M, K))
+    # for n in range(N):
+    #     ret3 += np.outer(Z[n], T[n] - Y[n])
+
+    # ret4 = Z.T.dot(T - Y)
+    return Z.T.dot(T - Y)
 
 def derivative_b2(T, Y):
     return (T - Y).sum(axis=0)
@@ -42,14 +53,16 @@ def derivative_w1(X, Z, T, Y, W2):
     N, D = X.shape
     M, K = W2.shape
 
-    # slow
-    ret1 = np.zeros((D, M))
-    for n in range(N):
-        for k in range(K):
-            for m in range(M):
-                for d in range(D):
-                    ret1[d,m] += (T[n,k] - Y[n,k])*W2[m,k]*Z[n,m]*(1 - Z[n,m])*X[n,d]
-    return ret1
+    # # slow
+    # ret1 = np.zeros((D, M))
+    # for n in range(N):
+    #     for k in range(K):
+    #         for m in range(M):
+    #             for d in range(D):
+    #                 ret1[d,m] += (T[n,k] - Y[n,k])*W2[m,k]*Z[n,m]*(1 - Z[n,m])*X[n,d]
+    # return ret1
+    dZ = (T - Y).dot(W2.T) * Z * (1 - Z)
+    return X.T.dot(dZ)
 
 def derivative_b1(T, Y, W2, Z):
     return ((T - Y).dot(W2.T) * Z * (1 - Z)).sum(axis=0)
@@ -78,8 +91,8 @@ def main():
     for i in range(N):
         T[i, Y[i]] = 1
 
-    plt.scatter(X[:, 0], X[:, 1], c=Y, s=100, alpha=0.5)
-    plt.show()
+    # plt.scatter(X[:, 0], X[:, 1], c=Y, s=100, alpha=0.5)
+    # plt.show()
 
     # initialize parameters
     W1 = np.random.randn(D, M)
