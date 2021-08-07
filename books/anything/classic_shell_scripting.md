@@ -476,6 +476,9 @@ base ❯ for k in 1 2 3 4 5
 ## sec 10
 Working with Files
 
+```sh
+$ echo /bin/*sh
+```
 
 
 
