@@ -478,6 +478,11 @@ Working with Files
 
 ```sh
 $ echo /bin/*sh
+
+$ ls /bin/*sh
+
+# Echo matching files 
+$ echo *
 ```
 
 
