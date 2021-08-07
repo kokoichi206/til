@@ -483,8 +483,188 @@ $ ls /bin/*sh
 
 # Echo matching files 
 $ echo *
+
+# you can manipulate the last-modification time
+$ touch -t 197607040000.00 US-bicentennial
 ```
 
+/tmp and /var/tmp
+
+df /tmp
+
+### Temporary Files
+A common shell-script preamble is:
+
+```sh
+umask 077   # Remove access for all but user
+
+TMPFILE=${TMPDIR-/tmp}/myprog.$$
+
+trap 'rm -f $TMPFILE' EXIT
+```
+
+This kind of files are readily guessable. To deal with this security issue, filenames must be unpredictable.
+
+USE mktemp command !!!
+
+```sh
+$ TMPFILE=`mktemp /tmp/myprog.XXXXXXXXX`
+$ ls -l $TMPFILE
+
+# use /dev/random
+$ TMPFILE=/tmp/secret.$(cat /dev/urandom | od -x | tr -d ' ' | head -n 1)
+```
+
+### Finding Files
+- `locate`
+  - find filenames quickly
+
+Finding Where Commands Are Stored
+
+```sh
+$ type gcc
+$ type type
+```
+
+Notice that type is an internal shell command, so it knows about aliases and functions as well
+
+If you wanna select, say, files larger than a certain size, or modified in the last three days, belonging to you, or having three or more hard links, you need the find command, one of the most powerful in the Unix toolbox.
+
+find offer as many as 60 different options
+
+Major Options
+
+- \-atime n
+  - select files with access times of n days
+- \-ctime n
+  - select files with inode-change times of n days
+- \-follow
+  - Follow symbolic links
+- \-group g
+  - select files in group g
+- \-links n
+  - select files with n hard links
+- \-ls
+  - produce a listing similar to the ls long form, rather than just filenames
+- \-mtime n 
+  - select files with modification times of n days
+- \-name 'pattern'
+  - select files matching the shell wildcard pattern
+- \-perm mask
+  - select files matching the specified octal permission mask
+- \-prune
+  - do not descend recursively into directory trees
+- \-size n
+  - select files of size n
+- \-type t
+  - select files of type t, asingle letter: d(directory), f(file), or l(symbolic link)
+- \-user u
+  - select files owned by user u
+
+Caveats
+
+Because of find's default directory descent, it potentially can take a long time to run in a large filesystem.
+
+```sh
+# ASCII sort
+$ find . | LC_ALL=C sort
+
+$ find . -ls
+$ find . -prune
+$ find * -prune   # $ ls -d *
+
+$ find $HOME/. ! -user $USER 2>/dev/null
+
+# And optin (-a)
+$ find . -size +0 -a -size -10
+# Or optin (-o)
+$ find . -size 0 -o -atime +365   # past year
+$ find . -size 0 -o -atime -365   # within year
+```
+
+### Running Commands: xargs
+When find produces a list of files, it is often useful to be able to supply that list as arguments to another command. Normally, this is done with the shell's command substitution feature.
+
+Whenever you write a program or a command that deals with a list of objects, you should make sure that it behaves properly if the list is empty.
+
+```sh
+# ensure that it does not hang waiting for terminal input
+# if find produces no output
+$ grep POSIX_OPEN_MAX /dev/null $(find /usr/include -type f | sort)
+```
+
+```sh
+# Get system configuration value of ARG_MAX
+$ getconf ARG_MAX
+1048576
+```
+
+The solution to the ARG_MAX problem is provided by xargs: it takes a list of arguments on standard input, one per line, and feeds them in suitably sized groups to another command given as arguments to xargs.
+
+Here is an example that eliminates the obnoxious Argument list too long error:
+```sh
+$ find /usr/include -type f | xargs grep POSIX_OPEN_MAX /dev/null
+```
+
+### Filesystem Space Information
+
+#### The df Command
+df(disk free) gives a one-line summary of used and available space on each mounted filesystem.
+
+```sh
+$ df -k
+$ df -h
+```
+
+#### The du Command
+show the space usage in one or more directory trees.
+
+df summarizes free soace by filesystem, but does not tell you how much space a particular directory tree requires. That job is done by du (disk usage). Like its companion, df, du's options tend to vary substantially between systems, and its space units also may vary.
+-k (kilobyte units) and -s (summarize)
+
+```sh
+$ du /tmp
+$ du -s /tmp
+
+$ du -h -s /var/log /var/spool /var/tmp
+```
+
+### Comparing Files
+cmp command, diff command, diff3 command
+
+```sh
+$ cmp /bin/cp /tmp/ls
+```
+
+It is conventional in using diff to supply the older file as the first argument.
+```sh
+$ echo Test 1 > test.1
+$ echo Test 2 > test.2
+$ diff test.[12]  # same as diff test.1 test.2
+1c1
+< Test 1
+---
+> Test 2
+```
+
+diff's output is carefully designed so that it can be used by other programs. For example, revision control systems use diff no manage the differences between successive versions of files under their management.
+
+### The patch Utility
+```sh
+$ diff -c test.1 test.2 > test.dif
+$ patch < test.dif  # Apply the differences
+$ cat test.1
+```
+
+### File Checksum Matching
+You can get nearly linear performance by using file checksums.
+
+```sh
+$ md5sum /bin/l?
+```
+
+### Digital Signature Verificatio
+gpg command ?
 
 
 
