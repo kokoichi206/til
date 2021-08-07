@@ -271,6 +271,13 @@ One of the insidious ways that shell scripts can be attacked is by manipulating 
 
 Another comman way to break security is to trick software into executing unintended commands.
 
+Exhaustive testing is tedious!
+
+Because undocumented software is likely to be unusable software, and because few books describe how to write manual pages, we develop a manual page for pathfind in Appendix A.
+
+troff was one of the earliest successful attempts at computer-based typesetting.
+
+Because Unix runs so many different platforms, it is common practice to build software package from source code, rather than installing binary distributions.
 
 
 ## Memo

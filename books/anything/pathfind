@@ -13,6 +13,12 @@
 #
 # Usage:
 #   pathfind [--all] [--?] [--help] [--version] envvar pattern(s)
+# e.g. 
+#   $ ./pathfind PATH ls
+#   $ ./pathfind -a PATH ls
+#   $ ./pathfind -a PATH '?sh'
+#   $ ./pathfind -a PATH c89 c99 cc c++ CC gcc g++ icc lcc pgcc pgCC
+#   $ ./pathfind -a PATH $(awk 'BEGIN { while (n < 150) printf("x.%d ", ++n) }')
 #
 # With the --all optin, every directory in the path is
 # searched, instead of stopping with the first one found
@@ -107,7 +113,7 @@ fi
 
 for pattern in "$@"
 do
-    retult=
+    result=
     for dir in $dirpath
     do
         for file in $dir/$pattern
