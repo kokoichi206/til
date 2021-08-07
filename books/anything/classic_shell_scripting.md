@@ -280,6 +280,202 @@ troff was one of the earliest successful attempts at computer-based typesetting.
 Because Unix runs so many different platforms, it is common practice to build software package from source code, rather than installing binary distributions.
 
 
+## sec 9
+Enough awk to Be Dangerous
+
+If no filenames are specified on the command line, awk reads from standard input.
+
+option
+
+- \-\-
+  - it indicates that there are no further command-line options for awk itself.
+- \-F
+  - redifines the default field separator, and it is conventional to make it the first command-line option.
+- \-v
+  - this options must precede any program given directly on the command line;
+
+awk views an input stream as a collection of records, each of which can be further subdivided into fields
+
+An awk program consists of pairs of patterns and braced actions
+
+- pattern { action }
+  - run action if pattern matches
+- pattern
+  - print record if pattern matches
+- { action }
+  - run action for every record
+
+two special patterns, BEGIN and END
+
+```awk
+s = "ABCD"
+s = "AB" "CD"
+s = "A" "B" "C" "D"
+```
+
+regular expressions
+
+~(matches) and !~(does not match)
+
+"ABC" ~ "^[A-Z]+$" is true
+
+"ABC" ~ /^[A-Z]+$/ same
+
+x != x is true only if x is NaN
+
+awk variable names are case-sensitive: foo, Foo, and FOO are distinct names. a common, and recommended, convention is to name local variables in lowercase, global variables with an initial uppercase letter, and built-in variables in uppercase.
+
+awk provides several built-in variables
+
+Commonly used built-in scalar variables in awk
+
+| Variable | Description |
+| --- | --- |
+| FILENAME | Name of the current input file |
+| FNR | Record number in the current input file |
+| FS | Field separator (regular expression)(default:" ") |
+| NF | Number of fields in current record |
+| NR | Record number in the job |
+| OFS | Output fleld separator (default:" ") |
+| ORS | Output record separator (default:"\n") |
+| RS | Input record separator (default:"\n") |
+
+### Array Variables
+Arrays with arbitrary indices are called associative arrays because they associate names with values, much like humans do.
+
+### Command-Line Arguments
+ARGC(Argument Count), ARGV(Argument vector, values)
+```sh
+$ cat showargs.awk
+BEGIN {
+  print "ARGC =", ARGC
+  for (k=0; k<ARGC; k++)
+    print "ARGV[" K "] = [" ARGV[k] "]"
+}
+$ ark -v One=1 -v Two=2 -f showargs.awk Three=3 file1 Four=4 file2 file3
+ARGC = 6
+ARGV[0] = [awk]
+ARGV[1] = [Three=3]
+...
+```
+
+### Environment Variables
+awk provides access to all of the environment variables as entries in the built-in array ENVIRON:
+
+```sh
+$ awk 'BEGIN{ print ENVIRON["HOME"]; print ENVIRON["USER"]}'
+```
+
+### Fields
+Fields are available to the awk program as the special names $1,$2,$3,..$NF.
+
+### Pattern and Actions
+Patterns and actions form the heart of awk programming. It is awk's unconventional *data-driven* programming model that makes it so attractive and contributes to the brevity of many awk programs.
+
+#### Patterns
+
+- (FNR == 3) && (FILENAME ~ /[.][ch]$/)
+  - select record 3 in C source files
+- /[Xx][Mm][Ll]/
+  - select records containing "XML", ignoring lettercase
+
+Two expressions separated by a comma select records from one matching the left expression up to, and including, the record that matches the right expression !!!
+
+- (FNR == 3), (FNR == 10)
+  - select records 3 through 10 in each input file
+- /<[Hh][Tt][Mm][Ll]>/, /<\/[Hh][Tt][Mm][Ll]>/
+  - select body of an HTML document
+
+### One-Line Programs in awk
+```sh
+# wc command using awk
+$ awk '{ C += length($0) + 1; W += NF}END{ print NR, W, C}'
+
+# this is equal to `cat fileA`
+$ awk 1 fileA
+
+```
+
+### Statements
+```sh
+if (expression)
+  statement1
+else
+  statement2
+
+$ awk 'BEGIN { for (x=0; x<=1; x += 0.05) print x}'
+```
+
+It is important to distinguish finding an index from finding a particular value. The index membership test requires constant time, whereas a search for a value takes time proportional to the number of elements in the array/
+
+
+### User-Controlled Input
+```awk
+print "What is the square root of 625?"
+getline answer
+print "Your reply, ", answer ", is", (answer == 25)? "right.": "wrong."
+```
+
+### system() function
+```awk
+system("rm -f " tmpfile)
+```
+
+### String Functions
+- substring extraction
+  - substr(string, start, len)
+- lettercase conversion
+  - tolower(string)
+  - toupper(string)
+- string searching
+  - index(string, find)
+    - index("abcdef", "de") returns 4
+    - index(tolower(string), tolower(find))
+    - returns 0 if find is not found in string
+- string matching
+  - match(string, regexp)
+- string substitution
+  - sub(regexp, replacement, target)
+  - gsub(...)
+- string splitting
+  - split(string, array, regexp)
+  - breaks string into pieces stored in successive elements
+
+### Numeric Functions
+- atan2(y, x)
+  - return the arctangent of y/x as a value in -pi to +pi
+- cos(x)
+- exp(x)
+- int(x)
+- log(x)
+- rand()
+  - return a uniformaly distributed pseudorandom number, r, such that 0 <= r < 1
+- sqrt(x)
+  - return the square root of x
+- srand(x)
+  - set the pseudorandom-number generator seed to x, and return the current seed. if x is omitted, use the current time in seconds, relative to the system epoch. If srand() is not called, awk starts with the same default seed on each run; mawk does not.
+
+```
+base ❯ for k in 1 2 3 4 5
+… for ❯ do
+… for ❯ awk 'BEGIN {
+… for quote ❯ srand()
+… for quote ❯ for (k=1; k<=5; k++)
+… for quote ❯ printf("%.5f ", rand())
+… for quote ❯ print ""
+… for quote ❯ }'  
+… for ❯ sleep 1
+… for ❯ done
+0.00248 0.23986 0.09344 0.51216 0.89200 
+0.36665 0.15769 0.90188 0.33921 0.83178 
+0.72635 0.57173 0.20648 0.66097 0.76693 
+0.57870 0.97954 0.00067 0.47364 0.19478 
+0.93932 0.89441 0.80636 0.79652 0.13092 
+```
+
+## sec 10
+Working with Files
+
 ## Memo
 
 ### To search
@@ -293,3 +489,6 @@ Because Unix runs so many different platforms, it is common practice to build so
   - Spelling mistakes always look sloppy in a formal letter.
 - sanity check
   - a basic test to quickly evaluate whether a claim or the result of a calculation can possibly be true.
+- pitfalls
+- ternary
+  - consisting of three parts
