@@ -811,6 +811,50 @@ pcmanfm^@--desktop^@--profile^@LXDE^@
 Having process data available as files is convenient and makes the data easily available to programs written in any programming language, even those that lack a system-call interface. For example, a shell script could collect hardware details of CPU, memory, and storage devices from the /proc/*info files on all of the machines in your environment that hace such files, producing reports somewhat like those from the fancy sysinfo command.
 
 
+## sec 14
+Shell Portability Issues and Extensions
+
+Over time, bash has acquired many of the extensions in ksh93, but not all of them. Thus, there is considerable functional overlap, but there are also many differences. This chapter outlines areas where bash and ksh93 differ, as well as where they have common extensions above and beyond the features of the POSIX shell.
+
+### Gotchas
+- echo *is not portable*
+- OPTIND *can be a local variable*
+- ${var:?message} *may not exist*
+
+### The bash shopt Command
+shopt command for enabling and disabling optins.
+
+```sh
+$ shopt
+```
+
+```sh
+PS3='terminal? '
+select term in gl35a t2000 s531 vt99
+do
+  if [ -n "$term" ]
+  then
+    TERM=$term
+    echo TERM is $TERM
+    export TERM
+    break
+  else
+    echo 'invalid.'
+  fi
+done
+```
+
+### Extended test operators
+-[](img/test_op1.png)
+
+-[](img/test_op2.png)
+
+```sh
+generate_data | tee >(sort | uniq > sorted_data)\
+          >(mail -s 'raw data' joe) > raw_data
+```
+
+Process substitution, combined with tee, frees you from the straight "one input, one output" paradigm of traditional Unix pipes, letting you split data into multiple output streams, and coalesce multiple input data streams into one.
 
 
 
