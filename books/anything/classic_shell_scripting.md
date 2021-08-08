@@ -677,6 +677,143 @@ Accurate execution timing has been harder to acquire because typical CPU timers 
 With only one special-puropose program, an afternoon's worth of work created a usable and useful tool. As is often the case, experience with a prototype in shell was then applied to writing a production version in C.
 
 
+## sec 13
+Processes
+
+A process is an instance of a running program. New processes are started by the fork() and execve() system calls, and normally run  until they issue an exit() system call.
+
+Unix systems have always supported multiple processes. Although the computer seems to be doing several things at once, in realitym this is an illusion, unless there are multiple CPUs. What really happens is that each process is permitted to run for a short interval, called a *time slice*, and then the process is temporarily suspended while another waiting process is given a chance to run. Time slices are quite short, usually only a few milliseconds, so humans seldom notice these *context switches* as control is transferred from one process to the kernel and then to another process. Processes themselves are unaware of context switches, and programs need not be written to relinquish control periodically to the operating system.
+
+A part of the operationg-system kernel, called the *scheduler*, is responsible for managing process execution.
+
+### Process Creation
+One of the great contributions of Unix to the computing world is that process creation is cheap and easy.
+
+Many programs are started by a shell. Each process initiated by a command shell starts with these guarantees:
+
+- The process has a *kernel context*: data structures inside the kernel that record process-specific information to allow the kernel to manage and control process execution.
+- The process has a *private* and *protected*, virtual address space that potentially can be as large as the machine is capable of addressing.
+- Three file descriptors (standard input, standard output, and standard error) are already open and ready for immediate use.
+- A process started from an interactive shell has a *controlling terminal*, which serves as the default source and destination for the three standard file systems.
+- Wildcard characters in command-line arguments have been expanded.
+- An environment-variable area of memory exists, containing strings with key/value assignments that can be retrieved by a library call
+
+The private address space ensures that processes cannot interfere with one another, or with the kernel. Operating systems that do not offer such protection are highly prone to failure.
+
+The three already-open files suffice for many programs, which can use them without the burden of having to deal with file opening and closing, and without having to know anything about filename syntax, or filesystems.
+
+Process number 1 is called init, and is described in the init(8) manual pages. A child process whose parent dies prematurely is assigned init as its new parent. This init process exits, the system halts.
+
+top command. On most systems, top requires intimate knowledge of kernel data structures, and thus tends to require updates at each operating system upgrade.
+
+By default, top shows the most CPU-intensive processes at the top of the list, which is usually what you are interested in.
+
+`bg, fg, jobs, wait` are shell commands for dealing with still-running processes created under the current shell.
+
+Four keyboard charactes interrupt *forground processes*. These characters are settable with stty command options, usually to Ctrl-C(intr: kill), Ctrl-Y (dsusp: suspend, but delay until input is flushed), Ctrl-Z (susp: suspend), and Ctrl-\ (quit: kill with *core dump*)
+
+### Process Control and Deletion
+The kill command does the job, but it is misnamed. What it really does is send a *signal* to a specified running process, and with two exeptions noted later, signals can be caught by the process and dealt with: it might simply choose to ignore them.
+
+```sh
+# list supported signal names
+$ kill -l
+
+# Suspend process
+$ kill -STOP XXX
+# Resume process in 10 hours
+$ sleep 36000 && kill -CONT XXX &
+```
+
+As a rule, you should give the process a chance to shut down gracefully by sending it a HUP signal first: if that does not cause it to exit shortly, then try the TERM -> KILL signal.
+
+```sh
+$ kill -HUP XXX
+# if HUP didn't work
+$ kill -TERM XXX
+$ kill -KILL XXX
+```
+
+### Trapping Process Signals
+```sh
+$ man -a signal
+```
+
+In addition to the standard signals listed earlier with kill -l, the shell provides one additional signal for the trap command: EXIT.
+
+```sh
+trap 'echo Ignoring HUP ...' HUP
+trap 'echo Terminating on USR1 ...; exit 1' USR1
+
+trap 'echo exitting...' EXIT
+```
+
+bash, ksh, and zsh provide two more signals for trap: DEBUG and ERR
+
+The most common use of singnal trapping in shell scripts is for cleanup actions that are run when the script terminates, such as removal of temporary files. Code like this trap command invocation is typical near the start of many shell scripts:
+
+```sh
+trap 'clean up action goes here' EXIT
+```
+
+Setting a trap on the shell's EXIT signal is usually sufficient, since it is handled after all other signals.
+
+```sh
+# Find traps in system shell scripts
+$ grep '^trap' /usr/bin/*
+
+$ cat /usr/bin/cd 
+```
+
+### Process System-Call Tracing
+- ktrace, par, strace, trace, or truss
+
+While these tools are normally not used inside shell scripts, they can be helpful for finding out what a process is doing and why it is taking so long. Also, they do not require source code access, or any changes whatsoever to the programs to be traced, so you can use them on any process that you own.
+
+If you are unfamiliar with the names of Unix system calls, you can quickly discover many of them by examination of trace logs. Their documentation is traditionally found in Section 2 of the online manuals; e.g., open(2).
+
+- access(), stat(), unlink()
+
+```sh
+$ PS1='traced-sh$ ' strace -e trace=process /bin/sh
+
+traced-sh$ /bin/pwd
+clone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0xffff8f04cd00) = 3495057
+wait4(-1, /home/ubuntu/work
+[{WIFEXITED(s) && WEXITSTATUS(s) == 0}], WSTOPPED, NULL) = 3495057
+--- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=3495057, si_uid=1000, si_status=0, si_utime=0, si_stime=0} ---
+wait4(-1, 0xfffff834735c, WNOHANG|WSTOPPED, NULL) = -1 ECHILD (No child processes)
+
+traced-sh$ exit
+```
+
+- at, crontab, batch
+
+```sh
+# List the current crontab schedule
+$ crontab -l
+```
+
+### The /proc Filesystem
+kernel data is made available through a special device driver that implements a standard filesystem interface in the /proc directory, Each running process has a subdirectory there, named with the process number. and inside each subdirectory are various small files with kernel data.
+
+```sh
+# see man page
+$ man proc
+
+# The -v option causes unprintable characters 
+# to be displayed in caret notation
+$ cat -v /proc/13936/cmdline
+pcmanfm^@--desktop^@--profile^@LXDE^@
+# ^@ represents the NUL character.
+```
+
+Having process data available as files is convenient and makes the data easily available to programs written in any programming language, even those that lack a system-call interface. For example, a shell script could collect hardware details of CPU, memory, and storage devices from the /proc/*info files on all of the machines in your environment that hace such files, producing reports somewhat like those from the fancy sysinfo command.
+
+
+
+
+
 ## Memo
 
 ### To search
@@ -695,4 +832,9 @@ With only one special-puropose program, an afternoon's worth of work created a u
   - consisting of three parts
 - retrospective
   - looking back on or dealing with past events or situations.
+- havoc
+  - widespread destruction.
+  - "the hurricane ripped through Florida causing havoc"
+- myriad
+  - a countless or extremely great number of people or things.
 
