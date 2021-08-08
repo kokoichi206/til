@@ -857,7 +857,47 @@ generate_data | tee >(sort | uniq > sorted_data)\
 Process substitution, combined with tee, frees you from the straight "one input, one output" paradigm of traditional Unix pipes, letting you split data into multiple output streams, and coalesce multiple input data streams into one.
 
 
+## sec 15
+Secure Shell Scripts: Getting Started
 
+Unix security is a problem of legendary notoriety.
+
+### Tips for Secure Shell Scripts
+- Don't put the current directory(dot) in PATH
+- Protect bin directories
+- Design before you code
+- Check all input arguments for validity
+- Check error codes from all commands that can return errors
+- Don't trust passed-in environment variables
+- Start in a known place
+- Use full pathnames for commands
+- Use syslog(8) to keep an audit trail
+  - `man logger`
+- Always quote user input when using that input
+- Don't use eval on user input
+- Quote the results of wildcard expansion
+- Check user iput for metacharacters
+- Test your code and read it critically
+- Be aware of race conditions
+  - If an attacker can execute arbitrary commands between any two commands in your scripts, will it compromise security? If so, find another way to do it.
+- Suspect symbolic links
+- Have someone elese review your code for mistakes
+- Use setgid rather than setuid, if possible
+- Use a new user rather than root
+- Limit setuid code as much as possible
+
+### Trojan Horses
+su..."switch user"
+
+
+## Appendix
+```sh
+$ getconf NAME_MAX .
+```
+
+The integration of devices into the hierarchical file system was the best idea in Unix
+
+- [Commands to remember](https://doc.lagout.org/operating%20system%20/linux/Classic%20Shell%20Scripting.pdf#page=497)
 ## Memo
 
 ### To search
@@ -881,4 +921,7 @@ Process substitution, combined with tee, frees you from the straight "one input,
   - "the hurricane ripped through Florida causing havoc"
 - myriad
   - a countless or extremely great number of people or things.
-
+- notoriety
+  - the state of being famous or well known for some bad quality or deed.
+- Glossary
+  - an alphabetical list of words relating to a specific subject, text, or dialect, with explanations; a brief dictionary.
