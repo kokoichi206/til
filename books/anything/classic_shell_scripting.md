@@ -667,6 +667,15 @@ $ md5sum /bin/l?
 gpg command ?
 
 
+## sec 11, 12
+It's occasionally interesting and instructive to reinvent a useful wheel.
+
+Experienced programmers soon develop a feel for what is cheap and what is expensive.
+
+Accurate execution timing has been harder to acquire because typical CPU timers have resolutions of only 60 to 100 ticks per second, which is completely inadequate in an era of GHz processors.
+
+With only one special-puropose program, an afternoon's worth of work created a usable and useful tool. As is often the case, experience with a prototype in shell was then applied to writing a production version in C.
+
 
 ## Memo
 
@@ -684,3 +693,6 @@ gpg command ?
 - pitfalls
 - ternary
   - consisting of three parts
+- retrospective
+  - looking back on or dealing with past events or situations.
+
