@@ -34,3 +34,24 @@ $ awk 'BEGIN{print atan2(0, -0)}'
 # Caveats
 $ awk 'BEGIN {print int(70.21 * 100)}'
 ```
+
+## sec 6
+連想配列
+
+```sh
+BEGIN {
+    fruit_list = "Apple Orange Banana"
+    num_fruits = split(fruit_list, fruits);
+    for (i = 1; i <= num_fruits; i++) {
+        print i, fruits[i];
+    }
+}
+
+$ echo -e "aa\nbb\naa" | awk '!a[$0]++'
+$ echo -e "aa\nbb\naa" | sort | uniq
+
+$ echo -e "aa\nbb\naa" | awk 'a[$0]++ == 1'
+$ echo -e "aa\nbb\naa" | sort | uniq -d
+```
+
+
