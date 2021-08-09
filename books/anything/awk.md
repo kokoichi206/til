@@ -55,3 +55,21 @@ $ echo -e "aa\nbb\naa" | sort | uniq -d
 ```
 
 
+
+
+## sec 11
+````sh
+$ echo 'a b c d' | awk -v before='a' -v after='A' 'sub(before, after)'
+
+$ echo 'This is a pen' | awk '{n += NF} END {print n}'
+
+# 中置記法による bc の実装
+$ echo '2 / 3' | awk '{system("awk \047 BEGIN {print " $0"}\047")}'
+
+# sort | uniq
+$ echo -e 'a\nb\na' | awk '!a[$0]++ {print $0}'
+# 後置
+$ echo -e 'a\nb\na' | awk '{print a[$0]++, a[$0]}'
+```
+
+
