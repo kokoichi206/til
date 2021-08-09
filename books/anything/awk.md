@@ -17,3 +17,20 @@ substr($0, index($0, "b"))
 
 $ grep -o 'b.*'
 ```
+
+## sec 5
+```sh
+$ echo '1 + 2 - 3 * 4 / 5' | bc
+$ echo '1 + 2 - 3 * 4 / 5' | bc - l
+
+# ~/.bashrc
+calc() {
+    awk "BEGIN {print $*}"
+}
+
+# def of pi (= atan2(0,-0))
+$ awk 'BEGIN{print atan2(0, -0)}'
+
+# Caveats
+$ awk 'BEGIN {print int(70.21 * 100)}'
+```
