@@ -58,7 +58,7 @@ $ echo -e "aa\nbb\naa" | sort | uniq -d
 
 
 ## sec 11
-````sh
+```sh
 $ echo 'a b c d' | awk -v before='a' -v after='A' 'sub(before, after)'
 
 $ echo 'This is a pen' | awk '{n += NF} END {print n}'
@@ -72,4 +72,9 @@ $ echo -e 'a\nb\na' | awk '!a[$0]++ {print $0}'
 $ echo -e 'a\nb\na' | awk '{print a[$0]++, a[$0]}'
 ```
 
+小数点以下の２進数を求めたい
+
+```sh
+$ awk 'BEGIN{x=0.21; for(i=1; i<=44; i++){if(x >= 1/2^i){x -= 1/2^i; printf 1}else{printf 0}}; print ""}'
+```
 
