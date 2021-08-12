@@ -28,6 +28,9 @@ X = melbourne_data[melbourne_features]
 
 X.describe()
 X.head()
+
+# format print
+print(f"MAE Baseline Score: {baseline_score:.4}")
 ```
 
 ## Decision Trees

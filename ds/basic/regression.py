@@ -102,3 +102,4 @@ Xgrid = np.vstack((xx.flatten(), yy.flatten())).T
 _, Yhat = forward(Xgrid)
 ax.plot_trisurf(Xgrid[:,0], Xgrid[:,1], Yhat, linewidth=0.2, antialiased=True)
 plt.show()
+
