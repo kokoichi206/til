@@ -104,4 +104,53 @@ final double TAX = 1.08;
   - 多次元配列
     - `int[][] list = new int[4][5]`
 
+## sec 3
+メモリの再割り当ては、それなりにオーバーヘッドの大きな処理なので、あらかじめ文字量が想定できているならば、インスタンス化の際にサイズを明示しておく。
+
+`var builder = new StringBuilder(1000)`
+
+前置演算子、後置演算子
+
+```java
+var i = 3;
+var j = ++i;
+System.out.println(i); // 4
+System.out.println(j); // 4
+
+var m = 3;
+var n = m++;
+System.out.println(m); // 4
+System.out.println(n); // 3
+```
+
+浮動小数店の演算に注意
+
+```java
+System.out.println(Math.floor((0.7 + 0.1) * 10)); // 7
+
+// 対策
+import java.math.BigDecimal;
+var bd1 = new BigDecimal("0.7");
+var bd2 = new BigDecimal("0.1");
+var bd3 = new BigDecimal("10");
+System.out.println(bd1.add(bd2).multiply(bd3)) // 8
+```
+
+- 同一性（Identity）と同値性（Equivalence）
+  - 同一性：オブジェクト参照同士が同じオブジェクトを参照していること
+  - 同値性：オブジェクトが同じ値を持っていること
+
+```java
+var builder1 = new StringBuilder("あいう");
+var builder2 = new StringBuilder("あいう");
+// == 演算子は、同一性を比較
+System.out.println(builder1 == builder2); //false
+// equals メソッドは、同値性を比較するツール
+
+```
+
+javaの論理演算において、「&&」は短絡評価を行うが、「&」は行わない！
+
+
+
 
