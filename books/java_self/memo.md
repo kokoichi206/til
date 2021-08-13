@@ -159,3 +159,76 @@ swich のフォールスルーに注意
 try-catch: の try ブロックへの移動も、相当のオーバーヘッドがかかる。ループ内での利用は注意
 
 
+## sec 5
+標準で利用できる数多くのクラス群（標準ライブラリ）
+
+- ラッパークラス
+  - 基本型をオブジェクトとして扱うためのクラス群
+  - 単なる値に過ぎない基本型のデータを包んで、オブジェクトとしての機能を付与するためのクラス
+  - メモリ消費量が大きいので、なるべく控える
+- 文字列の操作：String クラス
+  - 内部的に String クラスのインスタンスを生成している
+  - 文字列リテラルでインスタンスを生成するのが基本
+  - `var str = new String("ai")`は、２回インスタンスを作っていることになる...
+  - length()
+    - サロゲートペアの扱いには注意
+  - codePointCount(0, str.length())
+  - isEmpty()
+    - `"  "` return false
+  - isBlank()
+    - `"  "` returns true
+    - \t, \n, \r, \f also return true
+  - strip()
+    - stripLeading()
+    - stripTrailing()
+  - indexOf(str)
+    - lastIndexOf(str)
+    - indexOf(str, startIndex)
+    - returns -1 if not match
+  - contains
+    - startsWith
+    - endsWith
+  - substring(begin, end)
+  ```java
+  var mail = "yamada@example.com";
+  var domain = mail.substring(mail.lastIndexOf("@") + 1);
+  ```
+  - charAt(index)
+  - split(separator)
+  - join(separator, elems)
+  - format(brabra)
+    - 書式指定子と呼ばれるプレイスホルダー
+
+![](./img/format_specifier.png)
+
+- 日付/時間: Date-Time API
+  
+### Stream
+- Fileの読み書きは、途中で処理がこけてもちゃんとファイルを閉じれるようにする（そうしないと、プログラムがファイルを所有してしまって、他のプログラムからアクセスできない）
+- Java では、ストリーム（Stream）という仕組みを利用して、入出力処理を実施する。
+- 入力ストリーム、出力ストリーム
+- 文字ストリーム、バイナリストリーム
+- シリアライズ
+  - オブジェクトのような構造体データをバイト配列に変換すること
+- Files クラス
+- HttpClient クラス
+  - java.net.http モジュールに属するクラス
+  - module-info.java を変更する必要がある＠＠
+
+```java
+var client = HttpClient.newHttpClient();
+var req = HttpRequest.newBuilder()
+  .uri(URI.create("https://codezine.jp"))
+  .build();
+var res = client.send(req, HttpResponse.BodyHandlers.ofString());
+System.out.println(res.body());
+```
+
+![](./img/httpclient_method.png)
+
+
+
+
+
+
+
