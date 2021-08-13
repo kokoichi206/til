@@ -635,7 +635,221 @@ interface MyApp {
 
 抽象クラスを採用するのは、振る舞い以上に実装そのものに関心がある場合。
 
+## sec 9
+入れ子のクラス/ジェネリクス/例外処理など
+
+### Objectクラス
+extends 句を省略した場合に、暗黙的に継承されるものがObjectクラスである。
+
+Object クラスの主なメソッド
+
+| メソッド | 概要 |
+| --- | --- |
+| Object clone() | オブジェクトのコピーを作成 |
+| void finalize() | オブジェクトを破棄するときに実行 |
+| boolean equals(obj) | オブジェクトobjと等しいか |
+| Class<?> getClass() | オブジェクトのクラスを取得 |
+| int hashCode() | ハッシュコードを取得 |
+| String toString() | オブジェクトを文字列表現で取得 |
+
+オブジェクトの文字列表現を取得する
+
+toString メソッド
+
+toStringメソッドは、可能であるならば、全てのクラスで実装すべき。
+
+### equals メソッド
+オブジェクトの同値性を判定するためのメソッド。Objectクラスが既定で容易しているequalsメソッドでは、同一性（オブジェクト参照が同じオブジェクトを示していること）を確認しているにすぎない。意味ある値としての等価を判定したい場合には、個別のクラスでequalsメソッドをオーバーライドする！
+
+```java
+public class Person {
+  private String firstName;
+  private String lastName;
+
+  public Person(String firstName, String lastName) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    // 同一性の判定
+    if (this == obj) {
+      return true;
+    }
+    // 同値性の判定
+    if (obj instanceof Person) {
+      // ダウンキャスト
+      var p = (Person)obj;
+      return this.firstName.equals(p.firstName) &&
+        this.lastName.equals(p.lastName);
+    }
+    return false;
+  }
+}
+```
 
 
+```java
+try {
+  var in = new FileInputStream("C:/data/nothing.gif");
+  // DO SOMETHING
+} catch (FileNotFoundException e) {
+  // Exception handling
+} catch (IOException e) {
+  e.printStackTrace();
+  // error handling
+} finally {
+  try {
+    if (in != null) {
+      in.close();
+    }
+  } catch (IOException e) {
+    e.printStackTrace();
+  }
+}
+```
 
+### スタックトレース
+スタックトレースとは、例外が発生するまでに経てきたメソッドの履歴。
+
+### try-with-resource 構文
+リソースの有効範囲が、普通のtry-catchとは異なる
+
+```java
+try (var in = new FileInputStream(...)) {
+  ...
+} catch (FileNotFoundException e) {
+  ...
+}
+```
+
+### マルチキャッチ構文
+```java
+try {
+  ...
+} catch (IOException | URISyntaxException e) {
+  ...
+}
+```
+
+### 例外をスローする
+`throw 例外オブジェクト`
+
+`throw new NullPointerException()`
+
+`throw new FileNotFoundException("Invalid file path")`
+
+### throws 句
+スローする可能性がある例外を throws 句で宣言できる
+
+throws 句で宣言された例外は、そのままメソッドの呼び出し側でも補足し、明確に処理することを強制される！
+
+これによって、「起こりうる問題」をコードによって処理させることができる。
+
+```java
+public void foo() throws IOException, SQLException { ... }
+```
+
+うーん、非検査例外ってなんだっけ〜
+
+### よく利用する例外クラス
+| 例外 | 概要 |
+| --- | --- |
+| NullPointerException | オブジェクトがnullである |
+| IndexOutOfBoundsException | 配列のインデックスが範囲外 |
+| UnsupportedOperationException | 要求された操作が未サポート |
+| IllegalArgumentException | メソッドに渡された引数に問題がある |
+| IllegalStateException | 意図した状態でないときにメソッドを呼び出した |
+| ArithmeticException | 計算で例外的な条件が発生 |
+| NumberFormatException | 数値の形式が正しくない |
+
+assert 命令は、AssertionError 例外を投げる。
+
+キャッチした例外は、再スローすることも考える
+
+### 列挙型
+値そのものには意味がなく、シンボルとしてのみ意味を持つ定数の集合を表すために、final static を使用するのは誤り
+
+Season.java
+```java
+public enum Season {
+  // 定数の一種なので、アンダースコア記法
+  SPRING,
+  SUMMER,
+  AUTUMN,
+  WINTER,
+}
+
+var es = new EnumSeason();
+es.processSeason(Season.SPRING);
+```
+
+enum ブロックで定義される列挙型は、実は、Enumクラスを暗黙的に継承したクラスのこと。
+
+- 主なメソッド
+  - name(), ordinal(), toString(), 
+
+```java
+public enum Season {
+  SPRING(0, "春"),
+  SUMMER(1, "夏"),
+  AUTUMN(2, "秋"),
+  WINTER(4, "冬");
+
+  private int code;
+  private String jpName;
+
+  private Season(int code, String jpName) {
+    this.code = code;
+    this.jpName = jpName;
+  }
+}
+```
+
+流れ
+
+1. ここの列挙定数で実装すべき機能を、抽象メソッドとして準備
+2. 列挙定数ブロックで抽象メソッドをオーバーライド
+
+という構成が一般的
+
+### 入れこのクラス
+クラスは、class{...} の配下に入れ子で定義することができる
+
+- 入れ子のクラス(Nested Class)
+  - static メンバークラス
+  - 内部クラス(Inner Class)
+    - 非 static メンバークラス
+    - 匿名クラス
+    - ローカルクラス
+
+```java
+public class MyClass {
+  // static メンバークラスの定義
+  private static class MyHelper {
+    public void show() {
+      ...
+    }
+  }
+
+  public void run() {
+    var helper = new MyHelper();
+    helper.show();
+  }
+}
+
+----------
+var c = new MyClass();
+c.run();
+```
+
+### ジェネリクス
+ジェネリクスは、汎用的なクラス/メソッドに対して、特定の型を割り当てて、その型専用のクラスを作成する機能。
+
+- 型パラメーターの名前
+  - T: Type
+  - E: Element
+  - K: Key
+  - V: Value
 
