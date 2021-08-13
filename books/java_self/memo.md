@@ -286,6 +286,236 @@ ArrayListは、内部的には配列を利用したデータ構造。ただし�
 - queue(FIFO)
   - 待ち行列
 
+## sec 7
+オブジェクト指向構文
+
+Javaの基本はクラス。
+
+![](./img/class_diagram.png)
+
+class名は、Pascal記法（Upper CamelCase (UCC)）で統一
+
+よく利用される接頭辞/接尾辞
+
+| 接頭辞/接尾辞 | 概要 |
+| --- | --- |
+| AbstractXxxx | 抽象クラス |
+| XxxxxException | 例外クラス |
+| XxxxFormatter | フォーマッター |
+| XxxxLogger | ログクラス |
+| XxxxTest | テストクラス |
+
+- 下位クラスはより具体的に
+  - Readerクラスの派生クラスとして、FileReader/BufferedReader/PipedReader
+
+### 修飾子
+トップレベルで定義した class 命令で利用できる就職し
+
+| 修飾子 | 概要 |
+| --- | --- |
+| public | 全てのクラスからアクセス可能 |
+| final | 継承を許可しない |
+| abstract | 抽象クラス |
+| strictfp | 浮動小数点数を環境に依存しない方法で演算 |
+
+一般に、浮動小数点数の計算は重い処理であり、JavaではCPUに委ねている。このため、32bit,64bitなどの環境の違いにより、演算結果に差異が出る場合がある。
+
+### フィールド
+フィールドは、class {...}の直下で定義された変数。メンバー変数とも呼ばれ、クラスで管理すべき情報を表す。
+
+- 先頭に修飾子を付与できる
+- varキーワードは利用でき**ない**
+
+フィールドで利用できる主な修飾子
+
+| 修飾子 | 概要 |
+| --- | --- |
+| public | 全てのクラスからアクセス可能 |
+| protected | 現在のクラスと派生クラス、同じパッケージのクラスからのみアクセス可能 |
+| private | 現在のクラスからのみアクセス可能 |
+| static | クラスフィールドを宣言 |
+| final | 再代入を禁止 |
+| transient | シリアライズの対象から除去 |
+| volatile | 値のキャッシュを制御 |
+
+アクセ雨修飾子を省略した場合、private がデフォルトとなる！！えf
+
+### 既定値
+メソッドの中で宣言された変数（ローカル変数）と、フィールドとで異なる点が、もう一点ある。それは、ローカル変数が既定値を持たないのに対して、フィールドにはある！
+
+| データ型 | 既定値 |
+| --- | --- |
+| boolean | false |
+| byte, short, int, long | 0 |
+| float, double | 0.0 |
+| char | \u0000 |
+| 参照型 | null |
+
+### メソッド
+- メソッド名は「動詞＋名詞」の形式で命名するとよい
+
+![](./img/method_name_verbs.png)
+
+メソッド修飾子
+
+| 修飾子 | 概要 |
+| --- | --- |
+| public | 全てのクラスからアクセス可能 |
+| protected | 現在のクラスと派生クラス、同じパッケージのクラスからのみアクセス可能 |
+| private | 現在のクラスからのみアクセス可能 |
+| static | クラスメソッドを宣言 |
+| abstract | 抽象メソッドを宣言 |
+| final | オーバーライドできないようにする |
+| synchronized | 1つのスレッドからのみアクセス可能 |
+| strictfp | 浮動小数点数を環境に依存しない方法で演算 |
+| native | Java以外の言語で記述されたメソッド |
+
+- 修飾子の記述順
+  - public
+  - protected
+  - private
+  - abstract
+  - static
+  - final
+  - transient
+  - volatile
+  - synchronized
+  - native
+  - strictfp
+
+### メソッドのオーバーロード
+名前、引数の型/並び からなるメソッドの識別情報のことをシグニチャという。例えば「indexOf(String, int)」
+
+**引数の**型/並びが異なっていれば、同じ名前のメソッドも定義可能
+
+### スコープ
+- フィールドのスコープ
+- ローカル変数のスコープ
+- ブロックスコープ
+
+### コンストラクタ
+- public, protected, private 修飾子のみ
+- 戻り値は持たない
+- 名前はクラス名と一致させる
+
+```java
+public class MyClass {
+  public MyClass(String name) {
+    this.name = name;
+  }
+}
+```
+
+コンストラクタもメソッドと同じくオーバーロードできる！？！？！
+
+以下のようにデフォルト引数として利用する？
+
+```java
+public class Person {
+  public String name;
+  public int age;
+
+  public Person(String name, int age){
+    this.name = name;
+    this.age = age;
+  }
+  public Person(){
+    this("名無権兵衛", 120);
+    // Do something
+  }
+}
+```
+
+### 初期化ブロック
+class {...}の直下に書かれた名無しのブロックは、インスタンスかのタイミングでコンストラクターよりも先に実行される。！
+
+```java
+public class Person {
+  ...
+  // 初期化ブロック
+  {
+    this.updated = LocalDateTime.now();
+  }
+
+  public Person(...){
+    ...
+  }
+}
+```
+
+### ファクトリーメソッド
+コンストラクターはインスタンスを生成するための代表的な手段であるが、唯一の手段ではない。
+
+このようなインスタンス生成を目的としたメソッドをファクトリーメソッドという。
+
+```java
+public class FactoryClass {
+  private FactoryClass(){...}
+
+  // ファクトリーメソッド
+  public static FactoryClass getInstance() {
+    return new FactoryClass();
+  }
+}
+```
+
+メリット
+
+- 自由に命名できる
+- インスタンスを常に生成しなくても良い
+  - シングルトンパターン
+    - GoFの1つ
+- 戻り値の型を抽象型/インターフェイス型にもできる
+
+### ユーティリティクラス
+クラスメンバーしか持たない
+
+インスタンス化は不要で、無駄なインスタンスだけ生成できてしまう状態はむしろ有害！
+
+そのような場合には、コンストラクターをprivate化することで、そのクラスのインスタンス化を禁止できる！（コンストラクターを外から呼び出せない（private）＝インスタンス化できない）
+
+```java
+public final class Math {
+  private Math() {
+    ...
+  }
+}
+```
+
+なお、ユーティリティクラスは、finalで修飾しておくのが一般的。
+
+### クラス定数
+static final
+
+### 引数に注意
+![](./img/reference_type.png)
+
+参照型では、
+
+> （値そのものではなく）値を格納したメモリ上の場所を格納している
+
+からこのような現象が起こる
+
+### null 安全の対策
+- Optional クラス
+  - nullチェックを簡単かし、NullPointExceptionを防ぐための（null安全のための）クラス
+
+```java
+import java.util.Optinal;
+
+public Optional<String> getTitleByIsbn(String isbn) {
+  return Optional.ofNullable(this.data.get(isbn));
+}
+```
+
+![](./img/optional.png)
+
+### パッケージ
+名前を分類するための仕組み
+
+パッケージは、いうならば、クラス/インターフェイスなどの所属。Listだけでは一意にならない（かもしれない）名前も、java.utilパッケージに属するListとすることで、名前の衝突を回避できる
+
+名前空間まで加味した「java.util.List」のような名前を、**完全修飾名**という。
 
 
 
