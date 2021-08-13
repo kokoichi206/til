@@ -853,3 +853,142 @@ c.run();
   - K: Key
   - V: Value
 
+## sec 10
+Java 8 以降では、メソッドも型の一種。つまり、メソッドも別のメソッドの引数として渡すことができる。そして、メソッドを受け渡しするための構文が、メソッド参照やラムダ式である。
+
+### 関数型インターフェイス
+配下の抽象メソッドが1つであるインターフェイスのこと。
+
+```java
+public class MethodRefUse {
+  public void walkArray(String[] data, Output output) {
+    for (var value: data) {
+      output.print(value);
+    }
+  }
+
+  // Output型に対応したメソッド
+  static void addQuote(String value) {
+    System.out.printf("[%s]\n", value);
+  }
+}
+
+// String型の引数を受け取り、
+// 戻り値は void であるメソッド型
+@FunctionalInterface
+public interface Output {
+  void print(String str);
+}
+
+var data = new String[] {"a", "b", "c"};
+var u = new MethodRefUse();
+u.walkArray(data, MethodRefUse::addQuote);
+```
+
+FunctionalInterface は、対象のインターフェイスが関数型インターフェイスであることを宣言する
+
+```java
+@FunctionalInterface
+interface Hoge {
+  void print(String str);
+}
+```
+
+### メソッド参照の構文
+| 対象 | 構文 |
+| --- | --- |
+| クラスメソッド | クラスめい::メソッド名 |
+| インスタンスメソッド | オブジェクト変数::メソッド名 |
+| コンストラクター | クラス名::new |
+
+### ラムダ式
+メソッド定義を式（リテラル）として表すための仕組み。式なので、メソッド呼び出しの文の中に直接記述でき、コードがすっきりとする。
+
+```java
+import java.util.function.Consumer;
+
+public class MethodLambda {
+  public void walkArray(String[] data, Consumer<String> output) {
+    for (val value: data) {
+      output.accept(value);
+    }
+  }
+}
+- - - - - - - - -
+var data = new String[] {"a", "b", "c"};
+var ml = new MethodLambda();
+ml.walkArray(data, (String value) -> {
+  System.out.printf("[%s]\n", value)
+});
+```
+
+### Consumer インターフェイス
+```java
+// 標準ライブラリ java.util.function
+// で提供されている関数インターフェイス
+@FunctionalInterface
+public interface Consumer<T> {
+  void accept(T t);
+}
+```
+
+Tはジェネリクスの型パラメータ。Consumerであれば、
+
+> T 型の引数を受け取り、何らかの処理を実行する（戻り値はない）メソッド型
+
+をあらわす。
+
+名前が不要で、その機能だけが必要な場合に使う
+
+```java
+(引数型 仮引数) -> {
+  ...
+}
+
+() -> System.out.println("Hello, Java");
+```
+
+computeIfPresent
+
+computeIfAbsent
+
+### Stream API
+なんか、メソッドチェーンの流れ、Scriptのパイプに似てる？
+繰り返し処理をサポートするライブラリ。コレクション、配列、ファイルなどデータの集合体から、ここの要素を取り出して、これを「処理の流れ」（Stream）に引き渡すための仕組みを提供するもの。
+
+メソッドチェーンが許されている。
+
+parallelStream
+
+`list.parallelStream().forEach(System.out::println)`
+
+```java
+import java.util.Random;
+import java.util.stream.Stream;
+...
+var stream = Stream.generate(() -> {
+  var r = new Random();
+  return r.nextInt(100);
+});
+// 無限ストリームを生成するので、
+// limit メソッドなどで、明示的に中断する
+stream.limit(10).forEach(System.out::println);
+```
+
+```java
+import java.util.stream.IntStream;
+...
+IntStream.range(10, 20)
+  .forEach(System.out::println);
+  // 10,11,...,19
+
+IntStream.of(-2,-5,0,3,-1,2)
+  .takeWhile(i -> i < 0)
+  .forEach(System.out::println)
+IntStream.of(-2,-5,0,3,-1,2)
+  .dropWhile(i -> i < 0)
+  .forEach(System.out::println)
+```
+
+終端処理は省略できない！
+
