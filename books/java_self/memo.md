@@ -992,3 +992,136 @@ IntStream.of(-2,-5,0,3,-1,2)
 
 終端処理は省略できない！
 
+## sec 11
+
+### マルチスレッド処理
+スレッドは、プログラムを実行する処理の最小単位
+
+既定で、アプリはメインスレッドと呼ばれる、単一のスレッドで動作している。
+
+１つのプロセスに対して、１つ以上のスレッドが属する！プロセスは、いわゆるプログラムのインスタンスそのものであり、新たなプロセスの軌道にはCPUとメモリの割り当てが必要になる。
+
+対して、スレッドとはメモリ空間を共有しながら処理だけを分離する仕組み。その性質上、メモリの消費効率は良くなるけど、反面、スレッド間でデータを共有してる場合は、競合を意識しなければならない
+
+```java
+public class MyThread extends Thread {
+  @Override
+  public void run() {
+    for (var i = 0; i < 30; i++) {
+      System.out.println(this.getName() + ": " + i);
+    }
+  }
+}
+- - - - - - - - 
+var th1 = new MyThread();
+var th2 = new MyThread();
+var th3 = new MyThread();
+
+th1.start();
+th2.start();
+th3.start();
+```
+
+Runnable でも同じようなことができる！
+
+### 排他制御
+スレッドは同一のメモリ空間で実行される。よって、マルチスレッド処理では、データがスレッド間で共有されているかどうかを意識することが大切。
+
+```java
+public class SynchronizedNotUse {
+  private int value = 0;
+
+  // 10万個のスレッドを実行
+  public static void main(String[] args) {
+    // スレッドの個数
+    final int TASK_NUM = 100000;
+    vat th = new Thread[TASK_NUM];
+    vat tb = new SynchronizedNotUse();
+    // スレッドを生成＆実行
+    for (var i = 0; i < TASK_NUM; i++) {
+      th[i] = new Thread(() -> {
+        tb.increment();
+      });
+      th[i].start();
+    }
+
+    // スレッド終了まで待機
+    for (val i = 0; i < TASK_NUM; i++) {
+      try {
+        th[i].join();
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    }
+    System.out.println(tb.value);
+  }
+
+  // value フィールドをインクリメント
+  void increment() {
+    this.value__;
+  }
+}
+```
+
+![](./img/conflict.png)
+
+synchronized 命令！
+
+```java
+synchronized(ロック対象のオブジェクト){
+  ... 同期すべき処理 ...
+}
+```
+
+synchronized ブロックで囲まれた処理は、複数のスレッドから同時に呼び出されることがなくなる。
+
+このように、特定の処理を占有することをロックを獲得する、といいます。また、ロックを使って同時実行によるデータの不整合を防ぐことを排他制御（同期処理）と言います
+
+```java
+void increment() {
+  synchronized(this) {
+    this.value++;
+  }
+}
+
+// こういった書き方でもよき
+public class SynchronizedUse {
+  private Object lock = new Object();
+  ...
+  void increment() {
+    synchronized(lock) {
+      this.value++;
+    }
+  }
+}
+```
+
+なお、同期処理が正しく動作するのは、
+
+> ロック対象のオブジェクトが同一のインスタンスである
+
+場合に限る。
+
+Atomic とは、途中に割り込みがないことを保証されている状態のことをいう。たとえば Java では、long/double 型**以外**の変数への読み書きはアトミックであることが保証されている。
+
+スレッドプールを利用して、できるだけ再利用を心がけるべき。
+
+Executors クラス（java.util.concurrent パッケージ
+
+```java
+import java.io.File;
+import java.lang.reflect.Method;
+...
+// Fileクラスを取得
+var str = File.class;
+// File配下のpublicメソッドを列挙
+for (var m : str.getMethods()) {
+  System.out.println(m.getName());
+}
+```
+
+### モジュール
+モジュールとは、パッケージの上位概念で、パッケージ群と関連するリソース、そして、地震の構成情報を規定するモジュール定義ファイルから構成される。
+
+公開範囲などを自由度高く設定できる
+
