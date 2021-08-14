@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">イベントとリスナサンプル</string>
+    <string name="tv_name">お名前を入力してください</string>
+    <string name="bt_click">表示</string>
+    <string name="bt_clear">クリア</string>
+    <string-array name="lv_menu">
+        <item>からあげ定食</item>
+        <item>ハンバーグ定食</item>
+        <item>ステーキ定食</item>
+        <item>焼肉定食</item>
+        <item>コロッケ定食</item>
+    </string-array>
+    <string name="dialog_title">注文確認</string>
+    <string name="dialog_msg">選択されて注文を確認します。よろしいですか</string>
+    <string name="dialog_btn_ok">注文</string>
+    <string name="dialog_btn_ng">キャンセル</string>
+    <string name="dialog_btn_nu">問合せ</string>
+    <string name="dialog_ok_toast">ご注文ありがとうございます</string>
+    <string name="dialog_ng_toast">ご注文をキャンセルしました</string>
+    <string name="dialog_nu_toast">お問い合わせ内容をお知らせください</string>
+</resources>
