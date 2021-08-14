@@ -128,5 +128,3 @@ exit 0
 
 ## TODO
 man -7 signal
-
-

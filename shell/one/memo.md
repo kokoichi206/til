@@ -220,6 +220,7 @@ awk '{print NF}' ans
 time ( yes {A..Z} | tr ' ' \\n | paste - a | head -n 50000 > tmp; LANG=C sort -s -k1,1 tmp > tmp2 )
 ```
 ファイルにまとめるといいことがある。
+
 ## このA、B、、、Zごとにsortすると？
 とりあえず
 ```
@@ -378,6 +379,8 @@ cat nums | awk -F '' '{$NF="";print}'
 ## 九九の表を作る
 ```
 echo {1..9}{1..9} | tr ' ' '\n' | awk -F '' '{printf"%2s\n",$1*$2}' | paste -d ' ' - - - - - - - - - 
+
+echo {1..9}{1..9} | tr ' ' '\n' | sed -E 's@([0-9])([0-9])@\1*\2@g' | bc | paste -d ' ' - - - - - - - - -
 ```
 
 ## 4桁のなんとか
