@@ -147,10 +147,92 @@ Android開発では、コンテキストが重要な概念を果たす。実は�
 - 作り方はオプションメニューとほぼ一緒
 
 ### フラグメント
-画面の一部を独立したブロッkつそてい扱えるのがフラグメント！
+画面の一部を独立したブロックとして扱えるのがフラグメント！
+
+ディスプレイサイズなどに対応する
+
+Androidでは、layoutフォルダに修飾子をつけることで、どの画面用のレイアウトXMLファイルかを指定することができ、OS側で画面サイズに応じて自動的に切り替えてくれる仕組みが用意されている。
+
+- layout-land: 横向き表示用
+- layout-large: 7インチ画面用
+- layout-xlarge: 10インチ画面用
+
+フラグメント内で、画面サイズに応じて分岐が生じる
+
+### フラグメントトランザクション
+
+### bundleを直接生成する
+![](./img/adb reboot bootloader)
+
+### db
+![](./img/how_to_use_db.png)
+
+オブジェクトの開放って、具体的には何やってるん？
+
+```kotlin
+// ヘルパーオブジェクトの開放
+_helper.close()
+```
+
+#### Tips
+DBにデータがあるかないかで、INSERTとUPDATEを分ける必要がある。
+
+存在をチェックしてからINSERTとUPDATEを分けるよりは、１回DELETEしてからINSERTする方が楽
+
+本当は、この辺の取り扱いは、非同期で行った方が良さそうーAsyncTaskとか
 
 
+### 非同期処理
+Androidアプリで一番中心となるスレッドは、Activityが実行される画面スレッド。このスレッドは、UIスレッドと呼ばれる。
 
+- Java、Kotlin
+  - Thread クラス
+  - Runnable インターフェース
+- Android
+  - AsyncTask
+    - UIスレッドと頻繁にやりとりができる便利なクラス
+
+- AsyncTask
+  - AsyncTaskを継承したクラスを作る
+  - 作成したクラス内のdoInBackground()メソッドに非同期で行いたい処理を記述する
+  - アクティビティクラス内でこのクラスのインスタンスを作成し、execute()メソッドを実行する
+
+- 実行するタイミングと、スレッドをよく理解する必要がある！
+
+### media
+Androidでは、アプリがインターネットに接続するには、その許可をアプリに与える必要がある（＠AndroidManifest）
+
+Weather
+
+- [livedoor](https://weather.tsukumijima.net/)
+  - [地点定義表](https://weather.tsukumijima.net/primary_area.xml)
+- [効果音Lab](https://soundeffect-lab.info/sound/environment/)
+
+![](./img/android_web_post.png)
+
+### サービス
+アクティビティから独立してバックグラウンドで処理を続ける仕組みのことを、「サービス」という。
+
+サービスは、アクティビティとは別のクラス。サービスくらすもウィザードを使って作成する。javaフォルダをみ
+
+> [New] -> [Service] -> [Service]
+
+![](./img/onStartCommand.png)
+
+サービスは画面を持たない代わりに、通知を飛ばせる
+
+### 通知
+通知を扱うにはまずチャネルを生成する
+
+通知チャネルは、Android 8 から導入された機能で、通知の重要度、通知音、バイブレーションなどをまとめて設定できる。
+
+### 通知からアクティビティの起動
+PendingIntentを使う
+
+### 暗黙的インテント
+アプリ関連系の基礎！
+
+アプリチューザが開かれる！！
 
 
 ## Kotolin 基礎
@@ -181,6 +263,10 @@ when(view.id) {
 
 ### セーフコール演算子
 Nullable型のメンバに対してアクセスする際`supportActionBar?`みたいに`?.`を使ってアクセスするのがよい
+
+- vari?.let{}
+  - variがnullじゃない時のみ、letブロックを実行
+  - letブロック内ではvariではなく、itとして記述する
 
 ### !! メソッド
 確実にnullでないことがわかってるものには、!!演算子を用いて、非null型に変換できる
