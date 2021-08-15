@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">FlyGame</string>
+    <string name="app_name">I Have To Fly</string>
+    <string name="game_title">I Have To Fly!</string>
+    <string name="start_play_center_text">Play</string>
 </resources>
