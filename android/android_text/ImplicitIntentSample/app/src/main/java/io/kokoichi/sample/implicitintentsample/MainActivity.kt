@@ -27,7 +27,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // GPS機能を利用し、現在地からINFOを受け取る
+        // GPS機能を利用し、現在地
+        // からINFOを受け取る
         val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         // 位置情報が更新された際のリスナオブジェクトを作成
         val locationListener = GPSLocationListener()
