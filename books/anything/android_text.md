@@ -234,6 +234,23 @@ PendingIntentを使う
 
 アプリチューザが開かれる！！
 
+地図アプリ等、かな
+
+// Intentオブジェクトを作成
+val intent = Intent(Intent.ACTION_VIEW, uri)
+
+![](./img/implicit_intent_action_constant.png)
+
+- ACTION_VIEWの場合は、URIを元にOSがアプリを判断している
+  - `http://~`では、ブラウザ
+  - `geo:~`では、地図アプリ
+
+### 位置情報を利用する
+LocationManagerクラスを使う
+
+位置情報の利用時にはプロバイダを指定する！Android端末が位置情報を取得する方法はGPSだけではない。他にも、Wi-Fiや電波の基地局などのネットワークから取得する方法もある
+
+
 
 ## Kotolin 基礎
 
