@@ -239,6 +239,8 @@ print("MAE scores:\n", scores)
 
 It is a little surprising that we specify negative MAE. Scikit-learn has a convention where all metrics are defined so a high number is better. Using negatives here allows them to be consistent with that convention, though negative MAE is almost unheard of elsewhere.
 
+## Optimize models
+
 ### Grid search?
 Use cross-validation to select parameters for a machine learning model！
 
@@ -246,6 +248,47 @@ If you'd like to learn more about [hyperparameter optimization](https://en.wikip
 
 Thankfully, scikit-learn also contains a built-in function GridSearchCV() that can make your grid search code very efficient!
 
+### Gradient boosting
+Gradient boosting is a method that goes through cycles to iteratively add models into an ensemble.
+
+XGBoost stands for extreme gradient boosting, which is an implementation of gradient boosting with several additional features focused on performance and speed. 
+
+```python
+from xgboost import XGBRegressor
+
+my_model = XGBRegressor()
+my_model.fit(X_train, y_train)
+
+my_model = XGBRegressor(n_estimators=500)
+my_model.fit(X_train, y_train)
+```
+
+- parameter tuning
+  - n_estimators, learning_rate, n_jobs,
+
+
+## data leakage
+In this tutorial, you will learn what data leakage is and how to prevent it. If you don't know how to prevent it, leakage will come up frequently, and it will ruin your models in subtle and dangerous ways. So, this is one of the most important concepts for practicing data scientists.
+
+Data leakage (or leakage) happens when your training data contains information about the target, but similar data will not be available when the model is used for prediction. This leads to high performance on the training set (and possibly even the validation data), but the model will perform poorly in production.
+
+- There are two main types of leakage: 
+  - target leakage
+  - train-test contamination.
+
+**Target Leakage**
+
+People take antibiotic medicines after getting pneumonia in order to recover. The raw data shows a strong relationship between those columns, but took_antibiotic_medicine is frequently changed after the value for got_pneumonia is determined. This is target leakage.
+
+![](./img/target_leakage.png)
+
+**Train-Test Contamination**
+
+You can corrupt this process in subtle ways if the validation data affects the preprocessing behavior. This is sometimes called train-test contamination.
+
+If your validation is based on a simple train-test split, exclude the validation data from any type of fitting, including the fitting of preprocessing steps. This is easier if you use scikit-learn pipelines. When using cross-validation, it's even more critical that you do your preprocessing inside the pipeline!
+
+You should not prepsocess data before you split train-test data. ??
 
 
 
@@ -279,4 +322,16 @@ find min value from dictionary
 ```python
 n_estimators_best = min(results, key=results.get)
 ```
+
+
+## English
+Getting Rich With Cryptocurrencies?
+
+### words
+- inflection
+  - a change in the form of a word (typically the ending) to express a grammatical function or attribute such as tense, mood, person, number, case, and gender.
+  - the modulation of intonation or pitch in the voice.
+
+
+shoelace, cryptocurrency
 
