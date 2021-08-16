@@ -1,0 +1,92 @@
+
+assemble:	file format mach-o 64-bit x86-64
+
+
+Disassembly of section __TEXT,__text:
+
+0000000100003e60 <_func_op>:
+100003e60:     	pushq	%rbp
+100003e61:     	movq	%rsp, %rbp
+100003e64:     	xorl	%eax, %eax
+100003e66:     	popq	%rbp
+100003e67:     	retq
+100003e68:     	nopl	(%rax,%rax)
+
+0000000100003e70 <_func>:
+100003e70:     	pushq	%rbp
+100003e71:     	movq	%rsp, %rbp
+100003e74:     	leaq	16789(%rip), %rax  # 100008010 <_global>
+100003e7b:     	movq	$0, -8(%rbp)
+100003e83:     	movabsq	$-18765284782900, %rcx
+100003e8d:     	movq	%rcx, -8(%rbp)
+100003e91:     	movl	$21845, (%rax)
+100003e97:     	popq	%rbp
+100003e98:     	retq
+100003e99:     	nopl	(%rax)
+
+0000000100003ea0 <_main>:
+100003ea0:     	pushq	%rbp
+100003ea1:     	movq	%rsp, %rbp
+100003ea4:     	subq	$64, %rsp
+100003ea8:     	movq	337(%rip), %rax  # 100004000 <dyld_stub_binder+0x100004000>
+100003eaf:     	movq	(%rax), %rax
+100003eb2:     	movq	%rax, -8(%rbp)
+100003eb6:     	movl	$0, -36(%rbp)
+100003ebd:     	movl	$0, -40(%rbp)
+100003ec4:     	movq	213(%rip), %rax  # 100003fa0 <dyld_stub_binder+0x100003fa0>
+100003ecb:     	movq	%rax, -32(%rbp)
+100003ecf:     	movq	210(%rip), %rax  # 100003fa8 <dyld_stub_binder+0x100003fa8>
+100003ed6:     	movq	%rax, -24(%rbp)
+100003eda:     	leaq	-129(%rip), %rax  # 100003e60 <_func_op>
+100003ee1:     	movq	%rax, -56(%rbp)
+100003ee5:     	movl	$43981, -40(%rbp)
+100003eec:     	cmpl	$4660, -40(%rbp)
+100003ef3:     	je	0x100003f00 <_main+0x60>
+100003ef9:     	movl	$0, -40(%rbp)
+100003f00:     	jmp	0x100003f05 <_main+0x65>
+100003f05:     	cmpl	$0, -40(%rbp)
+100003f09:     	jne	0x100003f1d <_main+0x7d>
+100003f0f:     	movl	-40(%rbp), %eax
+100003f12:     	addl	$1, %eax
+100003f15:     	movl	%eax, -40(%rbp)
+100003f18:     	jmp	0x100003f05 <_main+0x65>
+100003f1d:     	callq	0x100003e70 <_func>
+100003f22:     	callq	*-56(%rbp)
+100003f25:     	movl	%eax, -40(%rbp)
+100003f28:     	movl	$0, -40(%rbp)
+100003f2f:     	cmpl	$15, -40(%rbp)
+100003f33:     	jae	0x100003f53 <_main+0xb3>
+100003f39:     	movl	-40(%rbp), %eax
+100003f3c:     	movl	%eax, %ecx
+100003f3e:     	movb	-32(%rbp,%rcx), %dl
+100003f42:     	movb	%dl, -41(%rbp)
+100003f45:     	movl	-40(%rbp), %eax
+100003f48:     	addl	$1, %eax
+100003f4b:     	movl	%eax, -40(%rbp)
+100003f4e:     	jmp	0x100003f2f <_main+0x8f>
+100003f53:     	movq	166(%rip), %rax  # 100004000 <dyld_stub_binder+0x100004000>
+100003f5a:     	movq	(%rax), %rax
+100003f5d:     	movq	-8(%rbp), %rcx
+100003f61:     	cmpq	%rcx, %rax
+100003f64:     	jne	0x100003f72 <_main+0xd2>
+100003f6a:     	xorl	%eax, %eax
+100003f6c:     	addq	$64, %rsp
+100003f70:     	popq	%rbp
+100003f71:     	retq
+100003f72:     	callq	0x100003f7a <dyld_stub_binder+0x100003f7a>
+100003f77:     	ud2
+
+Disassembly of section __TEXT,__stubs:
+
+0000000100003f7a <__stubs>:
+100003f7a:     	jmpq	*16512(%rip)  # 100008000 <dyld_stub_binder+0x100008000>
+
+Disassembly of section __TEXT,__stub_helper:
+
+0000000100003f80 <__stub_helper>:
+100003f80:     	leaq	16513(%rip), %r11  # 100008008 <__dyld_private>
+100003f87:     	pushq	%r11
+100003f89:     	jmpq	*121(%rip)  # 100004008 <dyld_stub_binder+0x100004008>
+100003f8f:     	nop
+100003f90:     	pushq	$0
+100003f95:     	jmp	0x100003f80 <__stub_helper>
