@@ -11,6 +11,7 @@ import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Build;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 
@@ -91,6 +92,7 @@ public class GameView extends SurfaceView implements Runnable {
     @Override
     public void run() {
         while(isPlaying) {
+            Log.d("hoge", "run is called");
 
             update();
             draw();
@@ -184,8 +186,9 @@ public class GameView extends SurfaceView implements Runnable {
         if(getHolder().getSurface().isValid()) {
             // draw background first
             Canvas canvas = getHolder().lockCanvas();
+            Log.d("hoge", String.valueOf(background1.y));
             canvas.drawBitmap(background1.background, background1.x, background1.y, paint);
-            canvas.drawBitmap(background2.background, background2.x, background2.y, paint);
+//            canvas.drawBitmap(background2.background, background2.x, background2.y, paint);
 
             // draw Birds
             for (Bird bird : birds)
