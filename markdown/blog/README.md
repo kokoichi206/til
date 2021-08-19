@@ -23,7 +23,6 @@
 - TOC
   - [:contents]
 
-
 ```html
 <details><summary>サンプルコード</summary><div>
 

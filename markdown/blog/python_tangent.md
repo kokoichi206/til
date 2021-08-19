@@ -54,7 +54,7 @@ def tangent(func, x, a):
 ```python
 import matplotlib.pyplot as plt
 
-def quad_func(x):  # y=x^2-1を表す関数
+def quad_func(x):
     y = x**2 - 1
     return y
 
@@ -87,7 +87,7 @@ plt.ylim([-3, 10])
 plt.show()
 ```
 
-![](./img/tangent.png)
+![](./img/tangent_1.png)
 
 ### おまけ
 各点における接線を集めると、以下のように放物線の下半分を覆い尽くします（下に凸だから？）。
