@@ -54,8 +54,8 @@ def tangent(func, x, a):
 ```python
 import matplotlib.pyplot as plt
 
-def quad_func(x):  # y=x^2+1を表す関数
-    y = x**2 + 1
+def quad_func(x):  # y=x^2-1を表す関数
+    y = x**2 - 1
     return y
 
 def tangent(func, x, a):

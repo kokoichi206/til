@@ -23,6 +23,16 @@
 - TOC
   - [:contents]
 
+
+```html
+<details><summary>サンプルコード</summary><div>
+
+\```rb
+puts 'Hello, World'
+\```
+</div></details>
+```
+
 ### 数式ちょっと独特
 [tex:
 \int V _ {in}(s)e^{st}ds = \frac{1}{RC}\int V _ {out}(s)\left(\int _ {-\infty} ^{t} e ^{st'}dt'\right)ds + \int V _ {out}(s)e ^{st}ds
