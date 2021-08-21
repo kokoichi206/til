@@ -77,3 +77,4 @@ $$R^2 = 1 - \frac{\Sigma(y_i-\hat{y_i})}{\Sigma(y_i-\bar{y})}$$
 TP, TN, FP, FN
 
 
+
