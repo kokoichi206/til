@@ -77,4 +77,58 @@ $$R^2 = 1 - \frac{\Sigma(y_i-\hat{y_i})}{\Sigma(y_i-\bar{y})}$$
 TP, TN, FP, FN
 
 
+## sec 3
+
+### GDBD (Gradient Boosting Decision Tree: 勾配ブースティング木)
+- 数値の大きさ自体には意味がなく、大小関係のみが影響する
+- 欠損値があっても、そのまま取り扱うことができる
+- 決定木の分岐の繰り返しによって変数間の相互作用を反映する
+
+### 決定木の気持ちになって考える
+
+### 欠損値の扱い
+欠損値はその値が何らかの理由で欠損しているという情報を持っていると考えると、その情報を捨てるのはもったいないため、そのまま取り扱うのが自然な方法。
+
+予測による補完なども使われることもある。
+
+欠損値が、-1, 9999 などで扱われていることもある！
+
+```python
+# 欠損値を指定して train.csv を読み込む
+train = pd.read_csv('train_csv', na_values=['', 'NA', -1, 9999])
+
+# ある列の -1 のみ変換する
+data['col1'] = data['col1'].replace(-1, np.nan)
+```
+
+### 標準化
+```python
+from sklearn.preprocessing import StandardScaler
+
+scaler = StandardScaler()
+scaler.fit(train_x[num_cols])
+
+train_x[num_cols] = scaler.transform(train_x[num_cols])
+test_x[num_cols] = scaler.transform(test_x[num_cols])
+```
+
+### 非線形変換
+```python
+x = np.array([1.0, 10.0, 1000.0, 10000.0])
+
+# 単に対数を取る
+x1 = np.log(x)
+
+# 1 を加えた後に対数を取る！
+x2 = np.log1p(x)    # こんな関数があるらしい
+
+# 絶対値の対数をとってから元の符号を付加する
+x3 = np.sign(x) * np.log(np.abs(x))
+```
+
+```python
+all_x = pd.concat([train_x, test_x])
+```
+
+
 
