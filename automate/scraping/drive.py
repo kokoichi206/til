@@ -87,7 +87,7 @@ class FetchPdfNames():
         driver.close()
         return pfd_infos
 
-    # 何を引数に渡すのがいいんだろう？
+    # 何を引数に渡すのがいいんだろう?
     def get_new_pdf_infos_since(self, date):
         # pdf_date => 2021/08/01 or 13:44
         # compare_date => 2021/07/07
