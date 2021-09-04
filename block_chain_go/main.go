@@ -12,6 +12,7 @@ func init() {
 
 func main() {
 	w := wallet.NewWallet()
-	fmt.Println(w.PublicKey())
 	fmt.Println(w.PrivateKeyStr())
+	fmt.Println(w.PublicKey())
+	fmt.Println(w.BlockchainAddress())
 }
