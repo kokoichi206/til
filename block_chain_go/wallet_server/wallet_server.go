@@ -75,11 +75,6 @@ func (ws *WalletServer) CreateTransaction(w http.ResponseWriter, req *http.Reque
 			return
 		}
 
-		fmt.Println(*t.SenderPublicKey)
-		fmt.Println(*t.SenderPrivateKey)
-		fmt.Println(*t.SenderBlockchainAddress)
-		fmt.Println(*t.RecipientBlockchainAddress)
-		fmt.Println(*t.Value)
 	default:
 		w.WriteHeader(http.StatusBadRequest)
 		log.Println("ERROR: Invalid HTTP Method")
