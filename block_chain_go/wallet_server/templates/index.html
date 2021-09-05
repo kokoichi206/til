@@ -6,6 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wallet</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        // ページを読み込んだ時の処理
+        $(function () {
+            $.ajax({
+                url: '/wallet',
+                type: 'POST',
+                success: function (response) {
+                    $('#public_key').val(response['public_key']);
+                    $('#private_key').val(response['private_key']);
+                    $('#blockchain_address').val(response['blockchain_address']);
+                    console.log(response);
+                },
+                error: function (error) {
+                    console.error(error);
+                }
+            })
+        })
+    </script>
 </head>
 <body>
     
@@ -21,7 +39,7 @@
         <textarea name="" id="private_key" cols="100" rows="1"></textarea>
 
         <p>Blockchain Address</p>
-        <textarea name="" id="blockchain_addres" cols="100" rows="1"></textarea>
+        <textarea name="" id="blockchain_address" cols="100" rows="1"></textarea>
     </div>
 
     <div>
