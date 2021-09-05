@@ -1,9 +1,10 @@
 package main
 
 import (
-	"log"
-	"fmt"
+	"blockchaingo/block"
 	"blockchaingo/wallet"
+	"fmt"
+	"log"
 )
 
 func init() {
@@ -11,12 +12,23 @@ func init() {
 }
 
 func main() {
-	w := wallet.NewWallet()
-	fmt.Println(w.PrivateKeyStr())
-	fmt.Println(w.PublicKey())
-	fmt.Println(w.BlockchainAddress())
+	walletM := wallet.NewWallet()
+	walletA := wallet.NewWallet()
+	walletB := wallet.NewWallet()
+	
+	// Wallet
+	t := wallet.NewTransaction(walletA.PrivateKey(), walletA.PublicKey(), walletA.BlockchainAddress(), walletB.BlockchainAddress(), 1.0)
 
-	// トランザクションのストラクチャーを作る
-	t := wallet.NewTransaction(w.PrivateKey(), w.PublicKey(), w.BlockchainAddress(), "B", 1.0)
-	fmt.Printf("signature %s\n", t.GenerateSignature())
+	// Blockchain
+	blockchain := block.NewBlockchain(walletM.BlockchainAddress())
+	isAdded := blockchain.AddTransaction(walletA.BlockchainAddress(), walletB.BlockchainAddress(), 1.0,
+		walletA.PublicKey(), t.GenerateSignature())
+	fmt.Println("Added? ", isAdded)
+
+	blockchain.Mining()
+	blockchain.Print()
+
+	fmt.Printf("A %.1f\n", blockchain.CalculateTotalAmount(walletA.BlockchainAddress()))
+	fmt.Printf("B %.1f\n", blockchain.CalculateTotalAmount(walletB.BlockchainAddress()))
+	fmt.Printf("M %.1f\n", blockchain.CalculateTotalAmount(walletM.BlockchainAddress()))
 }
