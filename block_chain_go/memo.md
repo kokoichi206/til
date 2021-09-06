@@ -16,3 +16,8 @@ gofmt -w block/goblockchain.go
 block chain address をパラメータとして渡し、そのアカウントの持つ総コイン量を求める
 
 http://localhost:5000/amount?blockchain_address=1DSTFJMa4YA4nh128iLcWNba3QcZSNBCzZ
+
+
+### メモ
+- ポインタにすると nil も入る
+  - `*string`,`&t.value`
