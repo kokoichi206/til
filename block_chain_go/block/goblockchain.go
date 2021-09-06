@@ -2,11 +2,13 @@ package block
 
 import (
 	"blockchaingo/utils"
+	"bytes"
 	"crypto/ecdsa"
 	"crypto/sha256"
 	"encoding/json"
 	"fmt"
 	"log"
+	"net/http"
 	"strings"
 	"sync"
 	"time"
@@ -112,11 +114,15 @@ func (bc *Blockchain) SyncNeighbors() {
 
 func (bc *Blockchain) StartSyncNeighbors() {
 	bc.SyncNeighbors()
-	_ = time.AfterFunc(time.Second * BLOCKCHAIN_NEIGHBOR_SYNC_TIME_SEC, bc.StartSyncNeighbors)
+	_ = time.AfterFunc(time.Second*BLOCKCHAIN_NEIGHBOR_SYNC_TIME_SEC, bc.StartSyncNeighbors)
 }
 
 func (bc *Blockchain) TransactionPool() []*Transaction {
 	return bc.transactionPool
+}
+
+func (bc *Blockchain) ClearTransactionPool() {
+	bc.transactionPool = bc.transactionPool[:0]
 }
 
 func (bc *Blockchain) MarshalJSON() ([]byte, error) {
@@ -131,6 +137,14 @@ func (bc *Blockchain) CreateBlock(nonce int, previousHash [32]byte) *Block {
 	b := NewBlock(nonce, previousHash, bc.transactionPool)
 	bc.chain = append(bc.chain, b)
 	bc.transactionPool = []*Transaction{} // ブロック生成後は、プールを空にする
+	// 他のノードに delete リクエストを投げる
+	for _, n := range bc.neighbors {
+		endpoint := fmt.Sprintf("http://%s/transactions", n)
+		client := &http.Client{}
+		req, _ := http.NewRequest("DELETE", endpoint, nil)
+		resp, _ := client.Do(req)
+		log.Printf("%v", resp)
+	}
 	return b
 }
 
@@ -151,8 +165,23 @@ func (bc *Blockchain) CreateTransaction(sender string, recipient string, value f
 	senderPublickKey *ecdsa.PublicKey, s *utils.Signature) bool {
 	isTransacted := bc.AddTransaction(sender, recipient, value, senderPublickKey, s)
 
-	// TODO
 	// Sync
+	if isTransacted {
+		for _, n := range bc.neighbors {
+			publicKeyStr := fmt.Sprintf("%064x%064x", senderPublickKey.X.Bytes(),
+				senderPublickKey.Y.Bytes())
+			signatureStr := s.String()
+			bt := &TransactionRequest{
+				&sender, &recipient, &publicKeyStr, &value, &signatureStr}
+			m, _ := json.Marshal(bt)
+			buf := bytes.NewBuffer(m)
+			endpoint := fmt.Sprintf("http://%s/transactions", n)
+			client := &http.Client{}
+			req, _ := http.NewRequest("PUT", endpoint, buf)
+			resp, _ := client.Do(req)
+			log.Printf("%v", resp)
+		}
+	}
 
 	return isTransacted
 }
