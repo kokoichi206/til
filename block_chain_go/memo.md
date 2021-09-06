@@ -18,6 +18,9 @@ block chain address をパラメータとして渡し、そのアカウントの
 http://localhost:5000/amount?blockchain_address=1DSTFJMa4YA4nh128iLcWNba3QcZSNBCzZ
 
 
+### 51%攻撃
+悪意のあるグループが、ネットワーク全体のマイニング速度の５１パーセントを支配して、不正な取引を行うこと
+
 ### メモ
 - ポインタにすると nil も入る
   - `*string`,`&t.value`
