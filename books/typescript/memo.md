@@ -46,27 +46,240 @@ inference magic
 
 TypeScript can't catch for you at compile time - things like stack overflows, broken network connections, and malformed user inputs - that will still result in runtime exceptions.
 
-### setups
-```sh
-$ npm install --save-dev typescript tslint @types/node
+## chap 3
+Types
+
+![](./imgs/type_hierarchy.png)
+
+### any
+any is the Godfather of types. It does anything for a price, but you don't want to ask any for a favor unless you're completely out of options.
+
+```typescript
+let a: any = 666
+let b: any = ['danger']
+let c = a + b  // doesn't report an error
 ```
 
-tsconfig.json
+To get TypeScript to complain about implicit anys be sure to enable to noImplicitAny flag in your tscofig.json. It's a part of the strict family of TSC flags.
 
-```
-{
-  "compilerOptions": {
-    "lib": ["es2015"],
-    "target": "es2015",
-    "module": "commonjs",
-    "outDir": "dist",
-    "strict": true
-  },
-  "include": [
-    "src
-  ]
+### unknown
+If any is the Godfather, then unknown is Keanu Reeves as undercover FBI agent Johnny Utah in POint Break: laid back, fits right in with the bad guys, but deep down has a respect for the law and is on the side of the good guys.
+
+Like any, it represents any value, but TypeScript won't let you use an unknown type until you refine it by checking what it is.
+
+```typescript
+let a: unknown = 30
+let b = a === 130   // ok
+let c = a + 10      // out
+if (typeof a === 'number') {
+  let d = a + 10    // ok
 }
 ```
+
+This example shoud give you a rough idea of how to use unknown:
+
+1. TypeScript will never infer something as unknown - you have to explicitly annotate it !
+2. You can compare values to values that are of type unknown.
+3. But, you can't do things that assume an unknown value is of a specific type; you have to prove to TypeScript that the value really is of that type first
+
+### number
+number is the set of all numbers: integers, floats, positives, negatives, Infinity, NaN, and so on.
+
+```typescript
+let oneMillion = 1_000_000
+```
+
+### bigint
+```typescript
+let a = 1234n
+const b = 5678n
+```
+
+### symbol
+this is used as an alternative to string keys in objects and maps, in places where you want to be extra sure that people are using the right well-known key and didn't accidentally set the key - think setting a default iterator for your object.
+
+### objects
+object is a little narrower than any, but not by much.
+
+```typescript
+let a: object = {
+  b: 'x'
+}
+a.b // ERROR
+
+let a = {
+  b: 'x'
+}
+a.b // ERROR
+```
+
+You can either let TS infer your object's shape for you, or explicitly describe it inside curly braces
+
+```typescript
+let a: {b: number} = {
+  b: 'x'
+}
+a.b // ERROR
+```
+
+object literal, or class
+
+```typescript
+let c: {
+  firstName: string
+  lastName: string
+} = {
+  firstName: 'john',
+  lastName: 'barrowman'
+}
+
+class Person {
+  constructor(
+    // public is shorthand for this.blahblah
+    public firstName: string,
+    public lastName: string
+  ) {}
+}
+c = new Person('matt', 'smith')
+```
+
+Can you tell TS that something is optional, or that there might be more properties than you planned for? You bet:
+
+```typescript
+let a: {
+  b: number
+  c?: string
+  [key: number]: boolean
+}
+```
+
+a might have a property c that's a string. And if c is set, it might be undefined.
+
+a might have any number of numeric properties that are booleans
+
+```typescript
+a = {b: 1}
+a = {b: 1, c: undefined}
+a = {b: 1, c: 'd'}
+a = {b: 1, 10: true}
+a = {b: 1, 10: true, 20: false}
+```
+
+#### Index Signatures
+The `[key: T]: U` syntax is called an **index signature**, and this is the way you tell TypeScript that the given object might contain more keys.
+
+U must be assignable to eigher number or string.
+
+Also note that you can use any word for the index signature key's name - it doesn't have to be key:
+
+```typescript
+let a: {
+  [seatNum: string]: string
+} = {
+  '34D': 'Boris Cherny',
+  '34E': 'Boris Gates'
+}
+```
+
+### memo
+- Empty object literal notation ({}). Try to avoid this.
+- The Object type. Try to avoid this.
+
+### Type Aliases
+Just like you can use variable declarations to declare a variable that aliases a value, you can declare a type that points to a type.
+
+```typescript
+type Age = number
+
+type Person = {
+  name: String
+  age: Age
+}
+```
+
+Aliases are **never** inferred by TypeScript, so you have to type them explicitly:
+
+
+### Union and Intersection types
+
+![](./imgs/union_intersection.png)
+
+```typescript
+type Returns = string | null
+
+function (a: string, b: number) {
+  return a || b
+}
+```
+
+### Arrays
+```typescript
+let d = [1, 'a']   // (string | number)[]
+
+let g = []
+g.push(1)
+g.push('red')   // NO error
+```
+
+The general rule of thumb is to keep arrays homogeneous. That is, don't mix apples and oranges and numbers in a single array.
+
+
+### Tuples
+Tuples are subtypes of array. They're a special way to type arrays that have fixed lengths, where the values at each index have specific, known types.
+
+```typescript
+let a: [number] = [1]
+
+let b: [string, string, number] = ['malcolm', 'gladwell', 1964]
+```
+
+Tuples support optional elements too.
+
+```typescript
+let trainFares: [number, number?][] = [
+  [3.6],
+  [3.4, 4],
+  [10.50]
+]
+```
+
+### Read-only arrays and tuples
+```typescript
+let as: readonly number[] = [1, 2, 3]
+```
+
+What is the difference between read-only and constant ???
+
+> read-only vs constant vs immutable
+
+### Enums
+Enums are a way to enumerate the possible values for a type. They are unordered data structures that map keys to values.
+
+```typescript
+// By convention, enum names are uppercases and singular.
+// Their keys are also uppercase.
+enum Language {
+  English,
+  Spanish,
+  Russian
+}
+
+// or, you can set values explicitly.
+enum Language {
+  English = 0,
+  Spanish = 1,
+  Russian = 2
+}
+Language.English
+```
+
+
+
+
+
+
+
+
 
 ## English
 
@@ -75,13 +288,22 @@ tsconfig.json
   - someone who is very interested in and enthusiastic about a particular subject: 
 - nerd
   - engage in or discuss a technical field obsessively or with great attention to detail.
+- squiggly
+  - a short, irregular curve or twist, as in writing or drawing. 
+- undercover
+  - involving secret work within a community or organization, especially for the purposes of police investigation or espionage.
+- pesky
+  - annoying or causing trouble
+- pitfall
+  - a hidden or unsuspected danger or difficulty.
+
 
 ### sentences
 - I'll wrap up with how to use TypeScript with your favorite frameworks, migrating your existing JavaScript project to TypeScript.
 - What exactly do I mean when I say "safer"? What I am talking about, of course, is type safety.
 - Don't get me wrong.
 - When are errors surfaced?
-
+- Why? Don't ask me, I'm just the guy writing this book.
 
 
 
