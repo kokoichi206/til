@@ -273,9 +273,171 @@ enum Language {
 Language.English
 ```
 
+## chap 4
+Functions
+
+The return type is inferred, but you can explicitly annotate it too if you want:
+
+```typescript
+function add(a: number, b: number): number {
+  return a + b
+}
+
+let gree3 = (name: string) => {
+  return 'hello' + name
+}
+```
+
+Optional and Default Parameters
+
+```typescript
+function log(message: string, userId?: string) {
+  let time = new Date().toLocaleTimeString()
+  console.log(time, message, userId || 'Not signed in')
+}
+
+log('Page loaded')
+log('User signed in', 'da763be')
+```
+
+### Rest parameters
+```typescript
+function sumVariadicSafe(...numbers: number[]): number {
+  return numbers.reduce((total, n) => total + n, 0)
+}
+sumVariadicSafe(1, 2, 3)
+```
+
+### call, apply, and bind
+```typescript
+function add(a: number, b: number): number {
+  return a + b
+}
+
+add(10, 20)
+add.apply(null, [10, 20])
+add.call(null, 10, 20)
+add.bind(null, 10, 20)
+```
+
+apply binds a value to this within your function
+
+"this" has a different value depending on how you called your function, which can make it notoriously fragile and hard to reason about.
+
+> For this reason, a lot of teams ban "this" everywhere except in class methods - to do this for your codebase too, enable to no-invalid-this TSLint rule.
+
+The reason that "this" is fragile has to do with the way it's assigned.
+
+### Generator Functions
+```typescript
+// The asterisk before a function's name makes that function a generator.
+function* createFibonacciGenerator() {
+  let a = 0
+  let b = 1
+  while (true) {
+    yield a;
+    [a, b] = [b, a + b]
+  }
+}
+
+let fibonacciGenerator = createFibonacciGenerator() // IterableIterator<number>
+fibonacciGenerator.next()  // evaluates to {value: 0, done: false}
+fibonacciGenerator.next()
+fibonacciGenerator.next()
+fibonacciGenerator.next()
+```
+
+### Iterators
+Iterators are the flip side to generators: while generators are a way to produce a stream of values, iterators are a way to consume those values.
+
+> Any object that defines a method called next, which returns an object with the properties value and done.
 
 
+### Type Level and Value Level Code
+A rule of thumb is: if it's valid JavaScript code, then it's value-level; if it's valid TypeScript but not Valid JavaScript, then it's type-level.
 
+### Contextual Typing
+```typescript
+function times(
+  f: (index: number) => void,
+  n: number
+) {
+  for (let i = 0; i < n; i++) {
+    f(i)
+  }
+}
+
+times(n => console.log(n), 4)
+```
+
+Note that if we didn't declare f inline, TS wouldn't have been able to infer its type:
+
+```typescript
+function f(n) {  // 'n' implicitly has an 'any' type
+  console.log(n)
+}
+
+times(f, 4)
+```
+
+### Generics?
+```typescript
+type Filter = {
+  <T>(array: T[], f: (item: T) => boolean): T[]
+}
+
+function map<T, U>(array: T[], f: (item: T) => U): U[] {
+  let result = []
+  for (let i = 0; i < array.,length; i++) {
+    result[i] = f(array[i])
+  }
+  return result
+}
+```
+
+### Generic Type Aliases
+```typescript
+type MyEvent<T> = {
+  target: T
+  type: string
+}
+```
+
+### Generic Type Defaults
+```typescript
+type MyEvent<T> = {
+  target: T
+  type: string
+}
+```
+
+To create a new event, we have to explicitly bind a generic type to MyEvent, representing the type of HTML element that the envet was dispatched on:
+
+```typescript
+let buttonEvent: MyEvent<HTMLButtonElement> = {
+  target: myButton,
+  type: string
+}
+```
+
+We can add a default
+
+```typescript
+type MyEvent<T = HTMLElement> = {
+  target: T
+  type: string
+}
+
+let myEvent: MyEvent = {
+  target: myElement,
+  type: string
+}
+```
+
+### Type-Driven Development
+> A style of programming where you sketch out type signatures first, and fill in values later.
+
+When you apply an expressive type system to a function, the function's type signature might end up telling you most of what you need to know about that function.
 
 
 
@@ -296,6 +458,8 @@ Language.English
   - annoying or causing trouble
 - pitfall
   - a hidden or unsuspected danger or difficulty.
+- arity
+  - the number of arguments that a function can take
 
 
 ### sentences
@@ -304,6 +468,13 @@ Language.English
 - Don't get me wrong.
 - When are errors surfaced?
 - Why? Don't ask me, I'm just the guy writing this book.
-
+- Here's what a function looks like in TypeScript
+- Thankfully, TypeScript has your back.
+- That is intentional.
+  - Was it intentional?
+- So far in this book, we've been talking about the hows and whys of concrete types, and functions that use concrete types.
+- You are spot-on
+  - Your guess was spot-on
+- How exactly does this work? Let's walk through it step by step.
 
 
