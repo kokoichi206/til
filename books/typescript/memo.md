@@ -440,6 +440,45 @@ let myEvent: MyEvent = {
 When you apply an expressive type system to a function, the function's type signature might end up telling you most of what you need to know about that function.
 
 
+## Chap 5
+Classes and Interfaces
+
+- [./checc.ts]
+- [./index_3.ts]
+
+The **private access modifier** in the constructor automatically assigns the prarameter to "this". and sets its visibility to private, meaning that code within a Position instance can read and write to it, but code outside of a Position instance can't.
+
+**protected** makes the property visible both to instance of Piece and **the instances of any subclass of Piece.**
+
+If we hadn't assigned it a value in the constructor, TS would have told us that the variable is not definitely assigned, i.e., we said it's of type T, but it's actually T | undefined because it's not assigned a value in a property initializer or in the constuctor
+
+### Access modifier
+- public
+- protected
+- private
+
+Using access modifiers, you can design classes that don't expose too much info about their implementations, and instead expose well-defined APIs for others to use.
+
+### others
+```typescript
+abstract class Piece {
+  ...
+}
+// Cannot create an instance of an abstract class
+new Piece('White', 'E', 1)  // ERROR
+```
+
+### Interfaces
+Like type aliases, interfaces are a way to name a type so you don't have to define it inline.
+
+Everywhere you used your Sushi type alias, you can also use your Sushi interface.
+
+What are the differences between types and interfaces? There are three, and thre're subtle.
+
+when you extend an interface, TS will make sure that the interface you're extending is assignable to your extension!
+
+### Implementing Interfaces Versus Extending Abstract Classes
+The difference is that interfaces are more general and lightweight, and abstract classes are more special-purpose and feature-rich.
 
 
 
