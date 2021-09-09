@@ -55,3 +55,25 @@ class Cat implements Animal {
     console.info('slept for', hours, 'hours')
   }
 }
+
+
+
+// interface MyMap<K, V> {
+//   get(key: K): V
+//   set(key: K, value: V): void
+// }
+
+// class MyMap<K, V> {
+//   constructor(initialKey: K, initialValue: V) {
+//     this.K = V
+//   }
+// }
+
+// let a = new MyMap<string, number>('k', 1)
+// let b = new MyMap('k', true)
+
+// a.get('k')
+// b.get('k')
+
+
+

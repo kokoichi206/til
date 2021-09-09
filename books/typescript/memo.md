@@ -481,6 +481,109 @@ when you extend an interface, TS will make sure that the interface you're extend
 The difference is that interfaces are more general and lightweight, and abstract classes are more special-purpose and feature-rich.
 
 
+### Mixins
+Mixins are a pattern that allows us to mix behaviors and properties into a class. By convention, mixins:
+
+- Can have state (i.e., instance properties)
+- Can only provide concrete methods (not abstract ones)
+- Can have constructors, which are called in the same order asa their classses were mixed in
+
+```typescript
+// Generic type parameter
+type ClassConstructor<T> = nwe(...args: any[]) => T
+
+function withEZDebug<C extends ClassConstructor<{
+  getDebugValue(): object
+}>>(Class: C) {
+  return class extends Class {
+    constructor(...args: any[]) {
+      super(...args)
+    }
+    debug() {
+      let Name = Class.constructor.name
+      let value = this.getDebugValue()
+      return Name + '(' + JSON.stringify(value) + ')'
+    }
+  }
+}
+```
+
+### final Classes
+To simulate final classes in TS, we can take advantage of private constructors:
+
+When a constructor is marked private, you can't new the class or extend it.
+
+```typescript
+class MessageQueue {
+  private constructor(private message: string[]) {}
+  static create(messages: string[]) {
+    return new MessageQueue(messages)
+  }
+}
+
+MessageQueue.create([])
+
+class BadQueue extends MessageQueue {}  // ERROR
+new MessageQueue([])  // ERROR
+```
+
+### Design Patterns
+
+#### Factory Pattern
+```typescript
+let Shoe = {
+  create(type: 'balletFlat' | 'boot' | 'sneaker'): Shoe {
+    switch (type) {
+      case 'balletFlat': return new BalletFlat
+      ...
+    }
+  }
+}
+```
+
+#### Builder Pattern
+A way to separate the construction of an object from the way that object is actually implemented.
+
+```typescript
+// this type
+new RequestBuilder()
+  .setURL('/users')
+  .setMethod('get')
+  .setData({firstName: 'Anna'})
+  .send()
+
+// how to make
+class RequestBuilder {
+
+  private data: object | null = null
+  private method: 'get' | 'post' | null = null
+  private url: string | null = null
+
+  setMethod(method: 'get' | 'post'): this {
+    this.method = method
+    return this
+  }
+  setData(data: object): this {
+    this.data = data 
+    return this
+  }
+  setURL(url: string): this {
+    this.url = url
+    return this
+  }
+  send() {
+    // ...
+  }
+}
+```
+
+This traditional builder design is not completely safe: we can call .send before we set the method, URL or data, resulting in a runtime exception (remember, that's the bad kind of exception).
+
+
+
+
+
+
 
 ## English
 
@@ -499,6 +602,12 @@ The difference is that interfaces are more general and lightweight, and abstract
   - a hidden or unsuspected danger or difficulty.
 - arity
   - the number of arguments that a function can take
+- delve
+  - reach inside a receptacle and search for something
+- receptacle
+  - a hollow object used to contain something
+- hollow
+  - having a hole or empty space inside
 
 
 ### sentences
