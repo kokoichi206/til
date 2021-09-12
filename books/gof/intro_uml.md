@@ -82,11 +82,13 @@ uml では、フィールドやメソッドの頭にアクセス修飾子を表�
 
 通常では、勝手に変換される（上図）。この機能は、次の一文できることができる。
 
-skinparam classAttributeIconSize 0
-
-hide circle
-
-を使うことで、まるを消すこともできる。
+### クラス図を書く際の Tips
+- アクセス修飾子のアイコン化を無視
+  - skinparam classAttributeIconSize 0
+- A, C, I などのアイコン（丸）を表示させない
+  - hide circle
+- 関係性の左に書いたものが、グラフ上で「上 or 左」にくる
+- `-`が１本なら横に並び、２本以上なら縦に並ぶ
 
 ### シーケンス図
 Sequence Diagram
