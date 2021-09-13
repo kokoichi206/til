@@ -6,11 +6,26 @@ https://www.hyuki.com/dp/
 ## UML
 - システムを視覚化したり、仕様書や設計を文章化したりするための表現方法。
 - Unified Modeling Language
+- オブジェクト指向システムを記述、視覚化、構築、文章化するための汎用記述言
+
 
 ### クラスと階層関係
 Class Diagram
 
 クラスやインスタンスなどの、静的な関係を表したもの。クラス以外のものも表す。矢印は、サブクラスからスーパークラスに向かう
+
+
+- stereotype、ステレオタイプ
+  - `class Stereotype <<interface>>`
+- "has a" 関係を表現するには、集約（aggregation）を使う
+- "uses"の関係には、破線を引く
+  - あるクラスが別のクラスや interface に対して**依存性（dependency）**をもっている場合
+  - 下のケースでは、"PeripheralTester uses Peripheral"
+  ```java
+  public class PeripheralTester {
+      public void test(Peripheral p) {...}
+  }
+  ```
 
 ```plantuml
 @startuml

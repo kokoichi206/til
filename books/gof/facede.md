@@ -17,8 +17,8 @@ Facade パターンは、複雑に絡み合ってごちゃごちゃした詳細�
 ```plantuml
 @startuml
 Main --> PageMaker: Uses >
-PageMaker --> HtmlWriter: Uses >
-PageMaker --> Database: Uses >
+PageMaker --|> HtmlWriter: Uses >
+PageMaker --|> Database: Uses >
 
 class PageMaker {
   {method} <u>makeWelcomePage</u>
