@@ -2,7 +2,9 @@
 ```bash
 seq 100 | awk '{if($1 % 15 == 0){print "FizzBuzz"}else if($1 % 3 == 0){print "Fizz"}else if($1 % 5 == 0){print "Buzz"}else{print $1}}'
 
-seq 30 | awk '{if($1 % 3 == 0){a[$1] = "Fizz"}}{if($1 % 5 == 0){a[$1] = a[$1]"Buzz"}}END{for(i=1; i<length(a); i++){if(a[i] != ""){print a[i]}else{print i}}}'
+seq 100 | awk '{if($1 % 3 == 0){a[$1] = "Fizz"}}{if($1 % 5 == 0){a[$1] = a[$1]"Buzz"}}END{for(i=1; i<length(a); i++){if(a[i] != ""){print a[i]}else{print i}}}'
+
+seq 100 | awk '{if($1 % 3 == 0){a[$1] = "Fizz"}}{if($1 % 5 == 0){a[$1] = a[$1]"Buzz"}}END{for(i=1; i<length(a); i++){if(a[i] != ""){print a[i]}else{print i}}}' | tr '\n' , | sed -E 's@(.*),@\1@'
 ```
 
 ## sed
