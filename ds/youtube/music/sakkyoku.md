@@ -26,6 +26,18 @@
 - 生成モデル（GAN、VAE）による作曲
 - Music Transformer の利用
 
+### Magenta のモデル
+- Melody RNN
+  - 再帰型ニューラルネットワークの一種、LSTM を用いたメロディの生成
+  - 直近の note の並びから次の note が予想される
+- Music VAE
+  - 変分オートエンコーダ（VAE）を用いた音楽生成
+- GANSynth
+  - 敵対的生成ネットワークを用いてオーディオを合成
+- Image Stylization
+  - アーティスティックに表現された写真を生成
+- Sketch RNN
+  - スケッチを生成する RNN
 
 
 
