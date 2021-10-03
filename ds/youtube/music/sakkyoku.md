@@ -40,4 +40,28 @@
   - スケッチを生成する RNN
 
 
+## sec 3
+
+### RNN
+- Reccurent Neural Network
+- 入力と正解が「時系列データ」となる
+- 中間層が「再帰」の構造を持つ
+  - 全てのパラメータは共有される
+
+### LSTM
+- Long Short-Term Memory
+- RNN の一種
+  - RNN のの全結合層の代わりに、LSTM 層が使われている
+- 記憶セルの導入による、長期の情報保持
+- Magenta でも多く使われている
+
+### Magenta の RNN 音楽生成モデル
+- Melody RNN
+- Drums RNN
+- Improv RNN
+- Polyphony RNN
+  - バッハ風の、和音を繋いで進行する曲を生成する
+- Pianoroll RNN-NADE
+- Performance RNN
+  - 音の強弱やタイミングなどの微妙な表現まで変化する高度な曲の生成
 
