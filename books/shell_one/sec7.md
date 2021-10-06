@@ -148,7 +148,99 @@ $ echo hell > /dev/pts/8
 ```
 
 
+### カレントディレクトリ
+```sh
+# あるコマンドがどこで実行されているか
+$ ls -l /proc
+# PID 1567 について調べる: cwd = 場所
+$ ls -l /proc/1567/cwd
+# PID 1567 について調べる: cwd = 実行ファイルへのシンボリックリンク
+$ ls -l /proc/1567/exe
+```
+
+### ldd
+- print shared object dependencies
+- ldd prints the shared objects (shared libraries) required by each program or shared object specified on the command line.  An example of its use and output is
+
+```sh
+$ ldd /bin/ls
+
+# maps ファイルには、プロセス内でのメモリアドレスの使われ方が記録されている
+$ cat /proc/1234/maps
+    linux-vdso.so.1 (0x0000ffff9ecf0000)
+    libselinux.so.1 => /lib/aarch64-linux-gnu/libselinux.so.1 (0x0000ffff9ec3b000)
+    libc.so.6 => /lib/aarch64-linux-gnu/libc.so.6 (0x0000ffff9eac8000)
+    /lib/ld-linux-aarch64.so.1 (0x0000ffff9ecc0000)
+    libpcre2-8.so.0 => /lib/aarch64-linux-gnu/libpcre2-8.so.0 (0x0000ffff9ea3a000)
+    libdl.so.2 => /lib/aarch64-linux-gnu/libdl.so.2 (0x0000ffff9ea26000)
+    libpthread.so.0 => /lib/aarch64-linux-gnu/libpthread.so.0 (0x0000ffff9e9f6000)
+# vDSO: virtual Dynamic Shared Objects
+$ man 7 vdso
+
+# Linux には、共有ライブラリを検索する際、
+# 各ライブラリのパスをキャッシュすることで高速に検索する仕組み
+# キャッシュの確認には、ldconfig というコマンドを使う
+$ ldconfig -p | grep -e libc.so.6 -e ld-link
+    libc.so.6 (libc6,AArch64, OS ABI: Linux 3.7.0) => /lib/aarch64-linux-gnu/libc.so.6
+```
+
+### デバイス調査
+```sh
+# /dev の中で、1文字目が b となるファイルが、
+# ブロックデバイスのデバイスファイル
+$ ls -l /dev | grep '^b'
+
+$ f(){ ls /sys/bus/usb/drivers/usb | wc -l ;}
+```
+
+### システムコールを追いかける
+```sh
+# strace は、調査対象のコマンドを邪魔しないよう、標準エラー出力からでてくる
+$ strace bash -c 'echo aaa > tmp1' |& head -n 3
+
+# strace は多くの子プロセスを作るので遅い！
+$ strace xargs -n 1 < words |& grep '^clone(' | wc -l
+$ strace -c xargs -n 1 < words >/dev/null
+
+# プロセスを立ち上げていることの確認
+$ strace bash -c 'for i in {1..1000}; do /bin/echo "$i" >/dev/null; done' |& grep ^clone | wc -l
+1000
+$ time for i in {1..1000}; do /bin/echo "$i" >/dev/null; done
+real    0m0.056s
+user    0m0.040s
+sys     0m0.016s
+
+$ strace bash -c 'for i in {1..1000}; do builtin echo "$i" >/dev/null; done' |& grep ^clone | wc -l
+0
+$ time for i in {1..1000}; do builtin echo "$i" >/dev/null; done
+real    0m0.056s
+user    0m0.040s
+sys     0m0.016s
+
+## ぎもん！
+## 下では、なぜ出力はない？（clone が存在しない？）
+## for loop が必要なのか？？
+$ strace bash -c '/bin/echo "i"' |& grep ^clone
+```
+
+### ネットワーク, その他
+```sh
+# ネットワークデバイス一覧
+$ ip l | grep ^[0-9] | awk '{print $2}' | tr -d : | xargs
+lo eth0 wlan0 docker0
+
+$ echo $BASH_VERSION
+5.0.17(1)-release
+
+# エミュレータのウィンドウサイズ！！
+$ stty size
+27 170
+```
+
+
 
 ## 小ネタ
 - grep -a は、バイナリファイル内を検索するのに使える！
   - 行儀の悪いログが多いので、つけるのをお勧め
+- echo $!
+  - 直前にバックグラウンドで実行されたコマンドのプロセス ID が展開される
