@@ -14,7 +14,7 @@ $ awk 'match($0, /^ +/){if (RLENGTH%4) print NR}' hoge.py
 これを利用してユーザーを偽サイトに誘導する手法を、ビットスクワッティングと呼ぶ。もし「blog.ueda.tech」の blog.ueda の部分に１ビットのビットスクワッティングが起きたら、どのような文字列になるか？
 
 ```sh
- echo 'blog.ueda' | xxd -b -c1
+$ echo 'blog.ueda' | xxd -b -c1
 00000000: 01100010  b
 00000001: 01101100  l
 00000002: 01101111  o
