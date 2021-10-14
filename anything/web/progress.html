@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="cv" width="360" height="240"></canvas>
+    <canvas id="cv2" width="360" height="240"></canvas>
+    <canvas id="cv3" width="360" height="240"></canvas>
+    <canvas id="cv4" width="360" height="240"></canvas>
+    <canvas id="cv5" width="360" height="240"></canvas>
+    <canvas id="cv6" width="360" height="240"></canvas>
+</body>
+<script>
+    const pi = Math.PI
+
+    let ctx = document.getElementById("cv").getContext("2d");
+    ctx.beginPath();
+    const STEPS = 100;
+    for (let i=0; i<=STEPS; i++) {
+        ctx.arc(120, 120, 100, 0, 2 * pi * i / STEPS, true);
+        ctx.stroke();
+    }
+
+
+    // canv2, 3 で共通の設定
+    const MAX_ROUND = 2;
+    let ONE_ROUND_STEPS = 100;
+    const default_speed = 2 * pi / ONE_ROUND_STEPS;
+    const FRAME_SEC = 8;
+
+    const canvas2 = document.getElementById("cv2");
+    const ctx2 = canvas2.getContext("2d");
+    const WIDTH = canvas2.width;
+    const HEIGHT = canvas2.height;
+    let i = 0;
+
+    let angle = 0;
+    let interval = setInterval(() => {
+        ctx2.clearRect(0, 0, WIDTH, HEIGHT);
+
+        ctx2.beginPath();
+
+        angle += calc_speed(i, ONE_ROUND_STEPS)
+
+        // console.log(i, angle);
+        if (angle > i) angle = i;
+        ctx2.arc(120, 120, 100, default_speed * i, default_speed * angle, true);
+        ctx2.stroke();
+        i++;
+        if (i > ONE_ROUND_STEPS * MAX_ROUND) {
+            clearInterval(interval);
+        }
+    }, FRAME_SEC);
+
+
+    let j = 0;
+    let angle2 = 0;
+    // なんか最後途中で終わるように見えるため、オフセット追加
+    const MIN_LENGTH = 3;
+    let ctx3 = document.getElementById("cv3").getContext("2d");
+    let interval3 = setInterval(() => {
+        ctx3.clearRect(0, 0, WIDTH, HEIGHT);
+
+        ctx3.beginPath();
+
+        angle2 += calc_speed2(j, ONE_ROUND_STEPS)
+
+        console.log(j, angle2);
+        if (angle2 > j) angle2 = j - MIN_LENGTH;
+        ctx3.arc(120, 120, 100, default_speed * j, default_speed * angle2, true);
+        ctx3.stroke();
+        j++;
+        if (j > ONE_ROUND_STEPS * MAX_ROUND) {
+            clearInterval(interval3);
+        }
+    }, FRAME_SEC);
+
+
+    function calc_speed2(step, half_points) {
+        let speed = 0;
+        // サークルの動きを計算する部分
+        if (step < 2 * half_points / 10) {
+            speed = 0;
+        } else if (step < half_points) {
+            speed = (step - half_points / 10) / (2 * half_points);
+        } else if (step < (2 - 1/10) * half_points) {  // ２周の 2
+            speed = 50 * step / (16 * half_points) - 21 / 8;
+        } else {
+            speed = 41 - 20 * step / half_points;
+        }
+        return speed;
+    }
+
+    function calc_speed(step, half_points) {
+        let speed = 0;
+        // サークルの動きを計算する部分
+        if (step < half_points) {
+            speed = step / half_points;
+        } else if (step < 3 * half_points / 2) {
+            speed = 1 + 2 * (step - half_points) / half_points;
+        } else {
+            speed = 5 - 2 * step / half_points;
+        }
+        return speed;
+    }
+
+
+    // let cv4 = document.getElementById("cv4").getContext("2d");
+    // cv4.beginPath();
+    // cv4.arc(120, 120, 100, 2 * pi, 1, true);
+    // cv4.stroke();
+</script>
+</html>
