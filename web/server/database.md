@@ -54,3 +54,21 @@ if execErr != nil {
 	fmt.Println("Pien, could not create db")
 }
 ```
+
+
+```sql
+sakamichi=> select count(*) from member_tags;
+ count 
+-------
+    99
+(1 row)
+
+sakamichi=> select count(*) from members;
+ count 
+-------
+    94
+(1 row)
+```
+
+
+
