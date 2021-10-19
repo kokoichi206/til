@@ -71,4 +71,10 @@ sakamichi=> select count(*) from members;
 ```
 
 
+### db にアクセス
+```sh
+$ psql sakamichi
+```
+
+
 
