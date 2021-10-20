@@ -15,6 +15,7 @@ $ cat /etc/apache2/conf-enabled/serve-cgi-bin.conf
 [go から cgi にして配信するまで](https://tech-blog.s-yoshiki.com/entry/188)
 [apache2 ubuntu の設定方法](https://www.server-world.info/query?os=Ubuntu_20.04&p=httpd&f=5)
 
+[Ubuntu ではじめる Linux サーバー](https://shell-mag.com/portal-linuxserver/)
 
 ## PostgreSql
 [ubuntu にローカルサーバーで DB を立てる](https://www.server-world.info/query?os=Ubuntu_20.04&p=postgresql12&f=1)
