@@ -1,3 +1,8 @@
+cgi 関係の設定
+
+```sh
+$ sudo vim /etc/apache2/conf-available/serve-cgi-bin.conf
+```
 
 
 ```sh
