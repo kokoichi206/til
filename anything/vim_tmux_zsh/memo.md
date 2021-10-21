@@ -234,3 +234,16 @@ $ find -name models.py
 - [Last Pass](https://www.lastpass.com/)
 - [chrome remote desktop](https://remotedesktop.google.com/?pli=1)
 
+
+## 世界で通用するエンジニアになるには？
+- 英語で技術情報収集
+- わかりやすく最適なコード
+  - コメントを書かないでもわかるくらいのわかりやすさ！
+- 良いエンジニアはキャリア構築力がある
+  - 世界のエンジニアと働ける環境
+  - オープンソースに参加が良い手段
+  - 自分よりスキルがある知人と一緒に開発
+  - Udemy などでシリコンバレーの技術習得も良い手段
+
+### 流行りのテクノロジー、言語
+Programming language market share
