@@ -30,3 +30,14 @@ SELECT member_id, name_ja, tag_name
             ON member_tags.tag_id = tags.tag_id
                 WHERE tags.tag_name = 'あざとい';
 
+-- members
+SELECT * FROM members
+    INNER JOIN member_infos ON members.member_id = member_infos.member_id
+    INNER JOIN groups ON groups.group_id = members.group_id
+        WHERE groups.group_name = 'hinatazaka';
+
+-- members blood type
+SELECT * FROM member_infos 
+    INNER JOIN members ON members.member_id = member_infos.member_id 
+        WHERE members.group_id = 3 AND member_infos.generation = '2期生' 
+            ORDER BY member_infos.blood_type;
