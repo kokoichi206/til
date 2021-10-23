@@ -1,11 +1,17 @@
+## Memo
+うーん。リダイレクトはあんまりうまくいかなかった
 
-```sh
-# usb 接続状況を確認
-$ lsusb
+port を開けると解決？
 
-$ ls /dev/video*
-```
+- firewall でのポートを解放
+  - sudo ufw status
+  - sudo ufw allow 8888
+  - sudo ufw deny 8888
+- ルーターでのポートも、8888 と 8888 をつなげる記述をした
 
+http://192.168.3.7:8888/javascript.html
+
+bash ~/mjpg-streamer/start_server.sh
 
 ### mjpg-stream
 ```sh
@@ -36,3 +42,14 @@ To activate the new configuration, you need to run:
 ```sh
 ```
 
+### コマンドメモ
+```sh
+# usb 接続状況を確認
+$ lsusb
+
+$ ls /dev/video*
+
+# apache リスタート
+$ sudo systemctl restart apache2
+
+```
