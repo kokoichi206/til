@@ -42,4 +42,11 @@ $ sudo dpkg -i wiringpi-latest.deb
 $ gpio -v
 ```
 
+### sensor
+目標物までの距離を測定できる
+
+ちゃんとしてそう！かつ簡単！
+
+- [公式サイト](https://docs.sunfounder.com/projects/davinci-kit/ja/latest/2.2.5_ultrasonic_sensor_module.html)
+- [Code](./sensor.py)
 
