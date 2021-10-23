@@ -65,3 +65,15 @@ apache
   - apache の仕組みによっては、接続もとが変わってるかもと思ったので
 - firewall で、5432 のポートを解放
 
+
+## 各種ファイルの中身どんなのかまとめ
+```sh
+$ sudo vim /etc/apache2/apache2.conf
+
+<Directory /var/www/html>
+▸---AllowOverride None
+▸---Require all granted
+#    AliasMatch ^/api/(.*) https://www.google.com/search?q=$1
+</Directory>
+```
+
