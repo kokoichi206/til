@@ -50,3 +50,10 @@ $ gpio -v
 - [公式サイト](https://docs.sunfounder.com/projects/davinci-kit/ja/latest/2.2.5_ultrasonic_sensor_module.html)
 - [Code](./sensor.py)
 
+
+### RFID モジュール
+無線周波数識別（RFID）は、オブジェクト（またはタグ）と質問デバイス（またはリーダー）の間の無線通信を使用して、そのようなオブジェクトを自動的に追跡したり識別したりする技術を指す。
+
+- [公式サイト](https://docs.sunfounder.com/projects/davinci-kit/ja/latest/2.2.7_mfrc522_rfid_module.html)
+- [Code]()
+
