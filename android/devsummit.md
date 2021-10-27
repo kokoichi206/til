@@ -147,9 +147,82 @@ val extraPadding by animateDpAsState {
   - remember the value over configuration changes
 
 
+
+## Flow
+- [Developers site](https://developer.android.com/kotlin/flow)
+
+![](imgs/flow_.png)
+
+### Reactive
+make data flow just one direction
+
+![](imgs/data_one_direction.png)
+
+### Kotlin Flow\<T\>
+- Produces emit data to the flow
+  - Data sources or Repositories
+- Consumers collect data from the flow
+  - UI layer
+
+![](imgs/data_one_direction.png)
+
+![](imgs/flow_concept.png)
+
+![](imgs/flow_builder.png)
+
+### Upstream Flow
+![](imgs/upstream_flow.png)
+
+### Observing Flows
+- Flow.collect
+- Collect items when needed
+  - should not waste the water
+
+![](imgs/flow_good_collect.png)
+
+### lifecycle
+![](imgs/flow_lifecycle.png)
+
+### StateFlow
+![](imgs/flow_lifecycle.png)
+
+```kotlin
+val result: StateFlow<Result<UiState>> = someFlow
+    .stateIn(
+        initialValue = Result.Loading
+        scope = viewModelScope,
+        started = WhileSubscribed(5000),
+    )
+```
+
+- scenerio
+  - rotation
+  - navigation to home
+
+### testing_flow
+
+#### case1: 
+![](imgs/testing_flow.png)
+
+```kotlin
+class MyFakeRepository : MyRepository {
+    fun observeCount() = flow {
+        emit(ITEM_1)
+    }
+}
+```
+
+#### case2:
+![](imgs/testing_flow2.png)
+
+
+
+
+
 ## 気になってること： [TODO]
 アニメーション？
 https://developer.android.com/jetpack/compose/animation
+これはやる
 
 Material you
 その人の背景色などの設定によって、アプリ内の色もダイナミカルに変わる！
@@ -162,9 +235,9 @@ MotionLayout
 
 RemoteCoroutineWorker
 
-Work Manager ?
+[Work Manager ?](https://developer.android.com/topic/libraries/architecture/workmanager?gclid=Cj0KCQjw8eOLBhC1ARIsAOzx5cG1Lq8ywJdy4fFWo4OggVRTsN1_WDkROXk82ZQfjYuehf2aWWIFO2caAvLKEALw_wcB&gclsrc=aw.ds)
 
-figma
+[figma](https://www.figma.com/)
 export to Android Studio !?
 working with designers
 designtocode
@@ -172,6 +245,10 @@ designtocode
 ### Compose
 Surface で囲むことの意味？
 
+### Flows
+
+### WearOS
+やってみたい
 
 
 ## English
@@ -179,3 +256,8 @@ Surface で囲むことの意味？
 - expedited work
 - I think I can take this question.
 - have a place in compose world
+- you improve your game
+- Specifically, we work through what's similiar, what's different, and what's new in this version of Compose.
+- This is what you get
+- I know your time is valiable, so thank you so much for spending some time with us.
+  - Happy coding
