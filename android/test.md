@@ -11,5 +11,29 @@
 - UI tests: 10%
   - End to end test
 
+### Test Driven Development
+- Main Principle: 
+  - Write the test case before the implementation of the function(only for unit tests)
+- You should only have one assertion per test case.
+
+#### What makes a good test?
+1. Scope
+2. Speed
+3. Fidelity
+
+Not a flaky test (sometmies succeeds and sometimes failes)
+
+#### How many test cases should you write?
+- As littele tests as necessary, but also as many as necessary.
+
+### Context?
+We rely on the androdi component
+
+All our test cases should be independent each other
+
+![](imgs/test_size.png)
+
+### その他
+- [Pixabay Developer API](https://pixabay.com/ja/service/about/api/)
 
 

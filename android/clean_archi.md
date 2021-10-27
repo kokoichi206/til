@@ -89,4 +89,13 @@ JJUG CCC 2019 Spring
 
 ### memo
 - FlowRow は有能すぎん？
+- lateinit
+  - late init
+  - 後から初期化する！？
+
+### Hilt
+- InstallIn
+  - lifecycle がその（）の中のものと同じになる？
+
+### LiveData
 
