@@ -216,7 +216,18 @@ class MyFakeRepository : MyRepository {
 ![](imgs/testing_flow2.png)
 
 
+## Android 12
 
+### App Links
+- Granular verification: link-by-link
+- APIs to request users to set default apps
+
+### Tools and tips
+```sh
+$ adb shell dumpsys platform_compat
+$ adb shell am compat enable | disable | reset <CHANGE_ID|CHANGE_NAME> <PACKAGE_NAME>
+
+```
 
 
 ## 気になってること： [TODO]
