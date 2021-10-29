@@ -36,4 +36,16 @@ All our test cases should be independent each other
 ### その他
 - [Pixabay Developer API](https://pixabay.com/ja/service/about/api/)
 
+### memo
+- viewmodel は普通のテスト (NOT AndroidTest)
+- test フォルダの方では、`` で名前を囲む命名が使える
 
+
+## kotlin
+```kotlin
+val string = buildString {
+    for (i in 1..Constants.MAX_NAME_LENGTH + 1) {
+        append(1)
+    }
+}
+```
