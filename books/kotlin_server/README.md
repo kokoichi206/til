@@ -2,6 +2,8 @@
 
 [サンプルコード](https://github.com/n-takehata/kotlin-server-side-programming-practice)
 
+[自分のコード](./untitled/src)
+
 ### sec 1
 
 #### Kotlin 
@@ -45,4 +47,57 @@ fun printMessageLength(message: String?) {
     println(message!!.length)
 }
 ```
+
+#### build.gradle.kts　について
+Gradle（ビルドツール）の設定ファイルを、Kotlin DSL という Kotlin で記述できるようにしたもの
+
+#### 型
+- Unit は何もないことを表す型、基本的には不要
+  - void ?
+
+####　シールドクラス
+- 継承を制限する機能
+- 継承・オーバーライドさせたい関数に関しては、open をつけておく必要がある
+- seald をつけることで、このクラスは**他ファイルのクラスから**継承できなくなる
+
+```kotlin
+// 同一ファイル内からなら可能
+seald class Platform {
+    abstract fun showName()
+}
+
+class AndroidPlatform: Platform() {
+    override fun showName() {
+        println("Android.")
+    }
+}
+class IosPlatform: Platform() {
+    override fun showName() {
+        println("iOS.")
+    }
+}
+```
+
+#### interface
+- 継承のさせ方が微妙に違う？
+  - クラスの場合は、() が着くけど、インターフェースの場合はつかない？
+
+```kotlin
+interface Greeter {
+    fun hello()
+}
+
+// ------------- //
+class GreeterImpl: Greeter {
+    override fun hello() {
+        println("Hello.")
+    }
+}
+```
+
+#### コレクション
+- List
+- Map
+- Set
+
 
