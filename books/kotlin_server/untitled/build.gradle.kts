@@ -25,4 +25,5 @@ tasks.withType<KotlinCompile>() {
 
 dependencies {
     // ここにライブラリやフレームワークを追加していく
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
 }
