@@ -288,3 +288,18 @@ fun asyncTest() {
 }
 ```
 
+
+### sec 3 Java との相互作用
+
+#### companion object
+Kotlin ではクラス内に static な変数や関数を定義するとき、companion object を使う
+
+```kotlin
+class CompanyConstants {
+    companion object {
+        val maxEmployeeCount = 100
+    }
+}
+```
+
+
