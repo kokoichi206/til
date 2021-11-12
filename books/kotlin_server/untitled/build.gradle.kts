@@ -22,3 +22,7 @@ tasks.test {
 tasks.withType<KotlinCompile>() {
     kotlinOptions.jvmTarget = "11"
 }
+
+dependencies {
+    // ここにライブラリやフレームワークを追加していく
+}
