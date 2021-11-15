@@ -33,3 +33,36 @@ val color = Color(Random.nextInt(256), Random.nextInt(256), Random.nextInt(256))
 Log.d("test", color.toString())
 ```
 
+
+## かっこいいいいねボタン
+```kotlin
+IconToggleButton(
+    modifier = Modifier
+        .align(Alignment.CenterEnd),
+    checked = isChecked,
+    onCheckedChange = {
+        viewModel.toggleIsSortTime()
+    },
+) {
+
+    val transition = updateTransition(isChecked, label = "Checked indicator")
+
+    val tint by transition.animateColor(
+        label = "Tint"
+    ) { isChecked ->
+        if (isChecked) Color.Red else Color.Black
+    }
+
+    Icon(
+        imageVector = if (isChecked) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
+        contentDescription = null,
+        tint = tint,
+        modifier = Modifier.size(30.dp)
+    )
+}
+```
+
+
+## UseCase
+- Make your business logic reusable.
+
