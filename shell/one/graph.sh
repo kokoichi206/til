@@ -1,6 +1,10 @@
 #! /bin/bash -
-# cat /dev/urandom | LC_CTYPE=C tr -dc 0-9 | fold -w 5 | sed 's@^@0.@' | xargs -n 12 2>/dev/null | head -n 1000 | \
-# awk '{for(i=0; i<=int(NF) ;i++){{if(i==0){a = 0}else{a += $i}}{if(i == NF){print 2*a/NF}}}}' |\
+# 
+# Make a graph from a data file.
+#
+# Usage: bash ./graph.sh FILE
+#   FILE format: label value
+#
 
 usage()
 {
@@ -21,7 +25,6 @@ usage_and_exit()
     exit $1
 }
 
-DIVIDER=4
 AVERAGE_COUNT=12
 MAX_LENGTH=60
 SHAPE="■"
@@ -71,13 +74,12 @@ for i in "$@"; do
         ;;
     esac
 done
-echo $1
+
 if [[ "$FILE" ]] ; then
-    echo "file $FILE exists"
     cat "$FILE" |\
-    awk -v i=1 -v max_length="$MAX_LENGTH" -v shape="$SHAPE" 
-    '{b[i]=$1; a[i]=$2; i=i+1; if($2 > max){max = $2}}
-    END{for(j=1; j<=length(a); j++){printf "%1.2f: ", b[j]; 
+    awk -v i=1 -v max_length="$MAX_LENGTH" -v shape="$SHAPE" \
+    '{b[i]=$1; a[i]=$2; i=i+1; if($2 > max){max = $2}}\
+    END{for(j=1; j<=length(a); j++){printf "%1.2f: ", b[j]; \
     for(k=0; k<int(max_length*a[j]/max); k++){printf shape}{printf "\n"}}}'
 else
     echo "file $1 does NOT exist"
