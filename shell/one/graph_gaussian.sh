@@ -12,6 +12,12 @@
 #   bash graph_gaussian.sh -s \# -d 1 -c 4 -n 1000
 #
 
+no_praph_script_error()
+{
+    echo "You need the file \"$PATH_TO_GRAPH_SCRIPT\" to make a graph"
+    exit 1
+}
+
 usage()
 {
     echo "Usage: $PROGRAM [OPTION] FILE"
@@ -40,12 +46,19 @@ usage_and_exit()
     exit $1
 }
 
+# PARAMS
+PATH_TO_GRAPH_SCRIPT="./graph.sh"
 AVERAGE_COUNT=12
 DIVIDER=4
 MAX_LENGTH=60
 NUM=2000
 SHAPE="■"
 PROGRAM=`basename $0`
+
+# if there's no file to make a graph, exit with error.
+if [[ ! "$PATH_TO_GRAPH_SCRIPT" ]] ; then
+    no_praph_script_error
+fi
 
 for i in "$@"; do
     case $i in
@@ -115,8 +128,9 @@ awk '{for(i=0; i<=int(NF) ;i++){{if(i==0){a = 0}else{a += $i}}{if(i == NF){print
 awk -v g="$DIVIDER" '{print substr(g*$0,1,3)/g}' | sort | uniq -c | awk '{print $2,$1}' > "$TMP_FILE"
 
 # 4. Make a graph by using graph.sh
-bash ./graph.sh -c "$AVERAGE_COUNT" -l "$MAX_LENGTH" -s "$SHAPE" "$TMP_FILE"
+bash "$PATH_TO_GRAPH_SCRIPT" -c "$AVERAGE_COUNT" -l "$MAX_LENGTH" -s "$SHAPE" "$TMP_FILE"
 
-# 5. Remove the temporary file.
+# wait until the scripts writes a graph to the terminal
 sleep 4
+# 5. Remove the temporary file.
 rm "$TMP_FILE"
