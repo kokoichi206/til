@@ -24,7 +24,7 @@ def parseArgs() -> list:
     return args
 
 def isValidName(name: str, nameEn: str) -> bool:
-    return not (name == '藤吉夏鈴') ^ (nameEn == 'fujiyoshikarin')
+    return not ((name == '藤吉夏鈴') ^ (nameEn == 'fujiyoshikarin'))
 
 
 if __name__ == '__main__':
