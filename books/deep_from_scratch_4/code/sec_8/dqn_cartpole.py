@@ -4,13 +4,13 @@ import matplotlib.pyplot as plt
 
 episodes = 300  # 10000
 sync_interval = 20
-env = gym.make('CartPole-v0')
-agent = DQNAgent()
 reward_log = []
 
-ave = 100
+ave = 5
 cnt = 0
 for _ in range(ave):
+    env = gym.make('CartPole-v0')
+    agent = DQNAgent()
     cnt += 1
     for episode in range(episodes):
         state = env.reset()
@@ -20,7 +20,7 @@ for _ in range(ave):
         while not done:
             if agent.epsilon > 0.05:
                 agent.epsilon -= (1 / 5000)
-            #agent.epsilon = max(0.01, 0.1 - 0.01*(episode/200)) #Linear annealing from 10% to 1%
+            agent.epsilon = max(0.01, 0.1 - 0.09*(episode/200)) #Linear annealing from 10% to 1%
             action = agent.get_action(state)
             next_state, reward, done, info = env.step(action)
 
