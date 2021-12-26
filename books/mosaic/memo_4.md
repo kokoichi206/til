@@ -175,6 +175,148 @@ $$
 ### 演習
 ガウシアンピラミッドの縮小操作は、ガウシアンぼかしをかけてからダウンサンプリングをするというものである。TensorFlowのDepthwise Convでは、縦横方向のstrides=2とすれば良い。
 
+#### のこぎり波
+三角関数の合成で表される関数で、
+
+$$
+f(x) = \sum^{\infty}_{k=1} \frac{1}{k}\sin(kx)
+$$
+
+で表される関数である(saw_y)。
+
+``` python
+## のこぎり波
+saw_x = np.arange(-2*np.pi, 2*np.pi, 0.02)
+saw_y = np.zeros(saw_x.shape)
+for i in range(1, 201):
+    saw_y += np.sin(i*saw_x) / i
+###
+
+plt.plot(saw_x, saw_y) 
+
+fft_saw = np.fft.fft(saw_y)
+plt.plot(np.abs(fft_saw)[:saw_x.shape[0]//2])
+###
+```
+
+のこぎり波はシンセサイザーに使われ、のこぎり波をたくさん重ね合わせることでストリングス（弦楽器）の音として用いることができる。
 
 
+#### ローパス
+- データをFFTにかける
+  - `np.fft.fft()`
+- FFTの結果に対し、最初のN個だけ1をかけ、残りに対しては0をかける（ローパスフィルター）
+- ローパスフィルターを適用したFFTに対し、逆フーリエ変換を適用しデータの空間に戻す
+  - `np.fft.ifft()`
+
+``` python
+fig = plt.figure(figsize=(8,8))
+for i, n in enumerate([10, 20, 40, 100]):
+    ax = fig.add_subplot(2, 2, i+1)
+    flag = (np.arange(saw_x.shape[0]) <= n).astype(np.float32)
+    fft_lowpass = fft_saw * flag
+    tmp = np.fft.ifft(fft_lowpass)
+    ax.plot(saw_x, tmp.real)
+    ax.set_title("N = "+str(n))
+###
+```
+
+#### バンドパス
+ローパスの、かけるフィルターが違うのみ
+
+``` python
+## バンドパスの実装
+fig = plt.figure(figsize=(8,8))
+thresholds = [0, 10, 20, 40, 100]
+for i in range(len(thresholds)-1):
+    ax = fig.add_subplot(2, 2, i+1)
+    indices = np.arange(saw_x.shape[0])
+    flag = ((indices >= thresholds[i]) * (indices <= thresholds[i+1])).astype(np.float32)
+    fft_bandpass = fft_saw * flag
+    tmp = np.fft.ifft(fft_bandpass)
+    ax.plot(saw_x, tmp.real)
+    ax.set_title(str(thresholds[i]) + str(" <= N <= ") + str(thresholds[i+1]))
+###
+```
+
+#### 画像のフーリエ変換（２次元のフーリエ変換）
+`np.fft.fft2(image)`を使う。imageは行列。
+
+画像は3階テンソルであるので、
+
+``` python
+out = np.zeros(inputs.shape, dtype=np.complex128)
+for i in range(inputs.shape[-1]):
+    out[:,:,i] = np.fft.fft2(inputs[:,:,i])
+```
+
+のように**カラーチャンネル別にFFTするか、グレースケール画像として事前に変換しておく**必要がある
+
+#### FFT2
+fft2dのデフォルトの出力は周波数ゼロが左上にきて見づらい。そこで、ゼロを中央に、外側にいくほど高周波となるように座標変更する。これは、np.fft.fftshitという関数でできる。
+
+```
+fft_image = np.fft.fft2(image)
+fft_image = np.fft.fftshift(fft_image)
+```
+
+``` python
+flower_fft = np.fft.fft2(flower_original)
+## 中心が (0,0) となるように shift している
+flower_fft = np.fft.fftshift(flower_fft)
+fft_plot = np.abs(flower_fft)
+###
+
+plt.imshow(flower_original, cmap="gray")
+plt.show()
+plt.imshow(np.log(fft_plot), cmap="gray")
+```
+
+``` python
+flower_inv = np.fft.ifftshift(flower_fft)
+flower_inv = np.fft.ifft2(flower_inv)
+###
+
+plt.imshow(flower_inv.real, cmap="gray")
+```
+
+#### 二次元ローパス
+``` python
+from PIL import ImageDraw
+
+def get_circle_mask(radius):
+    with Image.new("L", (flower_original.shape[1], flower_original.shape[0]), color=0) as mask:
+        draw = ImageDraw.Draw(mask)
+        center = np.asarray(flower_original.shape[::-1]) // 2 # (H, W) -> (W, H)
+        draw.ellipse((*(center-radius), *(center+radius)), fill=255)
+        return np.asarray(mask, np.float32) / 255.0
+
+## 確認用
+out = get_circle_mask(80)
+plt.imshow(out, cmap="gray")
+```
+
+> Rが低くても高くても背景の雲は同じように描画されている。一方で、Rが低いとたんぽぽの綿毛がぼやけて、Rが大きくなるに従って綿毛の輪郭が描画されていく。つまり、雲の部分は低周波成分で、綿毛の部分が高周波成分であることがわかる。
+
+> また別の見方をすれば、Rが低いほどぼやけた画像となる。ガウシアンぼかしやモザイクをかけた画像とは、低周波成分のみ残って高周波成分が消えた画像ということができる。これは特にガウシアンぼかしで成立する。ガウシアンぼかしをガウシアンローパスフィルターと言ったり、単にローパスフィルターというのはこのためである。
+
+#### 二次元バンドパスフィルター
+``` python
+flower_fft = np.fft.fft2(flower_original)
+flower_fft = np.fft.fftshift(flower_fft)
+fig = plt.figure(figsize=(10, 10))
+bradius = [0, 10, 20, 50, 100]
+for i in range(len(bradius)-1):
+    mask = (1-get_circle_mask(bradius[i])) * get_circle_mask(bradius[i+1])
+    out = mask * flower_fft
+    out = np.fft.ifftshift(out)
+    out = np.fft.ifft2(out)
+###
+    ax = fig.add_subplot(2, 2, i+1)
+    ax.imshow(out.real, cmap="gray")
+    ax.set_title(str(bradius[i])+" <= R <= "+str(bradius[i+1]))
+```
+
+- モザイクとは高周波の成分にノイズが乗るローパスフィルタだあ！
+- 「モザイク除去」＝「拡大縮小の超解像問題＋ノイズ除去」
 
