@@ -173,6 +173,12 @@ bind C-g send-prefix
   - ctrol + u の逆サイ
 
 
+### セッションを終了 ※-t <対象セッション名>でセッション名の指定も可能
+tmux kill-session
+
+### tmux全体を終了
+tmux kill-server
+
 ### ペイン
 - ctrl + d, ペインを抜ける
 - ctrl + g, z: 拡大縮小

@@ -1,5 +1,7 @@
 #!/bin/bash -
 #
+# Description:
+# Count the number of instances of  an item
 #
 # Usage:
 # countem.sh < inputfile
