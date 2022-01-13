@@ -27,6 +27,22 @@
 One hidden layer can solve non-linearly separable problems
 
 
+## FCNN: Fully Connected NN
+
+### ReLU: Rectified Linear Unit
+- Rectified: 修正済みの線形関数！
+    - 線形だと、重ねる意味がなくなる
+- sigmoid はほとんどで微分が０なので、多層になった場合に back propagation が効かない。
+    - ReLU は正の部分で全て１！！
+
+Why ReLU?
+
+- Avoid the problem of vanishing gradients during back propagation as the dervative becomes 1
+
+
+### Loss fn
+Multi class classification task -> CrossEntropyLoss
+
 
 ## Pytorch
 
