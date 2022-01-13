@@ -17,6 +17,16 @@
 4. Adjust weight by Gradient Descent
 
 
+### MLP: Multi-layer perceptron
+- Simple perceptron can only solve linearly separable problems
+- Input Layer -> Hidden Layers -> Output Layer
+
+### loss fn
+0 or 1 の分類 ⇨ binary cross entropy
+
+One hidden layer can solve non-linearly separable problems
+
+
 
 ## Pytorch
 
