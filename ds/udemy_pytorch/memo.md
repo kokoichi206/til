@@ -44,9 +44,21 @@ Why ReLU?
 Multi class classification task -> CrossEntropyLoss
 
 
+## CNN
+Convolutional Neural Network
+
+Fashion MNIST
+
+### Dropout
+Overfitting can be avoided.
+
+### 疑問
+このやり方で、val データが train データに混ざってない？？
+
+
 ## Pytorch
 
-```
+``` python
 import torch
 
 x = torch.Tensor([1, 2, 3])
@@ -55,5 +67,11 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(x)
 x = x.to(device)
 print(x)
+```
+
+### Data Preparation
+``` python
+fashon_mnist_train = FashionMNIST("FashionMNIST", train=True, download=True, transform=transforms.ToTensor())
+fashon_mnist_test = FashionMNIST("FashionMNIST", train=False, download=True, transform=transforms.ToTensor())
 ```
 
