@@ -56,6 +56,14 @@ Overfitting can be avoided.
 このやり方で、val データが train データに混ざってない？？
 
 
+## RNN
+- RNN has a structure with closed paths inside
+- The state of the previous hidden layer and the current input determine the current hidden layer and output
+- It can handle sequential data which has time dependency
+- It can also handle image data
+- LSTM/GRU can learn long time temporal relationships, but it has basically the same structure as RNN
+
+
 ## Pytorch
 
 ``` python
