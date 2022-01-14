@@ -66,7 +66,13 @@ Overfitting can be avoided.
 
 ## Sesame Street Transformers
 
+### T5
+Examples of text-to-text are
 
+1. translation
+1. question and answering
+1. classification
+1. summarization
 
 
 
