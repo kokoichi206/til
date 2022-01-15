@@ -45,3 +45,10 @@ Min-Max GAN:
 ![](imgs/loss_func.png)
 
 
+## Conditional GAN
+COnditional GAN は、ノイズや画像にラベルを付与することで、特定の画像を生成することができる！
+
+100次元のノイズ＋One hot vector 10次元（ここでは、0-9 の数字の分類に使うので、10次元の One hot vector）
+
+画像に対してラベルを付与する場合は、チャネル方向に追加する。
+モノクロに対しては、1次元＋10次元 ⇨ １１チャネルになる
