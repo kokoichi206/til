@@ -99,3 +99,33 @@ BN は当てないほうがいい。
 
 そもそも、Discriminator の１層目は、なんで最初から BN False にしてたんだっけ？
 
+### Gradient Penalty Loss
+``` python
+def gradient_penalty(real_imgs, fake_imgs, gp_weight, netD, device):
+    batch_size = real_imgs.size()[0]
+    alpha = torch.rand(batch_size, 1, 1, 1)
+    alpha = alpha.expand_as(real_imgs).to(device)
+    fake_imgs = fake_imgs.to(device)
+    interpolated_imgs = (alpha * real_imgs.data + (1 - alpha) * fake_imgs.data).requires_grad_()
+    interpolated_out = netD(interpolated_imgs)
+    grad_outputs = torch.ones(interpolated_out.size()).to(device)
+    gradients = torch.autograd.grad(interpolated_out, interpolated_imgs,
+                                    grad_outputs=grad_outputs,
+                                    create_graph=True, retain_graph=True)[0]
+    gradients = gradients.view(batch_size, -1)
+    eps = 1e-12
+    gradient_norm = torch.sqrt(torch.sum(gradients ** 2, dim=1) + eps)
+    gp = gp_weight * ((gradient_norm - 1) ** 2).mean()
+    return gp
+```
+
+使い方
+
+``` python
+lossD_gp = gradient_penalty(real_imgs, fake_imgs, opt.gp_weight, netD, device)
+lossD = lossD_real + lossD_fake + lossD_gp
+lossD.backward()
+optimizerD.step()
+```
+
+学習のスピードはゆっくり！
