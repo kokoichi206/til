@@ -170,3 +170,80 @@ Instance Normalization では、画像全体のみで正規化を行う。ミニ
     - CycleGAN では学習中の損失の振動を抑えるために最新の Fake 画像を判別する代わりに過去 50 枚のバッファー画像から１枚を取り出して損失を計算する
 - [馬としまうまのデータセット](https://people.eecs.berkeley.edu/~taesung_park/CycleGAN/datasets/)
 
+
+
+## Self-Attention GAN
+
+### 畳み込みの問題点
+畳み込みはカーネルを通してパターンを拾う or 表現する
+
+転置畳み込みで画像を拡大するときは**局所的なパターンのつなぎ合わせ**で全体を表現する。
+
+> 複数のカーネルをまたぐ Long-range のパターンは苦手！
+
+### Self-Attention の導入
+SA-GAN では自分のピクセルと似ている部分を特徴料として抽出する Self-Attention を導入
+
+右目に対して左目の位置など**ピクセル的には少し離れている大域的な特徴**を拾うことができる
+
+### SA の計算
+大まかに２ステップ。
+
+1. 畳み込みでチャネル数を圧縮する
+1. attention マップを作成
+
+![](imgs/self_attention.png)
+
+### Step1:Pointwise Convolution
+(1*1) Pointwise Operation
+
+Self-Attention マップは非常にメモリを食うため、あらかじめチャネル数を圧縮しておく
+
+### Step2:Attention Map
+Attention Map とはピクセル毎に相関を計算した行列。
+
+まずは画像を一次元化し、転置したベクトルとの行列席を計算する
+
+### Attention Layer
+元の画像に Attention Map を足し算として、特徴量とする。
+
+Attention Map はピクセルの相関を計算しているため、似ているところが入力で重みづけられる
+
+### Spectral Normalization
+1-Lipscitz 連続を課すための方法の１つ
+
+Weight を正則化する
+
+固有値の最大値で規格化しておくと、一番大きな値でも１になるため、出力値が極端にならない（Spectral Normalization）の考え方
+
+1. 行列の特異値（固有値）を求める
+1. 特異値の最大値（行列のスペクトル半径）で重み付けパラメーターを規格化する
+
+### ネットワーク
+![](imgs/self_attention_gen.png)
+
+![](imgs/self_attention_disc.png)
+
+### 訓練の工夫展
+
+#### TTUR
+Two-Timescale Update Rule
+
+識別器と生成器で異なる学習率を使うこと。
+
+識別器の学習率 4e-4, 生成器の学習率 1e-4 とすることで、識別器を速く訓練する
+
+### dataset
+[Oxford 102 Flowers](https://www.robots.ox.ac.uk/~vgg/data/flowers/102/)
+
+### Loss Func
+Self-Attention GAN では、損失関数に **Hinge 損失**という関数を用いる。
+
+なぜなーら、GANの安定な訓練に寄与するから！
+
+## Memo
+``` python
+layers = [nn.utils.spectral_norm(nn.Conv2d(in_channels, out_channels, kernel_size, stride, padding))]
+```
+
+ここがどういう処理辿ってるかわからん。。。
