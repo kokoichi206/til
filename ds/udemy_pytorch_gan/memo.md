@@ -247,3 +247,7 @@ layers = [nn.utils.spectral_norm(nn.Conv2d(in_channels, out_channels, kernel_siz
 ```
 
 ここがどういう処理辿ってるかわからん。。。
+
+
+### Links
+- [さまざまなGAN](https://ai-scholar.tech/articles/treatise/gansurvey-ai-371)
