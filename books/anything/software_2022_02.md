@@ -269,5 +269,86 @@ const decrement = makeCounter(-1);
 
 ## Github Actions
 
+### What Is Github Actions
+- [Events that trigger workflows](https://docs.github.com/ja/actions/using-workflows/events-that-trigger-workflows)
+
+#### 構成要素
+- Workflow
+  - 1つ以上のジョブから構成
+  - 1つのワークフローにつき、１つのYAMLファイル
+  - トリガーとなるイベントが異なれば、ワークフローを別に用意する
+- Job
+  - １つ以上のステップから構成されるタスク定義
+  - ジョブが分割されると、それぞれ別のランナーアプリケーションインスタンスで実行されるため、ジョブ間のデータ共有に注意する
+- Step
+  - ステップは、ジョブの中で実行される各タスクのこと
+- Action
+  - アクションは、ステップを構成する最小の構成要素
+
+##### Action
+jsアクション、Dockerコンテナアクション、Compositeアクション
+
+##### Runner
+Jobはランナーと呼ばれるアプリケーションにより実行される。なお、ランナーは2019年にOSSとして公開されている
+
+[Github](https://github.com/actions/runner)
+
+[自分のランナーをホストする](https://docs.github.com/ja/actions/hosting-your-own-runners)
 
 
+```
+$ git tag -a v0.0.1 -m "v0.0.1"
+```
+
+#### あれこれ
+- [Actions cache examples](https://github.com/actions/cache)
+- Github Environments は 2021/12 にリリースされた機能！
+- IaC
+  - CI/CD との組み合わせ
+  - AWS CloudFormation
+  - Google Cloud Deployment Manager
+  - Azure Resource Manager
+  - Terraform
+  - Ansible
+- やってみたいこと
+  - Terraformを活用し、CI/CD経由でAWSにEC2を構築する
+
+#### Github Actionsによる細かいタスクの自動化
+GitHub Actioinsは、コードのビルド、テスト、リリースなどを自動化できるが、CI/CD専用の自動化ツールではない！！！
+
+[Action Github-Scripts](https://github.com/actions/github-script)
+
+
+labeler.yml: どのファイルの変更にどのラベルを付与するか。・
+
+``` yml
+# .github/labeler-config.yml
+# kubernetes配下ファイル+サブフォルダ含む
+kubernetes:
+- kubernetes/**/*
+
+# cloudformation配下のファイル
+cloudformation:
+- cloudformation/*
+
+# terraform配下のファイル
+terraform:
+- terraform/*
+```
+
+``` yml
+name: Labeler
+on:
+  pull_request:
+
+jobs:
+  label:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/labeler@v3
+        with:
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          configuration-path: ".github/labeler-config.yml"
+          sync-labels: true
+```
