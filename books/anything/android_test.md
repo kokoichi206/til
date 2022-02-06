@@ -165,6 +165,148 @@ verify(recorder, times(1)).record(eq("Weather is SUNNY"))
 Kotlin のために１から書かれた新しいモックライブラリ。Kotlin のコルーチンや拡張関数のモックにも対応するなど、大きな可能性を秘めている。
 
 
+## sec 3
+
+### Robolectric
+Local Unit Test ではモジュールに android.* の名前空間のクラス群が含まれる場合、Android SDK によって提供される android.jar でフレームワークの依存関係を解決する。ただ、これはあくまで名前解決の便宜上提供されているダミーに過ぎず、実機やエミュレータ以外で実行しようとすると実行時例外が上がってテストが失敗する。
+
+そこで、「フレームワークのモック」が簡単に行える Robolectric を使う
+
+Robolectric は Android フレームワークのコードをシミュレートして JVM 上で高速に実行できるテストフレームワーク
+
+### SQLite を利用したモジュールの Test
+Robolectric は **shadow** と呼ばれる仕組みを使って Android フレームワークのコードをシミュレートする。
+
+Jetpack ファミリーのひとつであり、柔軟なオブジェクトマッピングを提供する SQLite のラッパーライブラリ Room Persistence Libracy を使ってみる
+
+### 非同期処理のユニットテスト
+- 非同期処理はコールバック関数を通じて処理の完了を通知してもらうことが多いので戻り値を返さず検証がしづらい
+- 非同期処理では呼び出し元スレッドと実行スレッドが異なるため、実行順序を考える必要があるなど検証が容易ではない
+
+``` kotlin
+class StringFetcher {
+    fun fetch(): String {
+        Thread.sleep(1000L)
+        return "foo"
+    }
+}
+```
+
+StringFetcher を利用して非同期に処理を実行し、結果をコールバックとして返すための AsyncStringFetcher クラス！
+
+``` kotlin
+class AsyncStringFetcher(val fetcher: StringFetcher) {
+    val executor: ExecutorService = Executors.newCachedThreadPool()
+
+    fun fetchAsync(onSuccess: (value: String) -> Unit,
+                onFailure: (error: Throwable) -> Unit) {
+        executor.submit {
+            try {
+                val value = fetcher.fetch()
+                onSuccess(value)
+            } catch (error: Throwable) {
+                onFailure(error)
+            }
+        }
+    }
+}
+```
+
+
+### OkHttp と Retrofit を使ったモジュールのユニットテスト
+OkHttp は決済大手の Square 社が中心となって開発している OSS の HTTP クライアント。標準で HTTP/2 やレスポンスキャッシュなどをサポートし、シンプルかつ柔軟な使い勝手から Android における HTTP クライアントとしてデファクト。
+
+Retrofit は同じく Square 社の OSS で、REST クライアントを作成する際のボイラープレートを大幅に削減してくれるライブラリ。HTTP 通信部分は標準で OkHttp を利用する。
+
+Retrofit と OkHttp の組み合わせは Android で REST 通信をする際の強力な選択肢になる
+
+
+### MockWebServer
+
+### MVP architecture
+一般に、**Fat Controller**（コントローラの責務過多）問題がある。この問題に対処するためにさまざまな多層アーキテクチャが生み出されている。
+
+今回はそのうちの MVP アーキテクチャに注目する
+
+- Model layer
+    - データ構造及びデータを操作する処理群
+- View layer
+    - UI 部品の操作
+- Presenter layer
+    - 両者の橋渡し
+
+#### モデル層
+モデル層の実装方法としてユースケースやリポジトリパターンなど様々ある。本項では取得したいデータを RxJava の Single でラップして返すリポジトリを想定している
+
+``` kotlin
+class GitHubRepository(val localDataSource: LocalDataSource) {
+    fun listRepos
+}
+```
+
+#### View と Presenter
+Activity は View と Controller の中間のような存在にあるため、View と Presenter の責務を分けにくい。
+
+ここでは、View = Activity or Fragment と定義し、これは賢いロジックを持たず「Presenter の求めに応じて UI 部品を更新する層」と定義する
+
+Activity はライフサイクルを持ち、UI コンポーネントを直接扱うことから android.* 名前空間と切っても切れない存在なので、そのままでは Local Unit Test が困難。
+
+従って、View と Presenter が互いに果たす責務をシンプルなインターフェイスとして定義する
+
+``` kotlin
+interface View {
+    fun showRepositoryList(list: List<Repo>)
+}
+
+interface Presenter {
+    fun getRepositoryList(name: String)
+}
+```
+
+これを踏まえて Activity を実装する
+
+``` kotlin
+class MainActivity: AppCompatActivity(), View {
+    override fun showRepositoryList(list: List<Repo>) {
+
+    }
+
+    override fun onCreate(savedInstanceState: Bunde?) {
+        val repository = GitHubRepository(LocalDataSource())
+        val presenter = ListPresenter(this, repository)
+        presenter.getRepositoryList("kokoichi")
+    }
+}
+```
+
+``` kotlin
+class ListPresenter(val view: View,
+                val repository: GitHubRepository) : Presenter {
+    override fun getRepositoryList(name: String) {
+        repository.listRepos(name)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy { view.showRepositoryList(it) }
+    }
+}
+```
+
+1. 注目すべきはコールバック相手の View の参照を Activity それ自体ではなく、View インターフェイス型としてもらっているてん。こうすることでユニットテストを書く際に Activity を直接扱わなくてもすむ。
+1. Presenter#getRepositoryList() が呼び出されるとモデル層の GitHubRepository#listRepos() に処理を移譲する
+1. データ取得後は subscribeBy { view.showRepositoryList(it) } のように View に対して結果をコールバックする。まさに橋渡し役
+
+
+### テストのないプロジェクトにテストを導入する
+データを取得するモジュールが Local..., Remote... ともにフィールドに private 宣言されており、テストダブルに置き換えることが困難。
+
+static メソッドに関しては上書きできないため動作の確認がめんどくさい
+
+アクセス権を private にしたままスタブに差し替えるには、Mockito の InjectMocks アノテーションを利用できる
+
+ただ、InjectMocks は final なフィールドをモックで差し替えることができない。**Kotlin ではデフォルトで final になる**ので、var で変数定義する必要があるが、テストのためにするのは不恰好すぎる。
+
+そこで、**依存関係をコンストラクタから渡してしまうというアプローチ**が有効なことも！
+
 
 
 
@@ -179,4 +321,5 @@ Kotlin のために１から書かれた新しいモックライブラリ。Kotl
 ## 命名
 - isValid_givenAlphaNumeric_returnsTrue()
 - isEqualToIgnoringCase
+- isValid_givenBlank_throwsIllegalArgumentException()
 
