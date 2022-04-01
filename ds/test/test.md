@@ -1,0 +1,3 @@
+1. CV means Cross Validation. This is the score in your validation set. In a competition, the LB normally is computed only 20-30 % test data. Everyday you submit to get a high score in the LB, even your CV is not good. It makes your model overfits with 20-30 % which is used for the LB. With any comp, finally, u need to choose 2 last submissions. The strategy is always choose one for highest in your CV and one for highest in LB.
+2. Depend on how big data have, we decide to implement K-fold or not. With K-fold we need a coupe of times to train. Then with a small data set, like https://www.kaggle.com/c/home-credit-default-risk, people use K-fold. With very big data set, like https://www.kaggle.com/c/talkingdata-adtracking-fraud-detection, it is impossible to use K-fold.
+
