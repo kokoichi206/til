@@ -123,9 +123,9 @@ done
 TMP_FILE=`date +%Y_%m%d_%H%M%S`
 
 # step 1,2,3 make a temporary file
-cat /dev/urandom | LC_CTYPE=C tr -dc 0-9 | fold -w 5 | sed 's@^@0.@' | xargs -n "$AVERAGE_COUNT" 2>/dev/null | head -n "$NUM" | \
-awk '{for(i=0; i<=int(NF) ;i++){{if(i==0){a = 0}else{a += $i}}{if(i == NF){print 2*a/NF}}}}' |\
-awk -v g="$DIVIDER" '{print substr(g*$0,1,3)/g}' | sort | uniq -c | awk '{print $2,$1}' > "$TMP_FILE"
+cat /dev/urandom | LC_CTYPE=utf_8 tr -dc 0-9 | fold -w 5 | sed 's@^@0.@' | xargs -n "$AVERAGE_COUNT" 2>/dev/null | head -n "$NUM" | \
+    awk '{for(i=0; i<=int(NF) ;i++){{if(i==0){a = 0}else{a += $i}}{if(i == NF){print 2*a/NF}}}}' |\
+    awk -v g="$DIVIDER" '{print substr(g*$0,1,3)/g}' | sort | uniq -c | awk '{print $2,$1}' > "$TMP_FILE"
 
 # 4. Make a graph by using graph.sh
 bash "$PATH_TO_GRAPH_SCRIPT" -c "$AVERAGE_COUNT" -l "$MAX_LENGTH" -s "$SHAPE" "$TMP_FILE"
