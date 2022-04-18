@@ -341,4 +341,51 @@ RNN は過去のことを徐々に忘れていく傾向にあるため、非常�
   - RNN, 1d CNN, Transform のいずれかを利用可
 
 
+## sec 12
+生成型 DL
+
+### シーケンスデータ
+最初の成功例は RNN, その後生成型 Transformer として GPT-3。
+
+前のトークンから次のトークンの確率を予測できるモデルを言語モデル（language model）と呼ぶ。
+
+``` python
+import numpy as np
+
+def reweight_distribution(original_distribution, temperature=0.5):
+    distribution = np.log(original_distribution) / temperature
+    distribution = np.exp(distribution)
+    return distribution / np.sum(distribution)
+```
+
+### DeepDream
+CNN が学習した表現を使う芸術的な画像加工手法
+
+- DeepDream では、特定のフィルタではなく層全体の活性化を最大化する。
+- 出発点が（ノイズが少し含まれた）からの入力ではなく既存の画像であるため、結果として得られた効果が既存の視覚的パターンとしっかり結びつき、画像の要素をどことなく芸術的な方法で歪ませる。
+- 入力画像はさまざまな尺度で処理されるため、可視化の品質が良くなる。これらの尺度をオクターブ（octave）と呼ぶ。
+- Keras での訓練済みの CNN
+  - VGG16
+  - VGG19
+  - Xception
+  - ResNet50
+  - etc.
+- 下位にある層ほど幾何学的なパターンを生成
+- 上位にある層ほど ImageNet のクラス（鳥、犬など）が見分けられるような表現を生成
+- DeepDream は、CNN を逆向きに実行することで、ネットワークが学習した表現に基づいて入力を生成する仕組み
+- 結果として、まるで幻覚を見ているような面白い画像が生成される
+
+### NN によるスタイル変換
+ニューラルスタイル変換（neural style transfer）。ベース画像の内容を維持した上で、リファレンス画像のスタイルをベース画像に適応するという仕組み。
+
+ここでのスタイルとは、基本的に、さまざまな空間的尺度での画像のテクスチャ、色、視覚パターンを意味する。そして内容とは、画像の俯瞰的なマクロ構造のこと。
+
+何を達成したいのかを指定する損失関数さえ定義したら良い！
+
+- スタイルの損失関数
+  - グラム行列（Gram matrix）
+    - 与えられた層の特徴量マップ同士の内積
+- 内容の損失関数
+  - 
+
 
