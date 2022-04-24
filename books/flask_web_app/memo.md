@@ -43,3 +43,30 @@ pip install flask-mail
   - ユーザーのログイン情報などをサーバーに保存し、一連の処理を継続的に行えるようにする仕組みのこと
 - クッキーを使ったセッション管理により、ステートレスなHTTP通信において、一連の処理を継続的に効率よく行う。
 
+
+## sec 2
+- Blueprint
+  - アプリを分割するための Flask の機能
+- SQLAlchemy
+  - Object Relational Mapping
+
+
+```
+pip install flask-sqlalchemy
+pip install flask-migrate
+```
+
+db migration
+
+```
+flask db init
+
+flask db migrate
+flask db upgrade
+```
+
+
+``` 
+pip install flask-wtf
+```
+
