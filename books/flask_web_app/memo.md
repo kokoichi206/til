@@ -77,7 +77,13 @@ pip install flask-login
 ```
 
 
+## sec 5
+```
+flask db migrate 
+flask db upgrade
 
+flask shell
+```
 
 
 
