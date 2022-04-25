@@ -85,8 +85,19 @@ flask db upgrade
 flask shell
 ```
 
+## todo
+~
+a
+~
 
+## sec 11 
+```
+pip install pytest 
+pytest
+pytest test_sample.py
+pytest test_sample.py::test_func2
+```
 
-
+conftest.py を使ってフィクスチャを共有する
 
 
