@@ -130,4 +130,12 @@ echo 147679 | sed 's/./&\n/g' | awk '{a[$1]=$1}END{for(i=0;i<=9;i++){print a[i]}
 seq 2 8128 | awk '{print 8128/$1}' | grep -Fv . | tr '\n' + | sed 's@\+$@\n@'| bc
 ```
 
+[Q]
+循環小数7/17の循環する部分を求める
+
+[A]
+``` sh
+$ echo 'scale=1000;7/17' | bc -l | tr -d '\n\\' | awk 4 | grep -oP '(\d+?)\1' | sort -u | awk '{print length($0),$0}' | sort -nr | head -n 1 | awk '{print substr($2,1,length($2)/2)}'
+4117647058823529
+```
 
