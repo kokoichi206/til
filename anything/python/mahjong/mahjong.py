@@ -50,12 +50,16 @@ for i in range(len(lines)):
     result = pattern.search(line)
     if result:
         print(lines[i-1])
-        # res = "4-4-4-3", pl=+1700", なぜか pl の最後に"がつく
+        # res = "4-4-4-3", pl=+1700", なぜか pl の最後に"がつく（時もある）
         res, pl = line.split(" ")
-        pl = pl[:-1]
+        print(pl)
+        if pl[-1] == "\"":
+            pl = pl[:-1]
+        print(pl)
         f, s, t, l = map(int, res.split("-"))
         # 例『1/16 藤江荘.5』の形で取れる
-        tmp = lines[i-1].split("\"")[1]
+        # tmp = lines[i-1].split("\"")[1]
+        tmp = lines[i-1].split("\t")[2]
         tmp_list = tmp.split(" ")
         if len(tmp_list) > 1:
             date, place = tmp_list[0], tmp_list[1]
