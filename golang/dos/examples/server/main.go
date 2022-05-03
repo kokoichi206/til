@@ -4,7 +4,13 @@ import (
 	"fmt"
 	"net/http"
 	"time"
+
+
 )
+
+func test() {
+	gohttp
+}
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
 	
