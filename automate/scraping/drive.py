@@ -1,24 +1,27 @@
 import time
-from selenium import webdriver
-from bs4 import BeautifulSoup
 from datetime import datetime
 
+from bs4 import BeautifulSoup
+from selenium import webdriver
 
-class FetchPdfNames():
+
+class FetchPdfNames:
     def __init__(self, driver_path):
         self.DRIVER_PATH = driver_path
         # Webページを取得して解析する
-        self.DEFAULT_URL = "https://drive.google.com/drive/folders/12CQH0j9-MHLMDUL-Ku-BV15lqy_SlVrn"
+        self.DEFAULT_URL = (
+            "https://drive.google.com/drive/folders/12CQH0j9-MHLMDUL-Ku-BV15lqy_SlVrn"
+        )
 
     def get_pdf_names(self, url=None, doesUseBrowser=False):
 
         if not url:
             url = self.DEFAULT_URL
 
-        #ヘッドレスモードでブラウザを起動するかどうか
+        # ヘッドレスモードでブラウザを起動するかどうか
         options = webdriver.ChromeOptions()
         if not doesUseBrowser:
-            options.add_argument('--headless')
+            options.add_argument("--headless")
 
         driver = webdriver.Chrome(self.DRIVER_PATH, options=options)
 
@@ -33,14 +36,14 @@ class FetchPdfNames():
         # FIXME
         # 待つ時間を、DOMレンダリング完了後、までに変更する
         time.sleep(15)
-        print('get HTML start')
-        html = driver.page_source.encode('utf-8')
+        print("get HTML start")
+        html = driver.page_source.encode("utf-8")
         soup = BeautifulSoup(html, "html.parser")
 
         BASE_URL = "https://drive.google.com/file/d/"
         SUFFIX = "/view?usp=sharing"
 
-        # 
+        #
         # FIXME
         # もっといいやり方ありそう...
         # divだけにしておくと、その子要素のspanが取れない
@@ -54,17 +57,17 @@ class FetchPdfNames():
                 id = div["data-id"]
                 pdf_url = BASE_URL + id + SUFFIX
                 pdf_info["url"] = pdf_url
-                
-                inner_divs = div.findChildren("div" , recursive=True)
+
+                inner_divs = div.findChildren("div", recursive=True)
 
                 for k in range(len(inner_divs)):
                     inner_div = inner_divs[k]
-                    if inner_div.text[-4:] == '.pdf':
+                    if inner_div.text[-4:] == ".pdf":
                         pdf_info["title"] = inner_div.text
                         break
 
                 TRY_NUM = 120
-                for j in range(i, i+TRY_NUM):
+                for j in range(i, i + TRY_NUM):
                     inner_span = divspans[j]
                     if inner_span.has_attr("data-tooltip"):
                         span_text = inner_span["data-tooltip"]
@@ -75,7 +78,7 @@ class FetchPdfNames():
                                 updated_at = split_date[1].strip()
                             elif len(split_date) == 3:
                                 # "最終更新 : 20:03" みたいな場合
-                                updated_at = ':'.join(split_date[1:])
+                                updated_at = ":".join(split_date[1:])
                             else:
                                 continue
 
@@ -94,14 +97,22 @@ class FetchPdfNames():
         def _is_new_info_by_date(pdf_date, compare_date):
             if ":" in pdf_date:
                 return True
-            
-            pdf_datetime = datetime(int(pdf_date.split("/")[0]), int(pdf_date.split("/")[1]), int(pdf_date.split("/")[2]))
-            compare_datetime = datetime(int(pdf_date.split("/")[0]), int(compare_date.split("/")[1]), int(compare_date.split("/")[2]))
+
+            pdf_datetime = datetime(
+                int(pdf_date.split("/")[0]),
+                int(pdf_date.split("/")[1]),
+                int(pdf_date.split("/")[2]),
+            )
+            compare_datetime = datetime(
+                int(pdf_date.split("/")[0]),
+                int(compare_date.split("/")[1]),
+                int(compare_date.split("/")[2]),
+            )
             #
             # TODO
             # = を含むかどうかとか、もう少しちゃんと考えたい
             return pdf_datetime > compare_datetime
-            
+
         results = []
         # 必要なpdfの情報を取得
         pdf_infos = self.get_pdf_names()
@@ -109,7 +120,7 @@ class FetchPdfNames():
             pdfdate = pdf_info["updated_at"]
             if _is_new_info_by_date(pdfdate, date):
                 results.append(pdf_info)
-        
+
         return results
 
 
