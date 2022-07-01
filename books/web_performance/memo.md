@@ -117,6 +117,107 @@ avg without(cpu) (rate(node_cpu_seconds_total{mode!="idle"}[1m]))
 
 
 
+## sec 3
+性能を数値化するための負荷試験を実行するソフトウェアをベンチマーカー。
 
+[private-isu](https://github.com/catatsuy/private-isu)
+
+- OS として Ubuntu Linux
+- データを保存する RDBMS として MySQL
+- セッション管理のストレージとして memcached
+- Web サーバー兼リバースプロキシとして nginx
+
+curl -L -O https://github.com/catatsuy/private-isu/releases/download/img/dump.sql
+.bz2
+
+負荷しけんの測定方法。
+Web サービスに負荷を与えるベンチマーカー側で計測する方法と、負荷を与えられる Web サービス側で計測する方法がある。
+
+負荷試験中以外であっても、Web サービスの性能をサーバー側で計測できるようにしておくことは大変重要！！
+
+``` sh
+log_format json escape=json '{"time":"$time_iso8601",'
+                            '"host":"$remote_addr",'
+                            '"port":"$remote_port",'
+                            '"method":"$request_method",'
+                            '"uri":"$request_uri",'
+                            '"status":"$status",'
+                            '"body_bytes":"$body_bytes_sent",'
+                            '"referer":"$http_referer",'
+                            '"ua":"$http_user_agent",'
+                            '"request_time":"$request_time",'
+                            '"response_time":"$upstream_response_time"}';
+
+server {
+  listen 80;
+
+  client_max_body_size 10m;
+  root /public/;
+
+  location / {
+    proxy_set_header Host $host;
+    proxy_pass http://app:8080;
+  }
+
+  access_log /var/log/nginx/access.log json;
+}
+```
+
+nginx のログを変更したあと。
+
+```
+excape=json{"time":"2022-06-30T21:40:41+00:00","host":"172.27.0.1","port":"57114","referer":"http://localhost/","request_time":"0.096","response_time":"0.096"}
+```
+
+JSON 形式のアクセスログの集計。alp を使う。
+alp は短期的なログの解析には便利だた、長期的なログ（実運用）には向いてない
+
+```
+brew install alp
+
+cat access.log | alp json
+alp json --file access.log
+```
+
+Apache HTTP Server に付属する ab コマンド（Apache Bench）！
+
+mac には標準でついてる。
+
+``` sh
+# ubuntu
+apt install apache2-utils
+```
+
+``` sh
+ab -c 1 -n 10 http://localhost/
+ab -c 1 -n 30 http://localhost/
+```
+
+アクセスログのローテーション
+
+負荷試験施行のたびに行うのを忘れない。
+
+``` sh
+#!/bin/sh
+set -eu
+
+mv /var/log/nginx/access.log /var/log/nginx/access.log.$(date +%Y%m%d-%H%M%S)
+# nginxにログファイルを開き直すシグナルを送る
+nginx -s reopen
+```
+
+requests per second を指標として使う。
+
+
+スロークエリログの設定。
+パフォーマンスチューニングにおいては long_query_time を 0 に設定して、全てのクエリのログを記録するのがおすすめ。
+
+
+サーバーの処理能力を使い切れているかの確認。
+なぜ CPU を使い切れていないのか。
+unicorn は、１プロセスで１リクエストを処理するアーキテクチャになっている。
+
+
+CPU によっては、同時マルチスレディング（Simultaneous Multi-Threading, SMT）というアーキテクチャが採用されていることも。
 
 
