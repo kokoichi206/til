@@ -7,6 +7,10 @@ from pydantic import BaseModel
 class ProgrammerListItem(BaseModel):
     name: str
 
+    # O/R マッパのモデルとの互換性を持たせる！
+    class Config:
+        orm_mode = True
+
 
 class ProgrammerDetail(BaseModel):
     name: str
