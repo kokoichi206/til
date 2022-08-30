@@ -1,7 +1,7 @@
 from app.api import cruds
 from app.api.dependencies import get_db
 from app.api.schemas import ProgrammerDetail, ProgrammerListItem
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 
 router = APIRouter()
 
@@ -27,10 +27,23 @@ def detail_programmer(name: str):
     )
 
 
-@router.post("/")
+@router.post(
+    "/",
+    responses={
+        400: {
+            "description": "programmer already exists",
+        }
+    },
+)
 def add_programmer(programmer: ProgrammerDetail, db=Depends(get_db)):
-    print("programmer")
-    print(programmer)
+    items = cruds.get_programmers(db)
+    checker = [it.name == programmer.name for it in items]
+    if any(checker):
+        raise HTTPException(
+            status_code=400,
+            detail="programmer already exists",
+        )
+
     cruds.add_programmer(db, programmer)
     return {"result": "OK"}
 
