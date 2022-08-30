@@ -1,0 +1,31 @@
+{
+  "Reservations": [
+    {
+      "Instances": [
+        {
+          "InstanceId": "i-aaaa",
+          "SecurityGroups": [{ "GroupId": "sg-0000" }],
+          "State": { "Name": "running" },
+          "Tags": [
+            {
+              "Key": "Env",
+              "Value": "Staging"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "SecurityGroups": [
+    {
+      "IpPermissions": [
+        {
+          "FromPort": 443,
+          "IpRanges": [{ "CidrIp": "0.0.0.0/0" }],
+          "ToPort": 443
+        }
+      ],
+      "GroupId": "sg-0000"
+    }
+  ]
+}

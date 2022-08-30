@@ -1,0 +1,112 @@
+{
+  "Reservations": [
+    {
+      "Instances": [
+        {
+          "InstanceId": "i-aaaa",
+          "SecurityGroups": [
+            {
+              "GroupId": "sg-abdcff3ca6f869322"
+            }
+          ],
+          "State": {
+            "Name": "running"
+          },
+          "Tags": [
+            {
+              "Key": "Env",
+              "Value": "Production"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Instances": [
+        {
+          "InstanceId": "i-bbbb",
+          "SecurityGroups": [
+            {
+              "GroupId": "sg-abdcff3ca6f869322"
+            }
+          ],
+          "State": {
+            "Name": "stopped"
+          },
+          "Tags": [
+            {
+              "Key": "Env",
+              "Value": "Staging"
+            }
+          ]
+        },
+        {
+          "InstanceId": "i-cccc",
+          "SecurityGroups": [
+            {
+              "GroupId": "sg-0c343b831c9af97a6"
+            }
+          ],
+          "State": {
+            "Name": "running"
+          },
+          "Tags": [
+            {
+              "Key": "Env",
+              "Value": "Staging"
+            }
+          ]
+        },
+        {
+          "InstanceId": "i-dddd",
+          "SecurityGroups": [
+            {
+              "GroupId": "sg-abdcff3ca6f869322"
+            }
+          ],
+          "State": {
+            "Name": "running"
+          },
+          "Tags": [
+            {
+              "Key": "Env",
+              "Value": "Staging"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "SecurityGroups": [
+    {
+      "IpPermissions": [
+        {
+          "FromPort": 443,
+          "IpProtocol": "tcp",
+          "IpRanges": [
+            {
+              "CidrIp": "10.0.0.0/8"
+            }
+          ],
+          "ToPort": 443
+        }
+      ],
+      "GroupId": "sg-0c343b831c9af97a6"
+    },
+    {
+      "IpPermissions": [
+        {
+          "FromPort": 443,
+          "IpProtocol": "tcp",
+          "IpRanges": [
+            {
+              "CidrIp": "0.0.0.0/0"
+            }
+          ],
+          "ToPort": 443
+        }
+      ],
+      "GroupId": "sg-abdcff3ca6f869322"
+    }
+  ]
+}
