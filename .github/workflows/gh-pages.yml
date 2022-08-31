@@ -1,0 +1,40 @@
+name: github pages
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Chekout
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Install redoc-cli
+        run: npm install -g redoc-cli
+        working-directory: ./anything/open-api
+
+      - name: Generate a static file
+        run: |
+          redoc-cli bundle openapi.yml \
+            --output index.html \
+            --options.theme.colors.primary.main=orange
+        working-directory: ./anything/open-api
+
+      - name: Move the static file
+        run: |
+          mkdir -p ./docs
+          mv ./anything/open-api/index.html ./docs/
+
+      - name: Deploy to github pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
