@@ -8,6 +8,12 @@ export interface Member {
   height: string;
   sns?: string;
 }
+export function memberToFileContent(member: Member): string {
+  const base = `名前: ${member.name}\n生年月日: ${member.birthday}` + 
+              `\n血液型: ${member.bloodType}\n星座: ${member.constellation}\n身長: ${member.height}\n`;
+  if (member.sns) return base + `SNS: ${member.sns}\n`;
+  return base;
+}
 
 export default {
   url: "https://www.nogizaka46.com/s/n46/search/artist?ima=0606",
