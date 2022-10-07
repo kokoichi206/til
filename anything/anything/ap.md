@@ -1,0 +1,44 @@
+## 英語
+
+- volatile: 揮発性
+- Revocation: 失効
+    - CRL
+- spoofing: なりすまし、いたずら、悪ふざけ
+    - spoofing attack
+- cannibalization: 共食い
+- forensics: 法科学
+    - computer forensics
+- aggregation: 集約
+    - Account aggregation
+- mnemonic: 短い語句・記号
+    - Mnemonic Code (e.g. BK,)
+- spanning: またがる
+    - STP: Spanning Tree Protocol
+- fuzzing:
+- body of knowledge: 知識体系
+    - PMBOK
+- spool: 糸巻き、フィルムのスプール、リール
+- anaglyph: アナグリフ、立体写真
+- tailoring: （洋服の）仕立て
+    - 部署・プロジェクトごとにマッチした具体的な標準の策定
+    - 共通フレーム 2013
+- foundry: 工場
+    - ファウンドリサービス、生産のみ行う
+- 知的財産: Intellectual Property
+    - IP プロバイダ、ARM 社
+- fabrication: 製造
+    - ファブレス、企画と販売
+- consolidation: 統合、統一
+    - サーバーコンソリデーション
+- skim: ざっと目を通す
+    - skim this article
+    - skimming: 時期ストライプの情報を読む
+- bid: 入札
+    - TOB: Take Over Bid, 株式公開買い付け
+- interleaving:
+    - データ入出力や通信において連続的に信号やデータを扱う際、**時間や空間**などの何らかの物理的な広がりに対して**わざと不連続にデータを配置**する手法
+- Smurf: 素性を偽って参加すること/人
+    - smurf 攻撃, DOS の一つ
+        - ping 送信元の偽装
+- bit: stands for binary digit
+
