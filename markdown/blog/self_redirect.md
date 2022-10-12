@@ -19,6 +19,10 @@ ID=ubuntu
 ID_LIKE=debian
 PRETTY_NAME="Ubuntu 20.04.2 LTS"
 ...
+
+$ bash -version
+GNU bash, version 5.0.17(1)-release (aarch64-unknown-linux-gnu)
+Copyright (C) 2019 Free Software Foundation, Inc.
 ```
 
 ## 時間ない人向けまとめ
