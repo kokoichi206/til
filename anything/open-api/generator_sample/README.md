@@ -1,6 +1,7 @@
 ## [Installation](https://openapi-generator.tech/docs/installation/)
 
-[usage](https://openapi-generator.tech/docs/usage)
+- [usage](https://openapi-generator.tech/docs/usage)
+- [現在何が対応しているか](./cli_list.yml)
 
 ```sh
 # install
@@ -27,6 +28,11 @@ openapi-generator-cli generate \
 openapi-generator-cli generate \
     -i openapi.yml \
     -g python-fastapi \
+    -o out
+
+openapi-generator-cli generate \
+    -i openapi.yml \
+    -g go-gin-server \
     -o out
 ```
 
