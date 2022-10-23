@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <div id="container"></div>
+    <script>
+      const container = document.getElementById("container");
+
+      fetch(
+        "https://kokoichi0206.mydns.jp/api/v1/members?gn=sakurazaka&key=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        {
+          mode: "cors",
+        }
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          console.log(data.members);
+          for (member of data.members) {
+            console.log(member.img_url);
+            const img_elm = document.createElement("img");
+            img_elm.src = member.img_url;
+            img_elm.width = 300;
+            img_elm.height = 300;
+            container.appendChild(img_elm);
+          }
+        });
+    </script>
+  </body>
+</html>
