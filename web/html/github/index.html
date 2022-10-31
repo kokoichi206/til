@@ -10,7 +10,7 @@
     </style>
   </head>
   <body>
-    <h2>現在の設定値</h2>
+    <h2>user-name: :user-name:</h2>
 
     <form action="javascript:post_data()">
       <div id="container">
@@ -18,7 +18,7 @@
           &nbsp;0
           <img
             class="fit-picture"
-            src="../imgs/github-events/0.png"
+            src="../../imgs/github-events/:user-name:/0.png"
             alt="0.png"
             id="img_0"
           />
@@ -30,7 +30,7 @@
           &nbsp;1
           <img
             class="fit-picture"
-            src="../imgs/github-events/1.png"
+            src="../../imgs/github-events/:user-name:/1.png"
             alt="1.png"
             id="img_1"
           />
@@ -42,7 +42,7 @@
           &nbsp;3
           <img
             class="fit-picture"
-            src="../imgs/github-events/3.png"
+            src="../../imgs/github-events/:user-name:/3.png"
             alt="3.png"
             id="img_3"
           />
@@ -54,7 +54,7 @@
           &nbsp;5
           <img
             class="fit-picture"
-            src="../imgs/github-events/5.png"
+            src="../../imgs/github-events/:user-name:/5.png"
             alt="5.png"
             id="img_5"
           />
@@ -66,7 +66,7 @@
           10
           <img
             class="fit-picture"
-            src="../imgs/github-events/10.png"
+            src="../../imgs/github-events/:user-name:/10.png"
             alt="10.png"
             id="img_10"
           />
@@ -127,7 +127,10 @@
 
           const field = document.createElement("input");
           field.type = "hidden";
-          field.name = `${key}.png`;
+          {{/* field.name = `${key}.png`; */}}
+          // サーバー側との取り決め。
+          // x.png#user_name
+          field.name = `${key}.png#:user-name:`;
           field.value = value;
           form.appendChild(field);
 
