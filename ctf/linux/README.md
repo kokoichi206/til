@@ -21,5 +21,7 @@ apt install gcc-multilib -y
 
 # python によるパケット解析
 apt install scapy
+
+# Web スキャナー
+apt install nikto
 ```
-Internet Protocol Version 4, Src: 118.27.110.77, Dst: 192.168.91.138
