@@ -223,7 +223,6 @@ stripped なバイナリとは、シンボル情報が削除されたバイナ�
 - レジスタの値はどうなっているか
 - 論理演算やビットシフトの計算結果がどのようになるか
 
-
 ### objdump
 
 ```sh
@@ -240,7 +239,59 @@ Disassembly of section .fini:
  a6c:   d65f03c0        ret
 ```
 
+## sec 2
 
+pwn
+オンラインゲームで own をタイプミスしたことから生まれ、「勝つ」や「打ち負かす」といった意味のスラングとして定着。
+
+checksec.sh
+https://github.com/slimm609/checksec.sh
+下調べのステップで行う RELRO, SSP, NX bit の確認に使う
+
+peda
+https://github.com/longld/peda
+gdb の機能を大幅に強化してくれる拡張スクリプト
+
+socat
+リモートエクスプロイトを、手元で再現するときに便利なツール
+
+### 実行ファイルのセキュリティ機構
+
+脆弱性の被害を緩和するために幾つかのセキュリティ機構を付与している。
+
+- RELRO: RELocation ReadOnly
+- SSP: Stack Smash Protection
+  - gcc で `-fno-stack-protector` で意図的に無効化
+  - スタック上でのバッファオーバーフローを防ぐ仕組み
+- NX bit: No eXecute bit
+  - 必要のないデータを実行不可能に設定
+  - gcc では `-z execstack` で無効にできる
+- ASLR: Address Space Layout Randomization
+  - アドレスの一部をランダム化することでアドレスを推測するのを困難にしている
+- PIE: Position Independent Executable
+  - 実行コード内のアドレス参照を全て相対アドレスで行うことで、実行ファイルがメモリ上のどの位置に置かれても正常に実行できるようにする
+
+```sh
+# OFF
+sysctl -w kernel.randomize_va_space=0
+> sysctl: setting key "kernel.randomize_va_space", ignoring: Read-only file system
+
+# ON
+sysctl -w kernel.randomize_va_space=2
+```
+
+```
+readelf -s a.out | grep buffer
+```
+
+| 領域 | 32bit | 64bit |
+| :---: | :---: | :---: |
+| stack | 11 bit | 20 bit |
+| mmap | 8 bit | 28 bit |
+| heap | 13 bit | 13 bit |
+
+共有ライブラリは mmap を用いてメモリに配置されるので、32 bit では 8bit -> 256 通りのランダム化しか提供しない！
+→ **ASLR の回避方として簡単なのはブルートフォース！**
 
 ## memo
 

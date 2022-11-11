@@ -9,4 +9,8 @@ docker compose exec ubuntu bash
 apt update
 apt install gdb
 apt install gcc
+
+apt install python3
+# for 32 bit libraries
+apt install gcc-multilib
 ```
