@@ -7,10 +7,19 @@ docker compose exec ubuntu bash
 
 ```sh
 apt update
-apt install gdb
-apt install gcc
+apt install gdb -y
+apt install gcc -y
+apt install file -y
+apt install vim -y
+apt install ftp -y
+apt install netcat -y
 
-apt install python3
+apt install python3 -y
+apt install python3-pip -y
 # for 32 bit libraries
-apt install gcc-multilib
+apt install gcc-multilib -y
+
+# python によるパケット解析
+apt install scapy
 ```
+Internet Protocol Version 4, Src: 118.27.110.77, Dst: 192.168.91.138

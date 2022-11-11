@@ -284,14 +284,31 @@ sysctl -w kernel.randomize_va_space=2
 readelf -s a.out | grep buffer
 ```
 
-| 領域 | 32bit | 64bit |
-| :---: | :---: | :---: |
+| 領域  | 32bit  | 64bit  |
+| :---: | :----: | :----: |
 | stack | 11 bit | 20 bit |
-| mmap | 8 bit | 28 bit |
-| heap | 13 bit | 13 bit |
+| mmap  | 8 bit  | 28 bit |
+| heap  | 13 bit | 13 bit |
 
 共有ライブラリは mmap を用いてメモリに配置されるので、32 bit では 8bit -> 256 通りのランダム化しか提供しない！
 → **ASLR の回避方として簡単なのはブルートフォース！**
+
+## sec 3
+
+ネットワークは非常にレイヤーが綺麗に区切られている。
+それぞれのレイヤーでは、そのプロトコルに必要な情報を渡されたデータの先頭に付与。
+この**付与した情報をヘッダと呼び、この作業をカプセル化**という。
+
+パケットが記録されるファイル
+
+libpcap (Packet capture library)
+`.pcap` ファイル。
+
+### Netcat
+
+```sh
+nc (接続先 IP アドレス) (接続先ポート番号)
+```
 
 ## memo
 
