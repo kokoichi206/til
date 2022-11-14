@@ -1,0 +1,1845 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"
+      xmlns:app="http://www.w3.org/2007/app">
+
+  <link rel="first" href="https://blog.hatena.ne.jp/kokoichi206/koko206.hatenablog.com/atom/entry" />
+
+  
+  <link rel="next" href="https://blog.hatena.ne.jp/kokoichi206/koko206.hatenablog.com/atom/entry?page=1667486025" />
+  
+
+  <title>Diary</title>
+  
+  <subtitle>日々学んだことをアウトプットする場として初めてみました</subtitle>
+  
+  <link rel="alternate" href="https://koko206.hatenablog.com/"/>
+  <updated>2022-11-14T19:27:51+09:00</updated>
+  <author>
+    <name>kokoichi206</name>
+  </author>
+  <generator uri="https://blog.hatena.ne.jp/" version="971e2121321824100940af419222e3">Hatena::Blog</generator>
+  <id>hatenablog://blog/26006613509706227</id>
+
+  
+  <entry>
+<id>tag:blog.hatena.ne.jp,2013:blog-kokoichi206-26006613509706227-4207112889936542968</id>
+<link rel="edit" href="https://blog.hatena.ne.jp/kokoichi206/koko206.hatenablog.com/atom/entry/4207112889936542968"/>
+<link rel="alternate" type="text/html" href="https://koko206.hatenablog.com/entry/2022/11/14/192751"/>
+<author><name>kokoichi206</name></author>
+<title>Jetpack Compose で Material You を使う</title>
+<updated>2022-11-14T19:27:51+09:00</updated>
+<published>2022-11-14T19:27:51+09:00</published>
+<app:edited>2022-11-14T19:27:51+09:00</app:edited>
+<summary type="text">今回は、Jetpack compose で Material You を使う方法についてメモしておきます。 なお、今回の内容は『Android DevSummit &quot;Material You in Compose apps&quot;』から学んだものとなります。 環境 - kotlinCo…</summary>
+<content type="text/x-markdown">今回は、Jetpack compose で Material You を使う方法についてメモしておきます。
+
+なお、今回の内容は[『Android DevSummit &quot;Material You in Compose apps&quot;』](https://www.youtube.com/watch?v=xS4GpdIQUEo&amp;list=PLWz5rJ2EKKc92MGTd1CgUtXZfhA74nUpb&amp;index=40&amp;ab_channel=AndroidDevelopers)から学んだものとなります。
+
+## 環境
+
+```
+- kotlinCompilerVersion &#39;1.6&#39;
+- compose_ui_version = &#39;1.3.0-beta03&#39;
+- androidx.compose.material3:material3:1.1.0-alpha02
+- androidx.compose.material3:material3-window-size-class:1.1.0-alpha02
+```
+
+## Material You
+
+Material You とは、個々人の設定に合わせてアプリ内の色（や形？）をカスタマイズしてくれるような機能です。  
+こちらの機能は Android OS 12 (API31) で追加されました。
+
+今回は、個人の**背景設定の色に合わせてアプリ内で使用する色を変え**てみました。
+
+### 使用準備
+
+最初にプロジェクトを作成するときに material3 を選択しなかった場合、アプリレベルの `build.gradle` に次のライブラリを追加します。
+
+```
+dependencies {
+    ...
+    implementation(&quot;androidx.compose.material3:material3:1.1.0-alpha02&quot;)
+    implementation(&quot;androidx.compose.material3:material3-window-size-class:1.1.0-alpha02&quot;)
+}
+```
+
+色をダイナミックに変化させていくには、[dynamicDarkColorScheme](&lt;https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#dynamicDarkColorScheme(android.content.Context)&gt;) 等を使います。  
+ここでは、ダークモードかそうじゃないかで切り替えたいため [isSystemInDarkTheme](&lt;https://developer.android.com/reference/kotlin/androidx/compose/foundation/package-summary#isSystemInDarkTheme()&gt;) を使っています。
+
+```kotlin
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MaterialYouTest() {
+    // API31 で追加された機能のため確認する。
+    val dynamicColor = Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.S
+    val dark = isSystemInDarkTheme()
+    val colorScheme = if (dynamicColor) {
+        if (dark) {
+            dynamicDarkColorScheme(LocalContext.current)
+        } else {
+            dynamicLightColorScheme(LocalContext.current)
+        }
+    } else {
+        // 普通のカラースキームを使う。
+        if (dark) {
+            darkColorScheme()
+        } else {
+            lightColorScheme()
+        }
+    }
+    ...
+}
+```
+
+### 使うとき
+
+ここで定義した `colorScheme` を次のように使っていきます。
+
+```kotlin
+Box(
+    modifier = Modifier
+        .size(100.dp)
+        .clip(CircleShape)
+        .background(colorScheme.primary),
+)
+```
+
+### 確認してみる
+
+[こちらのコード](https://github.com/kokoichi206/android-app/blob/master/PlayGround/app/src/main/java/jp/mydns/kokoichi0206/playground/blogs/MaterialYou.kt)でどのように変化するかを確認してみました。
+
+
+[f:id:kokoichi206:20221114192427p:plain]
+
+[f:id:kokoichi206:20221114192716p:plain]
+
+[f:id:kokoichi206:20221114192727p:plain]
+
+[f:id:kokoichi206:20221114192737p:plain]
+
+
+
+『Wallpaper &amp; style &gt; Basic colors』の色が反映されてるように見えます。
+
+
+
+## Links
+
+- https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#dynamicDarkColorScheme(android.content.Context)
+- https://m3.material.io/get-started
+- https://foso.github.io/Jetpack-Compose-Playground/cookbook/detect_darkmode/
+- https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#ModalDrawerSheet(androidx.compose.ui.Modifier,androidx.compose.ui.graphics.Shape,androidx.compose.ui.graphics.Color,androidx.compose.ui.graphics.Color,androidx.compose.ui.unit.Dp,androidx.compose.foundation.layout.WindowInsets,kotlin.Function1)
+
+## おわりに
+
+普通のアプリでは UI 的に使いたい色がるため使う機会は少ないと思いますが、電卓などの汎用的なアプリではいい感じにユーザー毎のカスタマイズが可能になりそうな気がします！
+</content>
+<hatena:formatted-content type="text/html" xmlns:hatena="http://www.hatena.ne.jp/info/xmlns#">&lt;p&gt;今回は、&lt;a class=&quot;keyword&quot; href=&quot;http://d.hatena.ne.jp/keyword/Jetpack&quot;&gt;Jetpack&lt;/a&gt; compose で Material You を使う方法についてメモしておきます。&lt;/p&gt;
+
+&lt;p&gt;なお、今回の内容は&lt;a href=&quot;https://www.youtube.com/watch?v=xS4GpdIQUEo&amp;amp;list=PLWz5rJ2EKKc92MGTd1CgUtXZfhA74nUpb&amp;amp;index=40&amp;amp;ab_channel=AndroidDevelopers&quot;&gt;『Android DevSummit &quot;Material You in Compose apps&quot;』&lt;/a&gt;から学んだものとなります。&lt;/p&gt;
+
+&lt;h2 id=&quot;環境&quot;&gt;環境&lt;/h2&gt;
+
+&lt;pre class=&quot;code&quot; data-lang=&quot;&quot; data-unlink&gt;- kotlinCompilerVersion &amp;#39;1.6&amp;#39;
+- compose_ui_version = &amp;#39;1.3.0-beta03&amp;#39;
+- androidx.compose.material3:material3:1.1.0-alpha02
+- androidx.compose.material3:material3-window-size-class:1.1.0-alpha02&lt;/pre&gt;
+
+
+&lt;h2 id=&quot;Material-You&quot;&gt;Material You&lt;/h2&gt;
+
+&lt;p&gt;Material You とは、個々人の設定に合わせてアプリ内の色（や形？）をカスタマイズしてくれるような機能です。&lt;br /&gt;
+こちらの機能は &lt;a class=&quot;keyword&quot; href=&quot;http://d.hatena.ne.jp/keyword/Android&quot;&gt;Android&lt;/a&gt; OS 12 (API31) で追加されました。&lt;/p&gt;
+
+&lt;p&gt;今回は、個人の&lt;strong&gt;背景設定の色に合わせてアプリ内で使用する色を変え&lt;/strong&gt;てみました。&lt;/p&gt;
+
+&lt;h3 id=&quot;使用準備&quot;&gt;使用準備&lt;/h3&gt;
+
+&lt;p&gt;最初にプロジェクトを作成するときに material3 を選択しなかった場合、アプリレベルの &lt;code&gt;build.gradle&lt;/code&gt; に次のライブラリを追加します。&lt;/p&gt;
+
+&lt;pre class=&quot;code&quot; data-lang=&quot;&quot; data-unlink&gt;dependencies {
+    ...
+    implementation(&amp;#34;androidx.compose.material3:material3:1.1.0-alpha02&amp;#34;)
+    implementation(&amp;#34;androidx.compose.material3:material3-window-size-class:1.1.0-alpha02&amp;#34;)
+}&lt;/pre&gt;
+
+
+&lt;p&gt;色をダイナミックに変化させていくには、&lt;a href=&quot;https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#dynamicDarkColorScheme(android.content.Context)&quot;&gt;dynamicDarkColorScheme&lt;/a&gt; 等を使います。&lt;br /&gt;
+ここでは、ダークモードかそうじゃないかで切り替えたいため &lt;a href=&quot;https://developer.android.com/reference/kotlin/androidx/compose/foundation/package-summary#isSystemInDarkTheme()&quot;&gt;isSystemInDarkTheme&lt;/a&gt; を使っています。&lt;/p&gt;
+
+&lt;pre class=&quot;code lang-kotlin&quot; data-lang=&quot;kotlin&quot; data-unlink&gt;&lt;span class=&quot;synIdentifier&quot;&gt;@OptIn&lt;/span&gt;(ExperimentalMaterial3Api&lt;span class=&quot;synStatement&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;synType&quot;&gt;class&lt;/span&gt;)
+&lt;span class=&quot;synIdentifier&quot;&gt;@Composable&lt;/span&gt;
+&lt;span class=&quot;synType&quot;&gt;fun&lt;/span&gt; MaterialYouTest() {
+    &lt;span class=&quot;synComment&quot;&gt;// API31 で追加された機能のため確認する。&lt;/span&gt;
+    &lt;span class=&quot;synType&quot;&gt;val&lt;/span&gt; dynamicColor = Build.VERSION.SDK_INT&lt;span class=&quot;synStatement&quot;&gt; &amp;gt;=&lt;/span&gt; Build.VERSION_CODES.S
+    &lt;span class=&quot;synType&quot;&gt;val&lt;/span&gt; dark = isSystemInDarkTheme()
+    &lt;span class=&quot;synType&quot;&gt;val&lt;/span&gt; colorScheme = &lt;span class=&quot;synStatement&quot;&gt;if&lt;/span&gt; (dynamicColor) {
+        &lt;span class=&quot;synStatement&quot;&gt;if&lt;/span&gt; (dark) {
+            dynamicDarkColorScheme(LocalContext.current)
+        } &lt;span class=&quot;synStatement&quot;&gt;else&lt;/span&gt; {
+            dynamicLightColorScheme(LocalContext.current)
+        }
+    } &lt;span class=&quot;synStatement&quot;&gt;else&lt;/span&gt; {
+        &lt;span class=&quot;synComment&quot;&gt;// 普通のカラースキームを使う。&lt;/span&gt;
+        &lt;span class=&quot;synStatement&quot;&gt;if&lt;/span&gt; (dark) {
+            darkColorScheme()
+        } &lt;span class=&quot;synStatement&quot;&gt;else&lt;/span&gt; {
+            lightColorScheme()
+        }
+    }
+    ...
+}
+&lt;/pre&gt;
+
+
+&lt;h3 id=&quot;使うとき&quot;&gt;使うとき&lt;/h3&gt;
+
+&lt;p&gt;ここで定義した &lt;code&gt;colorScheme&lt;/code&gt; を次のように使っていきます。&lt;/p&gt;
+
+&lt;pre class=&quot;code lang-kotlin&quot; data-lang=&quot;kotlin&quot; data-unlink&gt;Box(
+    modifier = Modifier
+        .size(&lt;span class=&quot;synConstant&quot;&gt;100&lt;/span&gt;.dp)
+        .clip(CircleShape)
+        .background(colorScheme.primary),
+)
+&lt;/pre&gt;
+
+
+&lt;h3 id=&quot;確認してみる&quot;&gt;確認してみる&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/kokoichi206/android-app/blob/master/PlayGround/app/src/main/java/jp/mydns/kokoichi0206/playground/blogs/MaterialYou.kt&quot;&gt;こちらのコード&lt;/a&gt;でどのように変化するかを確認してみました。&lt;/p&gt;
+
+&lt;p&gt;&lt;span itemscope itemtype=&quot;http://schema.org/Photograph&quot;&gt;&lt;img src=&quot;https://cdn-ak.f.st-hatena.com/images/fotolife/k/kokoichi206/20221114/20221114192427.png&quot; width=&quot;788&quot; height=&quot;732&quot; loading=&quot;lazy&quot; title=&quot;&quot; class=&quot;hatena-fotolife&quot; itemprop=&quot;image&quot;&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;span itemscope itemtype=&quot;http://schema.org/Photograph&quot;&gt;&lt;img src=&quot;https://cdn-ak.f.st-hatena.com/images/fotolife/k/kokoichi206/20221114/20221114192716.png&quot; width=&quot;826&quot; height=&quot;784&quot; loading=&quot;lazy&quot; title=&quot;&quot; class=&quot;hatena-fotolife&quot; itemprop=&quot;image&quot;&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;span itemscope itemtype=&quot;http://schema.org/Photograph&quot;&gt;&lt;img src=&quot;https://cdn-ak.f.st-hatena.com/images/fotolife/k/kokoichi206/20221114/20221114192727.png&quot; width=&quot;824&quot; height=&quot;804&quot; loading=&quot;lazy&quot; title=&quot;&quot; class=&quot;hatena-fotolife&quot; itemprop=&quot;image&quot;&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;span itemscope itemtype=&quot;http://schema.org/Photograph&quot;&gt;&lt;img src=&quot;https://cdn-ak.f.st-hatena.com/images/fotolife/k/kokoichi206/20221114/20221114192737.png&quot; width=&quot;794&quot; height=&quot;772&quot; loading=&quot;lazy&quot; title=&quot;&quot; class=&quot;hatena-fotolife&quot; itemprop=&quot;image&quot;&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;『Wallpaper &amp;amp; style &gt; Basic colors』の色が反映されてるように見えます。&lt;/p&gt;
+
+&lt;h2 id=&quot;Links&quot;&gt;Links&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#dynamicDarkColorScheme(android.content.Context)&quot;&gt;https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#dynamicDarkColorScheme(android.content.Context)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://m3.material.io/get-started&quot;&gt;https://m3.material.io/get-started&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://foso.github.io/Jetpack-Compose-Playground/cookbook/detect_darkmode/&quot;&gt;https://foso.github.io/Jetpack-Compose-Playground/cookbook/detect_darkmode/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#ModalDrawerSheet(androidx.compose.ui.Modifier,androidx.compose.ui.graphics.Shape,androidx.compose.ui.graphics.Color,androidx.compose.ui.graphics.Color,androidx.compose.ui.unit.Dp,androidx.compose.foundation.layout.WindowInsets,kotlin.Function1)&quot;&gt;https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#ModalDrawerSheet(androidx.compose.ui.Modifier,androidx.compose.ui.graphics.Shape,androidx.compose.ui.graphics.Color,androidx.compose.ui.graphics.Color,androidx.compose.ui.unit.Dp,androidx.compose.foundation.layout.WindowInsets,kotlin.Function1)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h2 id=&quot;おわりに&quot;&gt;おわりに&lt;/h2&gt;
+
+&lt;p&gt;普通のアプリでは UI 的に使いたい色がるため使う機会は少ないと思いますが、電卓などの汎用的なアプリではいい感じにユーザー毎のカスタマイズが可能になりそうな気がします！&lt;/p&gt;
+</hatena:formatted-content>
+
+<category term="Android" />
+
+<category term="Android-jetpack compose" />
+
+<app:control>
+  <app:draft>no</app:draft>
+</app:control>
+
+  </entry>
+  
+  <entry>
+<id>tag:blog.hatena.ne.jp,2013:blog-kokoichi206-26006613509706227-4207112889936318594</id>
+<link rel="edit" href="https://blog.hatena.ne.jp/kokoichi206/koko206.hatenablog.com/atom/entry/4207112889936318594"/>
+<link rel="alternate" type="text/html" href="https://koko206.hatenablog.com/entry/2022/11/13/233411"/>
+<author><name>kokoichi206</name></author>
+<title>ワイヤレスデバッグをステータスバーに表示する方法</title>
+<updated>2022-11-13T23:34:11+09:00</updated>
+<published>2022-11-13T23:34:11+09:00</published>
+<app:edited>2022-11-13T23:34:11+09:00</app:edited>
+<summary type="text">開発者モードのオプションにあるワイヤレスデバッグを、ステータスバー（通知バー）に表示する方法をメモしておきます。 開発時、ステータスバーにデバッグオプションを表示させた方が便利なケースが多いです。 標準ではこちらに表示されておりません。 Settings から、『Quick se…</summary>
+<content type="text/x-markdown">開発者モードのオプションにあるワイヤレスデバッグを、ステータスバー（通知バー）に表示する方法をメモしておきます。
+
+開発時、ステータスバーにデバッグオプションを表示させた方が便利なケースが多いです。
+
+[f:id:kokoichi206:20221113233324p:plain]
+
+標準ではこちらに表示されておりません。
+
+Settings から、『Quick settings developer tiles』のように検索します。  
+（日本語では『クイック設定開発者用タイル』）
+
+[f:id:kokoichi206:20221113233341p:plain]
+
+この中から『Wireless debugging』を ON にします。
+
+そうすると、ステータスバーに『Wireless debug』オプションの設定が表示されます。
+
+[f:id:kokoichi206:20221113233350p:plain]
+
+## Links
+
+- https://developer.android.com/studio/debug/dev-options#general
+</content>
+<hatena:formatted-content type="text/html" xmlns:hatena="http://www.hatena.ne.jp/info/xmlns#">&lt;p&gt;開発者モードのオプションにあるワイヤレス&lt;a class=&quot;keyword&quot; href=&quot;http://d.hatena.ne.jp/keyword/%A5%C7%A5%D0%A5%C3%A5%B0&quot;&gt;デバッグ&lt;/a&gt;を、ステータスバー（通知バー）に表示する方法をメモしておきます。&lt;/p&gt;
+
+&lt;p&gt;開発時、ステータスバーに&lt;a class=&quot;keyword&quot; href=&quot;http://d.hatena.ne.jp/keyword/%A5%C7%A5%D0%A5%C3%A5%B0&quot;&gt;デバッグ&lt;/a&gt;オプションを表示させた方が便利なケースが多いです。&lt;/p&gt;
+
+&lt;p&gt;&lt;span itemscope itemtype=&quot;http://schema.org/Photograph&quot;&gt;&lt;img src=&quot;https://cdn-ak.f.st-hatena.com/images/fotolife/k/kokoichi206/20221113/20221113233324.png&quot; width=&quot;623&quot; height=&quot;1200&quot; loading=&quot;lazy&quot; title=&quot;&quot; class=&quot;hatena-fotolife&quot; itemprop=&quot;image&quot;&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;標準ではこちらに表示されておりません。&lt;/p&gt;
+
+&lt;p&gt;Settings から、『Quick settings developer tiles』のように検索します。&lt;br /&gt;
+（日本語では『クイック設定開発者用タイル』）&lt;/p&gt;
+
+&lt;p&gt;&lt;span itemscope itemtype=&quot;http://schema.org/Photograph&quot;&gt;&lt;img src=&quot;https://cdn-ak.f.st-hatena.com/images/fotolife/k/kokoichi206/20221113/20221113233341.png&quot; width=&quot;623&quot; height=&quot;1200&quot; loading=&quot;lazy&quot; title=&quot;&quot; class=&quot;hatena-fotolife&quot; itemprop=&quot;image&quot;&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;この中から『Wireless debugging』を ON にします。&lt;/p&gt;
+
+&lt;p&gt;そうすると、ステータスバーに『Wireless debug』オプションの設定が表示されます。&lt;/p&gt;
+
+&lt;p&gt;&lt;span itemscope itemtype=&quot;http://schema.org/Photograph&quot;&gt;&lt;img src=&quot;https://cdn-ak.f.st-hatena.com/images/fotolife/k/kokoichi206/20221113/20221113233350.png&quot; width=&quot;574&quot; height=&quot;1090&quot; loading=&quot;lazy&quot; title=&quot;&quot; class=&quot;hatena-fotolife&quot; itemprop=&quot;image&quot;&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;Links&quot;&gt;Links&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://developer.android.com/studio/debug/dev-options#general&quot;&gt;https://developer.android.com/studio/debug/dev-options#general&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+</hatena:formatted-content>
+
+<category term="Android" />
+
+<app:control>
+  <app:draft>no</app:draft>
+</app:control>
+
+  </entry>
+  
+  <entry>
+<id>tag:blog.hatena.ne.jp,2013:blog-kokoichi206-26006613509706227-4207112889935434612</id>
+<link rel="edit" href="https://blog.hatena.ne.jp/kokoichi206/koko206.hatenablog.com/atom/entry/4207112889935434612"/>
+<link rel="alternate" type="text/html" href="https://koko206.hatenablog.com/entry/2022/11/10/224356"/>
+<author><name>kokoichi206</name></author>
+<title>Android: offline-first</title>
+<updated>2022-11-10T22:43:56+09:00</updated>
+<published>2022-11-10T22:43:56+09:00</published>
+<app:edited>2022-11-10T22:43:56+09:00</app:edited>
+<summary type="text">Dev Summit: Create offline-first apps を試聴したのでそのメモです（）。 repository 層の役割 リポジトリー層の役割として、少なくとも 2 つのデータソース（LocalDataSource と NetworkDataSource）から…</summary>
+<content type="text/x-markdown">[Dev Summit: Create offline-first apps](https://www.youtube.com/watch?v=jaZ2gLMGUsM&amp;list=PLWz5rJ2EKKc92MGTd1CgUtXZfhA74nUpb&amp;index=7&amp;ab_channel=AndroidDevelopers) を試聴したのでそのメモです（）。
+
+## repository 層の役割
+
+リポジトリー層の役割として、少なくとも 2 つのデータソース（LocalDataSource と NetworkDataSource）からデータを取得することを考える。
+
+この際、取得できるエンティティが異なるかもしれないが（`AuthorEntity`と`NetworkAuthor`など）、それを整形して統一して返してあげるのも**Data Layer の役割**。
+
+- Read は Flow を使って
+- Write は suspend fun で
+
+## ネットワークのモニター
+
+- ネットワーク接続がとれるまで**キューに貯めておく必要がある！**
+  - 書き込みについて
+- ネットワークをモニターし、接続が取れたらキューからジョブを実行させる
+
+LocalDataSource については、データの一貫性のために**常に読み込みできることが大切！**
+
+失敗時にリトライが必要そうなら、再度キューに入れる作戦で！
+
+## Synchronization
+
+ローカルデータとリモートデータを統一させること。
+
+- Pull-based
+  - on demand で取得する
+  - 実装が簡単
+- Push-based
+  - データ使用量が最小ですむ
+  - must be supported by the network.
+
+## Links
+
+- [Build an offline-first app](https://developer.android.com/topic/architecture/data-layer/offline-first)
+- [Dev Summit: Create offline-first apps](https://www.youtube.com/watch?v=jaZ2gLMGUsM&amp;list=PLWz5rJ2EKKc92MGTd1CgUtXZfhA74nUpb&amp;index=7&amp;ab_channel=AndroidDevelopers)
+
+## おわりに
+
+なんとなくやりたいことはわかったけど、実際に手動かしてみないと！
+</content>
+<hatena:formatted-content type="text/html" xmlns:hatena="http://www.hatena.ne.jp/info/xmlns#">&lt;p&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=jaZ2gLMGUsM&amp;amp;list=PLWz5rJ2EKKc92MGTd1CgUtXZfhA74nUpb&amp;amp;index=7&amp;amp;ab_channel=AndroidDevelopers&quot;&gt;Dev Summit: Create offline-first apps&lt;/a&gt; を試聴したのでそのメモです（）。&lt;/p&gt;
+
+&lt;h2 id=&quot;repository-層の役割&quot;&gt;repository 層の役割&lt;/h2&gt;
+
+&lt;p&gt;&lt;a class=&quot;keyword&quot; href=&quot;http://d.hatena.ne.jp/keyword/%A5%EA%A5%DD%A5%B8%A5%C8%A5%EA&quot;&gt;リポジトリ&lt;/a&gt;ー層の役割として、少なくとも 2 つのデータソース（LocalDataSource と NetworkDataSource）からデータを取得することを考える。&lt;/p&gt;
+
+&lt;p&gt;この際、取得できるエンティティが異なるかもしれないが（&lt;code&gt;AuthorEntity&lt;/code&gt;と&lt;code&gt;NetworkAuthor&lt;/code&gt;など）、それを整形して統一して返してあげるのも&lt;strong&gt;Data Layer の役割&lt;/strong&gt;。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Read は Flow を使って&lt;/li&gt;
+&lt;li&gt;Write は suspend fun で&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h2 id=&quot;ネットワークのモニター&quot;&gt;ネットワークのモニター&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;ネットワーク接続がとれるまで&lt;strong&gt;キューに貯めておく必要がある！&lt;/strong&gt;
+
+&lt;ul&gt;
+&lt;li&gt;書き込みについて&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;ネットワークをモニターし、接続が取れたらキューからジョブを実行させる&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;LocalDataSource については、データの一貫性のために&lt;strong&gt;常に読み込みできることが大切！&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;失敗時にリトライが必要そうなら、再度キューに入れる作戦で！&lt;/p&gt;
+
+&lt;h2 id=&quot;Synchronization&quot;&gt;Synchronization&lt;/h2&gt;
+
+&lt;p&gt;ローカルデータとリモートデータを統一させること。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Pull-based
+
+&lt;ul&gt;
+&lt;li&gt;on demand で取得する&lt;/li&gt;
+&lt;li&gt;実装が簡単&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Push-based
+
+&lt;ul&gt;
+&lt;li&gt;データ使用量が最小ですむ&lt;/li&gt;
+&lt;li&gt;must be supported by &lt;a class=&quot;keyword&quot; href=&quot;http://d.hatena.ne.jp/keyword/the%20network&quot;&gt;the network&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h2 id=&quot;Links&quot;&gt;Links&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://developer.android.com/topic/architecture/data-layer/offline-first&quot;&gt;Build an offline-first app&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=jaZ2gLMGUsM&amp;amp;list=PLWz5rJ2EKKc92MGTd1CgUtXZfhA74nUpb&amp;amp;index=7&amp;amp;ab_channel=AndroidDevelopers&quot;&gt;Dev Summit: Create offline-first apps&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h2 id=&quot;おわりに&quot;&gt;おわりに&lt;/h2&gt;
+
+&lt;p&gt;なんとなくやりたいことはわかったけど、実際に手動かしてみないと！&lt;/p&gt;
+</hatena:formatted-content>
+
+<category term="Android" />
+
+<app:control>
+  <app:draft>no</app:draft>
+</app:control>
+
+  </entry>
+  
+  <entry>
+<id>tag:blog.hatena.ne.jp,2013:blog-kokoichi206-26006613509706227-4207112889935396838</id>
+<link rel="edit" href="https://blog.hatena.ne.jp/kokoichi206/koko206.hatenablog.com/atom/entry/4207112889935396838"/>
+<link rel="alternate" type="text/html" href="https://koko206.hatenablog.com/entry/2022/11/10/202653"/>
+<author><name>kokoichi206</name></author>
+<title>Jetpack Compose をデバッグする方法</title>
+<updated>2022-11-10T20:26:53+09:00</updated>
+<published>2022-11-10T20:26:53+09:00</published>
+<app:edited>2022-11-10T20:26:53+09:00</app:edited>
+<summary type="text">今回は Android Studio の Layout Inspector Jetpack Compose のを使ってみていくことになります。 環境 - Android Studio: Android Studio Dolphin | 2021.3.1 - kotlinCompi…</summary>
+<content type="text/x-markdown">
+今回は [Android Studio の Layout Inspector](https://developer.android.com/studio/debug/layout-inspector?hl=ja) Jetpack Compose のを使ってみていくことになります。
+
+## 環境
+
+```
+- Android Studio: Android Studio Dolphin | 2021.3.1
+- kotlinCompilerVersion &#39;1.6&#39;
+- compose_ui_version = &#39;1.2.1&#39;
+```
+
+## 確認方法
+
+右下の方に `Layout Inspector` と書かれたボタンがあるので押します。
+
+中央を確認し、自アプリのプロセスが選択されてない時は、端末・アプリを選択します。
+
+
+[f:id:kokoichi206:20221110202435p:plain]
+
+すると、下の写真のようなことが分かります。
+
+- 構成されている composal の情報
+- 何回 recomposition されたか
+  - 何回スキップされたか
+
+[f:id:kokoichi206:20221110202536p:plain]
+
+また属性値も確認できます。
+
+[f:id:kokoichi206:20221110202612p:plain]
+
+これを使って詳細なサイズ調整や、無駄な recomposition を見つけてパフォーマンスを上げることができそうです！
+</content>
+<hatena:formatted-content type="text/html" xmlns:hatena="http://www.hatena.ne.jp/info/xmlns#">&lt;p&gt;今回は &lt;a href=&quot;https://developer.android.com/studio/debug/layout-inspector?hl=ja&quot;&gt;Android Studio の Layout Inspector&lt;/a&gt; &lt;a class=&quot;keyword&quot; href=&quot;http://d.hatena.ne.jp/keyword/Jetpack&quot;&gt;Jetpack&lt;/a&gt; Compose のを使ってみていくことになります。&lt;/p&gt;
+
+&lt;h2 id=&quot;環境&quot;&gt;環境&lt;/h2&gt;
+
+&lt;pre class=&quot;code&quot; data-lang=&quot;&quot; data-unlink&gt;- Android Studio: Android Studio Dolphin | 2021.3.1
+- kotlinCompilerVersion &amp;#39;1.6&amp;#39;
+- compose_ui_version = &amp;#39;1.2.1&amp;#39;&lt;/pre&gt;
+
+
+&lt;h2 id=&quot;確認方法&quot;&gt;確認方法&lt;/h2&gt;
+
+&lt;p&gt;右下の方に &lt;code&gt;Layout Inspector&lt;/code&gt; と書かれたボタンがあるので押します。&lt;/p&gt;
+
+&lt;p&gt;中央を確認し、自アプリのプロセスが選択されてない時は、端末・アプリを選択します。&lt;/p&gt;
+
+&lt;p&gt;&lt;span itemscope itemtype=&quot;http://schema.org/Photograph&quot;&gt;&lt;img src=&quot;https://cdn-ak.f.st-hatena.com/images/fotolife/k/kokoichi206/20221110/20221110202435.png&quot; width=&quot;1200&quot; height=&quot;274&quot; loading=&quot;lazy&quot; title=&quot;&quot; class=&quot;hatena-fotolife&quot; itemprop=&quot;image&quot;&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;すると、下の写真のようなことが分かります。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;構成されている composal の情報&lt;/li&gt;
+&lt;li&gt;何回 recomposition されたか
+
+&lt;ul&gt;
+&lt;li&gt;何回スキップされたか&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;&lt;span itemscope itemtype=&quot;http://schema.org/Photograph&quot;&gt;&lt;img src=&quot;https://cdn-ak.f.st-hatena.com/images/fotolife/k/kokoichi206/20221110/20221110202536.png&quot; width=&quot;660&quot; height=&quot;536&quot; loading=&quot;lazy&quot; title=&quot;&quot; class=&quot;hatena-fotolife&quot; itemprop=&quot;image&quot;&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;また属性値も確認できます。&lt;/p&gt;
+
+&lt;p&gt;&lt;span itemscope itemtype=&quot;http://schema.org/Photograph&quot;&gt;&lt;img src=&quot;https://cdn-ak.f.st-hatena.com/images/fotolife/k/kokoichi206/20221110/20221110202612.png&quot; width=&quot;536&quot; height=&quot;990&quot; loading=&quot;lazy&quot; title=&quot;&quot; class=&quot;hatena-fotolife&quot; itemprop=&quot;image&quot;&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;これを使って詳細なサイズ調整や、無駄な recomposition を見つけてパフォーマンスを上げることができそうです！&lt;/p&gt;
+</hatena:formatted-content>
+
+<category term="Android-jetpack compose" />
+
+<category term="Android" />
+
+<app:control>
+  <app:draft>no</app:draft>
+</app:control>
+
+  </entry>
+  
+  <entry>
+<id>tag:blog.hatena.ne.jp,2013:blog-kokoichi206-26006613509706227-4207112889934621054</id>
+<link rel="edit" href="https://blog.hatena.ne.jp/kokoichi206/koko206.hatenablog.com/atom/entry/4207112889934621054"/>
+<link rel="alternate" type="text/html" href="https://koko206.hatenablog.com/entry/2022/11/08/002123"/>
+<author><name>kokoichi206</name></author>
+<title>ShellCheck から学ぶ良いスクリプトの書き方 〜SC2086(ダブルクォート)編〜</title>
+<updated>2022-11-08T00:21:23+09:00</updated>
+<published>2022-11-08T00:21:23+09:00</published>
+<app:edited>2022-11-08T00:21:23+09:00</app:edited>
+<summary type="text">とりあえずは変数はダブルクォーテーションで囲もうってことなんですが、囲まないとどうなるか少し調べてみました。 [目次] Double quote to prevent globbing and word splitting. globbing word splitting おまけ…</summary>
+<content type="text/x-markdown">とりあえずは**変数はダブルクォーテーションで囲もう**ってことなんですが、囲まないとどうなるか少し調べてみました。
+
+**[目次]**
+
+[:contents]
+
+今回は簡単な部類である [SC2086](https://www.shellcheck.net/wiki/SC2086) から確認していきます。
+
+[ShellCheck](https://www.shellcheck.net/) のサイトや、[ShellCheck の拡張機能](https://github.com/vscode-shellcheck/vscode-shellcheck)の入った VSCode などで以下のようなコードを打ちます。
+
+```sh
+#!/bin/bash
+
+d=&quot;true = true -o x&quot;
+if [ $d = &quot;pien&quot; ]; then
+    echo &quot;d is equal to pien&quot;
+fi
+```
+
+すると以下のようなエラーが表示されます。
+
+```sh
+$ shellcheck myscript
+
+Line 4:
+if [ $d = &quot;pien&quot; ]; then
+     ^-- SC2086 (info): Double quote to prevent globbing and word splitting.
+
+Did you mean: (apply this, apply all SC2086)
+if [ &quot;$d&quot; = &quot;pien&quot; ]; then
+```
+
+つまりは『ダブルクォーテーション（&quot;）』で囲めば解決するんですが、今回は**囲まなかったらどうなるか・なぜこれが良くないのか**について少し調べてみました。
+
+## Double quote to prevent globbing and word splitting.
+
+どうやら `Double quote` は何かを防いでくれるようです。
+
+一つずつ見ていきます。
+
+### globbing
+
+まず glob についてはマニュアルの [3.5.8 Filename Expansion](https://www.gnu.org/software/bash/manual/html_node/Filename-Expansion.html) にちょっと書いてありますが、要は『bash 用に定義された特殊なパターン』と思っていいんじゃないでしょうか。
+
+```sh
+// こんなやつ
+$ ls *.py
+```
+
+『ダブルクォーテーションで囲むと、この `glob` 展開を禁止するよ！』と言ってるんですね。
+
+**具体例**  
+例えば次のような例を考えます。
+
+```sh
+# なんかの演算の結果、ファイル名に * がきてしまった。
+file_name=&quot;*&quot;
+# このままでは file_name がエスケープされていないので、
+# sh の拡張子のファイルが全部表示される。
+ls $file_name.sh
+
+# ===== Output =====
+&#39;*.sh&#39;   check.sh   echo_script.sh   test.sh
+```
+
+文字列で受け取っている以上、期待結果としては &#39;\*.sh&#39; のファイル**1 つのみ**なはずです。
+
+ShellCheck の指示通り `&quot;` で囲んであげたら期待値通り `*.sh` のファイルにのみヒットします。
+
+```sh
+# なんかの演算の結果、ファイル名に * がきてしまった。
+file_name=&quot;*&quot;
+# &#39;*.sh&#39; というファイル名にのみヒットする
+ls &quot;$file_name.sh&quot;
+
+# ===== Output =====
+&#39;*.sh&#39;
+```
+
+### word splitting
+
+bash では**空白で一息つく**癖があるので、スペースが含まれてると文字列じゃないように解釈されてしまってやばいよ！ってことです。
+
+**具体例**  
+これは結構問題になる例が浮かんでくるかと思いますが、とりあえず 1 つ。
+
+```sh
+# なんかの拍子で d に以下のような文字列が入ってきた！
+d=&quot;true = true -o x&quot;
+# 実はここは true になるので、意図しないタイミングで if 節の中が実行される！
+if [ $d = &quot;pien&quot; ]; then
+    echo &quot;variable d is equal to pien&quot;
+fi
+```
+
+コマンド `[` では `-o` オプションは `OR` の役割を果たしており、`$d = &quot;pien&quot;` とかいた時は次『のどちらかが成立する時』という条件式になっています。
+
+- `true = true`
+- `x = &quot;pien&quot;`
+
+つまり 1 つ目の式が絶対に真となるため、**意図せず if ブロックが実行されてしまいます！**
+
+SQL インジェクションみたいだな〜〜って思って考えていました。
+
+## おまけ
+
+glob の文字列を含むファイル名を作成できるの？って感じですが、以下のようにすれば可能でした。
+
+```sh
+$ touch \*.sh
+$ touch &#39;*.sh&#39;
+```
+
+## おわりに
+
+ShellCheck は偉大だけど納得して使いたい。
+</content>
+<hatena:formatted-content type="text/html" xmlns:hatena="http://www.hatena.ne.jp/info/xmlns#">&lt;p&gt;とりあえずは&lt;strong&gt;変数はダブルクォーテーションで囲もう&lt;/strong&gt;ってことなんですが、囲まないとどうなるか少し調べてみました。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;[目次]&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul class=&quot;table-of-contents&quot;&gt;
+    &lt;li&gt;&lt;a href=&quot;#Double-quote-to-prevent-globbing-and-word-splitting&quot;&gt;Double quote to prevent globbing and word splitting.&lt;/a&gt;&lt;ul&gt;
+            &lt;li&gt;&lt;a href=&quot;#globbing&quot;&gt;globbing&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href=&quot;#word-splitting&quot;&gt;word splitting&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;#おまけ&quot;&gt;おまけ&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;#おわりに&quot;&gt;おわりに&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;今回は簡単な部類である &lt;a href=&quot;https://www.shellcheck.net/wiki/SC2086&quot;&gt;SC2086&lt;/a&gt; から確認していきます。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.shellcheck.net/&quot;&gt;ShellCheck&lt;/a&gt; のサイトや、&lt;a href=&quot;https://github.com/vscode-shellcheck/vscode-shellcheck&quot;&gt;ShellCheck の拡張機能&lt;/a&gt;の入った &lt;a class=&quot;keyword&quot; href=&quot;http://d.hatena.ne.jp/keyword/VSCode&quot;&gt;VSCode&lt;/a&gt; などで以下のようなコードを打ちます。&lt;/p&gt;
+
+&lt;pre class=&quot;code lang-sh&quot; data-lang=&quot;sh&quot; data-unlink&gt;&lt;span class=&quot;synComment&quot;&gt;#!/bin/bash&lt;/span&gt;
+
+&lt;span class=&quot;synIdentifier&quot;&gt;d&lt;/span&gt;=&lt;span class=&quot;synStatement&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;synConstant&quot;&gt;true = true -o x&lt;/span&gt;&lt;span class=&quot;synStatement&quot;&gt;&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;synStatement&quot;&gt;if [&lt;/span&gt; &lt;span class=&quot;synPreProc&quot;&gt;$d&lt;/span&gt; &lt;span class=&quot;synStatement&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;synConstant&quot;&gt;&amp;quot;pien&amp;quot;&lt;/span&gt; &lt;span class=&quot;synStatement&quot;&gt;];&lt;/span&gt; &lt;span class=&quot;synStatement&quot;&gt;then&lt;/span&gt;
+    &lt;span class=&quot;synStatement&quot;&gt;echo&lt;/span&gt;&lt;span class=&quot;synConstant&quot;&gt; &lt;/span&gt;&lt;span class=&quot;synStatement&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;synConstant&quot;&gt;d is equal to pien&lt;/span&gt;&lt;span class=&quot;synStatement&quot;&gt;&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;synStatement&quot;&gt;fi&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;すると以下のようなエラーが表示されます。&lt;/p&gt;
+
+&lt;pre class=&quot;code lang-sh&quot; data-lang=&quot;sh&quot; data-unlink&gt;$ shellcheck myscript
+
+Line 4:
+&lt;span class=&quot;synStatement&quot;&gt;if [&lt;/span&gt; &lt;span class=&quot;synPreProc&quot;&gt;$d&lt;/span&gt; &lt;span class=&quot;synStatement&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;synConstant&quot;&gt;&amp;quot;pien&amp;quot;&lt;/span&gt; &lt;span class=&quot;synStatement&quot;&gt;];&lt;/span&gt; &lt;span class=&quot;synStatement&quot;&gt;then&lt;/span&gt;
+     ^&lt;span class=&quot;synStatement&quot;&gt;--&lt;/span&gt; SC2086 &lt;span class=&quot;synPreProc&quot;&gt;(&lt;/span&gt;info&lt;span class=&quot;synPreProc&quot;&gt;)&lt;/span&gt;: Double quote to prevent globbing and word splitting.
+
+Did you mean: &lt;span class=&quot;synPreProc&quot;&gt;(&lt;/span&gt;apply this, apply all SC2086&lt;span class=&quot;synPreProc&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;synStatement&quot;&gt;if [&lt;/span&gt; &lt;span class=&quot;synStatement&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;synPreProc&quot;&gt;$d&lt;/span&gt;&lt;span class=&quot;synStatement&quot;&gt;&amp;quot;&lt;/span&gt; &lt;span class=&quot;synStatement&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;synConstant&quot;&gt;&amp;quot;pien&amp;quot;&lt;/span&gt; &lt;span class=&quot;synStatement&quot;&gt;];&lt;/span&gt; &lt;span class=&quot;synStatement&quot;&gt;then&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;つまりは『ダブルクォーテーション（&quot;）』で囲めば解決するんですが、今回は&lt;strong&gt;囲まなかったらどうなるか・なぜこれが良くないのか&lt;/strong&gt;について少し調べてみました。&lt;/p&gt;
+
+&lt;h2 id=&quot;Double-quote-to-prevent-globbing-and-word-splitting&quot;&gt;Double quote to prevent globbing and word splitting.&lt;/h2&gt;
+
+&lt;p&gt;どうやら &lt;code&gt;Double quote&lt;/code&gt; は何かを防いでくれるようです。&lt;/p&gt;
+
+&lt;p&gt;一つずつ見ていきます。&lt;/p&gt;
+
+&lt;h3 id=&quot;globbing&quot;&gt;globbing&lt;/h3&gt;
+
+&lt;p&gt;まず glob についてはマニュアルの &lt;a href=&quot;https://www.gnu.org/software/bash/manual/html_node/Filename-Expansion.html&quot;&gt;3.5.8 Filename Expansion&lt;/a&gt; にちょっと書いてありますが、要は『&lt;a class=&quot;keyword&quot; href=&quot;http://d.hatena.ne.jp/keyword/bash&quot;&gt;bash&lt;/a&gt; 用に定義された特殊なパターン』と思っていいんじゃないでしょうか。&lt;/p&gt;
+
+&lt;pre class=&quot;code lang-sh&quot; data-lang=&quot;sh&quot; data-unlink&gt;// こんなやつ
+$ &lt;span class=&quot;synStatement&quot;&gt;ls&lt;/span&gt; *.py
+&lt;/pre&gt;
+
+
+&lt;p&gt;『ダブルクォーテーションで囲むと、この &lt;code&gt;glob&lt;/code&gt; 展開を禁止するよ！』と言ってるんですね。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;具体例&lt;/strong&gt;&lt;br /&gt;
+例えば次のような例を考えます。&lt;/p&gt;
+
+&lt;pre class=&quot;code lang-sh&quot; data-lang=&quot;sh&quot; data-unlink&gt;&lt;span class=&quot;synComment&quot;&gt;# なんかの演算の結果、ファイル名に * がきてしまった。&lt;/span&gt;
+&lt;span class=&quot;synIdentifier&quot;&gt;file_name&lt;/span&gt;=&lt;span class=&quot;synStatement&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;synConstant&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;synStatement&quot;&gt;&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;synComment&quot;&gt;# このままでは file_name がエスケープされていないので、&lt;/span&gt;
+&lt;span class=&quot;synComment&quot;&gt;# sh の拡張子のファイルが全部表示される。&lt;/span&gt;
+&lt;span class=&quot;synStatement&quot;&gt;ls&lt;/span&gt; &lt;span class=&quot;synPreProc&quot;&gt;$file_name&lt;/span&gt;.sh
+
+&lt;span class=&quot;synComment&quot;&gt;# ===== Output =====&lt;/span&gt;
+&lt;span class=&quot;synStatement&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;synConstant&quot;&gt;*.sh&lt;/span&gt;&lt;span class=&quot;synStatement&quot;&gt;&#39;&lt;/span&gt;   check.sh   echo_script.sh   &lt;span class=&quot;synStatement&quot;&gt;test&lt;/span&gt;.sh
+&lt;/pre&gt;
+
+
+&lt;p&gt;文字列で受け取っている以上、期待結果としては &#39;*.sh&#39; のファイル&lt;strong&gt;1 つのみ&lt;/strong&gt;なはずです。&lt;/p&gt;
+
+&lt;p&gt;ShellCheck の指示通り &lt;code&gt;&quot;&lt;/code&gt; で囲んであげたら期待値通り &lt;code&gt;*.sh&lt;/code&gt; のファイルにのみヒットします。&lt;/p&gt;
+
+&lt;pre class=&quot;code lang-sh&quot; data-lang=&quot;sh&quot; data-unlink&gt;&lt;span class=&quot;synComment&quot;&gt;# なんかの演算の結果、ファイル名に * がきてしまった。&lt;/span&gt;
+&lt;span class=&quot;synIdentifier&quot;&gt;file_name&lt;/span&gt;=&lt;span class=&quot;synStatement&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;synConstant&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;synStatement&quot;&gt;&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;synComment&quot;&gt;# &#39;*.sh&#39; というファイル名にのみヒットする&lt;/span&gt;
+&lt;span class=&quot;synStatement&quot;&gt;ls&lt;/span&gt; &lt;span class=&quot;synStatement&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;synPreProc&quot;&gt;$file_name&lt;/span&gt;&lt;span class=&quot;synConstant&quot;&gt;.sh&lt;/span&gt;&lt;span class=&quot;synStatement&quot;&gt;&amp;quot;&lt;/span&gt;
+
+&lt;span class=&quot;synComment&quot;&gt;# ===== Output =====&lt;/span&gt;
+&lt;span class=&quot;synStatement&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;synConstant&quot;&gt;*.sh&lt;/span&gt;&lt;span class=&quot;synStatement&quot;&gt;&#39;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h3 id=&quot;word-splitting&quot;&gt;word splitting&lt;/h3&gt;
+
+&lt;p&gt;&lt;a class=&quot;keyword&quot; href=&quot;http://d.hatena.ne.jp/keyword/bash&quot;&gt;bash&lt;/a&gt; では&lt;strong&gt;空白で一息つく&lt;/strong&gt;癖があるので、スペースが含まれてると文字列じゃないように解釈されてしまってやばいよ！ってことです。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;具体例&lt;/strong&gt;&lt;br /&gt;
+これは結構問題になる例が浮かんでくるかと思いますが、とりあえず 1 つ。&lt;/p&gt;
+
+&lt;pre class=&quot;code lang-sh&quot; data-lang=&quot;sh&quot; data-unlink&gt;&lt;span class=&quot;synComment&quot;&gt;# なんかの拍子で d に以下のような文字列が入ってきた！&lt;/span&gt;
+&lt;span class=&quot;synIdentifier&quot;&gt;d&lt;/span&gt;=&lt;span class=&quot;synStatement&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;synConstant&quot;&gt;true = true -o x&lt;/span&gt;&lt;span class=&quot;synStatement&quot;&gt;&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;synComment&quot;&gt;# 実はここは true になるので、意図しないタイミングで if 節の中が実行される！&lt;/span&gt;
+&lt;span class=&quot;synStatement&quot;&gt;if [&lt;/span&gt; &lt;span class=&quot;synPreProc&quot;&gt;$d&lt;/span&gt; &lt;span class=&quot;synStatement&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;synConstant&quot;&gt;&amp;quot;pien&amp;quot;&lt;/span&gt; &lt;span class=&quot;synStatement&quot;&gt;];&lt;/span&gt; &lt;span class=&quot;synStatement&quot;&gt;then&lt;/span&gt;
+    &lt;span class=&quot;synStatement&quot;&gt;echo&lt;/span&gt;&lt;span class=&quot;synConstant&quot;&gt; &lt;/span&gt;&lt;span class=&quot;synStatement&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;synConstant&quot;&gt;variable d is equal to pien&lt;/span&gt;&lt;span class=&quot;synStatement&quot;&gt;&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;synStatement&quot;&gt;fi&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;コマンド &lt;code&gt;[&lt;/code&gt; では &lt;code&gt;-o&lt;/code&gt; オプションは &lt;code&gt;OR&lt;/code&gt; の役割を果たしており、&lt;code&gt;$d = &quot;pien&quot;&lt;/code&gt; とかいた時は次『のどちらかが成立する時』という条件式になっています。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;true = true&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;x = &quot;pien&quot;&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;つまり 1 つ目の式が絶対に真となるため、&lt;strong&gt;意図せず if ブロックが実行されてしまいます！&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a class=&quot;keyword&quot; href=&quot;http://d.hatena.ne.jp/keyword/SQL&quot;&gt;SQL&lt;/a&gt; インジェクションみたいだな〜〜って思って考えていました。&lt;/p&gt;
+
+&lt;h2 id=&quot;おまけ&quot;&gt;おまけ&lt;/h2&gt;
+
+&lt;p&gt;glob の文字列を含むファイル名を作成できるの？って感じですが、以下のようにすれば可能でした。&lt;/p&gt;
+
+&lt;pre class=&quot;code lang-sh&quot; data-lang=&quot;sh&quot; data-unlink&gt;$ &lt;span class=&quot;synStatement&quot;&gt;touch&lt;/span&gt; \*.sh
+$ &lt;span class=&quot;synStatement&quot;&gt;touch&lt;/span&gt; &lt;span class=&quot;synStatement&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;synConstant&quot;&gt;*.sh&lt;/span&gt;&lt;span class=&quot;synStatement&quot;&gt;&#39;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h2 id=&quot;おわりに&quot;&gt;おわりに&lt;/h2&gt;
+
+&lt;p&gt;ShellCheck は偉大だけど納得して使いたい。&lt;/p&gt;
+</hatena:formatted-content>
+
+<category term="Shell" />
+
+<app:control>
+  <app:draft>no</app:draft>
+</app:control>
+
+  </entry>
+  
+  <entry>
+<id>tag:blog.hatena.ne.jp,2013:blog-kokoichi206-26006613509706227-4207112889934433908</id>
+<link rel="edit" href="https://blog.hatena.ne.jp/kokoichi206/koko206.hatenablog.com/atom/entry/4207112889934433908"/>
+<link rel="alternate" type="text/html" href="https://koko206.hatenablog.com/entry/2022/11/07/123151"/>
+<author><name>kokoichi206</name></author>
+<title>Jetpack compose で Indicator をなめらかにする</title>
+<updated>2022-11-07T12:31:51+09:00</updated>
+<published>2022-11-07T12:31:51+09:00</published>
+<app:edited>2022-11-07T12:53:26+09:00</app:edited>
+<summary type="text">今回は、Jetpack compose でなめらかに Indicator を表示する方法についてメモしておきます。 なお、今回の内容は『Android DevSummit &quot;5 quick animations to make your Compose app stand out…</summary>
+<content type="text/x-markdown">今回は、Jetpack compose でなめらかに Indicator を表示する方法についてメモしておきます。
+
+なお、今回の内容は[『Android DevSummit &quot;5 quick animations to make your Compose app stand out&quot;』](https://www.youtube.com/watch?v=0mfCbXrYBPE&amp;list=PLWz5rJ2EKKc92MGTd1CgUtXZfhA74nUpb&amp;index=4&amp;ab_channel=AndroidDevelopers)から学んだものとなります。
+
+**[目次]**
+
+[:contents]
+
+## 環境
+
+```
+- compose &quot;1.3.0-rc01&quot;
+- kotlin &quot;1.7.1&quot;
+```
+
+## 実装方法
+
+今回は `LinearProgressIndicator` でやってますが、特にこれに限った話ではありません。  
+（今回のソースコードは [github](https://github.com/kokoichi206/android-app/blob/master/PlayGround/app/src/main/java/jp/mydns/kokoichi0206/playground/blogs/AnimatedIndicator.kt) においてます。）
+
+### 通常の Indicator
+
+比較のため、まずは通常の `LinearProgressIndicator` を実装します。
+
+```kotlin
+var idx by remember {
+    mutableStateOf(1)
+}
+val progress = idx.toFloat() / 5
+
+LinearProgressIndicator(
+    modifier = Modifier
+        .padding(32.dp)
+        .fillMaxWidth(),
+    progress = progress,
+    color = Color.Red,
+)
+```
+
+（gif ってのもありますが）カクカクしています。
+
+[f:id:kokoichi206:20221107122834g:plain]
+
+### [animate\*AsState](https://developer.android.com/jetpack/compose/animation?hl=ja#animate-as-state) を使う
+
+`progress`の定義を以下のように変更するだけです。  
+非常に簡単でありがたいです。
+
+```kotlin
+val progress by animateFloatAsState(targetValue = idx.toFloat()/5)
+```
+
+また、animationSpec を細かく変更することも可能です。
+
+```kotlin
+var idx by remember {
+    mutableStateOf(1)
+}
+val progress by animateFloatAsState(
+    targetValue = idx.toFloat() / 5,
+    animationSpec = spring(
+        dampingRatio = Spring.DampingRatioLowBouncy,
+        stiffness = Spring.StiffnessLow,
+    )
+)
+
+LinearProgressIndicator(
+    modifier = Modifier
+        .padding(32.dp)
+        .fillMaxWidth(),
+    progress = progress,
+    color = Color.Red,
+)
+```
+
+gif に変更してるので多少分かりにくいかもですが、通常の時に比べてなめらかに変化していることがわかります。
+
+[f:id:kokoichi206:20221107122717g:plain]
+
+## リンク
+
+- [DevSummit](https://www.youtube.com/watch?v=0mfCbXrYBPE&amp;list=PLWz5rJ2EKKc92MGTd1CgUtXZfhA74nUpb&amp;index=4&amp;ab_channel=AndroidDevelopers)
+- DevSummit のなかで紹介されてたリンク
+  - https://developer.android.com/jetpack/compose/animation
+  - https://storage.googleapis.com/android-stories/compose/Compose_Animation_Cheat_Sheet.pdf
+  - https://medium.com/androiddevelopers/customizing-animatedcontent-in-jetpack-compose-629c67b45894
+
+## おわりに
+
+[Jetpack Compose のアニメーションのページ](https://developer.android.com/jetpack/compose/animation?hl=ja)が非常にしっかりしてて、気合い入れてる度合いが伝わってきます。  
+こっちもきちんとウォッチしていきたいです。
+</content>
+<hatena:formatted-content type="text/html" xmlns:hatena="http://www.hatena.ne.jp/info/xmlns#">&lt;p&gt;今回は、&lt;a class=&quot;keyword&quot; href=&quot;http://d.hatena.ne.jp/keyword/Jetpack&quot;&gt;Jetpack&lt;/a&gt; compose でなめらかに Indicator を表示する方法についてメモしておきます。&lt;/p&gt;
+
+&lt;p&gt;なお、今回の内容は&lt;a href=&quot;https://www.youtube.com/watch?v=0mfCbXrYBPE&amp;amp;list=PLWz5rJ2EKKc92MGTd1CgUtXZfhA74nUpb&amp;amp;index=4&amp;amp;ab_channel=AndroidDevelopers&quot;&gt;『Android DevSummit &quot;5 quick animations to make your Compose app stand out&quot;』&lt;/a&gt;から学んだものとなります。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;[目次]&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul class=&quot;table-of-contents&quot;&gt;
+    &lt;li&gt;&lt;a href=&quot;#環境&quot;&gt;環境&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;#実装方法&quot;&gt;実装方法&lt;/a&gt;&lt;ul&gt;
+            &lt;li&gt;&lt;a href=&quot;#通常の-Indicator&quot;&gt;通常の Indicator&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href=&quot;#animateAsState-を使う&quot;&gt;animate*AsState を使う&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;#リンク&quot;&gt;リンク&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;#おわりに&quot;&gt;おわりに&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;環境&quot;&gt;環境&lt;/h2&gt;
+
+&lt;pre class=&quot;code&quot; data-lang=&quot;&quot; data-unlink&gt;- compose &amp;#34;1.3.0-rc01&amp;#34;
+- kotlin &amp;#34;1.7.1&amp;#34;&lt;/pre&gt;
+
+
+&lt;h2 id=&quot;実装方法&quot;&gt;実装方法&lt;/h2&gt;
+
+&lt;p&gt;今回は &lt;code&gt;LinearProgressIndicator&lt;/code&gt; でやってますが、特にこれに限った話ではありません。&lt;br /&gt;
+（今回の&lt;a class=&quot;keyword&quot; href=&quot;http://d.hatena.ne.jp/keyword/%A5%BD%A1%BC%A5%B9%A5%B3%A1%BC%A5%C9&quot;&gt;ソースコード&lt;/a&gt;は &lt;a href=&quot;https://github.com/kokoichi206/android-app/blob/master/PlayGround/app/src/main/java/jp/mydns/kokoichi0206/playground/blogs/AnimatedIndicator.kt&quot;&gt;github&lt;/a&gt; においてます。）&lt;/p&gt;
+
+&lt;h3 id=&quot;通常の-Indicator&quot;&gt;通常の Indicator&lt;/h3&gt;
+
+&lt;p&gt;比較のため、まずは通常の &lt;code&gt;LinearProgressIndicator&lt;/code&gt; を実装します。&lt;/p&gt;
+
+&lt;pre class=&quot;code lang-kotlin&quot; data-lang=&quot;kotlin&quot; data-unlink&gt;&lt;span class=&quot;synType&quot;&gt;var&lt;/span&gt; idx &lt;span class=&quot;synStatement&quot;&gt;by&lt;/span&gt; remember {
+    mutableStateOf(&lt;span class=&quot;synConstant&quot;&gt;1&lt;/span&gt;)
+}
+&lt;span class=&quot;synType&quot;&gt;val&lt;/span&gt; progress = idx.toFloat() &lt;span class=&quot;synStatement&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;synConstant&quot;&gt;5&lt;/span&gt;
+
+LinearProgressIndicator(
+    modifier = Modifier
+        .padding(&lt;span class=&quot;synConstant&quot;&gt;32&lt;/span&gt;.dp)
+        .fillMaxWidth(),
+    progress = progress,
+    color = Color.Red,
+)
+&lt;/pre&gt;
+
+
+&lt;p&gt;（gif ってのもありますが）カクカクしています。&lt;/p&gt;
+
+&lt;p&gt;&lt;span itemscope itemtype=&quot;http://schema.org/Photograph&quot;&gt;&lt;img src=&quot;https://cdn-ak.f.st-hatena.com/images/fotolife/k/kokoichi206/20221107/20221107122834.gif&quot; width=&quot;720&quot; height=&quot;400&quot; loading=&quot;lazy&quot; title=&quot;&quot; class=&quot;hatena-fotolife&quot; itemprop=&quot;image&quot;&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;animateAsState-を使う&quot;&gt;&lt;a href=&quot;https://developer.android.com/jetpack/compose/animation?hl=ja#animate-as-state&quot;&gt;animate*AsState&lt;/a&gt; を使う&lt;/h3&gt;
+
+&lt;p&gt;&lt;code&gt;progress&lt;/code&gt;の定義を以下のように変更するだけです。&lt;br /&gt;
+非常に簡単でありがたいです。&lt;/p&gt;
+
+&lt;pre class=&quot;code lang-kotlin&quot; data-lang=&quot;kotlin&quot; data-unlink&gt;&lt;span class=&quot;synType&quot;&gt;val&lt;/span&gt; progress &lt;span class=&quot;synStatement&quot;&gt;by&lt;/span&gt; animateFloatAsState(targetValue = idx.toFloat()&lt;span class=&quot;synStatement&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;synConstant&quot;&gt;5&lt;/span&gt;)
+&lt;/pre&gt;
+
+
+&lt;p&gt;また、animationSpec を細かく変更することも可能です。&lt;/p&gt;
+
+&lt;pre class=&quot;code lang-kotlin&quot; data-lang=&quot;kotlin&quot; data-unlink&gt;&lt;span class=&quot;synType&quot;&gt;var&lt;/span&gt; idx &lt;span class=&quot;synStatement&quot;&gt;by&lt;/span&gt; remember {
+    mutableStateOf(&lt;span class=&quot;synConstant&quot;&gt;1&lt;/span&gt;)
+}
+&lt;span class=&quot;synType&quot;&gt;val&lt;/span&gt; progress &lt;span class=&quot;synStatement&quot;&gt;by&lt;/span&gt; animateFloatAsState(
+    targetValue = idx.toFloat() &lt;span class=&quot;synStatement&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;synConstant&quot;&gt;5&lt;/span&gt;,
+    animationSpec = spring(
+        dampingRatio = Spring.DampingRatioLowBouncy,
+        stiffness = Spring.StiffnessLow,
+    )
+)
+
+LinearProgressIndicator(
+    modifier = Modifier
+        .padding(&lt;span class=&quot;synConstant&quot;&gt;32&lt;/span&gt;.dp)
+        .fillMaxWidth(),
+    progress = progress,
+    color = Color.Red,
+)
+&lt;/pre&gt;
+
+
+&lt;p&gt;gif に変更してるので多少分かりにくいかもですが、通常の時に比べてなめらかに変化していることがわかります。&lt;/p&gt;
+
+&lt;p&gt;&lt;span itemscope itemtype=&quot;http://schema.org/Photograph&quot;&gt;&lt;img src=&quot;https://cdn-ak.f.st-hatena.com/images/fotolife/k/kokoichi206/20221107/20221107122717.gif&quot; width=&quot;720&quot; height=&quot;400&quot; loading=&quot;lazy&quot; title=&quot;&quot; class=&quot;hatena-fotolife&quot; itemprop=&quot;image&quot;&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;リンク&quot;&gt;リンク&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=0mfCbXrYBPE&amp;amp;list=PLWz5rJ2EKKc92MGTd1CgUtXZfhA74nUpb&amp;amp;index=4&amp;amp;ab_channel=AndroidDevelopers&quot;&gt;DevSummit&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;DevSummit のなかで紹介されてたリンク
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://developer.android.com/jetpack/compose/animation&quot;&gt;https://developer.android.com/jetpack/compose/animation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://storage.googleapis.com/android-stories/compose/Compose_Animation_Cheat_Sheet.pdf&quot;&gt;https://storage.googleapis.com/android-stories/compose/Compose_Animation_Cheat_Sheet.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://medium.com/androiddevelopers/customizing-animatedcontent-in-jetpack-compose-629c67b45894&quot;&gt;https://medium.com/androiddevelopers/customizing-animatedcontent-in-jetpack-compose-629c67b45894&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h2 id=&quot;おわりに&quot;&gt;おわりに&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://developer.android.com/jetpack/compose/animation?hl=ja&quot;&gt;Jetpack Compose のアニメーションのページ&lt;/a&gt;が非常にしっかりしてて、気合い入れてる度合いが伝わってきます。&lt;br /&gt;
+こっちもきちんとウォッチしていきたいです。&lt;/p&gt;
+</hatena:formatted-content>
+
+<category term="Android-jetpack compose" />
+
+<category term="Android" />
+
+<app:control>
+  <app:draft>no</app:draft>
+</app:control>
+
+  </entry>
+  
+  <entry>
+<id>tag:blog.hatena.ne.jp,2013:blog-kokoichi206-26006613509706227-4207112889934051656</id>
+<link rel="edit" href="https://blog.hatena.ne.jp/kokoichi206/koko206.hatenablog.com/atom/entry/4207112889934051656"/>
+<link rel="alternate" type="text/html" href="https://koko206.hatenablog.com/entry/2022/11/06/035812"/>
+<author><name>kokoichi206</name></author>
+<title>Android のマルチモジュール化で Preview の高速化</title>
+<updated>2022-11-06T03:58:12+09:00</updated>
+<published>2022-11-06T03:58:12+09:00</published>
+<app:edited>2022-11-06T14:43:08+09:00</app:edited>
+<summary type="text">今回は Android のプロジェクトをマルチモジュール化し、Jetpack Compose の Preview を高速化してみました。 [目次] 環境 マルチモジュール化のメリット デメリット マルチモジュール化の方法 プレビュー速度の向上 Links おわりに 環境 - PC…</summary>
+<content type="text/x-markdown">今回は Android のプロジェクトをマルチモジュール化し、Jetpack Compose の Preview を高速化してみました。
+
+[目次]
+
+[:contents]
+
+## 環境
+
+```
+- PC
+    - macOS version 12.4
+    - Apple M1 chip
+    - Memory 16 GB
+- Android Project
+    - compose &quot;1.3.0-rc01&quot;
+    - kotlin &quot;1.7.1&quot;
+```
+
+## マルチモジュール化のメリット
+
+- **ビルド時間の短縮**
+  - 2 回目以降のビルドは、**変更の入ったモジュールのみ**になるため速い！
+- レイヤー間の**依存関係の強制**
+- 各モジュールの関心ごとを小さくできる
+  - package ではクラスのグルーピングしかできないが、レイアウトファイルや resource 等も含めたグルーピングが可能！
+  - string, layout, manifest 等が機能単位に集約され、見やすい
+  - internal 修飾子による、モノリスより柔軟な可視性制御
+- **Compose の Preview も速くなる**
+
+特に『Compose の Preview を速くする』ことを目的に、今回はとあるプロジェクトをマルチモジュール化してみました。
+
+### デメリット
+
+メリットだけだと不公平なので、デメリットも思いつく限り記載しておきます。
+
+- 初回ビルドは時間がかかる
+  - らしい
+  - 対象モジュールを結合するため
+- 浅いモジュールを作りすぎると、複雑性が増して保守しにくくなる
+  - 分割の仕方大事そう
+
+
+## マルチモジュール化の方法
+
+[『既存の Android アプリを multi-module project 化』](https://droidkaigi.github.io/codelab-2020/ja/index.html#3)のサイトが詳しいですが、概略としては以下のステップで可能です。
+
+1. File &gt; New &gt; New Module
+   - 何もなければ No Activity で
+1. フォルダ構造を変更（refactor）
+   1. settings.gradle も変更する
+   1. `&#39;:data&#39;` -&gt; `&#39;:core:data&#39;`
+1. 余計なファイルを削除する
+   - `drawable` など
+
+module にするときは、`build.gradle &gt; plugins` の `com.android.application` の値を `com.android.library` に変更します。
+
+```
+// module になる側
+plugins {
+    // id &#39;com.android.application&#39;
+    id &#39;com.android.library&#39;
+    ...
+}
+```
+
+また、module を import したい時は、`build.gradle` に以下のように記載します。
+
+```
+// module を使う側
+android {
+    ...
+}
+dependencies {
+    ...
+    // modules
+    implementation project(&quot;:core:common&quot;)
+    implementation project(&quot;:core:domain&quot;)
+}
+```
+
+（[実際にやった対応](https://github.com/android-project-46group/android/pull/85)と[リポジトリ](https://github.com/android-project-46group/android)です。）
+
+## プレビュー速度の向上
+
+Jetpack Compose には UI を即座に確認できる『`Preview`』が用意されております。
+
+```kotlin
+@Preview
+@Composable
+fun MainViewPreview() {
+    val uiState = MemberListUiState()
+
+    CustomTheme() {
+        MainView(uiState = uiState)
+    }
+}
+```
+
+ここでは `Preview` を行う際に重要となる次の 3 つの動作について、それぞれ変更前と後で時間を比較しました。
+
+- 1. Build Refresh
+  - Preview の内容を変更した際に変更を反映させます。
+  - [f:id:kokoichi206:20221106035953p:plain]
+- 2. Start Interactive Mode
+  - `Interactive Mode`（Preview Mode でタッチ操作可能なモード）を有効にする
+  - [f:id:kokoichi206:20221106040016p:plain]
+- 3. Stop Interactive Mode
+  - `Interactive Mode` を止める
+
+それぞれ 3 回ずつ測定し平均を求めております。
+
+| 変更前 |                    | マルチモジュール |
+| :----: | :----------------: | :--------------: |
+|  12.1  |      1.Build       |       7.5        |
+|  9.5   | 2.Start&lt;br/&gt;画面 1 |       2.6        |
+|  11.2  | 2.Start&lt;br/&gt;画面 2 |       2.9        |
+|  8.7   | 3.Stop&lt;br/&gt;画面 1  |       3.2        |
+|  9.3   | 3.Stop&lt;br/&gt;画面 2  |       2.7        |
+
+**2~3 倍程度速度の高速化**が確認できました。
+
+## Links
+
+- [Sansan Android アプリ開発におけるマルチモジュール化の進め方 / Approaches to multi-module development in Sansan Android app](https://speakerdeck.com/sansanbuildersbox/approaches-to-multi-module-development-in-sansan-android-app)
+- [既存の Android アプリを multi-module project 化](https://droidkaigi.github.io/codelab-2020/ja/index.html#3)
+- [now in android](https://github.com/android/nowinandroid)
+
+## おわりに
+
+今までは正直、Preview の動作が重くて使ってなかったのですが、これでようやく使い物になりそうです。
+
+また、マルチモジュール化を行うことで各レイヤー・各画面の責務を考えるきっかけになったのでよかったです。
+</content>
+<hatena:formatted-content type="text/html" xmlns:hatena="http://www.hatena.ne.jp/info/xmlns#">&lt;p&gt;今回は &lt;a class=&quot;keyword&quot; href=&quot;http://d.hatena.ne.jp/keyword/Android&quot;&gt;Android&lt;/a&gt; のプロジェクトをマルチモジュール化し、&lt;a class=&quot;keyword&quot; href=&quot;http://d.hatena.ne.jp/keyword/Jetpack&quot;&gt;Jetpack&lt;/a&gt; Compose の &lt;a class=&quot;keyword&quot; href=&quot;http://d.hatena.ne.jp/keyword/Preview&quot;&gt;Preview&lt;/a&gt; を高速化してみました。&lt;/p&gt;
+
+&lt;p&gt;[目次]&lt;/p&gt;
+
+&lt;ul class=&quot;table-of-contents&quot;&gt;
+    &lt;li&gt;&lt;a href=&quot;#環境&quot;&gt;環境&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;#マルチモジュール化のメリット&quot;&gt;マルチモジュール化のメリット&lt;/a&gt;&lt;ul&gt;
+            &lt;li&gt;&lt;a href=&quot;#デメリット&quot;&gt;デメリット&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;#マルチモジュール化の方法&quot;&gt;マルチモジュール化の方法&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;#プレビュー速度の向上&quot;&gt;プレビュー速度の向上&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;#Links&quot;&gt;Links&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;#おわりに&quot;&gt;おわりに&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;環境&quot;&gt;環境&lt;/h2&gt;
+
+&lt;pre class=&quot;code&quot; data-lang=&quot;&quot; data-unlink&gt;- PC
+    - macOS version 12.4
+    - Apple M1 chip
+    - Memory 16 GB
+- Android Project
+    - compose &amp;#34;1.3.0-rc01&amp;#34;
+    - kotlin &amp;#34;1.7.1&amp;#34;&lt;/pre&gt;
+
+
+&lt;h2 id=&quot;マルチモジュール化のメリット&quot;&gt;マルチモジュール化のメリット&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;ビルド時間の短縮&lt;/strong&gt;
+
+&lt;ul&gt;
+&lt;li&gt;2 回目以降のビルドは、&lt;strong&gt;変更の入ったモジュールのみ&lt;/strong&gt;になるため速い！&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;レイヤー間の&lt;strong&gt;依存関係の強制&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;各モジュールの関心ごとを小さくできる
+
+&lt;ul&gt;
+&lt;li&gt;package ではクラスのグルーピングしかできないが、レイアウトファイルや resource 等も含めたグルーピングが可能！&lt;/li&gt;
+&lt;li&gt;string, layout, manifest 等が機能単位に集約され、見やすい&lt;/li&gt;
+&lt;li&gt;internal 修飾子による、&lt;a class=&quot;keyword&quot; href=&quot;http://d.hatena.ne.jp/keyword/%A5%E2%A5%CE%A5%EA%A5%B9&quot;&gt;モノリス&lt;/a&gt;より柔軟な可視性制御&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Compose の &lt;a class=&quot;keyword&quot; href=&quot;http://d.hatena.ne.jp/keyword/Preview&quot;&gt;Preview&lt;/a&gt; も速くなる&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;特に『Compose の &lt;a class=&quot;keyword&quot; href=&quot;http://d.hatena.ne.jp/keyword/Preview&quot;&gt;Preview&lt;/a&gt; を速くする』ことを目的に、今回はとあるプロジェクトをマルチモジュール化してみました。&lt;/p&gt;
+
+&lt;h3 id=&quot;デメリット&quot;&gt;デメリット&lt;/h3&gt;
+
+&lt;p&gt;メリットだけだと不公平なので、デメリットも思いつく限り記載しておきます。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;初回ビルドは時間がかかる
+
+&lt;ul&gt;
+&lt;li&gt;らしい&lt;/li&gt;
+&lt;li&gt;対象モジュールを結合するため&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;浅いモジュールを作りすぎると、複雑性が増して保守しにくくなる
+
+&lt;ul&gt;
+&lt;li&gt;分割の仕方大事そう&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h2 id=&quot;マルチモジュール化の方法&quot;&gt;マルチモジュール化の方法&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://droidkaigi.github.io/codelab-2020/ja/index.html#3&quot;&gt;『既存の Android アプリを multi-module project 化』&lt;/a&gt;のサイトが詳しいですが、概略としては以下のステップで可能です。&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;File &gt; New &gt; New Module
+
+&lt;ul&gt;
+&lt;li&gt;何もなければ No Activity で&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;フォルダ構造を変更（refactor）
+
+&lt;ol&gt;
+&lt;li&gt;settings.gradle も変更する&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&#39;:data&#39;&lt;/code&gt; -&gt; &lt;code&gt;&#39;:core:data&#39;&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;余計なファイルを削除する
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;drawable&lt;/code&gt; など&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+
+
+&lt;p&gt;module にするときは、&lt;code&gt;build.gradle &amp;gt; plugins&lt;/code&gt; の &lt;code&gt;com.android.application&lt;/code&gt; の値を &lt;code&gt;com.android.library&lt;/code&gt; に変更します。&lt;/p&gt;
+
+&lt;pre class=&quot;code&quot; data-lang=&quot;&quot; data-unlink&gt;// module になる側
+plugins {
+    // id &amp;#39;com.android.application&amp;#39;
+    id &amp;#39;com.android.library&amp;#39;
+    ...
+}&lt;/pre&gt;
+
+
+&lt;p&gt;また、module を import したい時は、&lt;code&gt;build.gradle&lt;/code&gt; に以下のように記載します。&lt;/p&gt;
+
+&lt;pre class=&quot;code&quot; data-lang=&quot;&quot; data-unlink&gt;// module を使う側
+android {
+    ...
+}
+dependencies {
+    ...
+    // modules
+    implementation project(&amp;#34;:core:common&amp;#34;)
+    implementation project(&amp;#34;:core:domain&amp;#34;)
+}&lt;/pre&gt;
+
+
+&lt;p&gt;（&lt;a href=&quot;https://github.com/android-project-46group/android/pull/85&quot;&gt;実際にやった対応&lt;/a&gt;と&lt;a href=&quot;https://github.com/android-project-46group/android&quot;&gt;リポジトリ&lt;/a&gt;です。）&lt;/p&gt;
+
+&lt;h2 id=&quot;プレビュー速度の向上&quot;&gt;プレビュー速度の向上&lt;/h2&gt;
+
+&lt;p&gt;&lt;a class=&quot;keyword&quot; href=&quot;http://d.hatena.ne.jp/keyword/Jetpack&quot;&gt;Jetpack&lt;/a&gt; Compose には UI を即座に確認できる『&lt;code&gt;Preview&lt;/code&gt;』が用意されております。&lt;/p&gt;
+
+&lt;pre class=&quot;code lang-kotlin&quot; data-lang=&quot;kotlin&quot; data-unlink&gt;&lt;span class=&quot;synIdentifier&quot;&gt;@Preview&lt;/span&gt;
+&lt;span class=&quot;synIdentifier&quot;&gt;@Composable&lt;/span&gt;
+&lt;span class=&quot;synType&quot;&gt;fun&lt;/span&gt; MainViewPreview() {
+    &lt;span class=&quot;synType&quot;&gt;val&lt;/span&gt; uiState = MemberListUiState()
+
+    CustomTheme() {
+        MainView(uiState = uiState)
+    }
+}
+&lt;/pre&gt;
+
+
+&lt;p&gt;ここでは &lt;code&gt;Preview&lt;/code&gt; を行う際に重要となる次の 3 つの動作について、それぞれ変更前と後で時間を比較しました。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;ol&gt;
+&lt;li&gt;Build Refresh&lt;/li&gt;
+&lt;li&gt;&lt;a class=&quot;keyword&quot; href=&quot;http://d.hatena.ne.jp/keyword/Preview&quot;&gt;Preview&lt;/a&gt; の内容を変更した際に変更を反映させます。&lt;/li&gt;
+&lt;li&gt;&lt;span itemscope itemtype=&quot;http://schema.org/Photograph&quot;&gt;&lt;img src=&quot;https://cdn-ak.f.st-hatena.com/images/fotolife/k/kokoichi206/20221106/20221106035953.png&quot; width=&quot;568&quot; height=&quot;196&quot; loading=&quot;lazy&quot; title=&quot;&quot; class=&quot;hatena-fotolife&quot; itemprop=&quot;image&quot;&gt;&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;ol&gt;
+&lt;li&gt;Start Interactive Mode&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Interactive Mode&lt;/code&gt;（&lt;a class=&quot;keyword&quot; href=&quot;http://d.hatena.ne.jp/keyword/Preview&quot;&gt;Preview&lt;/a&gt; Mode でタッチ操作可能なモード）を有効にする&lt;/li&gt;
+&lt;li&gt;&lt;span itemscope itemtype=&quot;http://schema.org/Photograph&quot;&gt;&lt;img src=&quot;https://cdn-ak.f.st-hatena.com/images/fotolife/k/kokoichi206/20221106/20221106040016.png&quot; width=&quot;506&quot; height=&quot;126&quot; loading=&quot;lazy&quot; title=&quot;&quot; class=&quot;hatena-fotolife&quot; itemprop=&quot;image&quot;&gt;&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;ol&gt;
+&lt;li&gt;Stop Interactive Mode&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Interactive Mode&lt;/code&gt; を止める&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;それぞれ 3 回ずつ測定し平均を求めております。&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&quot;text-align:center;&quot;&gt; 変更前 &lt;/th&gt;
+&lt;th style=&quot;text-align:center;&quot;&gt;                    &lt;/th&gt;
+&lt;th style=&quot;text-align:center;&quot;&gt; マルチモジュール &lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center;&quot;&gt;  12.1  &lt;/td&gt;
+&lt;td style=&quot;text-align:center;&quot;&gt;      1.Build       &lt;/td&gt;
+&lt;td style=&quot;text-align:center;&quot;&gt;       7.5        &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center;&quot;&gt;  9.5   &lt;/td&gt;
+&lt;td style=&quot;text-align:center;&quot;&gt; 2.Start&lt;br/&gt;画面 1 &lt;/td&gt;
+&lt;td style=&quot;text-align:center;&quot;&gt;       2.6        &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center;&quot;&gt;  11.2  &lt;/td&gt;
+&lt;td style=&quot;text-align:center;&quot;&gt; 2.Start&lt;br/&gt;画面 2 &lt;/td&gt;
+&lt;td style=&quot;text-align:center;&quot;&gt;       2.9        &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center;&quot;&gt;  8.7   &lt;/td&gt;
+&lt;td style=&quot;text-align:center;&quot;&gt; 3.Stop&lt;br/&gt;画面 1  &lt;/td&gt;
+&lt;td style=&quot;text-align:center;&quot;&gt;       3.2        &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center;&quot;&gt;  9.3   &lt;/td&gt;
+&lt;td style=&quot;text-align:center;&quot;&gt; 3.Stop&lt;br/&gt;画面 2  &lt;/td&gt;
+&lt;td style=&quot;text-align:center;&quot;&gt;       2.7        &lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+&lt;p&gt;&lt;strong&gt;2~3 倍程度速度の高速化&lt;/strong&gt;が確認できました。&lt;/p&gt;
+
+&lt;h2 id=&quot;Links&quot;&gt;Links&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://speakerdeck.com/sansanbuildersbox/approaches-to-multi-module-development-in-sansan-android-app&quot;&gt;Sansan Android アプリ開発におけるマルチモジュール化の進め方 / Approaches to multi-module development in Sansan Android app&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://droidkaigi.github.io/codelab-2020/ja/index.html#3&quot;&gt;既存の Android アプリを multi-module project 化&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/android/nowinandroid&quot;&gt;now in android&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h2 id=&quot;おわりに&quot;&gt;おわりに&lt;/h2&gt;
+
+&lt;p&gt;今までは正直、&lt;a class=&quot;keyword&quot; href=&quot;http://d.hatena.ne.jp/keyword/Preview&quot;&gt;Preview&lt;/a&gt; の動作が重くて使ってなかったのですが、これでようやく使い物になりそうです。&lt;/p&gt;
+
+&lt;p&gt;また、マルチモジュール化を行うことで各レイヤー・各画面の責務を考えるきっかけになったのでよかったです。&lt;/p&gt;
+</hatena:formatted-content>
+
+<category term="Android-jetpack compose" />
+
+<category term="Android" />
+
+<app:control>
+  <app:draft>no</app:draft>
+</app:control>
+
+  </entry>
+  
+  <entry>
+<id>tag:blog.hatena.ne.jp,2013:blog-kokoichi206-26006613509706227-4207112889933866508</id>
+<link rel="edit" href="https://blog.hatena.ne.jp/kokoichi206/koko206.hatenablog.com/atom/entry/4207112889933866508"/>
+<link rel="alternate" type="text/html" href="https://koko206.hatenablog.com/entry/2022/11/05/131141"/>
+<author><name>kokoichi206</name></author>
+<title>Android のモジュールで BuildConfig を生成しない方法</title>
+<updated>2022-11-05T13:11:41+09:00</updated>
+<published>2022-11-05T13:11:41+09:00</published>
+<app:edited>2022-11-05T13:11:41+09:00</app:edited>
+<summary type="text">この間マルチモジュールの対応をしたのですが、その際に BuildConfig について少し気になったので、今回はモジュールにおいて BuildConfig を生成しない方法についてメモしておきます。 各モジュールにおいても、標準では以下のようなファイルが generated フォ…</summary>
+<content type="text/x-markdown">
+この間マルチモジュールの対応をしたのですが、その際に `BuildConfig` について少し気になったので、今回はモジュールにおいて `BuildConfig` を生成しない方法についてメモしておきます。
+
+各モジュールにおいても、標準では以下のようなファイルが `generated` フォルダに生成されます。  
+（`build/generated/source/buildConfig/` の中にあります。）
+
+```
+package jp.mydns.kokoichi0206.common;
+
+public final class BuildConfig {
+  public static final boolean DEBUG = Boolean.parseBoolean(&quot;true&quot;);
+  public static final String LIBRARY_PACKAGE_NAME = &quot;jp.mydns.kokoichi0206.common&quot;;
+  public static final String BUILD_TYPE = &quot;debug&quot;;
+}
+```
+
+これをモジュールで生成しないようにするには、**module の** `build.gradle` に以下のように設定します。
+
+```
+plugins {
+    ...
+}
+
+android {
+    ...
+    libraryVariants.all {
+        it.generateBuildConfig.enabled = false
+    }
+}
+...
+```
+</content>
+<hatena:formatted-content type="text/html" xmlns:hatena="http://www.hatena.ne.jp/info/xmlns#">&lt;p&gt;この間マルチモジュールの対応をしたのですが、その際に &lt;code&gt;BuildConfig&lt;/code&gt; について少し気になったので、今回はモジュールにおいて &lt;code&gt;BuildConfig&lt;/code&gt; を生成しない方法についてメモしておきます。&lt;/p&gt;
+
+&lt;p&gt;各モジュールにおいても、標準では以下のようなファイルが &lt;code&gt;generated&lt;/code&gt; フォルダに生成されます。&lt;br /&gt;
+（&lt;code&gt;build/generated/source/buildConfig/&lt;/code&gt; の中にあります。）&lt;/p&gt;
+
+&lt;pre class=&quot;code&quot; data-lang=&quot;&quot; data-unlink&gt;package jp.mydns.kokoichi0206.common;
+
+public final class BuildConfig {
+  public static final boolean DEBUG = Boolean.parseBoolean(&amp;#34;true&amp;#34;);
+  public static final String LIBRARY_PACKAGE_NAME = &amp;#34;jp.mydns.kokoichi0206.common&amp;#34;;
+  public static final String BUILD_TYPE = &amp;#34;debug&amp;#34;;
+}&lt;/pre&gt;
+
+
+&lt;p&gt;これをモジュールで生成しないようにするには、&lt;strong&gt;module の&lt;/strong&gt; &lt;code&gt;build.gradle&lt;/code&gt; に以下のように設定します。&lt;/p&gt;
+
+&lt;pre class=&quot;code&quot; data-lang=&quot;&quot; data-unlink&gt;plugins {
+    ...
+}
+
+android {
+    ...
+    libraryVariants.all {
+        it.generateBuildConfig.enabled = false
+    }
+}
+...&lt;/pre&gt;
+
+</hatena:formatted-content>
+
+<category term="Android" />
+
+<app:control>
+  <app:draft>no</app:draft>
+</app:control>
+
+  </entry>
+  
+  <entry>
+<id>tag:blog.hatena.ne.jp,2013:blog-kokoichi206-26006613509706227-4207112889933778275</id>
+<link rel="edit" href="https://blog.hatena.ne.jp/kokoichi206/koko206.hatenablog.com/atom/entry/4207112889933778275"/>
+<link rel="alternate" type="text/html" href="https://koko206.hatenablog.com/entry/2022/11/05/041905"/>
+<author><name>kokoichi206</name></author>
+<title>マルチモジュールでの compose navigation におけるベストプラクティス（Android DevSummit）</title>
+<updated>2022-11-05T04:19:05+09:00</updated>
+<published>2022-11-05T04:19:05+09:00</published>
+<app:edited>2022-11-05T04:19:05+09:00</app:edited>
+<summary type="text">Compose の nagitaion における multi module 対応についての内容を youtube で見ました（&quot;Type safe, multi-module best practices with Navigation Compose&quot;）。 この中で 5 つのベ…</summary>
+<content type="text/x-markdown">[Compose の nagitaion における multi module 対応](https://developer.android.com/jetpack/compose/navigation?hl=ja)についての内容を youtube で見ました（[&quot;Type safe, multi-module best practices with Navigation Compose&quot;](https://www.youtube.com/watch?v=goFpG25uoc8&amp;ab_channel=AndroidDevelopers)）。
+
+この中で 5 つのベストプラクティスが紹介されていたため、簡単に紹介します。
+
+## Compose のスクリーンでは State を入力とし events を出力とせよ
+
+```kotlin
+@Composable
+fun ColumnWithLine(
+    uiState: MemberListUiState,
+    onNavigateToParticipantList: (conversationId: String) -&gt; Unit,
+) {
+    ...
+}
+```
+
+Screen はデータがどこから来たかを気にするべきではなく、例えば viewmodel であったり、適当な値が入ってようが動くようにするべきである。  
+また、誰がイベントを受け取るかも気にするべきではない。
+
+独立性を高めて、テストを容易にするメリットもある。
+
+## navigation graph も分割せよ
+
+画面ごとに `feature` module を分解した際に、`app` module 等で Navigation の設定をするかと思います。  
+『その Navigation のグラフ設定も、`feature` module 側に含めよ』ということです。
+
+ルートの設定をするのは、使われる側（モジュール）の役目ということですね。
+
+`feature/settings/navigation/settings.kt`
+
+```kotlin
+const val settingsRoute = &quot;settings_route&quot;
+
+// NavGraphBuilder にメソッドを生やす
+fun NavGraphBuilder.settingsScreen(
+    onThemeChanged: (String) -&gt; Unit,
+) {
+    composable(route = settingsRoute) {
+        SettingsScreen {
+            onThemeChanged(it)
+        }
+    }
+}
+```
+
+例えば `app` 側で呼び出すには以下のようにします。
+
+```kotlin
+@Composable
+fun BottomNavHost(
+    navHostController: NavHostController,
+    onThemeChanged: (String) -&gt; Unit
+) {
+    NavHost(
+        navController = navHostController,
+        startDestination = BottomNavItem.Home.route
+    ) {
+        homeScreen()
+
+        // こんな感じで使える！
+        settingsScreen(onThemeChanged)
+```
+
+## 必要な Public API のみを公開せよ
+
+Argument の設定等、公開しなくてもいいものは `internal` をつけるなどして、他モジュールに公開しないようにします。
+
+また、[VisibleForTesting annotation](https://developer.android.com/reference/androidx/annotation/VisibleForTesting) を使ってテストように公開することも可能です。
+
+```kotlin
+@VisibleForTesting
+internal const val authorIdArg = &quot;authorId&quot;
+
+internal class AuthorArgs(val authorId: String) {
+    constructor(savedStateHandle: SavedStateHandle, stringDecoder: StringDecoder) :
+        this(stringDecoder.decodeString(checkNotNull(savedStateHandle[authorIdArg])))
+}
+```
+
+## Module 構造と Graph 構造はセットに考えるべき
+
+module を分割しその公開 API を決めることで、Graph 構造も定まるようにするべきです。
+
+特に、module 間で遷移することはやめるべきであり、遷移メソッドを公開し上位メソッドから呼び出すように修正します。
+
+公開する遷移のためのメソッドを `NavController` に生やす。
+
+```kotlin
+fun NavController.navigateToMemberDetail(member: Member) {
+    this.navigateUp()
+    this.navigate(
+        memberDetailRoute
+                + &quot;/$memberJson=${getJsonFromMember(member)}&quot;
+    )
+}
+```
+
+上位モジュールから呼び出す。
+
+```kotlin
+NavHost(
+    navController = navHostController,
+    startDestination = BottomNavItem.Home.route
+) {
+    memberListScreen {
+        navHostController.navigateToMemberDetail(it)
+    }
+```
+
+## リソースを随時確認せよ
+
+最後のベストプラクティスは、以下リソースを随時確認しよう、ということです。
+
+- [Documentation: Type safety in Kotlin DSL and Navigation Compose](https://developer.android.com/guide/navigation/navigation-type-safety)
+- [NowInAndroid app: sample app](https://github.com/android/nowinandroid)
+
+## おわりに
+
+[NowInAndroid app: sample app](https://github.com/android/nowinandroid) のアプリは非常に完成度高そうなので、積極的に参考にしていきたいです。
+</content>
+<hatena:formatted-content type="text/html" xmlns:hatena="http://www.hatena.ne.jp/info/xmlns#">&lt;p&gt;&lt;a href=&quot;https://developer.android.com/jetpack/compose/navigation?hl=ja&quot;&gt;Compose の nagitaion における multi module 対応&lt;/a&gt;についての内容を &lt;a class=&quot;keyword&quot; href=&quot;http://d.hatena.ne.jp/keyword/youtube&quot;&gt;youtube&lt;/a&gt; で見ました（&lt;a href=&quot;https://www.youtube.com/watch?v=goFpG25uoc8&amp;amp;ab_channel=AndroidDevelopers&quot;&gt;&quot;Type safe, multi-module best practices with Navigation Compose&quot;&lt;/a&gt;）。&lt;/p&gt;
+
+&lt;p&gt;この中で 5 つのベストプ&lt;a class=&quot;keyword&quot; href=&quot;http://d.hatena.ne.jp/keyword/%A5%E9%A5%AF&quot;&gt;ラク&lt;/a&gt;ティスが紹介されていたため、簡単に紹介します。&lt;/p&gt;
+
+&lt;h2 id=&quot;Compose-のスクリーンでは-State-を入力とし-events-を出力とせよ&quot;&gt;Compose のスクリーンでは State を入力とし events を出力とせよ&lt;/h2&gt;
+
+&lt;pre class=&quot;code lang-kotlin&quot; data-lang=&quot;kotlin&quot; data-unlink&gt;&lt;span class=&quot;synIdentifier&quot;&gt;@Composable&lt;/span&gt;
+&lt;span class=&quot;synType&quot;&gt;fun&lt;/span&gt; ColumnWithLine(
+    uiState: MemberListUiState,
+    onNavigateToParticipantList: (conversationId: &lt;span class=&quot;synType&quot;&gt;String&lt;/span&gt;) &lt;span class=&quot;synType&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;synType&quot;&gt;Unit&lt;/span&gt;,
+) {
+    ...
+}
+&lt;/pre&gt;
+
+
+&lt;p&gt;Screen はデータがどこから来たかを気にするべきではなく、例えば viewmodel であったり、適当な値が入ってようが動くようにするべきである。&lt;br /&gt;
+また、誰がイベントを受け取るかも気にするべきではない。&lt;/p&gt;
+
+&lt;p&gt;独立性を高めて、テストを容易にするメリットもある。&lt;/p&gt;
+
+&lt;h2 id=&quot;navigation-graph-も分割せよ&quot;&gt;navigation graph も分割せよ&lt;/h2&gt;
+
+&lt;p&gt;画面ごとに &lt;code&gt;feature&lt;/code&gt; module を分解した際に、&lt;code&gt;app&lt;/code&gt; module 等で Navigation の設定をするかと思います。&lt;br /&gt;
+『その Navigation のグラフ設定も、&lt;code&gt;feature&lt;/code&gt; module 側に含めよ』ということです。&lt;/p&gt;
+
+&lt;p&gt;ルートの設定をするのは、使われる側（モジュール）の役目ということですね。&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;feature/settings/navigation/settings.kt&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre class=&quot;code lang-kotlin&quot; data-lang=&quot;kotlin&quot; data-unlink&gt;&lt;span class=&quot;synType&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;synType&quot;&gt;val&lt;/span&gt; settingsRoute = &lt;span class=&quot;synConstant&quot;&gt;&amp;quot;settings_route&amp;quot;&lt;/span&gt;
+
+&lt;span class=&quot;synComment&quot;&gt;// NavGraphBuilder にメソッドを生やす&lt;/span&gt;
+&lt;span class=&quot;synType&quot;&gt;fun&lt;/span&gt; NavGraphBuilder.settingsScreen(
+    onThemeChanged: (&lt;span class=&quot;synType&quot;&gt;String&lt;/span&gt;) &lt;span class=&quot;synType&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;synType&quot;&gt;Unit&lt;/span&gt;,
+) {
+    composable(route = settingsRoute) {
+        SettingsScreen {
+            onThemeChanged(it)
+        }
+    }
+}
+&lt;/pre&gt;
+
+
+&lt;p&gt;例えば &lt;code&gt;app&lt;/code&gt; 側で呼び出すには以下のようにします。&lt;/p&gt;
+
+&lt;pre class=&quot;code lang-kotlin&quot; data-lang=&quot;kotlin&quot; data-unlink&gt;&lt;span class=&quot;synIdentifier&quot;&gt;@Composable&lt;/span&gt;
+&lt;span class=&quot;synType&quot;&gt;fun&lt;/span&gt; BottomNavHost(
+    navHostController: NavHostController,
+    onThemeChanged: (&lt;span class=&quot;synType&quot;&gt;String&lt;/span&gt;) &lt;span class=&quot;synType&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;synType&quot;&gt;Unit&lt;/span&gt;
+) {
+    NavHost(
+        navController = navHostController,
+        startDestination = BottomNavItem.Home.route
+    ) {
+        homeScreen()
+
+        &lt;span class=&quot;synComment&quot;&gt;// こんな感じで使える！&lt;/span&gt;
+        settingsScreen(onThemeChanged)
+&lt;/pre&gt;
+
+
+&lt;h2 id=&quot;必要な-Public-API-のみを公開せよ&quot;&gt;必要な Public &lt;a class=&quot;keyword&quot; href=&quot;http://d.hatena.ne.jp/keyword/API&quot;&gt;API&lt;/a&gt; のみを公開せよ&lt;/h2&gt;
+
+&lt;p&gt;Argument の設定等、公開しなくてもいいものは &lt;code&gt;internal&lt;/code&gt; をつけるなどして、他モジュールに公開しないようにします。&lt;/p&gt;
+
+&lt;p&gt;また、&lt;a href=&quot;https://developer.android.com/reference/androidx/annotation/VisibleForTesting&quot;&gt;VisibleForTesting annotation&lt;/a&gt; を使ってテストように公開することも可能です。&lt;/p&gt;
+
+&lt;pre class=&quot;code lang-kotlin&quot; data-lang=&quot;kotlin&quot; data-unlink&gt;&lt;span class=&quot;synIdentifier&quot;&gt;@VisibleForTesting&lt;/span&gt;
+&lt;span class=&quot;synType&quot;&gt;internal&lt;/span&gt; &lt;span class=&quot;synType&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;synType&quot;&gt;val&lt;/span&gt; authorIdArg = &lt;span class=&quot;synConstant&quot;&gt;&amp;quot;authorId&amp;quot;&lt;/span&gt;
+
+&lt;span class=&quot;synType&quot;&gt;internal&lt;/span&gt; &lt;span class=&quot;synType&quot;&gt;class&lt;/span&gt; AuthorArgs(&lt;span class=&quot;synType&quot;&gt;val&lt;/span&gt; authorId: &lt;span class=&quot;synType&quot;&gt;String&lt;/span&gt;) {
+    &lt;span class=&quot;synType&quot;&gt;constructor&lt;/span&gt;(savedStateHandle: SavedStateHandle, stringDecoder: StringDecoder) :
+        &lt;span class=&quot;synStatement&quot;&gt;this&lt;/span&gt;(stringDecoder.decodeString(checkNotNull(savedStateHandle[authorIdArg])))
+}
+&lt;/pre&gt;
+
+
+&lt;h2 id=&quot;Module-構造と-Graph-構造はセットに考えるべき&quot;&gt;Module 構造と Graph 構造はセットに考えるべき&lt;/h2&gt;
+
+&lt;p&gt;module を分割しその公開 &lt;a class=&quot;keyword&quot; href=&quot;http://d.hatena.ne.jp/keyword/API&quot;&gt;API&lt;/a&gt; を決めることで、Graph 構造も定まるようにするべきです。&lt;/p&gt;
+
+&lt;p&gt;特に、module 間で遷移することはやめるべきであり、遷移メソッドを公開し上位メソッドから呼び出すように修正します。&lt;/p&gt;
+
+&lt;p&gt;公開する遷移のためのメソッドを &lt;code&gt;NavController&lt;/code&gt; に生やす。&lt;/p&gt;
+
+&lt;pre class=&quot;code lang-kotlin&quot; data-lang=&quot;kotlin&quot; data-unlink&gt;&lt;span class=&quot;synType&quot;&gt;fun&lt;/span&gt; NavController.navigateToMemberDetail(member: Member) {
+    &lt;span class=&quot;synStatement&quot;&gt;this&lt;/span&gt;.navigateUp()
+    &lt;span class=&quot;synStatement&quot;&gt;this&lt;/span&gt;.navigate(
+        memberDetailRoute
+                &lt;span class=&quot;synStatement&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;synConstant&quot;&gt;&amp;quot;/&lt;/span&gt;&lt;span class=&quot;synIdentifier&quot;&gt;$memberJson&lt;/span&gt;&lt;span class=&quot;synConstant&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;synIdentifier&quot;&gt;${&lt;/span&gt;getJsonFromMember(member)&lt;span class=&quot;synIdentifier&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;synConstant&quot;&gt;&amp;quot;&lt;/span&gt;
+    )
+}
+&lt;/pre&gt;
+
+
+&lt;p&gt;上位モジュールから呼び出す。&lt;/p&gt;
+
+&lt;pre class=&quot;code lang-kotlin&quot; data-lang=&quot;kotlin&quot; data-unlink&gt;NavHost(
+    navController = navHostController,
+    startDestination = BottomNavItem.Home.route
+) {
+    memberListScreen {
+        navHostController.navigateToMemberDetail(it)
+    }
+&lt;/pre&gt;
+
+
+&lt;h2 id=&quot;リソースを随時確認せよ&quot;&gt;リソースを随時確認せよ&lt;/h2&gt;
+
+&lt;p&gt;最後のベストプ&lt;a class=&quot;keyword&quot; href=&quot;http://d.hatena.ne.jp/keyword/%A5%E9%A5%AF&quot;&gt;ラク&lt;/a&gt;ティスは、以下リソースを随時確認しよう、ということです。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://developer.android.com/guide/navigation/navigation-type-safety&quot;&gt;Documentation: Type safety in Kotlin DSL and Navigation Compose&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/android/nowinandroid&quot;&gt;NowInAndroid app: sample app&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h2 id=&quot;おわりに&quot;&gt;おわりに&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/android/nowinandroid&quot;&gt;NowInAndroid app: sample app&lt;/a&gt; のアプリは非常に完成度高そうなので、積極的に参考にしていきたいです。&lt;/p&gt;
+</hatena:formatted-content>
+
+<category term="Android" />
+
+<category term="Android-jetpack compose" />
+
+<app:control>
+  <app:draft>no</app:draft>
+</app:control>
+
+  </entry>
+  
+  <entry>
+<id>tag:blog.hatena.ne.jp,2013:blog-kokoichi206-26006613509706227-4207112889933459361</id>
+<link rel="edit" href="https://blog.hatena.ne.jp/kokoichi206/koko206.hatenablog.com/atom/entry/4207112889933459361"/>
+<link rel="alternate" type="text/html" href="https://koko206.hatenablog.com/entry/2022/11/03/233345"/>
+<author><name>kokoichi206</name></author>
+<title>Jetpack compose で Back-end (JVM) Internal error</title>
+<updated>2022-11-03T23:33:45+09:00</updated>
+<published>2022-11-03T23:33:45+09:00</published>
+<app:edited>2022-11-03T23:33:45+09:00</app:edited>
+<summary type="text">Jetpack compose で開発中、以下のようなエラーが出ました。 Caused by: org.jetbrains.kotlin.codegen.CompilationException: Back-end (JVM) Internal error: Couldn&#39;t i…</summary>
+<content type="text/x-markdown">Jetpack compose で開発中、以下のようなエラーが出ました。
+
+
+```
+Caused by: org.jetbrains.kotlin.codegen.CompilationException: 
+	Back-end (JVM) Internal error: Couldn&#39;t inline method call: 
+	CALL &#39;public final fun Column (modifier: androidx.compose.ui.Modifier, 
+	verticalArrangement: androidx.compose.foundation.layout.Arrangement.Vertical, 
+	horizontalAlignment: androidx.compose.ui.Alignment.Horizontal, content: 
+	@[Composable] @[ExtensionFunctionType] kotlin.Function1&lt;androidx.compose.foundation.layout.ColumnScope, kotlin.Unit&gt;):
+	kotlin.Unit [inline] declared in androidx.compose.foundation.layout.ColumnKt&#39; type=kotlin.Unit origin=null
+Method: null
+File is unknown
+The root cause java.lang.IllegalStateException was thrown at: 
+org.jetbrains.kotlin.codegen.inline.SourceCompilerForInlineKt.getMethodNode(SourceCompilerForInline.kt:118)
+	at org.jetbrains.kotlin.codegen.inline.InlineCodegen.performInline(InlineCodegen.kt:63)
+	at org.jetbrains.kotlin.backend.jvm.codegen.IrInlineCodegen.genInlineCall(IrInlineCodegen.kt:163)
+	...
+```
+
+エラーメッセージから何のことか自分には特定に時間がかかったため、こちらにメモしておきます。
+
+## 原因
+
+[buildFeatures に compose が設定されてない。](https://developer.android.com/reference/tools/gradle-api/7.0/com/android/build/api/dsl/BuildFeatures#compose)
+
+途中から compose に切り替えた場合や Module を作成した場合ではこちらが入ってないので、`build.gradle` に入れてやる必要があります。
+
+
+
+```gradle
+plugins {
+	...
+}
+
+android {
+    ...
+	// 追加
+    buildFeatures {
+        compose true
+    }
+	...
+}
+...
+```
+
+</content>
+<hatena:formatted-content type="text/html" xmlns:hatena="http://www.hatena.ne.jp/info/xmlns#">&lt;p&gt;&lt;a class=&quot;keyword&quot; href=&quot;http://d.hatena.ne.jp/keyword/Jetpack&quot;&gt;Jetpack&lt;/a&gt; compose で開発中、以下のようなエラーが出ました。&lt;/p&gt;
+
+&lt;pre class=&quot;code&quot; data-lang=&quot;&quot; data-unlink&gt;Caused by: org.jetbrains.kotlin.codegen.CompilationException: 
+    Back-end (JVM) Internal error: Couldn&amp;#39;t inline method call: 
+    CALL &amp;#39;public final fun Column (modifier: androidx.compose.ui.Modifier, 
+    verticalArrangement: androidx.compose.foundation.layout.Arrangement.Vertical, 
+    horizontalAlignment: androidx.compose.ui.Alignment.Horizontal, content: 
+    @[Composable] @[ExtensionFunctionType] kotlin.Function1&amp;lt;androidx.compose.foundation.layout.ColumnScope, kotlin.Unit&amp;gt;):
+    kotlin.Unit [inline] declared in androidx.compose.foundation.layout.ColumnKt&amp;#39; type=kotlin.Unit origin=null
+Method: null
+File is unknown
+The root cause java.lang.IllegalStateException was thrown at: 
+org.jetbrains.kotlin.codegen.inline.SourceCompilerForInlineKt.getMethodNode(SourceCompilerForInline.kt:118)
+    at org.jetbrains.kotlin.codegen.inline.InlineCodegen.performInline(InlineCodegen.kt:63)
+    at org.jetbrains.kotlin.backend.jvm.codegen.IrInlineCodegen.genInlineCall(IrInlineCodegen.kt:163)
+    ...&lt;/pre&gt;
+
+
+&lt;p&gt;エラーメッセージから何のことか自分には特定に時間がかかったため、こちらにメモしておきます。&lt;/p&gt;
+
+&lt;h2 id=&quot;原因&quot;&gt;原因&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://developer.android.com/reference/tools/gradle-api/7.0/com/android/build/api/dsl/BuildFeatures#compose&quot;&gt;buildFeatures に compose が設定されてない。&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;途中から compose に切り替えた場合や Module を作成した場合ではこちらが入ってないので、&lt;code&gt;build.gradle&lt;/code&gt; に入れてやる必要があります。&lt;/p&gt;
+
+&lt;pre class=&quot;code gradle&quot; data-lang=&quot;gradle&quot; data-unlink&gt;plugins {
+    ...
+}
+
+android {
+    ...
+    // 追加
+    buildFeatures {
+        compose true
+    }
+    ...
+}
+...&lt;/pre&gt;
+
+</hatena:formatted-content>
+
+<category term="Android" />
+
+<category term="Android-jetpack compose" />
+
+<app:control>
+  <app:draft>no</app:draft>
+</app:control>
+
+  </entry>
+  
+</feed>
