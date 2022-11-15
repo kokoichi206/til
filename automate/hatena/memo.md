@@ -26,7 +26,10 @@ curl -u kokoichi206:api_key https://blog.hatena.ne.jp/kokoichi206/koko206.hatena
 cat entry | xq > entry_xq
 
 # 最終系
-cat entry_xq | jq '.feed.entry | map({ title: .title, url: .link[0]."@href", published: .published, summary: .summary."#text", category: .category })' > entry_output
+# sed で string を Array に変換（gsed = GNU sed）
+cat entry_xq | gsed -z 's@"category": \({\n[^}]*}\)@"category": [\1]@g' > entry_xq_
+# 最終 output
+cat entry_xq_ | jq '.feed.entry | { entries: (map({ title: .title, url: .link[0]."@href", published: .published, summary: .summary."#text", category: (.category | map(."@term") ) }))}' > entry_output
 ```
 
 ### jq: 1 compile error
@@ -110,7 +113,7 @@ $ cat entry_xq | jq '.feed.entry | map({ category: .category })'
 ]
 ```
 
-### category の型が異なる問題（未解決！）
+### category の型が異なる問題
 
 xq で json にパースする際に、`category` が 1 つか複数かによって**返却される型が異なる**（`category` なしは何が返ってくるかも**要確認**）
 
@@ -134,6 +137,19 @@ $ cat entry_xq | jq '.feed.entry[] | { category: .category }'
 ```
 
 これを他の他の型付き言語とかでパースしようと思ったらエラーになりそうな予感（わからん）がするので、json の段階で直しておきたい（`[]` に統一しておきたい）。
+
+sed で置換し、その後は jq で頑張る！
+
+```sh
+cat entry_xq_ | jq '.feed.entry | { categories: (map({ category: (.category[] | ."@term" ) }))}'
+
+cat entry_xq_ | jq '.feed.entry | { categories: (map({ category: (.category[] | ."@term" ) }))}'
+
+# gsed = GNU sed
+cat entry_xq | gsed -z 's@"category": \({\n[^}]*}\)@"category": [\1]@g' > entry_xq_
+
+cat entry_xq_ | jq '.feed.entry | { categories: (map({ category: (.category | map(."@term") ) }))}'
+```
 
 ## [はてなブログ oEmbed API](https://developer.hatena.ne.jp/ja/documents/blog/apis/oembed)
 

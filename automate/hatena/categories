@@ -1,0 +1,82 @@
+[
+  {
+    "category": [
+      {
+        "@term": "Android"
+      },
+      {
+        "@term": "Android-jetpack compose"
+      }
+    ]
+  },
+  {
+    "category": {
+      "@term": "Android"
+    }
+  },
+  {
+    "category": {
+      "@term": "Android"
+    }
+  },
+  {
+    "category": [
+      {
+        "@term": "Android-jetpack compose"
+      },
+      {
+        "@term": "Android"
+      }
+    ]
+  },
+  {
+    "category": {
+      "@term": "Shell"
+    }
+  },
+  {
+    "category": [
+      {
+        "@term": "Android-jetpack compose"
+      },
+      {
+        "@term": "Android"
+      }
+    ]
+  },
+  {
+    "category": [
+      {
+        "@term": "Android-jetpack compose"
+      },
+      {
+        "@term": "Android"
+      }
+    ]
+  },
+  {
+    "category": {
+      "@term": "Android"
+    }
+  },
+  {
+    "category": [
+      {
+        "@term": "Android"
+      },
+      {
+        "@term": "Android-jetpack compose"
+      }
+    ]
+  },
+  {
+    "category": [
+      {
+        "@term": "Android"
+      },
+      {
+        "@term": "Android-jetpack compose"
+      }
+    ]
+  }
+]
