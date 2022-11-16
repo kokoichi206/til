@@ -16,206 +16,142 @@
     </style>
   </head>
   <body>
-    <!-- TODO: post_data()の設定 -->
-    <div class="container">
-      <!-- User Name -->
-      <div class="row">
-        <h1>User: :user-name:</h1>
-      </div>
-      <!-- Image Card List -->
-      <div class="row" id="container">
-        <!-- zero commit -->
-        <div class="col-6">
-          <div class="card" id="0">
-            <img
-              class="fit-picture"
-              src="../../imgs/github-events/:user-name:/0.png"
-              alt="zero-commit-image"
-              id="img_0"
-            />
-            <div
-              class="card-body"
-              style="display: flex; justify-content: space-between"
-            >
-              <h5 class="card-title">0 commit</h5>
-              <input
-                type="file"
-                id="input_0"
-                name="image0"
-                accept="image/png"
-              />
-            </div>
-          </div>
-          <div id="err_0"></div>
-        </div>
-        <!-- 1 commit -->
-        <div class="col-6">
-          <div class="card" id="1">
-            <img
-              class="fit-picture"
-              src="../../imgs/github-events/:user-name:/1.png"
-              alt="one-commit-image"
-              id="img_1"
-            />
-            <div
-              class="card-body"
-              style="display: flex; justify-content: space-between"
-            >
-              <h5 class="card-title">1 commit</h5>
-              <input
-                type="file"
-                id="input_1"
-                name="image1"
-                accept="image/png"
-              />
-            </div>
-          </div>
-          <div id="err_1"></div>
-        </div>
-        <!-- 3 commit -->
-        <div class="col-6" id="3">
-          <div class="card">
-            <img
-              class="fit-picture"
-              src="../../imgs/github-events/:user-name:/3.png"
-              alt="three-commit-image"
-              id="img_3"
-            />
-            <div
-              class="card-body"
-              style="display: flex; justify-content: space-between"
-            >
-              <h5 class="card-title">3 commit</h5>
-              <input
-                type="file"
-                id="input_3"
-                name="image3"
-                accept="image/png"
-              />
-            </div>
-          </div>
-          <div id="err_3"></div>
-        </div>
-        <!-- 5 commit -->
-        <div class="col-6" id="5">
-          <div class="card">
-            <img
-              class="fit-picture"
-              src="../../imgs/github-events/:user-name:/5.png"
-              alt="five-commit-image"
-              id="img_5"
-            />
-            <div
-              class="card-body"
-              style="display: flex; justify-content: space-between"
-            >
-              <h5 class="card-title">5 commit</h5>
-              <input
-                type="file"
-                id="input_5"
-                name="image5"
-                accept="image/png"
-              />
-            </div>
-          </div>
-          <div id="err_5"></div>
-        </div>
-        <!-- 10 commit -->
-        <div class="col-6">
-          <div class="card">
-            <img
-              class="fit-picture"
-              src="../../imgs/github-events/:user-name:/10.png"
-              alt="ten-commit-image"
-              id="img_10"
-            />
-            <div
-              class="card-body"
-              style="display: flex; justify-content: space-between"
-            >
-              <h5 class="card-title">10 commit</h5>
-              <input
-                type="file"
-                id="input_10"
-                name="image10"
-                accept="image/png"
-              />
-            </div>
-          </div>
-          <div id="err_10"></div>
-        </div>
-      </div>
-      <!-- Submit Button -->
-      <div class="row">
-        <button type="submit" class="btn-success">Update Image</button>
-      </div>
-    </div>
-    
     <form action="javascript:post_data()">
-      <div id="container">
-        <div id="0">
-          &nbsp;0
-          <img
-            class="fit-picture"
-            src="../../imgs/github-events/:user-name:/0.png"
-            alt="0.png"
-            id="img_0"
-          />
-          <input type="file" id="input_0" name="image0" accept="image/png" />
-          <div id="err_0"></div>
+      <div class="container">
+        <!-- User Name -->
+        <div class="row">
+          <h1><a href="/github/">⬅︎</a> User: :user-name:</h1>
         </div>
-
-        <div id="1">
-          &nbsp;1
-          <img
-            class="fit-picture"
-            src="../../imgs/github-events/:user-name:/1.png"
-            alt="1.png"
-            id="img_1"
-          />
-          <input type="file" id="input_1" name="image1" accept="image/png" />
-          <div id="err_1"></div>
+        <!-- Image Card List -->
+        <div class="row" id="container">
+          <!-- zero commit -->
+          <div class="col-6">
+            <div class="card" id="0">
+              <img
+                class="fit-picture"
+                src="../../imgs/github-events/:user-name:/0.png"
+                alt="zero-commit-image"
+                id="img_0"
+              />
+              <div
+                class="card-body"
+                style="display: flex; justify-content: space-between"
+              >
+                <h5 class="card-title">0 commit</h5>
+                <input
+                  type="file"
+                  id="input_0"
+                  name="image0"
+                  accept="image/png"
+                />
+              </div>
+            </div>
+            <div id="err_0"></div>
+          </div>
+          <!-- 1 commit -->
+          <div class="col-6">
+            <div class="card" id="1">
+              <img
+                class="fit-picture"
+                src="../../imgs/github-events/:user-name:/1.png"
+                alt="one-commit-image"
+                id="img_1"
+              />
+              <div
+                class="card-body"
+                style="display: flex; justify-content: space-between"
+              >
+                <h5 class="card-title">1 commit</h5>
+                <input
+                  type="file"
+                  id="input_1"
+                  name="image1"
+                  accept="image/png"
+                />
+              </div>
+            </div>
+            <div id="err_1"></div>
+          </div>
+          <!-- 3 commit -->
+          <div class="col-6" id="3">
+            <div class="card">
+              <img
+                class="fit-picture"
+                src="../../imgs/github-events/:user-name:/3.png"
+                alt="three-commit-image"
+                id="img_3"
+              />
+              <div
+                class="card-body"
+                style="display: flex; justify-content: space-between"
+              >
+                <h5 class="card-title">3 commit</h5>
+                <input
+                  type="file"
+                  id="input_3"
+                  name="image3"
+                  accept="image/png"
+                />
+              </div>
+            </div>
+            <div id="err_3"></div>
+          </div>
+          <!-- 5 commit -->
+          <div class="col-6" id="5">
+            <div class="card">
+              <img
+                class="fit-picture"
+                src="../../imgs/github-events/:user-name:/5.png"
+                alt="five-commit-image"
+                id="img_5"
+              />
+              <div
+                class="card-body"
+                style="display: flex; justify-content: space-between"
+              >
+                <h5 class="card-title">5 commit</h5>
+                <input
+                  type="file"
+                  id="input_5"
+                  name="image5"
+                  accept="image/png"
+                />
+              </div>
+            </div>
+            <div id="err_5"></div>
+          </div>
+          <!-- 10 commit -->
+          <div class="col-6">
+            <div class="card">
+              <img
+                class="fit-picture"
+                src="../../imgs/github-events/:user-name:/10.png"
+                alt="ten-commit-image"
+                id="img_10"
+              />
+              <div
+                class="card-body"
+                style="display: flex; justify-content: space-between"
+              >
+                <h5 class="card-title">10 commit</h5>
+                <input
+                  type="file"
+                  id="input_10"
+                  name="image10"
+                  accept="image/png"
+                />
+              </div>
+            </div>
+            <div id="err_10"></div>
+          </div>
         </div>
-
-        <div id="3">
-          &nbsp;3
-          <img
-            class="fit-picture"
-            src="../../imgs/github-events/:user-name:/3.png"
-            alt="3.png"
-            id="img_3"
-          />
-          <input type="file" id="input_3" name="image3" accept="image/png" />
-          <div id="err_3"></div>
+        <!-- Submit Button -->
+        <div class="row">
+          <button type="submit" class="btn-success">Update Image</button>
         </div>
-
-        <div id="5">
-          &nbsp;5
-          <img
-            class="fit-picture"
-            src="../../imgs/github-events/:user-name:/5.png"
-            alt="5.png"
-            id="img_5"
-          />
-          <input type="file" id="input_5" name="image5" accept="image/png" />
-          <div id="err_5"></div>
-        </div>
-
-        <div id="10">
-          10
-          <img
-            class="fit-picture"
-            src="../../imgs/github-events/:user-name:/10.png"
-            alt="10.png"
-            id="img_10"
-          />
-          <input type="file" id="input_10" name="image10" accept="image/png" />
-          <div id="err_10"></div>
-        </div>
-
-        <input type="submit" />
       </div>
     </form>
+
     <script>
       const container = document.getElementById("container");
 
