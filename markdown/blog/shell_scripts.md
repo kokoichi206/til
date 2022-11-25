@@ -22,10 +22,26 @@
     - エラー発生時にスクリプトを終了する
   - `set -u`
     - 未定義の変数を参照時にエラー終了する
+  - `set -o pipefail`
+    - パイプ失敗時の終了ステータスを 0 以外にする
 
 ```sh
 #!/bin/bash
-set -eu
+set -euo pipefail
+```
+
+### set -e 指定時にエラーでも止めないようにする
+
+`set -e` を指定することで**意図しないエラーによる誤作動を防ぐことができる**のですが、コマンドによっては予想外の箇所でエラー（exit status が 1 以上）を吐く場合があります。
+
+例えば、`grep` の検索結果が 0 件だった時などです。  
+こういったコマンド 1 行単位でエラー判定を無効にするには、`||` を使ってあげます。
+
+```sh
+# set -e 指定時
+# || の後は確実に 0 で exit できるコマンドを与える
+echo hoge | grep pien || true
+echo hoge | grep pien || :
 ```
 
 ## ファイル内容のコメント
@@ -213,6 +229,11 @@ done < "$FILE"
 ```sh
 if [[ "$line" =~ ^\`\`\`.* ]]; then
     echo "Code block start (or end)"
+fi
+
+# () でマッチしたものに関しては BASH_REMATCH で取得可能
+if [[ "$line" =~ ^"actor "(.*) ]]; then
+    one_line="actor ${BASH_REMATCH[1]}"
 fi
 ```
 
