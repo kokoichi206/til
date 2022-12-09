@@ -1,3 +1,5 @@
+use rand::random;
+
 fn main() {
     println!("Hello, world!");
 
@@ -19,7 +21,7 @@ fn main() {
 
     let mut count = 0;
     while count < 10 {
-        count += 1  // count++ のような書き方はできない
+        count += 1 // count++ のような書き方はできない
     }
     println!("count is {}", count);
 
@@ -29,6 +31,9 @@ fn main() {
     println!("{}", banana.get_name());
 
     let _unit = Unit;
+
+    let random_number: i32 = random();
+    println!("Random number: {}", random_number);
 }
 
 struct Fruit {
@@ -61,4 +66,19 @@ impl Greeter for Person {
     fn greet(&self) {
         println!("Hello, I am {}!", self.0);
     }
+}
+
+fn div(x: i32, y: i32) -> i32 {
+    x / y
+}
+
+#[test]
+fn div_test() {
+    assert_eq!(div(10, 3), 3);
+}
+
+#[test]
+#[should_panic]
+fn div_panic_test() {
+    div(2, 0);
 }
