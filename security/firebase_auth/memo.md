@@ -73,5 +73,29 @@
 - IdP と直接やりとりするのは IDaaS になる
 
 
+## sec 2
+
+### Firebase CLI
+
+``` sh
+npm instal -g firebase-tools
+
+firebase --version
+11.29.1
+
+firebase login
+```
+
+### Firebase Hosting
+
+https://firebase.google.com/docs/hosting?hl=ja
+
+``` sh
+firebase init
+# Hosting: Configure files ...
+# Use an existing project
+
+firebase deploy
+```
 
 
