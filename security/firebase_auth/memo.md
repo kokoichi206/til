@@ -98,4 +98,8 @@ firebase init
 firebase deploy
 ```
 
+https://github.com/firebase/firebaseui-web
+
+IdP として利用可能なプロバイダ一覧  
+https://github.com/firebase/firebaseui-web#available-providers
 
