@@ -168,4 +168,46 @@ https://ritou.hatenablog.com/entry/2020/12/07/060000
   - ログイン用の URL を登録済みのメールアド絵r巣に送信し、その URL を開くことでログインが完了するログイン方式
 
 
+## sec 4
+
+- バンドル
+  - 複数のファイルを1つにまとめるもの
+  - webpack がその役割
+
+### 設定
+
+SDK の設定と構成 > Config
+
+``` sh
+npm init
+npm install firebase
+
+npm install -D copy-webpack-plugin
+npm install -D rimraf
+```
+
+### webpack
+
+- モジュールバンドル
+  - 複数に分かれた js のもっjーるファイルを1つにまとめること
+  - 読み取り性能向上につながる
+- ツリーシェイキング
+  - 使われていないコードを除去すること
+- webpack
+  - Node.js 上で動作する、CLI のモジュラーバンドラー
+  - コメント、改行を削除して小容量化（minify）
+  - 
+
+https://zenn.dev/yoshiooon/scraps/d69c67a684a559
+
+### IdP への登録
+
+事前に IdP にアプリを登録する必要がある！
+
+- sec 2 での Google の時は、よしなにやってくれてた？？
+  - のかな
+  - Firebase は Google によって提供されているため！
+- GitHub
+  - Settings > Developer settings > OAuth Apps
+
 
