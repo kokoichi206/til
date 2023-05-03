@@ -6,6 +6,8 @@ import {
 import logout from "./logout";
 import { initializeApp } from "firebase/app";
 import firebaseConfig from "./firebase-config";
+import showLinkState from "./link-state";
+import handleEmailSignIn from "./email-signin";
 
 initializeApp(firebaseConfig);
 
@@ -13,6 +15,11 @@ document.getElementById("logout").addEventListener("click", logout);
 
 document.addEventListener("DOMContentLoaded", async () => {
   const auth = getAuth();
+
+  // メールリンクからのログインである場合。
+  if (isSignInWithEmailLink(auth, window.location.href)) {
+    await handleEmailSignIn();
+  }
 
   onAuthStateChanged(auth, (user) => {
     if (!user) {
@@ -32,5 +39,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     ).textContent = `${displayName} さん、こんにちは！`;
 
     document.getElementById("currentEmail").textContent = email;
+
+    showLinkState(user);
   });
 });

@@ -7,6 +7,7 @@ module.exports = () => {
       login: "./src/js/login.js",
       mypage: "./src/js/mypage.js",
       "register-email": "./src/js/register-email.js",
+      recovery: "./src/js/recovery.js",
     },
     output: {
       path: `${__dirname}/public`,
