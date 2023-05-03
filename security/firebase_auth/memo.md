@@ -211,3 +211,12 @@ https://zenn.dev/yoshiooon/scraps/d69c67a684a559
   - Settings > Developer settings > OAuth Apps
 
 
+### memo
+
+- 登録処理時の離脱率低減がかなり大事！
+- emailVerified の初期値は、信頼できる IdP か信頼できない IdP かによって異なる
+- 登録ユーザー間でメールアドレスを重複させることはできない
+  - デフォルト設定が
+  - ソーシャルログインが使えなくなった場合の代替のログイン手段として、メールアドレスを使うってなった時に困るのでそうしてる
+  - 
+
