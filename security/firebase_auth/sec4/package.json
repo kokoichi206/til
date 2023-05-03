@@ -12,7 +12,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "firebase": "^9.21.0"
+    "firebase": "^9.21.0",
+    "js-cookie": "^3.0.5"
   },
   "devDependencies": {
     "@babel/core": "^7.21.8",

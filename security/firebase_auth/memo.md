@@ -271,3 +271,18 @@ https://firebase.google.com/docs/auth/web/email-link-auth?hl=ja&authuser=0
   - 入力ミスを防いだり
 
 
+## sec 7
+
+``` sh
+npm install firebase js-cookie
+```
+
+### Firebase Admin SDK
+
+``` sh
+npm install firebase-admin
+```
+
+- Google サービスアカウントに紐づく秘密鍵をサーバーサイドのプログラムに設定する必要がある
+
+
