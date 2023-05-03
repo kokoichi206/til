@@ -254,3 +254,20 @@ https://firebase.google.com/docs/auth/web/email-link-auth?hl=ja&authuser=0
   - メールアドレスとログインリンクとの対応を確認する
 
 
+## sec 6
+
+- 情報の変更
+- 一時凍結・再有効化
+  - Firebase コンソールで提供されている
+    - アカウントを無効にする
+    - アカウントを有効にする
+- 退会
+
+### memo
+
+- 『退会』『決済』といった第三者に不正に操作された場合に影響が大きい処理については、事前に**再認証**のステップを入れるべき
+- メールアドレスの更新前は所持確認をしたい
+  - updateEmail vs verifyBeforeUpdateEmail
+  - 入力ミスを防いだり
+
+

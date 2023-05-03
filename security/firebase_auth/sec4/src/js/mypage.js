@@ -8,10 +8,16 @@ import { initializeApp } from "firebase/app";
 import firebaseConfig from "./firebase-config";
 import showLinkState from "./link-state";
 import handleEmailSignIn from "./email-signin";
+import updateEmail from "./update-email";
+import deleteAccount from "./delete-user";
 
 initializeApp(firebaseConfig);
 
 document.getElementById("logout").addEventListener("click", logout);
+
+document.getElementById("emailForm").addEventListener("submit", updateEmail);
+
+document.getElementById("deleteAccount").addEventListener("click", deleteAccount);
 
 document.addEventListener("DOMContentLoaded", async () => {
   const auth = getAuth();
