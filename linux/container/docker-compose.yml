@@ -1,0 +1,9 @@
+version: '3'
+services:
+  alpine:
+    image: alpine:latest
+    # 指定したコマンドがない場合、デフォルトコマンドが実行される。
+    # Alpine イメージのデフォルトコマンドは、シェルを起動してすぐに終了となってる。。。
+    # ubuntu とかも基本は一緒なのか
+    command: tail -f /dev/null
+    user: root
