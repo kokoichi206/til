@@ -1,0 +1,50 @@
+/**
+   サンプルサービスです。何も機能を提供していません。
+
+   ログイン情報はメタデータの JWT トークンで提供するため、引数には入りません。
+*/
+syntax = "proto3";
+
+package sample.pien.v1;
+
+/// サンプルサービスです。
+service SampleService {
+  /**
+     サンプルメソッドです。
+  */
+  rpc SampleMethod(SampleRequest) returns (SampleResponse);
+
+  /**
+     ログインメソッドです。
+
+     - INVALID_ARGUMENT: 引数が不正な場合
+     - UNAUTHENTICATED: ログイン情報がない場合
+  */
+  rpc Login(LoginRequest) returns (LoginResponse);
+}
+
+/// サンプルリクエストです。
+message SampleRequest {
+  string message = 1; /// メッセージです。
+  message Option {
+    optional string sort_key = 1; /// ソートキーです。
+    optional bool sort_asc = 2; /// 昇順フラグです。
+  }
+}
+
+/// サンプルレスポンスです。
+message SampleResponse {
+  string message = 1; /// メッセージです。
+  bool success = 2; /// 成功フラグです。
+}
+
+/// ログインリクエストです。
+message LoginRequest {
+  string user_id = 1; /// ユーザーIDです。
+  string password = 2; /// パスワードです。
+}
+
+/// ログインレスポンスです。
+message LoginResponse {
+  string token = 1; /// JWTトークンです。
+}
