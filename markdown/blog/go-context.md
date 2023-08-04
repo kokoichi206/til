@@ -1,8 +1,8 @@
 # Go で HTTP 呼び出し時に Context のキャンセルが TCP コネクションに伝播されるまで
 
-go 1.7 で追加された Context には『key, value 形式による情報の伝搬』とcの主に2つの役割があります。
+go 1.7 で追加された Context には『key, value 形式による情報の伝搬』と『Goroutine の適切なキャンセル』の主に2つの役割があります。
 
-後者の『Goroutine の適切なキャンセル』が便利で、[公式ブログでも並行処理パターンとして紹介されている](https://go.dev/blog/context)ように、最近の各ライブラリでの実装が進んでいます。
+後者の『Goroutine の適切なキャンセル』が便利で、[公式ブログでも並行処理パターンとして紹介されている](https://go.dev/blog/context)ように、各ライブラリで context を引数に取るような実装がなされています。
 
 特に I/O 待ちを伴うものには（準）標準ライブラリにも導入されており、使い方が参考になりそうです。  
 （[sql パッケージの DB.QueryContext](https://pkg.go.dev/database/sql#DB.QueryContext) や [net/http パッケージの NewRequestWithContext](https://pkg.go.dev/net/http#NewRequestWithContext) メソッドなど）
