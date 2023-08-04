@@ -30,7 +30,6 @@ go 1.7 で追加された Context には『key, value 形式による情報の�
 **[目次]**
 
 - 環境
-Linux ubuntu 5.4.0-1045-raspi #49-Ubuntu SMP PREEMPT Wed Sep 29 17:49:16 UTC 2021 aarch64 aarch64 aarch64 GNU/Linux
 - client.Do を遡る
   - NewRequestWithContext
   - client.Do からひたすら遡る
