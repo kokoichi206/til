@@ -1,0 +1,59 @@
+3d2
+< mmap
+22c21
+< newfstatat
+---
+> fstat
+27c26
+< newfstatat
+---
+> fstat
+30,31d28
+< munmap
+< munmap
+39,40c36
+< newfstatat
+< mmap
+---
+> fstat
+42,43d37
+< munmap
+< munmap
+51,52c45
+< newfstatat
+< mmap
+---
+> fstat
+54,55d46
+< munmap
+< munmap
+61,63d51
+< set_tid_address
+< set_robust_list
+< rseq
+69d56
+< prlimit64
+73d59
+< getrandom
+77c63
+< newfstatat
+---
+> fstat
+81c67
+< newfstatat
+---
+> fstat
+84d69
+< futex
+254c239
+< newfstatat
+---
+> fstat
+266c251
+< --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=124741, si_uid=1000, si_status=0, si_utime=0, si_stime=1} ---
+---
+> --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=85967, si_uid=1000, si_status=1, si_utime=0, si_stime=0} ---
+273c258
+< +++ exited with 0 +++
+---
+> +++ exited with 1 +++

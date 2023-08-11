@@ -1,0 +1,3256 @@
+240,241d239
+< <...
+< <...
+243a242,243
+> <...
+> <...
+285,286d284
+< mmap
+< close
+288,1040d285
+< read
+< newfstatat
+< mmap
+< mmap
+< munmap
+< mprotect
+< mmap
+< mmap
+< close
+< openat
+< openat
+< openat
+< read
+< newfstatat
+< mmap
+< mmap
+< munmap
+< munmap
+< mprotect
+< mmap
+< mmap
+< close
+< openat
+< openat
+< openat
+< read
+< newfstatat
+< mmap
+< mmap
+< munmap
+< munmap
+< mprotect
+< mmap
+< mmap
+< close
+< openat
+< openat
+< openat
+< read
+< newfstatat
+< mmap
+< mmap
+< munmap
+< munmap
+< mprotect
+< mmap
+< close
+< openat
+< openat
+< openat
+< read
+< newfstatat
+< mmap
+< mmap
+< munmap
+< munmap
+< mprotect
+< mmap
+< close
+< openat
+< openat
+< openat
+< read
+< newfstatat
+< mmap
+< mmap
+< mmap
+< munmap
+< munmap
+< mprotect
+< mmap
+< close
+< mmap
+< set_tid_address
+< set_robust_list
+< rseq
+< mprotect
+< mprotect
+< mprotect
+< mprotect
+< mprotect
+< mprotect
+< mprotect
+< mprotect
+< prlimit64
+< munmap
+< getrandom
+< brk
+< brk
+< lseek
+< lseek
+< lseek
+< rt_sigaction
+< openat
+< newfstatat
+< mmap
+< close
+< brk
+< brk
+< uname
+< getuid
+< socket
+< connect
+< close
+< socket
+< connect
+< close
+< newfstatat
+< newfstatat
+< openat
+< newfstatat
+< read
+< read
+< newfstatat
+< close
+< openat
+< newfstatat
+< lseek
+< read
+< close
+< faccessat
+< faccessat
+< faccessat
+< faccessat
+< faccessat
+< faccessat
+< faccessat
+< faccessat
+< faccessat
+< faccessat
+< faccessat
+< faccessat
+< faccessat
+< faccessat
+< faccessat
+< faccessat
+< faccessat
+< faccessat
+< faccessat
+< faccessat
+< faccessat
+< faccessat
+< faccessat
+< newfstatat
+< brk
+< readlinkat
+< readlinkat
+< readlinkat
+< readlinkat
+< faccessat
+< newfstatat
+< openat
+< fcntl
+< ioctl
+< read
+< read
+< read
+< read
+< read
+< read
+< read
+< read
+< close
+< readlinkat
+< readlinkat
+< readlinkat
+< readlinkat
+< newfstatat
+< readlinkat
+< readlinkat
+< readlinkat
+< brk
+< getpid
+< openat
+< ioctl
+< ioctl
+< ioctl
+< ioctl
+< getpid
+< ioctl
+< lseek
+< ioctl
+< lseek
+< ioctl
+< lseek
+< ioctl
+< ioctl
+< fcntl
+< fcntl
+< fcntl
+< fcntl
+< rt_sigaction
+< rt_sigaction
+< write
+< write
+< write
+< write
+< write
+< write
+< write
+< write
+< openat
+< ioctl
+< ioctl
+< ioctl
+< ioctl
+< ioctl
+< ioctl
+< newfstatat
+< readlinkat
+< newfstatat
+< close
+< fcntl
+< pipe2
+< pipe2
+< pipe2
+< clone
+< set_robust_list
+< close
+< <...
+< <...
+< close
+< close
+< <...
+< <...
+< close
+< close
+< <...
+< <...
+< close
+< fcntl
+< <...
+< <...
+< fcntl
+< fcntl
+< close
+< <...
+< <...
+< fcntl
+< setsid
+< fcntl
+< <...
+< <...
+< read
+< fcntl
+< fcntl
+< close
+< close
+< close
+< openat
+< fcntl
+< fcntl
+< ioctl
+< ioctl
+< ioctl
+< ioctl
+< ---
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigprocmask
+< mmap
+< rt_sigprocmask
+< clone
+< rt_sigprocmask
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigprocmask
+< execve
+< <...
+< munmap
+< rt_sigprocmask
+< wait4
+< <...
+< brk
+< mmap
+< faccessat
+< openat
+< newfstatat
+< openat
+< newfstatat
+< openat
+< newfstatat
+< openat
+< newfstatat
+< openat
+< newfstatat
+< openat
+< newfstatat
+< openat
+< newfstatat
+< openat
+< newfstatat
+< openat
+< newfstatat
+< mmap
+< close
+< openat
+< read
+< newfstatat
+< mmap
+< mmap
+< munmap
+< munmap
+< mprotect
+< mmap
+< mmap
+< close
+< set_tid_address
+< set_robust_list
+< rseq
+< mprotect
+< mprotect
+< mmap
+< mprotect
+< prlimit64
+< munmap
+< getuid
+< getgid
+< getpid
+< rt_sigaction
+< geteuid
+< getrandom
+< brk
+< brk
+< getppid
+< newfstatat
+< newfstatat
+< geteuid
+< getegid
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< openat
+< fcntl
+< close
+< fcntl
+< dup3
+< close
+< clone
+< set_robust_list
+< wait4
+< execve
+< brk
+< mmap
+< faccessat
+< openat
+< newfstatat
+< openat
+< newfstatat
+< openat
+< newfstatat
+< openat
+< newfstatat
+< openat
+< newfstatat
+< openat
+< newfstatat
+< openat
+< newfstatat
+< openat
+< newfstatat
+< openat
+< newfstatat
+< mmap
+< close
+< openat
+< read
+< newfstatat
+< mmap
+< mmap
+< munmap
+< munmap
+< mprotect
+< mmap
+< mmap
+< close
+< set_tid_address
+< set_robust_list
+< rseq
+< mprotect
+< mprotect
+< mmap
+< mprotect
+< prlimit64
+< munmap
+< getrandom
+< brk
+< brk
+< openat
+< newfstatat
+< mmap
+< close
+< openat
+< newfstatat
+< read
+< read
+< close
+< openat
+< openat
+< openat
+< openat
+< openat
+< openat
+< openat
+< openat
+< openat
+< openat
+< openat
+< openat
+< ioctl
+< ioctl
+< ioctl
+< ioctl
+< ioctl
+< close
+< close
+< exit_group
+< +++
+< <...
+< ---
+< rt_sigreturn
+< dup3
+< close
+< exit_group
+< +++
+< <...
+< rt_sigaction
+< rt_sigaction
+< rt_sigprocmask
+< ---
+< rt_sigaction
+< ioctl
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< rt_sigaction
+< write
+< <...
+< close
+< write
+< <...
+< <...
+< read
+< close
+< <...
+< <...
+< close
+< close
+< <...
+< <...
+< read
+< execve
+< execve
+< execve
+< execve
+< execve
+< execve
+< execve
+< execve
+< execve
+< execve
+< execve
+< execve
+< execve
+< execve
+< execve
+< execve
+< execve
+< execve
+< execve
+< execve
+< execve
+< execve
+< execve
+< <...
+< <...
+< close
+< brk
+< <...
+< <...
+< mmap
+< rt_sigaction
+< <...
+< <...
+< faccessat
+< rt_sigprocmask
+< <...
+< <...
+< openat
+< mmap
+< <...
+< <...
+< newfstatat
+< mprotect
+< <...
+< <...
+< openat
+< rt_sigprocmask
+< <...
+< clone
+< newfstatat
+< openat
+< rseq
+< <...
+< <...
+< <...
+< rt_sigprocmask
+< set_robust_list
+< newfstatat
+< <...
+< <...
+< <...
+< rt_sigprocmask
+< openat
+< futex
+< <...
+< <...
+< pipe2
+< newfstatat
+< <...
+< <...
+< fcntl
+< openat
+< <...
+< <...
+< fcntl
+< newfstatat
+< <...
+< <...
+< fcntl
+< openat
+< <...
+< <...
+< fcntl
+< newfstatat
+< <...
+< <...
+< fcntl
+< openat
+< <...
+< <...
+< fcntl
+< newfstatat
+< <...
+< <...
+< futex
+< openat
+< <...
+< <...
+< pselect6
+< <...
+< futex
+< newfstatat
+< <...
+< <...
+< write
+< openat
+< <...
+< <...
+< futex
+< <...
+< <...
+< newfstatat
+< futex
+< futex
+< <...
+< <...
+< <...
+< openat
+< read
+< futex
+< <...
+< <...
+< pselect6
+1260d504
+< rt_sigaction
+1261a506
+> rt_sigaction
+1264d508
+< rt_sigaction
+1269d512
+< <...
+1270a514
+> <...
+1280d523
+< close
+1283a527
+> close
+1284a529
+> rt_sigaction
+1286d530
+< ppoll
+1288d531
+< rt_sigaction
+1290a534
+> ppoll
+1457a702,703
+> <...
+> rt_sigaction
+1509a756
+> rt_sigaction
+1519,1522d765
+< rt_sigaction
+< <...
+< <...
+< close
+1540a784
+> close
+1542a787
+> <...
+1547d791
+< getpid
+1548a793
+> getpid
+1551d795
+< ioctl
+1552a797
+> ioctl
+1555d799
+< ioctl
+1556a801
+> ioctl
+1559d803
+< prlimit64
+1560a805
+> prlimit64
+1563d807
+< prlimit64
+1564a809
+> prlimit64
+1567d811
+< execve
+1568a813,814
+> execve
+> <...
+1583,1586d828
+< openat
+< newfstatat
+< openat
+< newfstatat
+1591d832
+< newfstatat
+1593a835
+> newfstatat
+1595d836
+< openat
+1596a838,839
+> <...
+> openat
+1619,1620d861
+< openat
+< <...
+1622c863
+< newfstatat
+---
+> openat
+1626c867
+< openat
+---
+> newfstatat
+1630c871
+< newfstatat
+---
+> openat
+1634c875
+< openat
+---
+> newfstatat
+1638c879
+< newfstatat
+---
+> openat
+1642c883
+< openat
+---
+> newfstatat
+1646c887
+< newfstatat
+---
+> openat
+1650c891
+< openat
+---
+> newfstatat
+1654c895
+< newfstatat
+---
+> openat
+1658c899
+< openat
+---
+> newfstatat
+1662c903
+< newfstatat
+---
+> openat
+1665a907
+> newfstatat
+1667d908
+< mmap
+1669a911
+> openat
+1671d912
+< close
+1673a915
+> newfstatat
+1675d916
+< openat
+1677a919
+> openat
+1679d920
+< read
+1680a922,923
+> <...
+> newfstatat
+1684c927
+< newfstatat
+---
+> mmap
+1688c931
+< mmap
+---
+> close
+1692c935
+< mmap
+---
+> openat
+1696c939
+< munmap
+---
+> read
+1700c943
+< mprotect
+---
+> newfstatat
+1712c955
+< close
+---
+> munmap
+1716c959
+< openat
+---
+> munmap
+1720c963
+< openat
+---
+> mprotect
+1723a967,971
+> mmap
+> openat
+> <...
+> <...
+> mmap
+1724a973,975
+> <...
+> <...
+> close
+1736c987
+< read
+---
+> openat
+1740c991
+< newfstatat
+---
+> read
+1744c995
+< mmap
+---
+> newfstatat
+1751,1753d1001
+< munmap
+< <...
+< <...
+1755c1003
+< munmap
+---
+> mmap
+1759c1007
+< mprotect
+---
+> munmap
+1763c1011
+< mmap
+---
+> munmap
+1767c1015
+< mmap
+---
+> mprotect
+1771c1019
+< close
+---
+> mmap
+1775c1023
+< openat
+---
+> mmap
+1779c1027
+< openat
+---
+> close
+1787c1035
+< read
+---
+> openat
+1791c1039
+< newfstatat
+---
+> openat
+1795c1043
+< mmap
+---
+> read
+1799c1047
+< mmap
+---
+> newfstatat
+1803c1051
+< munmap
+---
+> mmap
+1807,1809d1054
+< munmap
+< <...
+< <...
+1811d1055
+< mprotect
+1814d1057
+< close
+1815a1059
+> munmap
+1818d1061
+< openat
+1819a1063
+> munmap
+1822d1065
+< openat
+1825c1068
+< openat
+---
+> mprotect
+1828a1072
+> mmap
+1830d1073
+< read
+1834c1077
+< newfstatat
+---
+> close
+1838c1081
+< mmap
+---
+> openat
+1842c1085
+< mmap
+---
+> openat
+1846c1089
+< munmap
+---
+> openat
+1850c1093
+< munmap
+---
+> read
+1854c1097
+< mprotect
+---
+> newfstatat
+1861a1105,1107
+> mmap
+> <...
+> <...
+1863c1109
+< close
+---
+> munmap
+1867c1113
+< openat
+---
+> munmap
+1871c1117
+< openat
+---
+> mprotect
+1875c1121
+< openat
+---
+> mmap
+1879c1125
+< read
+---
+> close
+1883,1887c1129
+< newfstatat
+< <...
+< <...
+< mmap
+< mmap
+---
+> openat
+1890a1133
+> openat
+1894c1137
+< munmap
+---
+> openat
+1898c1141
+< munmap
+---
+> read
+1902c1145
+< mprotect
+---
+> newfstatat
+1910c1153
+< close
+---
+> mmap
+1914c1157
+< openat
+---
+> munmap
+1918c1161
+< openat
+---
+> munmap
+1922c1165
+< openat
+---
+> mprotect
+1926c1169
+< read
+---
+> mmap
+1930c1173
+< newfstatat
+---
+> close
+1934c1177
+< mmap
+---
+> openat
+1938c1181
+< mmap
+---
+> openat
+1942c1185
+< mmap
+---
+> openat
+1946c1189
+< munmap
+---
+> read
+1950c1193
+< munmap
+---
+> newfstatat
+1954c1197
+< mprotect
+---
+> mmap
+1966c1209
+< close
+---
+> munmap
+1970c1213
+< openat
+---
+> munmap
+1974c1217
+< openat
+---
+> mprotect
+1978c1221
+< openat
+---
+> mmap
+1982c1225
+< read
+---
+> mmap
+1986c1229
+< newfstatat
+---
+> close
+1990c1233
+< mmap
+---
+> openat
+1994c1237
+< mmap
+---
+> openat
+1999c1242
+< munmap
+---
+> openat
+2003c1246
+< munmap
+---
+> read
+2007c1250
+< mprotect
+---
+> newfstatat
+2015c1258
+< close
+---
+> mmap
+2019c1262
+< openat
+---
+> munmap
+2023c1266
+< openat
+---
+> munmap
+2027c1270
+< openat
+---
+> mprotect
+2031c1274
+< read
+---
+> mmap
+2035c1278
+< newfstatat
+---
+> close
+2039c1282
+< mmap
+---
+> openat
+2043c1286
+< mmap
+---
+> openat
+2047c1290
+< munmap
+---
+> openat
+2051c1294
+< munmap
+---
+> read
+2055c1298
+< mprotect
+---
+> newfstatat
+2063c1306
+< close
+---
+> mmap
+2067c1310
+< openat
+---
+> munmap
+2069d1311
+< openat
+2072c1314
+< openat
+---
+> munmap
+2075d1316
+< read
+2076a1318
+> mprotect
+2079d1320
+< newfstatat
+2085c1326
+< mmap
+---
+> close
+2089c1330
+< munmap
+---
+> openat
+2092a1334,1336
+> openat
+> <...
+> <...
+2093a1338
+> openat
+2096a1342,1344
+> read
+> <...
+> <...
+2097a1346
+> newfstatat
+2100c1349
+< munmap
+---
+> mmap
+2105c1354
+< mprotect
+---
+> mmap
+2109c1358
+< mmap
+---
+> munmap
+2113c1362
+< close
+---
+> munmap
+2117c1366
+< openat
+---
+> mprotect
+2121c1370
+< openat
+---
+> mmap
+2125c1374
+< openat
+---
+> close
+2129c1378
+< read
+---
+> openat
+2133c1382
+< newfstatat
+---
+> openat
+2137c1386
+< mmap
+---
+> openat
+2141c1390
+< mmap
+---
+> read
+2145c1394
+< munmap
+---
+> newfstatat
+2149c1398
+< munmap
+---
+> mmap
+2153d1401
+< mprotect
+2158c1406
+< close
+---
+> munmap
+2162c1410
+< openat
+---
+> munmap
+2166c1414
+< openat
+---
+> mprotect
+2170c1418
+< openat
+---
+> mmap
+2174c1422
+< read
+---
+> close
+2178c1426
+< newfstatat
+---
+> openat
+2182c1430
+< mmap
+---
+> openat
+2186c1434
+< mmap
+---
+> openat
+2189a1438,1440
+> read
+> <...
+> <...
+2190a1442
+> newfstatat
+2194c1446
+< munmap
+---
+> mmap
+2198c1450
+< munmap
+---
+> mmap
+2202c1454
+< mprotect
+---
+> munmap
+2206c1458
+< mmap
+---
+> munmap
+2210c1462
+< close
+---
+> mprotect
+2214c1466
+< openat
+---
+> mmap
+2218c1470
+< openat
+---
+> close
+2226c1478,1479
+< read
+---
+> openat
+> <...
+2229c1482
+< newfstatat
+---
+> openat
+2233c1486
+< mmap
+---
+> read
+2237c1490
+< mmap
+---
+> newfstatat
+2245c1498
+< munmap
+---
+> mmap
+2249c1502,1503
+< munmap
+---
+> mmap
+> <...
+2251a1506
+> munmap
+2254d1508
+< mprotect
+2255a1510
+> munmap
+2258d1512
+< mmap
+2259a1514
+> mprotect
+2262d1516
+< close
+2263a1518
+> mmap
+2267c1522
+< openat
+---
+> close
+2270d1524
+< openat
+2271a1526
+> openat
+2274d1528
+< openat
+2275a1530
+> openat
+2278d1532
+< read
+2279a1534
+> openat
+2282d1536
+< newfstatat
+2283a1538
+> read
+2286d1540
+< mmap
+2287a1542
+> newfstatat
+2290d1544
+< mmap
+2291a1546
+> mmap
+2294d1548
+< munmap
+2295a1550
+> mmap
+2297,2298d1551
+< <...
+< munmap
+2302c1555
+< mprotect
+---
+> munmap
+2306c1559
+< mmap
+---
+> munmap
+2310c1563
+< close
+---
+> mprotect
+2314c1567
+< openat
+---
+> mmap
+2318d1570
+< openat
+2319a1572
+> close
+2322d1574
+< openat
+2323a1576
+> openat
+2326d1578
+< read
+2327a1580
+> openat
+2330d1582
+< newfstatat
+2331a1584
+> openat
+2334d1586
+< mmap
+2335a1588
+> read
+2338d1590
+< mmap
+2339a1592
+> newfstatat
+2342d1594
+< munmap
+2343a1596
+> mmap
+2346c1599
+< munmap
+---
+> mmap
+2350d1602
+< mprotect
+2351a1604
+> munmap
+2354d1606
+< mmap
+2355a1608
+> munmap
+2358d1610
+< close
+2359a1612
+> mprotect
+2363c1616
+< openat
+---
+> mmap
+2366d1618
+< openat
+2367a1620
+> close
+2370d1622
+< openat
+2371a1624,1625
+> openat
+> <...
+2374c1628
+< read
+---
+> openat
+2378c1632
+< newfstatat
+---
+> openat
+2382c1636
+< mmap
+---
+> read
+2386c1640
+< mmap
+---
+> newfstatat
+2390c1644
+< munmap
+---
+> mmap
+2394c1648,1649
+< munmap
+---
+> mmap
+> <...
+2396a1652
+> munmap
+2399d1654
+< mprotect
+2400a1656
+> munmap
+2403d1658
+< mmap
+2404a1660
+> mprotect
+2407d1662
+< close
+2408a1664
+> mmap
+2411a1668,1671
+> close
+> <...
+> <...
+> read
+2414a1675
+> newfstatat
+2416d1676
+< read
+2418a1679
+> mmap
+2420d1680
+< newfstatat
+2423d1682
+< read
+2424a1684
+> read
+2426a1687
+> munmap
+2427a1689,1691
+> <...
+> <...
+> munmap
+2430a1695
+> mprotect
+2432d1696
+< munmap
+2438a1703
+> mmap
+2440d1704
+< mprotect
+2443,2444c1707
+< munmap
+< mmap
+---
+> close
+2451,2454c1714
+< <...
+< close
+< close
+< mmap
+---
+> openat
+2457c1717
+< openat
+---
+> close
+2466,2468d1725
+< openat
+< <...
+< read
+2472c1729
+< newfstatat
+---
+> openat
+2476c1733
+< mmap
+---
+> read
+2480c1737
+< mmap
+---
+> newfstatat
+2484c1741
+< munmap
+---
+> mmap
+2487a1745
+> mmap
+2489d1746
+< munmap
+2490a1748,1749
+> <...
+> munmap
+2494c1753
+< mprotect
+---
+> munmap
+2498c1757
+< mmap
+---
+> mprotect
+2506c1765
+< close
+---
+> mmap
+2510c1769
+< openat
+---
+> close
+2517c1776
+< newfstatat
+---
+> <...
+2518a1778
+> newfstatat
+2520a1781
+> openat
+2522d1782
+< read
+2524a1785
+> read
+2526d1786
+< newfstatat
+2528a1789
+> newfstatat
+2530d1790
+< mmap
+2533d1792
+< munmap
+2534a1794
+> munmap
+2537d1796
+< mprotect
+2538a1798,1799
+> mprotect
+> <...
+2540a1802,1803
+> mmap
+> <...
+2542d1804
+< close
+2543a1806
+> close
+2546d1808
+< openat
+2547a1810
+> openat
+2550d1812
+< openat
+2551a1814
+> openat
+2554d1816
+< openat
+2555a1818
+> openat
+2558d1820
+< read
+2559a1822
+> read
+2562d1824
+< newfstatat
+2563a1826
+> newfstatat
+2566d1828
+< mmap
+2567a1830
+> mmap
+2570d1832
+< mmap
+2571a1834
+> mmap
+2574d1836
+< munmap
+2575a1838
+> munmap
+2578d1840
+< munmap
+2579a1842
+> munmap
+2582d1844
+< mprotect
+2583a1846
+> mprotect
+2588d1850
+< close
+2592c1854
+< openat
+---
+> close
+2604c1866
+< read
+---
+> openat
+2606a1869
+> read
+2608d1870
+< newfstatat
+2611c1873
+< mmap
+---
+> newfstatat
+2619c1881
+< munmap
+---
+> mmap
+2627c1889
+< mprotect
+---
+> munmap
+2630a1893
+> mprotect
+2632,2634d1894
+< mmap
+< <...
+< close
+2638c1898
+< openat
+---
+> mmap
+2640a1901
+> close
+2642d1902
+< openat
+2645d1904
+< munmap
+2646a1906
+> munmap
+2648a1909
+> openat
+2650d1910
+< read
+2652a1913
+> openat
+2654d1914
+< newfstatat
+2656a1917
+> read
+2658d1918
+< mmap
+2660a1921
+> newfstatat
+2662d1922
+< mmap
+2664a1925
+> mmap
+2666d1926
+< munmap
+2668a1929
+> mmap
+2670d1930
+< munmap
+2672a1933
+> munmap
+2674d1934
+< mprotect
+2676a1937
+> munmap
+2678d1938
+< mmap
+2680a1941
+> mprotect
+2682d1942
+< close
+2686c1946
+< openat
+---
+> mmap
+2690c1950
+< openat
+---
+> close
+2698c1958
+< read
+---
+> openat
+2702c1962
+< newfstatat
+---
+> openat
+2706c1966
+< mmap
+---
+> read
+2710c1970
+< mmap
+---
+> newfstatat
+2718c1978
+< munmap
+---
+> mmap
+2722c1982
+< munmap
+---
+> mmap
+2726c1986
+< mprotect
+---
+> munmap
+2730c1990
+< mmap
+---
+> munmap
+2734c1994
+< close
+---
+> mprotect
+2738c1998
+< openat
+---
+> mmap
+2742c2002
+< openat
+---
+> close
+2750c2010,2011
+< read
+---
+> openat
+> <...
+2752d2012
+< newfstatat
+2753a2014
+> openat
+2756d2016
+< mmap
+2757a2018
+> read
+2760d2020
+< mmap
+2761a2022
+> newfstatat
+2764d2024
+< munmap
+2765a2026
+> mmap
+2768d2028
+< mprotect
+2769a2030
+> mmap
+2772d2032
+< mmap
+2773a2034
+> munmap
+2776d2036
+< close
+2777a2038
+> mprotect
+2785c2046
+< set_tid_address
+---
+> close
+2789c2050
+< set_robust_list
+---
+> mmap
+2793c2054
+< rseq
+---
+> set_tid_address
+2796a2058,2060
+> set_robust_list
+> <...
+> <...
+2798c2062
+< mprotect
+---
+> rseq
+2803d2066
+< mmap
+2805a2069
+> mmap
+2807d2070
+< close
+2809a2073
+> close
+2811c2075,2076
+< openat
+---
+> <...
+> <...
+2818d2082
+< read
+2820a2085
+> openat
+2822d2086
+< newfstatat
+2824a2089
+> read
+2826d2090
+< mmap
+2828a2093
+> newfstatat
+2829a2095,2096
+> <...
+> <...
+2830a2098
+> mprotect
+2832a2101
+> mmap
+2834d2102
+< munmap
+2836a2105
+> munmap
+2837a2107,2108
+> <...
+> <...
+2838a2110
+> mprotect
+2843a2116
+> <...
+2858d2130
+< openat
+2860a2133
+> openat
+2862d2134
+< read
+2865c2137
+< newfstatat
+---
+> read
+2867d2138
+< mmap
+2869a2141
+> newfstatat
+2871d2142
+< mmap
+2874,2876d2144
+< munmap
+< mprotect
+< mprotect
+2878,2879d2145
+< close
+< openat
+2883c2149
+< openat
+---
+> mmap
+2887c2153
+< openat
+---
+> munmap
+2891c2157
+< read
+---
+> mprotect
+2895c2161
+< newfstatat
+---
+> mmap
+2899c2165
+< mmap
+---
+> close
+2903c2169
+< mmap
+---
+> openat
+2907c2173
+< munmap
+---
+> openat
+2909d2174
+< mprotect
+2911a2177
+> openat
+2913d2178
+< mmap
+2915a2181
+> read
+2917d2182
+< close
+2919a2185
+> newfstatat
+2921d2186
+< openat
+2923a2189
+> mmap
+2925d2190
+< openat
+2928c2193
+< openat
+---
+> mmap
+2931a2197
+> munmap
+2933d2198
+< read
+2935a2201
+> mprotect
+2937d2202
+< newfstatat
+2940d2204
+< read
+2941a2206
+> read
+2945c2210
+< mmap
+---
+> close
+2947a2213
+> openat
+2949d2214
+< munmap
+2952,2953c2217
+< munmap
+< mprotect
+---
+> openat
+2955d2218
+< mmap
+2957a2221
+> openat
+2959d2222
+< close
+2962c2225
+< openat
+---
+> read
+2966c2229
+< openat
+---
+> newfstatat
+2970c2233
+< openat
+---
+> mmap
+2974c2237
+< read
+---
+> mmap
+2978c2241
+< newfstatat
+---
+> munmap
+2980d2242
+< mmap
+2982a2245
+> munmap
+2984d2246
+< mmap
+2986a2249
+> mprotect
+2988d2250
+< mmap
+2990a2253
+> mmap
+2992d2254
+< munmap
+2994a2257
+> close
+2996d2258
+< munmap
+3000c2262
+< mprotect
+---
+> openat
+3004c2266
+< mmap
+---
+> openat
+3007c2269
+< mmap
+---
+> openat
+3011c2273
+< close
+---
+> read
+3012a2275
+> newfstatat
+3015d2277
+< openat
+3016a2279
+> mmap
+3019d2281
+< openat
+3020a2283
+> mmap
+3023d2285
+< openat
+3024a2287
+> mmap
+3027d2289
+< read
+3029c2291
+< newfstatat
+---
+> munmap
+3033c2295
+< mmap
+---
+> munmap
+3037,3038c2299
+< mmap
+< <...
+---
+> mprotect
+3041d2301
+< munmap
+3043a2304
+> mmap
+3045d2305
+< munmap
+3047a2308
+> mmap
+3049d2309
+< mprotect
+3051a2312
+> close
+3053d2313
+< mmap
+3055a2316
+> openat
+3057d2317
+< close
+3060d2319
+< write
+3061a2321
+> write
+3064d2323
+< rt_sigaction
+3065a2325
+> rt_sigaction
+3066a2327,2328
+> <...
+> read
+3070c2332
+< openat
+---
+> newfstatat
+3074c2336
+< read
+---
+> mmap
+3078c2340
+< newfstatat
+---
+> mmap
+3082c2344
+< mmap
+---
+> munmap
+3085,3086d2346
+< mmap
+< <...
+3089d2348
+< rt_sigprocmask
+3093,3094d2351
+< munmap
+< set_robust_list
+3096,3098d2352
+< <...
+< <...
+< <...
+3100,3101c2354
+< rt_sigprocmask
+< futex
+---
+> set_robust_list
+3105,3106c2358,2359
+< mmap
+< futex
+---
+> rt_sigprocmask
+> rt_sigprocmask
+3110c2363
+< munmap
+---
+> mmap
+3118d2370
+< futex
+3120c2372,2373
+< mprotect
+---
+> munmap
+> futex
+3124c2377
+< prctl
+---
+> mprotect
+3129c2382
+< ppoll
+---
+> prctl
+3134c2387
+< read
+---
+> ppoll
+3138,3139d2390
+< ppoll
+< <...
+3141c2392
+< futex
+---
+> read
+3144c2395,2396
+< read
+---
+> <...
+> ppoll
+3145a2398
+> read
+3148d2400
+< newfstatat
+3149a2402
+> newfstatat
+3152d2404
+< mmap
+3153a2406
+> mmap
+3156d2408
+< mmap
+3157a2410
+> mmap
+3160d2412
+< munmap
+3161a2414
+> munmap
+3164d2416
+< munmap
+3165a2418
+> munmap
+3167a2421
+> futex
+3168a2423,2424
+> <...
+> <...
+3179d2434
+< futex
+3181a2437
+> futex
+3216d2471
+< mmap
+3218a2474
+> mmap
+3219a2476,2477
+> <...
+> <...
+3220a2479,2486
+> futex
+> <...
+> <...
+> openat
+> futex
+> <...
+> <...
+> openat
+3224c2490
+< mmap
+---
+> openat
+3225a2492,2494
+> read
+> <...
+> <...
+3227c2496
+< mmap
+---
+> newfstatat
+3231c2500
+< set_tid_address
+---
+> mmap
+3234c2503
+< set_robust_list
+---
+> mmap
+3238c2507
+< rseq
+---
+> munmap
+3242,3243c2511
+< futex
+< mprotect
+---
+> munmap
+3249d2516
+< mprotect
+3251a2519
+> mmap
+3253c2521,2523
+< mprotect
+---
+> <...
+> <...
+> close
+3255d2524
+< mprotect
+3257a2527,2529
+> mmap
+> futex
+> mmap
+3259d2530
+< mprotect
+3261a2533
+> set_tid_address
+3263d2534
+< mprotect
+3265a2537
+> set_robust_list
+3266a2539,2541
+> <...
+> <...
+> rseq
+3268d2542
+< mprotect
+3273d2546
+< futex
+3284a2558
+> mprotect
+3286,3290c2560,2561
+< futex
+< futex
+< futex
+< futex
+< futex
+---
+> <...
+> <...
+3291a2563
+> futex
+3293a2566
+> mprotect
+3295a2569
+> futex
+3298a2573
+> futex
+3299a2575
+> futex
+3316d2591
+< mprotect
+3318,3320d2592
+< <...
+< <...
+< mprotect
+3321a2594,2596
+> futex
+> futex
+> mprotect
+3324d2598
+< mprotect
+3325a2600
+> mprotect
+3330d2604
+< fcntl
+3332a2607,2608
+> fcntl
+> mprotect
+3334a2611
+> futex
+3337d2613
+< futex
+3338a2615
+> futex
+3341,3342d2617
+< futex
+< mprotect
+3343a2619,2620
+> mprotect
+> futex
+3360d2636
+< futex
+3366a2643,2644
+> mprotect
+> futex
+3378,3379d2655
+< futex
+< futex
+3384a2661
+> futex
+3391,3392c2668
+< prlimit64
+< futex
+---
+> mprotect
+3395c2671,2672
+< munmap
+---
+> futex
+> mprotect
+3400,3402d2676
+< getrandom
+< <...
+< <...
+3404,3406d2677
+< brk
+< <...
+< <...
+3408,3410d2678
+< brk
+< <...
+< <...
+3412,3413c2680
+< geteuid
+< rt_sigprocmask
+---
+> mprotect
+3415a2683,2684
+> geteuid
+> mprotect
+3417d2685
+< rt_sigaction
+3419a2688
+> mprotect
+3421d2689
+< rt_sigprocmask
+3425c2693
+< rt_sigaction
+---
+> prlimit64
+3429c2697,2698
+< rt_sigprocmask
+---
+> munmap
+> <...
+3431a2701
+> getrandom
+3434d2703
+< statfs
+3435a2705
+> brk
+3438c2708
+< statfs
+---
+> brk
+3440d2709
+< openat
+3444c2713
+< newfstatat
+---
+> rt_sigprocmask
+3448c2717
+< read
+---
+> rt_sigaction
+3452c2721
+< read
+---
+> rt_sigprocmask
+3456c2725
+< close
+---
+> rt_sigaction
+3458c2727,2728
+< faccessat
+---
+> <...
+> rt_sigprocmask
+3462c2732
+< prctl
+---
+> statfs
+3466c2736
+< prctl
+---
+> statfs
+3470c2740
+< prctl
+---
+> openat
+3474c2744
+< prctl
+---
+> newfstatat
+3478c2748
+< prctl
+---
+> read
+3482c2752
+< prctl
+---
+> read
+3485,3487c2755
+< getpid
+< <...
+< <...
+---
+> close
+3489d2756
+< rt_sigprocmask
+3492c2759
+< openat
+---
+> faccessat
+3494c2761
+< futex
+---
+> rt_sigprocmask
+3502d2768
+< newfstatat
+3504,3505c2770
+< eventfd2
+< <...
+---
+> prctl
+3508c2773,2774
+< read
+---
+> futex
+> prctl
+3510d2775
+< write
+3513a2779,2780
+> eventfd2
+> prctl
+3515,3517d2781
+< ioctl
+< ppoll
+< read
+3520a2785,2786
+> write
+> prctl
+3522d2787
+< read
+3524,3526d2788
+< close
+< <...
+< ppoll
+3529,3531c2791,2793
+< ppoll
+< read
+< ioctl
+---
+> prctl
+> futex
+> futex
+3534,3535d2795
+< ppoll
+< umask
+3536a2797,2798
+> futex
+> prctl
+3538a2801,2810
+> <...
+> futex
+> <...
+> getpid
+> futex
+> <...
+> <...
+> <...
+> ppoll
+> futex
+3542,3543c2814,2816
+< sendmsg
+< newfstatat
+---
+> ppoll
+> <...
+> <...
+3545d2817
+< ioctl
+3547d2818
+< close
+3549d2819
+< mknodat
+3552,3553d2821
+< ppoll
+< openat
+3554a2823,2824
+> ppoll
+> ppoll
+3557c2827,2831
+< newfstatat
+---
+> write
+> <...
+> <...
+> ioctl
+> sendmsg
+3559a2834,2837
+> ppoll
+> read
+> ppoll
+> read
+3561d2838
+< mkdirat
+3563a2841
+> close
+3565d2842
+< newfstatat
+3567a2845
+> ioctl
+3569d2846
+< rt_sigprocmask
+3571a2849
+> umask
+3573d2850
+< signalfd4
+3575a2853
+> openat
+3577d2854
+< inotify_init1
+3579a2857
+> newfstatat
+3581d2858
+< inotify_add_watch
+3583a2861
+> read
+3585d2862
+< openat
+3587a2865
+> ioctl
+3589d2866
+< newfstatat
+3592c2869,2870
+< getdents64
+---
+> read
+> close
+3598c2876
+< getdents64
+---
+> newfstatat
+3601d2878
+< <...
+3605c2882,2883
+< close
+---
+> <...
+> mknodat
+3612c2890
+< ppoll
+---
+> openat
+3617a2896
+> <...
+3619a2899
+> newfstatat
+3622c2902,2903
+< futex
+---
+> <...
+> mkdirat
+3625d2905
+< futex
+3627a2908
+> newfstatat
+3628a2910,2912
+> <...
+> <...
+> <...
+3629a2914,2916
+> rt_sigprocmask
+> <...
+> <...
+3631a2919
+> signalfd4
+3634a2923,2926
+> inotify_init1
+> <...
+> <...
+> <...
+3635a2928,2929
+> inotify_add_watch
+> <...
+3636a2931
+> <...
+3638a2934,2935
+> openat
+> futex
+3639a2937,2939
+> <...
+> <...
+> newfstatat
+3643a2944,2945
+> <...
+> getdents64
+3647a2950
+> <...
+3649,3650c2952
+< ppoll
+< write
+---
+> getdents64
+3655d2956
+< read
+3656a2958
+> close
+3659,3660c2961,2963
+< futex
+< futex
+---
+> <...
+> write
+> ppoll
+3670c2973
+< sendmsg
+---
+> ppoll
+3672a2976,2977
+> <...
+> read
+3674d2978
+< sendmsg
+3675a2980
+> sendmsg
+3676a2982
+> sendmsg
+3678d2983
+< <...
+3715,3718d3019
+< <...
+< futex
+< <...
+< futex
+3721d3021
+< futex
+3723c3023
+< ppoll
+---
+> <...
+3725a3026,3027
+> <...
+> ppoll
+3746,3749d3047
+< futex
+< <...
+< <...
+< ppoll
+3751,3763d3048
+< <...
+< <...
+< futex
+< futex
+< <...
+< <...
+< read
+< futex
+< <...
+< futex
+< <...
+< futex
+< futex
+3768a3054,3055
+> ppoll
+> read
+3806d3092
+< rt_sigprocmask
+3808a3095
+> rt_sigprocmask
+3810d3096
+< sched_yield
+3835d3120
+< eventfd2
+3837a3123
+> eventfd2
+3839d3124
+< write
+3841a3127
+> write
+3842a3129
+> <...
+3857d3143
+< <...
+3887,3888d3172
+< ppoll
+< close
+3890c3174
+< openat
+---
+> ppoll
+3891a3176
+> close
+3892a3178
+> openat
+3894d3179
+< ioctl
+3897c3182
+< rt_sigaction
+---
+> ioctl
+3898a3184
+> rt_sigaction
+3903d3188
+< rt_sigaction
+3905a3191
+> rt_sigaction
+3907d3192
+< ppoll
+3909a3195
+> ppoll
+3911d3196
+< read
+3915c3200
+< ppoll
+---
+> read
+3916a3202,3203
+> <...
+> ppoll
+3917a3205
+> <...
+3939,3943c3227
+< <...
+< futex
+< futex
+< <...
+< <...
+---
+> ppoll
+3945,3951d3228
+< futex
+< <...
+< futex
+< <...
+< futex
+< futex
+< futex
+3953a3231
+> write
+3958c3236
+< write
+---
+> read
+3964,3969d3241
+< read
+< <...
+< <...
+< futex
+< ppoll
+< <...
+3973d3244
+< <...
+3975,3978d3245
+< futex
+< <...
+< <...
+< <...
+3980,3982d3246
+< pselect6
+< <...
+< futex
+3984,3986d3247
+< <...
+< <...
+< read
+3988,3989d3248
+< <...
+< <...
+3991,3997d3249
+< write
+< <...
+< <...
+< write
+< <...
+< <...
+< futex
+3999d3250
+< futex
+4001,4006d3251
+< <...
+< <...
+< <...
+< futex
+< futex
+< <...
+4008,4010d3252
+< read
+< <...
+< <...
+4012,4013d3253
+< pselect6
+< <...
+4026d3265
+< <...
+4029,4037d3267
+< <...
+< <...
+< <...
+< pselect6
+< futex
+< futex
+< <...
+< <...
+< read
+4039,4041d3268
+< <...
+< <...
+< write
+4043,4045d3269
+< <...
+< <...
+< write
+4047,4051d3270
+< <...
+< <...
+< <...
+< futex
+< futex
+4053,4060d3271
+< <...
+< <...
+< <...
+< futex
+< futex
+< read
+< <...
+< <...
+4063,4065d3273
+< <...
+< <...
+< pselect6
+4072d3279
+< read
+4073a3281,3282
+> read
+> <...
+4116a3326
+> fcntl
+4119,4120d3328
+< fcntl
+< lseek
+4121a3330
+> lseek
+4124d3332
+< ppoll
+4125a3334
+> ppoll
+4128d3336
+< write
+4129a3338
+> write
+4132d3340
+< ppoll
+4133a3342
+> ppoll
+4136d3344
+< write
+4137a3346
+> write
+4140d3348
+< fstat
+4141a3350
+> fstat
+4144d3352
+< fcntl
+4145a3354
+> fcntl
+4148d3356
+< write
+4149a3358
+> write
+4153a3363
+> newfstatat
+4156d3365
+< newfstatat
+4157a3367
+> mmap
+4160d3369
+< mmap
+4162d3370
+< <...
+4469d3676
+< <...
+4471,4474d3677
+< futex
+< <...
+< <...
+< <...
+4476d3678
+< pselect6
+4479d3680
+< futex
+4484,4487d3684
+< <...
+< fdatasync
+< read
+< <...
+4492,4496c3689
+< <...
+< clock_nanosleep
+< write
+< write
+< <...
+---
+> fdatasync
+4500,4501c3693
+< futex
+< <...
+---
+> clock_nanosleep
+4503d3694
+< futex
+4505,4506d3695
+< <...
+< <...
+4508,4511d3696
+< futex
+< <...
+< <...
+< futex
+4513,4515d3697
+< read
+< <...
+< <...
+4517,4520d3698
+< pselect6
+< <...
+< <...
+< ---
+4523,4526c3701
+< futex
+< <...
+< pselect6
+< futex
+---
+> ---
+4529d3703
+< <...
+4531d3704
+< read
+4533,4535d3705
+< <...
+< <...
+< write
+4537d3706
+< <...
+4540,4550d3708
+< <...
+< <...
+< <...
+< write
+< futex
+< <...
+< futex
+< <...
+< futex
+< read
+< pselect6
+4552,4554d3709
+< <...
+< <...
+< <...
+4556,4561d3710
+< futex
+< futex
+< <...
+< <...
+< <...
+< pselect6
+4563,4566d3711
+< futex
+< <...
+< <...
+< <...
+4568,4570d3712
+< read
+< read
+< <...
+4571a3714
+> read
+4573d3715
+< write
+4575,4577d3716
+< <...
+< <...
+< write
+4580,4584d3718
+< <...
+< futex
+< read
+< pselect6
+< <...
+4588d3721
+< <...
+4590,4594d3722
+< futex
+< <...
+< <...
+< <...
+< pselect6
+4596,4598d3723
+< futex
+< <...
+< <...
+4600,4602d3724
+< read
+< write
+< <...
+4607d3728
+< <...
+4610,4611d3730
+< write
+< <...
+4615d3733
+< futex
+4617,4619d3734
+< <...
+< <...
+< read
+4621,4623d3735
+< <...
+< <...
+< pselect6
+4629c3741
+< kill
+---
+> <...
+4630a3743
+> kill
+4659,4743d3771
+< exit_group
+< <...
+< +++
+< ---
+< <...
+< futex
+< restart_syscall
+< <...
+< <...
+< pselect6
+< futex
+< read
+< ioctl
+< fcntl
+< fcntl
+< fcntl
+< close
+< openat
+< fcntl
+< fcntl
+< write
+< write
+< openat
+< openat
+< ioctl
+< fcntl
+< fcntl
+< fcntl
+< close
+< openat
+< fcntl
+< fcntl
+< close
+< openat
+< close
+< close
+< openat
+< fcntl
+< close
+< close
+< close
+< close
+< write
+< <...
+< close
+< read
+< <...
+< <...
+< futex
+< close
+< futex
+< <...
+< openat
+< futex
+< <...
+< <...
+< openat
+< futex
+< <...
+< openat
+< newfstatat
+< mmap
+< close
+< mmap
+< munmap
+< munmap
+< mprotect
+< openat
+< read
+< newfstatat
+< mmap
+< mmap
+< munmap
+< munmap
+< mprotect
+< mmap
+< close
+< mprotect
+< munmap
+< futex
+< rt_sigprocmask
+< madvise
+< exit
+< <...
+< +++
