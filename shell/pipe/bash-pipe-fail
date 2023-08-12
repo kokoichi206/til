@@ -1,0 +1,453 @@
+666475 execve("/usr/bin/bash", ["bash", "-c", "echo hoge | grep p"], 0xffffc6f6f208 /* 52 vars */) = 0
+666475 brk(NULL)                        = 0xaaaaf4e70000
+666475 mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xffff91ace000
+666475 faccessat(AT_FDCWD, "/etc/ld.so.preload", R_OK) = -1 ENOENT (No such file or directory)
+666475 openat(AT_FDCWD, "/home/ubuntu/catkin_ws/devel/lib/tls/aarch64/libtinfo.so.6", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+666475 newfstatat(AT_FDCWD, "/home/ubuntu/catkin_ws/devel/lib/tls/aarch64", 0xffffd9a8dd20, 0) = -1 ENOENT (No such file or directory)
+666475 openat(AT_FDCWD, "/home/ubuntu/catkin_ws/devel/lib/tls/libtinfo.so.6", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+666475 newfstatat(AT_FDCWD, "/home/ubuntu/catkin_ws/devel/lib/tls", 0xffffd9a8dd20, 0) = -1 ENOENT (No such file or directory)
+666475 openat(AT_FDCWD, "/home/ubuntu/catkin_ws/devel/lib/aarch64/libtinfo.so.6", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+666475 newfstatat(AT_FDCWD, "/home/ubuntu/catkin_ws/devel/lib/aarch64", 0xffffd9a8dd20, 0) = -1 ENOENT (No such file or directory)
+666475 openat(AT_FDCWD, "/home/ubuntu/catkin_ws/devel/lib/libtinfo.so.6", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+666475 newfstatat(AT_FDCWD, "/home/ubuntu/catkin_ws/devel/lib", {st_mode=S_IFDIR|0775, st_size=4096, ...}, 0) = 0
+666475 openat(AT_FDCWD, "/opt/ros/noetic/lib/tls/aarch64/libtinfo.so.6", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+666475 newfstatat(AT_FDCWD, "/opt/ros/noetic/lib/tls/aarch64", 0xffffd9a8dd20, 0) = -1 ENOENT (No such file or directory)
+666475 openat(AT_FDCWD, "/opt/ros/noetic/lib/tls/libtinfo.so.6", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+666475 newfstatat(AT_FDCWD, "/opt/ros/noetic/lib/tls", 0xffffd9a8dd20, 0) = -1 ENOENT (No such file or directory)
+666475 openat(AT_FDCWD, "/opt/ros/noetic/lib/aarch64/libtinfo.so.6", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+666475 newfstatat(AT_FDCWD, "/opt/ros/noetic/lib/aarch64", 0xffffd9a8dd20, 0) = -1 ENOENT (No such file or directory)
+666475 openat(AT_FDCWD, "/opt/ros/noetic/lib/libtinfo.so.6", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+666475 newfstatat(AT_FDCWD, "/opt/ros/noetic/lib", {st_mode=S_IFDIR|0755, st_size=4096, ...}, 0) = 0
+666475 openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+666475 newfstatat(3, "", {st_mode=S_IFREG|0644, st_size=85175, ...}, AT_EMPTY_PATH) = 0
+666475 mmap(NULL, 85175, PROT_READ, MAP_PRIVATE, 3, 0) = 0xffff91a83000
+666475 close(3)                         = 0
+666475 openat(AT_FDCWD, "/lib/aarch64-linux-gnu/libtinfo.so.6", O_RDONLY|O_CLOEXEC) = 3
+666475 read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0\267\0\1\0\0\0000\327\0\0\0\0\0\0"..., 832) = 832
+666475 newfstatat(3, "", {st_mode=S_IFREG|0644, st_size=187688, ...}, AT_EMPTY_PATH) = 0
+666475 mmap(NULL, 317704, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xffff91a35000
+666475 mmap(0xffff91a40000, 252168, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0) = 0xffff91a40000
+666475 munmap(0xffff91a35000, 45056)    = 0
+666475 munmap(0xffff91a7e000, 18696)    = 0
+666475 mprotect(0xffff91a69000, 65536, PROT_NONE) = 0
+666475 mmap(0xffff91a79000, 20480, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x29000) = 0xffff91a79000
+666475 close(3)                         = 0
+666475 openat(AT_FDCWD, "/home/ubuntu/catkin_ws/devel/lib/libdl.so.2", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+666475 openat(AT_FDCWD, "/opt/ros/noetic/lib/libdl.so.2", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+666475 openat(AT_FDCWD, "/lib/aarch64-linux-gnu/libdl.so.2", O_RDONLY|O_CLOEXEC) = 3
+666475 read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0\267\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+666475 newfstatat(3, "", {st_mode=S_IFREG|0644, st_size=6152, ...}, AT_EMPTY_PATH) = 0
+666475 mmap(NULL, 135200, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xffff91a1e000
+666475 mmap(0xffff91a20000, 69664, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0) = 0xffff91a20000
+666475 munmap(0xffff91a1e000, 8192)     = 0
+666475 munmap(0xffff91a32000, 53280)    = 0
+666475 mprotect(0xffff91a21000, 61440, PROT_NONE) = 0
+666475 mmap(0xffff91a30000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0) = 0xffff91a30000
+666475 close(3)                         = 0
+666475 openat(AT_FDCWD, "/home/ubuntu/catkin_ws/devel/lib/libc.so.6", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+666475 openat(AT_FDCWD, "/opt/ros/noetic/lib/libc.so.6", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+666475 openat(AT_FDCWD, "/lib/aarch64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+666475 read(3, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0\267\0\1\0\0\0\340u\2\0\0\0\0\0"..., 832) = 832
+666475 newfstatat(3, "", {st_mode=S_IFREG|0644, st_size=1641496, ...}, AT_EMPTY_PATH) = 0
+666475 mmap(NULL, 1810024, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xffff91866000
+666475 mmap(0xffff91870000, 1744488, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0) = 0xffff91870000
+666475 munmap(0xffff91866000, 40960)    = 0
+666475 munmap(0xffff91a1a000, 24168)    = 0
+666475 mprotect(0xffff919f9000, 61440, PROT_NONE) = 0
+666475 mmap(0xffff91a08000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x188000) = 0xffff91a08000
+666475 mmap(0xffff91a0e000, 48744, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0xffff91a0e000
+666475 close(3)                         = 0
+666475 mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xffff91acc000
+666475 set_tid_address(0xffff91acc0f0)  = 666475
+666475 set_robust_list(0xffff91acc100, 24) = 0
+666475 rseq(0xffff91acc7c0, 0x20, 0, 0xd428bc00) = 0
+666475 mprotect(0xffff91a08000, 16384, PROT_READ) = 0
+666475 mprotect(0xffff91a30000, 4096, PROT_READ) = 0
+666475 mprotect(0xffff91a79000, 16384, PROT_READ) = 0
+666475 mprotect(0xaaaade796000, 20480, PROT_READ) = 0
+666475 mprotect(0xffff91ad2000, 8192, PROT_READ) = 0
+666475 prlimit64(0, RLIMIT_STACK, NULL, {rlim_cur=8192*1024, rlim_max=RLIM64_INFINITY}) = 0
+666475 munmap(0xffff91a83000, 85175)    = 0
+666475 openat(AT_FDCWD, "/dev/tty", O_RDWR|O_NONBLOCK) = 3
+666475 close(3)                         = 0
+666475 getrandom("\x9e\xa0\xd5\x6d\x38\x15\x55\xa8", 8, GRND_NONBLOCK) = 8
+666475 brk(NULL)                        = 0xaaaaf4e70000
+666475 brk(0xaaaaf4e91000)              = 0xaaaaf4e91000
+666475 openat(AT_FDCWD, "/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3
+666475 newfstatat(3, "", {st_mode=S_IFREG|0644, st_size=4121216, ...}, AT_EMPTY_PATH) = 0
+666475 mmap(NULL, 4121216, PROT_READ, MAP_PRIVATE, 3, 0) = 0xffff91481000
+666475 close(3)                         = 0
+666475 openat(AT_FDCWD, "/usr/lib/aarch64-linux-gnu/gconv/gconv-modules.cache", O_RDONLY) = 3
+666475 newfstatat(3, "", {st_mode=S_IFREG|0644, st_size=27004, ...}, AT_EMPTY_PATH) = 0
+666475 mmap(NULL, 27004, PROT_READ, MAP_SHARED, 3, 0) = 0xffff91ac5000
+666475 close(3)                         = 0
+666475 futex(0xffff91a0d89c, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+666475 getuid()                         = 1000
+666475 getgid()                         = 1000
+666475 geteuid()                        = 1000
+666475 getegid()                        = 1000
+666475 rt_sigprocmask(SIG_BLOCK, NULL, [], 8) = 0
+666475 ioctl(-1, TIOCGPGRP, 0xffffd9a8ea24) = -1 EBADF (Bad file descriptor)
+666475 sysinfo({uptime=3103369, loads=[88768, 49888, 42752], totalram=8190713856, freeram=195313664, sharedram=81846272, bufferram=803545088, totalswap=0, freeswap=0, procs=1075, totalhigh=0, freehigh=0, mem_unit=1}) = 0
+666475 rt_sigaction(SIGCHLD, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTART}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+666475 rt_sigaction(SIGCHLD, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTART}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTART}, 8) = 0
+666475 rt_sigaction(SIGINT, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+666475 rt_sigaction(SIGINT, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+666475 rt_sigaction(SIGQUIT, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+666475 rt_sigaction(SIGQUIT, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+666475 rt_sigaction(SIGTSTP, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+666475 rt_sigaction(SIGTSTP, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+666475 rt_sigaction(SIGTTIN, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+666475 rt_sigaction(SIGTTIN, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+666475 rt_sigaction(SIGTTOU, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+666475 rt_sigaction(SIGTTOU, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+666475 rt_sigprocmask(SIG_BLOCK, NULL, [], 8) = 0
+666475 rt_sigaction(SIGQUIT, {sa_handler=SIG_IGN, sa_mask=[], sa_flags=0}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+666475 uname({sysname="Linux", nodename="ubuntu", ...}) = 0
+666475 newfstatat(AT_FDCWD, "/home/ubuntu/Documents/syscall/tty", {st_mode=S_IFDIR|0775, st_size=4096, ...}, 0) = 0
+666475 newfstatat(AT_FDCWD, ".", {st_mode=S_IFDIR|0775, st_size=4096, ...}, 0) = 0
+666475 newfstatat(AT_FDCWD, "/home", {st_mode=S_IFDIR|0755, st_size=4096, ...}, 0) = 0
+666475 newfstatat(AT_FDCWD, "/home/ubuntu", {st_mode=S_IFDIR|0755, st_size=4096, ...}, 0) = 0
+666475 newfstatat(AT_FDCWD, "/home/ubuntu/Documents", {st_mode=S_IFDIR|0755, st_size=4096, ...}, 0) = 0
+666475 newfstatat(AT_FDCWD, "/home/ubuntu/Documents/syscall", {st_mode=S_IFDIR|0775, st_size=4096, ...}, 0) = 0
+666475 newfstatat(AT_FDCWD, "/home/ubuntu/Documents/syscall/tty", {st_mode=S_IFDIR|0775, st_size=4096, ...}, 0) = 0
+666475 newfstatat(AT_FDCWD, "/home/ubuntu/Documents/syscall", {st_mode=S_IFDIR|0775, st_size=4096, ...}, 0) = 0
+666475 getpid()                         = 666475
+666475 getppid()                        = 666472
+666475 newfstatat(AT_FDCWD, ".", {st_mode=S_IFDIR|0775, st_size=4096, ...}, 0) = 0
+666475 newfstatat(AT_FDCWD, "/home/ubuntu/go/bin/bash", 0xffffd9a8e678, 0) = -1 ENOENT (No such file or directory)
+666475 newfstatat(AT_FDCWD, "/usr/local/go/bin/bash", 0xffffd9a8e678, 0) = -1 ENOENT (No such file or directory)
+666475 newfstatat(AT_FDCWD, "/home/ubuntu/.rbenv/bin/bash", 0xffffd9a8e678, 0) = -1 ENOENT (No such file or directory)
+666475 newfstatat(AT_FDCWD, "/home/ubuntu/.rbenv/bin/bash", 0xffffd9a8e678, 0) = -1 ENOENT (No such file or directory)
+666475 newfstatat(AT_FDCWD, "/home/ubuntu/work/go/bin/bash", 0xffffd9a8e678, 0) = -1 ENOENT (No such file or directory)
+666475 newfstatat(AT_FDCWD, "/usr/local/go//go/bin/bash", 0xffffd9a8e678, 0) = -1 ENOENT (No such file or directory)
+666475 newfstatat(AT_FDCWD, "/home/ubuntu/.goenv/bin/bash", 0xffffd9a8e678, 0) = -1 ENOENT (No such file or directory)
+666475 newfstatat(AT_FDCWD, "/home/ubuntu/.nodenv/shims/bash", 0xffffd9a8e678, 0) = -1 ENOENT (No such file or directory)
+666475 newfstatat(AT_FDCWD, "/usr/local/go/bash", 0xffffd9a8e678, 0) = -1 ENOENT (No such file or directory)
+666475 newfstatat(AT_FDCWD, "/opt/ros/noetic/bin/bash", 0xffffd9a8e678, 0) = -1 ENOENT (No such file or directory)
+666475 newfstatat(AT_FDCWD, "/home/ubuntu/.vscode-server/bin/74f6148eb9ea00507ec113ec51c489d6ffb4b771/bin/remote-cli/bash", 0xffffd9a8e678, 0) = -1 ENOENT (No such file or directory)
+666475 newfstatat(AT_FDCWD, "/home/ubuntu/.deno/bin/bash", 0xffffd9a8e678, 0) = -1 ENOENT (No such file or directory)
+666475 newfstatat(AT_FDCWD, "/home/ubuntu/.yarn/bin/bash", 0xffffd9a8e678, 0) = -1 ENOENT (No such file or directory)
+666475 newfstatat(AT_FDCWD, "/home/ubuntu/.nodenv/shims/bash", 0xffffd9a8e678, 0) = -1 ENOENT (No such file or directory)
+666475 newfstatat(AT_FDCWD, "/home/ubuntu/.nodenv/bin/bash", 0xffffd9a8e678, 0) = -1 ENOENT (No such file or directory)
+666475 newfstatat(AT_FDCWD, "/home/ubuntu/.vscode-server/bin/c3f126316369cd610563c75b1b1725e0679adfb3/bin/bash", 0xffffd9a8e678, 0) = -1 ENOENT (No such file or directory)
+666475 newfstatat(AT_FDCWD, "/home/ubuntu/.local/bin/bash", 0xffffd9a8e678, 0) = -1 ENOENT (No such file or directory)
+666475 newfstatat(AT_FDCWD, "/home/ubuntu/.vscode-server/bin/c3f126316369cd610563c75b1b1725e0679adfb3/bin/bash", 0xffffd9a8e678, 0) = -1 ENOENT (No such file or directory)
+666475 newfstatat(AT_FDCWD, "/home/ubuntu/.local/bin/bash", 0xffffd9a8e678, 0) = -1 ENOENT (No such file or directory)
+666475 newfstatat(AT_FDCWD, "/usr/local/sbin/bash", 0xffffd9a8e678, 0) = -1 ENOENT (No such file or directory)
+666475 newfstatat(AT_FDCWD, "/usr/local/bin/bash", 0xffffd9a8e678, 0) = -1 ENOENT (No such file or directory)
+666475 newfstatat(AT_FDCWD, "/usr/sbin/bash", 0xffffd9a8e678, 0) = -1 ENOENT (No such file or directory)
+666475 newfstatat(AT_FDCWD, "/usr/bin/bash", {st_mode=S_IFREG|0755, st_size=1215072, ...}, 0) = 0
+666475 newfstatat(AT_FDCWD, "/usr/bin/bash", {st_mode=S_IFREG|0755, st_size=1215072, ...}, 0) = 0
+666475 geteuid()                        = 1000
+666475 getegid()                        = 1000
+666475 getuid()                         = 1000
+666475 getgid()                         = 1000
+666475 faccessat(AT_FDCWD, "/usr/bin/bash", X_OK) = 0
+666475 newfstatat(AT_FDCWD, "/usr/bin/bash", {st_mode=S_IFREG|0755, st_size=1215072, ...}, 0) = 0
+666475 geteuid()                        = 1000
+666475 getegid()                        = 1000
+666475 getuid()                         = 1000
+666475 getgid()                         = 1000
+666475 faccessat(AT_FDCWD, "/usr/bin/bash", R_OK) = 0
+666475 newfstatat(AT_FDCWD, "/usr/bin/bash", {st_mode=S_IFREG|0755, st_size=1215072, ...}, 0) = 0
+666475 newfstatat(AT_FDCWD, "/usr/bin/bash", {st_mode=S_IFREG|0755, st_size=1215072, ...}, 0) = 0
+666475 geteuid()                        = 1000
+666475 getegid()                        = 1000
+666475 getuid()                         = 1000
+666475 getgid()                         = 1000
+666475 faccessat(AT_FDCWD, "/usr/bin/bash", X_OK) = 0
+666475 newfstatat(AT_FDCWD, "/usr/bin/bash", {st_mode=S_IFREG|0755, st_size=1215072, ...}, 0) = 0
+666475 geteuid()                        = 1000
+666475 getegid()                        = 1000
+666475 getuid()                         = 1000
+666475 getgid()                         = 1000
+666475 faccessat(AT_FDCWD, "/usr/bin/bash", R_OK) = 0
+666475 getpid()                         = 666475
+666475 getpgid(0)                       = 666472
+666475 ioctl(2, TIOCGPGRP, [666472])    = 0
+666475 rt_sigaction(SIGCHLD, {sa_handler=0xaaaade6c8de0, sa_mask=[], sa_flags=SA_RESTART}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTART}, 8) = 0
+666475 prlimit64(0, RLIMIT_NPROC, NULL, {rlim_cur=30840, rlim_max=30840}) = 0
+666475 rt_sigprocmask(SIG_BLOCK, NULL, [], 8) = 0
+666475 rt_sigprocmask(SIG_BLOCK, NULL, [], 8) = 0
+666475 rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+666475 pipe2([3, 4], 0)                 = 0
+666475 rt_sigprocmask(SIG_BLOCK, [INT CHLD], [CHLD], 8) = 0
+666475 clone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0xffff91acc0f0) = 666476
+666476 set_robust_list(0xffff91acc100, 24 <unfinished ...>
+666475 rt_sigprocmask(SIG_SETMASK, [CHLD],  <unfinished ...>
+666476 <... set_robust_list resumed>)   = 0
+666475 <... rt_sigprocmask resumed>NULL, 8) = 0
+666475 close(4 <unfinished ...>
+666476 getpid( <unfinished ...>
+666475 <... close resumed>)             = 0
+666476 <... getpid resumed>)            = 666476
+666475 close(4 <unfinished ...>
+666476 rt_sigprocmask(SIG_SETMASK, [],  <unfinished ...>
+666475 <... close resumed>)             = -1 EBADF (Bad file descriptor)
+666476 <... rt_sigprocmask resumed>NULL, 8) = 0
+666475 rt_sigprocmask(SIG_BLOCK, [INT CHLD],  <unfinished ...>
+666476 rt_sigaction(SIGTSTP, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0},  <unfinished ...>
+666475 <... rt_sigprocmask resumed>[CHLD], 8) = 0
+666476 <... rt_sigaction resumed>{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+666475 clone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD <unfinished ...>
+666476 rt_sigaction(SIGTTIN, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+666476 rt_sigaction(SIGTTOU, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+666476 close(3 <unfinished ...>
+666475 <... clone resumed>, child_tidptr=0xffff91acc0f0) = 666477
+666476 <... close resumed>)             = 0
+666476 dup3(4, 1, 0 <unfinished ...>
+666475 rt_sigprocmask(SIG_SETMASK, [CHLD],  <unfinished ...>
+666476 <... dup3 resumed>)              = 1
+666475 <... rt_sigprocmask resumed>NULL, 8) = 0
+666476 close(4 <unfinished ...>
+666475 close(3 <unfinished ...>
+666476 <... close resumed>)             = 0
+666475 <... close resumed>)             = 0
+666475 rt_sigprocmask(SIG_BLOCK, [CHLD],  <unfinished ...>
+666476 rt_sigaction(SIGINT, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0},  <unfinished ...>
+666475 <... rt_sigprocmask resumed>[CHLD], 8) = 0
+666476 <... rt_sigaction resumed>{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+666475 rt_sigprocmask(SIG_SETMASK, [CHLD],  <unfinished ...>
+666476 rt_sigaction(SIGQUIT, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0},  <unfinished ...>
+666475 <... rt_sigprocmask resumed>NULL, 8) = 0
+666476 <... rt_sigaction resumed>{sa_handler=SIG_IGN, sa_mask=[], sa_flags=0}, 8) = 0
+666475 rt_sigprocmask(SIG_BLOCK, [CHLD],  <unfinished ...>
+666476 rt_sigaction(SIGCHLD, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTART},  <unfinished ...>
+666475 <... rt_sigprocmask resumed>[CHLD], 8) = 0
+666476 <... rt_sigaction resumed>{sa_handler=0xaaaade6c8de0, sa_mask=[], sa_flags=SA_RESTART}, 8) = 0
+666475 rt_sigaction(SIGINT, {sa_handler=0xaaaade6c56d8, sa_mask=[], sa_flags=0},  <unfinished ...>
+666476 rt_sigprocmask(SIG_BLOCK, [CHLD],  <unfinished ...>
+666475 <... rt_sigaction resumed>{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+666476 <... rt_sigprocmask resumed>[], 8) = 0
+666475 wait4(-1,  <unfinished ...>
+666476 rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+666476 rt_sigaction(SIGCHLD, {sa_handler=0xaaaade6c8de0, sa_mask=[], sa_flags=SA_RESTART}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTART}, 8) = 0
+666476 rt_sigaction(SIGINT, {sa_handler=0xaaaade6e5338, sa_mask=[], sa_flags=0}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+666476 newfstatat(1, "", {st_mode=S_IFIFO|0600, st_size=0, ...}, AT_EMPTY_PATH) = 0
+666477 set_robust_list(0xffff91acc100, 24 <unfinished ...>
+666476 write(1, "hoge\n", 5 <unfinished ...>
+666477 <... set_robust_list resumed>)   = 0
+666476 <... write resumed>)             = 5
+666477 getpid()                         = 666477
+666476 exit_group(0 <unfinished ...>
+666477 rt_sigprocmask(SIG_SETMASK, [],  <unfinished ...>
+666476 <... exit_group resumed>)        = ?
+666477 <... rt_sigprocmask resumed>NULL, 8) = 0
+666477 rt_sigaction(SIGTSTP, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+666477 rt_sigaction(SIGTTIN, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+666476 +++ exited with 0 +++
+666475 <... wait4 resumed>[{WIFEXITED(s) && WEXITSTATUS(s) == 0}], 0, NULL) = 666476
+666477 rt_sigaction(SIGTTOU, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0},  <unfinished ...>
+666475 wait4(-1,  <unfinished ...>
+666477 <... rt_sigaction resumed>{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+666477 dup3(3, 0, 0)                    = 0
+666477 close(3)                         = 0
+666477 newfstatat(AT_FDCWD, ".", {st_mode=S_IFDIR|0775, st_size=4096, ...}, 0) = 0
+666477 newfstatat(AT_FDCWD, "/home/ubuntu/go/bin/grep", 0xffffd9a8e218, 0) = -1 ENOENT (No such file or directory)
+666477 newfstatat(AT_FDCWD, "/usr/local/go/bin/grep", 0xffffd9a8e218, 0) = -1 ENOENT (No such file or directory)
+666477 newfstatat(AT_FDCWD, "/home/ubuntu/.rbenv/bin/grep", 0xffffd9a8e218, 0) = -1 ENOENT (No such file or directory)
+666477 newfstatat(AT_FDCWD, "/home/ubuntu/.rbenv/bin/grep", 0xffffd9a8e218, 0) = -1 ENOENT (No such file or directory)
+666477 newfstatat(AT_FDCWD, "/home/ubuntu/work/go/bin/grep", 0xffffd9a8e218, 0) = -1 ENOENT (No such file or directory)
+666477 newfstatat(AT_FDCWD, "/usr/local/go//go/bin/grep", 0xffffd9a8e218, 0) = -1 ENOENT (No such file or directory)
+666477 newfstatat(AT_FDCWD, "/home/ubuntu/.goenv/bin/grep", 0xffffd9a8e218, 0) = -1 ENOENT (No such file or directory)
+666477 newfstatat(AT_FDCWD, "/home/ubuntu/.nodenv/shims/grep", 0xffffd9a8e218, 0) = -1 ENOENT (No such file or directory)
+666477 newfstatat(AT_FDCWD, "/usr/local/go/grep", 0xffffd9a8e218, 0) = -1 ENOENT (No such file or directory)
+666477 newfstatat(AT_FDCWD, "/opt/ros/noetic/bin/grep", 0xffffd9a8e218, 0) = -1 ENOENT (No such file or directory)
+666477 newfstatat(AT_FDCWD, "/home/ubuntu/.vscode-server/bin/74f6148eb9ea00507ec113ec51c489d6ffb4b771/bin/remote-cli/grep", 0xffffd9a8e218, 0) = -1 ENOENT (No such file or directory)
+666477 newfstatat(AT_FDCWD, "/home/ubuntu/.deno/bin/grep", 0xffffd9a8e218, 0) = -1 ENOENT (No such file or directory)
+666477 newfstatat(AT_FDCWD, "/home/ubuntu/.yarn/bin/grep", 0xffffd9a8e218, 0) = -1 ENOENT (No such file or directory)
+666477 newfstatat(AT_FDCWD, "/home/ubuntu/.nodenv/shims/grep", 0xffffd9a8e218, 0) = -1 ENOENT (No such file or directory)
+666477 newfstatat(AT_FDCWD, "/home/ubuntu/.nodenv/bin/grep", 0xffffd9a8e218, 0) = -1 ENOENT (No such file or directory)
+666477 newfstatat(AT_FDCWD, "/home/ubuntu/.vscode-server/bin/c3f126316369cd610563c75b1b1725e0679adfb3/bin/grep", 0xffffd9a8e218, 0) = -1 ENOENT (No such file or directory)
+666477 newfstatat(AT_FDCWD, "/home/ubuntu/.local/bin/grep", 0xffffd9a8e218, 0) = -1 ENOENT (No such file or directory)
+666477 newfstatat(AT_FDCWD, "/home/ubuntu/.vscode-server/bin/c3f126316369cd610563c75b1b1725e0679adfb3/bin/grep", 0xffffd9a8e218, 0) = -1 ENOENT (No such file or directory)
+666477 newfstatat(AT_FDCWD, "/home/ubuntu/.local/bin/grep", 0xffffd9a8e218, 0) = -1 ENOENT (No such file or directory)
+666477 newfstatat(AT_FDCWD, "/usr/local/sbin/grep", 0xffffd9a8e218, 0) = -1 ENOENT (No such file or directory)
+666477 newfstatat(AT_FDCWD, "/usr/local/bin/grep", 0xffffd9a8e218, 0) = -1 ENOENT (No such file or directory)
+666477 newfstatat(AT_FDCWD, "/usr/sbin/grep", 0xffffd9a8e218, 0) = -1 ENOENT (No such file or directory)
+666477 newfstatat(AT_FDCWD, "/usr/bin/grep", {st_mode=S_IFREG|0755, st_size=174304, ...}, 0) = 0
+666477 newfstatat(AT_FDCWD, "/usr/bin/grep", {st_mode=S_IFREG|0755, st_size=174304, ...}, 0) = 0
+666477 geteuid()                        = 1000
+666477 getegid()                        = 1000
+666477 getuid()                         = 1000
+666477 getgid()                         = 1000
+666477 faccessat(AT_FDCWD, "/usr/bin/grep", X_OK) = 0
+666477 newfstatat(AT_FDCWD, "/usr/bin/grep", {st_mode=S_IFREG|0755, st_size=174304, ...}, 0) = 0
+666477 geteuid()                        = 1000
+666477 getegid()                        = 1000
+666477 getuid()                         = 1000
+666477 getgid()                         = 1000
+666477 faccessat(AT_FDCWD, "/usr/bin/grep", R_OK) = 0
+666477 newfstatat(AT_FDCWD, "/usr/bin/grep", {st_mode=S_IFREG|0755, st_size=174304, ...}, 0) = 0
+666477 newfstatat(AT_FDCWD, "/usr/bin/grep", {st_mode=S_IFREG|0755, st_size=174304, ...}, 0) = 0
+666477 geteuid()                        = 1000
+666477 getegid()                        = 1000
+666477 getuid()                         = 1000
+666477 getgid()                         = 1000
+666477 faccessat(AT_FDCWD, "/usr/bin/grep", X_OK) = 0
+666477 newfstatat(AT_FDCWD, "/usr/bin/grep", {st_mode=S_IFREG|0755, st_size=174304, ...}, 0) = 0
+666477 geteuid()                        = 1000
+666477 getegid()                        = 1000
+666477 getuid()                         = 1000
+666477 getgid()                         = 1000
+666477 faccessat(AT_FDCWD, "/usr/bin/grep", R_OK) = 0
+666477 rt_sigaction(SIGINT, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+666477 rt_sigaction(SIGQUIT, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, {sa_handler=SIG_IGN, sa_mask=[], sa_flags=0}, 8) = 0
+666477 rt_sigaction(SIGCHLD, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTART}, {sa_handler=0xaaaade6c8de0, sa_mask=[], sa_flags=SA_RESTART}, 8) = 0
+666477 execve("/usr/bin/grep", ["grep", "p"], 0xaaaaf4e7e5f0 /* 52 vars */) = 0
+666477 brk(NULL)                        = 0xaaaae4aee000
+666477 mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xffff91c45000
+666477 faccessat(AT_FDCWD, "/etc/ld.so.preload", R_OK) = -1 ENOENT (No such file or directory)
+666477 openat(AT_FDCWD, "/home/ubuntu/catkin_ws/devel/lib/tls/aarch64/libpcre.so.3", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+666477 newfstatat(AT_FDCWD, "/home/ubuntu/catkin_ws/devel/lib/tls/aarch64", 0xffffe5696320, 0) = -1 ENOENT (No such file or directory)
+666477 openat(AT_FDCWD, "/home/ubuntu/catkin_ws/devel/lib/tls/libpcre.so.3", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+666477 newfstatat(AT_FDCWD, "/home/ubuntu/catkin_ws/devel/lib/tls", 0xffffe5696320, 0) = -1 ENOENT (No such file or directory)
+666477 openat(AT_FDCWD, "/home/ubuntu/catkin_ws/devel/lib/aarch64/libpcre.so.3", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+666477 newfstatat(AT_FDCWD, "/home/ubuntu/catkin_ws/devel/lib/aarch64", 0xffffe5696320, 0) = -1 ENOENT (No such file or directory)
+666477 openat(AT_FDCWD, "/home/ubuntu/catkin_ws/devel/lib/libpcre.so.3", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+666477 newfstatat(AT_FDCWD, "/home/ubuntu/catkin_ws/devel/lib", {st_mode=S_IFDIR|0775, st_size=4096, ...}, 0) = 0
+666477 openat(AT_FDCWD, "/opt/ros/noetic/lib/tls/aarch64/libpcre.so.3", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+666477 newfstatat(AT_FDCWD, "/opt/ros/noetic/lib/tls/aarch64", 0xffffe5696320, 0) = -1 ENOENT (No such file or directory)
+666477 openat(AT_FDCWD, "/opt/ros/noetic/lib/tls/libpcre.so.3", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+666477 newfstatat(AT_FDCWD, "/opt/ros/noetic/lib/tls", 0xffffe5696320, 0) = -1 ENOENT (No such file or directory)
+666477 openat(AT_FDCWD, "/opt/ros/noetic/lib/aarch64/libpcre.so.3", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+666477 newfstatat(AT_FDCWD, "/opt/ros/noetic/lib/aarch64", 0xffffe5696320, 0) = -1 ENOENT (No such file or directory)
+666477 openat(AT_FDCWD, "/opt/ros/noetic/lib/libpcre.so.3", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+666477 newfstatat(AT_FDCWD, "/opt/ros/noetic/lib", {st_mode=S_IFDIR|0755, st_size=4096, ...}, 0) = 0
+666477 openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+666477 newfstatat(3, "", {st_mode=S_IFREG|0644, st_size=85175, ...}, AT_EMPTY_PATH) = 0
+666477 mmap(NULL, 85175, PROT_READ, MAP_PRIVATE, 3, 0) = 0xffff91bfa000
+666477 close(3)                         = 0
+666477 openat(AT_FDCWD, "/lib/aarch64-linux-gnu/libpcre.so.3", O_RDONLY|O_CLOEXEC) = 3
+666477 read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0\267\0\1\0\0\0\200\26\0\0\0\0\0\0"..., 832) = 832
+666477 newfstatat(3, "", {st_mode=S_IFREG|0644, st_size=399240, ...}, AT_EMPTY_PATH) = 0
+666477 mmap(NULL, 528544, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xffff91b78000
+666477 mmap(0xffff91b80000, 463008, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0) = 0xffff91b80000
+666477 munmap(0xffff91b78000, 32768)    = 0
+666477 munmap(0xffff91bf2000, 28832)    = 0
+666477 mprotect(0xffff91be1000, 61440, PROT_NONE) = 0
+666477 mmap(0xffff91bf0000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x60000) = 0xffff91bf0000
+666477 close(3)                         = 0
+666477 openat(AT_FDCWD, "/home/ubuntu/catkin_ws/devel/lib/libdl.so.2", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+666477 openat(AT_FDCWD, "/opt/ros/noetic/lib/libdl.so.2", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+666477 openat(AT_FDCWD, "/lib/aarch64-linux-gnu/libdl.so.2", O_RDONLY|O_CLOEXEC) = 3
+666477 read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0\267\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+666477 newfstatat(3, "", {st_mode=S_IFREG|0644, st_size=6152, ...}, AT_EMPTY_PATH) = 0
+666477 mmap(NULL, 135200, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xffff91b5e000
+666477 mmap(0xffff91b60000, 69664, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0) = 0xffff91b60000
+666477 munmap(0xffff91b5e000, 8192)     = 0
+666477 munmap(0xffff91b72000, 53280)    = 0
+666477 mprotect(0xffff91b61000, 61440, PROT_NONE) = 0
+666477 mmap(0xffff91b70000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0) = 0xffff91b70000
+666477 close(3)                         = 0
+666477 openat(AT_FDCWD, "/home/ubuntu/catkin_ws/devel/lib/libc.so.6", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+666477 openat(AT_FDCWD, "/opt/ros/noetic/lib/libc.so.6", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+666477 openat(AT_FDCWD, "/lib/aarch64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+666477 read(3, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0\267\0\1\0\0\0\340u\2\0\0\0\0\0"..., 832) = 832
+666477 newfstatat(3, "", {st_mode=S_IFREG|0644, st_size=1641496, ...}, AT_EMPTY_PATH) = 0
+666477 mmap(NULL, 1810024, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xffff919a6000
+666477 mmap(0xffff919b0000, 1744488, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0) = 0xffff919b0000
+666477 munmap(0xffff919a6000, 40960)    = 0
+666477 munmap(0xffff91b5a000, 24168)    = 0
+666477 mprotect(0xffff91b39000, 61440, PROT_NONE) = 0
+666477 mmap(0xffff91b48000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x188000) = 0xffff91b48000
+666477 mmap(0xffff91b4e000, 48744, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0xffff91b4e000
+666477 close(3)                         = 0
+666477 openat(AT_FDCWD, "/home/ubuntu/catkin_ws/devel/lib/libpthread.so.0", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+666477 openat(AT_FDCWD, "/opt/ros/noetic/lib/libpthread.so.0", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+666477 openat(AT_FDCWD, "/lib/aarch64-linux-gnu/libpthread.so.0", O_RDONLY|O_CLOEXEC) = 3
+666477 read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0\267\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+666477 newfstatat(3, "", {st_mode=S_IFREG|0644, st_size=13736, ...}, AT_EMPTY_PATH) = 0
+666477 mmap(NULL, 135200, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xffff9198e000
+666477 mmap(0xffff91990000, 69664, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0) = 0xffff91990000
+666477 munmap(0xffff9198e000, 8192)     = 0
+666477 munmap(0xffff919a2000, 53280)    = 0
+666477 mprotect(0xffff91991000, 61440, PROT_NONE) = 0
+666477 mmap(0xffff919a0000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0) = 0xffff919a0000
+666477 close(3)                         = 0
+666477 mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xffff91c43000
+666477 set_tid_address(0xffff91c434f0)  = 666477
+666477 set_robust_list(0xffff91c43500, 24) = 0
+666477 rseq(0xffff91c43bc0, 0x20, 0, 0xd428bc00) = 0
+666477 mprotect(0xffff91b48000, 16384, PROT_READ) = 0
+666477 mprotect(0xffff919a0000, 4096, PROT_READ) = 0
+666477 mprotect(0xffff91b70000, 4096, PROT_READ) = 0
+666477 mprotect(0xffff91bf0000, 4096, PROT_READ) = 0
+666477 mprotect(0xaaaaab5eb000, 8192, PROT_READ) = 0
+666477 mprotect(0xffff91c49000, 8192, PROT_READ) = 0
+666477 prlimit64(0, RLIMIT_STACK, NULL, {rlim_cur=8192*1024, rlim_max=RLIM64_INFINITY}) = 0
+666477 munmap(0xffff91bfa000, 85175)    = 0
+666477 getrandom("\x8f\x30\xa9\x0f\x77\x8f\x77\xd5", 8, GRND_NONBLOCK) = 8
+666477 brk(NULL)                        = 0xaaaae4aee000
+666477 brk(0xaaaae4b0f000)              = 0xaaaae4b0f000
+666477 openat(AT_FDCWD, "/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3
+666477 newfstatat(3, "", {st_mode=S_IFREG|0644, st_size=4121216, ...}, AT_EMPTY_PATH) = 0
+666477 mmap(NULL, 4121216, PROT_READ, MAP_PRIVATE, 3, 0) = 0xffff915a1000
+666477 close(3)                         = 0
+666477 openat(AT_FDCWD, "/usr/lib/aarch64-linux-gnu/gconv/gconv-modules.cache", O_RDONLY) = 3
+666477 newfstatat(3, "", {st_mode=S_IFREG|0644, st_size=27004, ...}, AT_EMPTY_PATH) = 0
+666477 mmap(NULL, 27004, PROT_READ, MAP_SHARED, 3, 0) = 0xffff91c3c000
+666477 close(3)                         = 0
+666477 futex(0xffff91b4d89c, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+666477 sigaltstack({ss_sp=0xaaaaab5ed400, ss_flags=0, ss_size=16384}, NULL) = 0
+666477 openat(AT_FDCWD, "/usr/share/locale/locale.alias", O_RDONLY|O_CLOEXEC) = 3
+666477 newfstatat(3, "", {st_mode=S_IFREG|0644, st_size=2996, ...}, AT_EMPTY_PATH) = 0
+666477 read(3, "# Locale name alias data base.\n#"..., 4096) = 2996
+666477 read(3, "", 4096)                = 0
+666477 close(3)                         = 0
+666477 openat(AT_FDCWD, "/usr/share/locale/en_US.UTF-8/LC_MESSAGES/grep.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
+666477 openat(AT_FDCWD, "/usr/share/locale/en_US.utf8/LC_MESSAGES/grep.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
+666477 openat(AT_FDCWD, "/usr/share/locale/en_US/LC_MESSAGES/grep.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
+666477 openat(AT_FDCWD, "/usr/share/locale/en.UTF-8/LC_MESSAGES/grep.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
+666477 openat(AT_FDCWD, "/usr/share/locale/en.utf8/LC_MESSAGES/grep.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
+666477 openat(AT_FDCWD, "/usr/share/locale/en/LC_MESSAGES/grep.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
+666477 openat(AT_FDCWD, "/usr/share/locale-langpack/en_US.UTF-8/LC_MESSAGES/grep.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
+666477 openat(AT_FDCWD, "/usr/share/locale-langpack/en_US.utf8/LC_MESSAGES/grep.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
+666477 openat(AT_FDCWD, "/usr/share/locale-langpack/en_US/LC_MESSAGES/grep.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
+666477 openat(AT_FDCWD, "/usr/share/locale-langpack/en.UTF-8/LC_MESSAGES/grep.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
+666477 openat(AT_FDCWD, "/usr/share/locale-langpack/en.utf8/LC_MESSAGES/grep.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
+666477 openat(AT_FDCWD, "/usr/share/locale-langpack/en/LC_MESSAGES/grep.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
+666477 rt_sigaction(SIGSEGV, {sa_handler=0xaaaaab5c20d8, sa_mask=[], sa_flags=SA_ONSTACK|SA_NODEFER|SA_RESETHAND|SA_SIGINFO}, NULL, 8) = 0
+666477 fstat(1, {st_mode=S_IFCHR|0620, st_rdev=makedev(0x88, 0x4), ...}) = 0
+666477 newfstatat(AT_FDCWD, "/dev/null", {st_mode=S_IFCHR|0666, st_rdev=makedev(0x1, 0x3), ...}, 0) = 0
+666477 fstat(0, {st_mode=S_IFIFO|0600, st_size=0, ...}) = 0
+666477 lseek(0, 0, SEEK_CUR)            = -1 ESPIPE (Illegal seek)
+666477 read(0, "hoge\n", 98304)         = 5
+666477 read(0, "", 98304)               = 0
+666477 close(1)                         = 0
+666477 close(2)                         = 0
+666477 exit_group(1)                    = ?
+666477 +++ exited with 1 +++
+666475 <... wait4 resumed>[{WIFEXITED(s) && WEXITSTATUS(s) == 1}], 0, NULL) = 666477
+666475 rt_sigaction(SIGINT, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, {sa_handler=0xaaaade6c56d8, sa_mask=[], sa_flags=0}, 8) = 0
+666475 ioctl(2, TIOCGWINSZ, {ws_row=23, ws_col=109, ws_xpixel=0, ws_ypixel=0}) = 0
+666475 ioctl(1, TCGETS, {B38400 opost isig icanon echo ...}) = 0
+666475 newfstatat(AT_FDCWD, "/home/ubuntu/.terminfo", 0xaaaaf4e81d00, 0) = -1 ENOENT (No such file or directory)
+666475 newfstatat(AT_FDCWD, "/etc/terminfo", {st_mode=S_IFDIR|0755, st_size=4096, ...}, 0) = 0
+666475 newfstatat(AT_FDCWD, "/lib/terminfo", {st_mode=S_IFDIR|0755, st_size=4096, ...}, 0) = 0
+666475 newfstatat(AT_FDCWD, "/usr/share/terminfo", {st_mode=S_IFDIR|0755, st_size=4096, ...}, 0) = 0
+666475 faccessat(AT_FDCWD, "/etc/terminfo/x/xterm-256color", R_OK) = -1 ENOENT (No such file or directory)
+666475 faccessat(AT_FDCWD, "/lib/terminfo/x/xterm-256color", R_OK) = 0
+666475 openat(AT_FDCWD, "/lib/terminfo/x/xterm-256color", O_RDONLY) = 3
+666475 newfstatat(3, "", {st_mode=S_IFREG|0644, st_size=3503, ...}, AT_EMPTY_PATH) = 0
+666475 read(3, "\36\2%\0&\0\17\0\235\1\356\5xterm-256color|xterm"..., 32768) = 3503
+666475 read(3, "", 28672)               = 0
+666475 close(3)                         = 0
+666475 ioctl(1, TCGETS, {B38400 opost isig icanon echo ...}) = 0
+666475 ioctl(1, TCGETS, {B38400 opost isig icanon echo ...}) = 0
+666475 ioctl(1, TCGETS, {B38400 opost isig icanon echo ...}) = 0
+666475 ioctl(1, TCGETS, {B38400 opost isig icanon echo ...}) = 0
+666475 ioctl(1, TIOCGWINSZ, {ws_row=23, ws_col=109, ws_xpixel=0, ws_ypixel=0}) = 0
+666475 ioctl(0, TIOCGWINSZ, {ws_row=23, ws_col=109, ws_xpixel=0, ws_ypixel=0}) = 0
+666475 brk(0xaaaaf4eb2000)              = 0xaaaaf4eb2000
+666475 rt_sigprocmask(SIG_SETMASK, [CHLD], NULL, 8) = 0
+666475 close(3)                         = -1 EBADF (Bad file descriptor)
+666475 rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+666475 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=666476, si_uid=1000, si_status=0, si_utime=0, si_stime=0} ---
+666475 wait4(-1, 0xffffd9a8d2b0, WNOHANG, NULL) = -1 ECHILD (No child processes)
+666475 rt_sigreturn({mask=[]})          = 0
+666475 rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+666475 rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+666475 exit_group(1)                    = ?
+666475 +++ exited with 1 +++
