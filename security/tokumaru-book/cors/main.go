@@ -23,7 +23,7 @@ func preFlightOK(w http.ResponseWriter, r *http.Request) {
 	case http.MethodPatch:
 		w.WriteHeader(http.StatusOK)
 	case http.MethodOptions:
-		if r.Header.Get("Origin") != frontOrigin {
+		if r.Header.Get("Origin") != frontOrigin || r.Header.Get("Access-Control-Request-Method") != "PATCH" {
 			w.WriteHeader(http.StatusForbidden)
 			return
 		}
@@ -44,7 +44,7 @@ func corsOK(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Access-Control-Allow-Origin", frontOrigin) // preFlightOK Handler との差分。
 		w.WriteHeader(http.StatusOK)
 	case http.MethodOptions:
-		if r.Header.Get("Origin") != frontOrigin {
+		if r.Header.Get("Origin") != frontOrigin || r.Header.Get("Access-Control-Request-Method") != "PATCH" {
 			w.WriteHeader(http.StatusForbidden)
 			return
 		}
