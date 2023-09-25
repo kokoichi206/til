@@ -9,13 +9,15 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onLanguage:markdown"
+  ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "jump-file.helloWorld",
-        "title": "Hello World"
+        "command": "jump-file.start",
+        "title": "Start Custom Jump File"
       }
     ]
   },
