@@ -12,8 +12,10 @@ npx vsce package
 
 ## Install
 
-![](imgs/how-to-install.png)
+Download the `.vsix` file.
+
+Command + P > Extension: Install From VSIX
 
 ## Usage
 
-[どうが](./imgs/usage.mov)
+Command + P > Start Custom Jump File
