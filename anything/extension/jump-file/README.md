@@ -15,7 +15,3 @@ npx vsce package
 Download the `.vsix` file.
 
 Command + P > Extension: Install From VSIX
-
-## Usage
-
-Command + P > Start Custom Jump File
