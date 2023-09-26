@@ -14,28 +14,42 @@ export class CustomCodeJumpProvider implements vscode.DefinitionProvider {
     );
     const selectedText = document.getText(selection);
 
-    this.jumpFile(selectedText);
-    return;
+    return new Promise((resolve, reject) => {
+      this.searchFile(selectedText)
+        .then((uri) => {
+          if (uri) {
+            resolve(new vscode.Location(uri, new vscode.Position(0, 0)));
+          } else {
+            resolve(null);
+          }
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
   }
 
-  private jumpFile(selectedText: string): void {
+  private async searchFile(
+    selectedText: string
+  ): Promise<vscode.Uri | undefined> {
     const parts = selectedText.split("-");
 
     const capitalize = (str: string) =>
       str.charAt(0).toUpperCase() + str.slice(1);
     const componentName = parts[0];
     const folderName = parts.slice(1).map(capitalize).join("");
-    vscode.workspace
-      .findFiles(`**/*.vue`, "**/node_modules/**")
-      .then((value) => {
-        value.forEach((v) => {
-          const path = v.path;
-          if (path.includes(componentName) && path.includes(folderName)) {
-            vscode.workspace.openTextDocument(v).then((doc) => {
-              vscode.window.showTextDocument(doc, { preview: false });
-            });
-          }
-        });
-      });
+
+    const files = await vscode.workspace.findFiles(
+      `**/*.vue`,
+      "**/node_modules/**"
+    );
+    for (const v of files) {
+      const path = v.path;
+      if (path.includes(componentName) && path.includes(folderName)) {
+        return v;
+      }
+    }
+
+    return;
   }
 }
