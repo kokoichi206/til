@@ -41,7 +41,7 @@ export function activate(context: vscode.ExtensionContext) {
 
           editBuilder.replace(
             replaceRange,
-            `${whitespace}// eslint-disable-next-line no-console\n${whitespace}console.log("${variable}: " + ${variable})`
+            `${whitespace}// eslint-disable-next-line no-console\n${whitespace}console.log('${variable}: ' + ${variable});`
           );
         });
       }
