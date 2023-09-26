@@ -9,16 +9,23 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
-  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onLanguage:typescript",
+    "onLanguage:vue",
+    "onLanguage:vue-html",
+    "onLanguage:javascript",
+    "onLanguage:typescriptreact",
+    "onView:nodeDependencies"
+  ],
   "contributes": {
     "commands": [
       {
-        "command": "postfix-sample.helloWorld",
-        "title": "Hello World"
+        "command": "extension.consoleCommand",
+        "title": "Console Command"
       }
     ]
   },
+  "main": "./dist/extension.js",
   "scripts": {
     "vscode:prepublish": "npm run package",
     "compile": "webpack",
