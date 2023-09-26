@@ -51,8 +51,28 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(disposable);
 
   const provider1 = vscode.languages.registerCompletionItemProvider(
-    "typescript",
-    // ["typescript", "vue"],
+    [
+      {
+        language: "javascript",
+        scheme: "file",
+      },
+      {
+        language: "javascript",
+        scheme: "untitled",
+      },
+      {
+        language: "typescript",
+        scheme: "file",
+      },
+      {
+        language: "typescript",
+        scheme: "untitled",
+      },
+      {
+        language: "vue",
+        scheme: "file",
+      },
+    ],
     {
       provideCompletionItems(
         document: vscode.TextDocument,
