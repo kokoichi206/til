@@ -4,3 +4,17 @@
 - [vscode-extension-samples](https://github.com/microsoft/vscode-extension-samples)
 - [virtual documents](https://code.visualstudio.com/api/extension-guides/virtual-documents)
 - [Activation Events](https://code.visualstudio.com/api/references/activation-events#onFileSystem)
+
+## Compile
+
+`.vsix` ファイルにして配布
+
+``` sh
+npx vsce package
+```
+
+## Install
+
+Download the `.vsix` file.
+
+Command + P > Extension: Install From VSIX
