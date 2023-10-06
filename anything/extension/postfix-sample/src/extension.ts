@@ -41,7 +41,7 @@ export function activate(context: vscode.ExtensionContext) {
 
           editBuilder.replace(
             replaceRange,
-            `${whitespace}// eslint-disable-next-line no-console\n${whitespace}console.log('${variable}: ' + ${variable});`
+            `${whitespace}// eslint-disable-next-line no-console\n${whitespace}console.log('${variable}: ' + JSON.stringify(${variable}));`
           );
         });
       }
@@ -101,4 +101,55 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   context.subscriptions.push(provider1);
+
+  const provider2 = vscode.languages.registerCompletionItemProvider(
+    [
+      {
+        language: "javascript",
+        scheme: "file",
+      },
+    ],
+    {
+      provideCompletionItems(
+        document: vscode.TextDocument,
+        position: vscode.Position,
+        token: vscode.CancellationToken,
+        context: vscode.CompletionContext
+      ) {
+        let line = document.lineAt(position.line);
+        let dotIdx = line.text.lastIndexOf(".", position.character);
+        if (dotIdx === -1) {
+          return [];
+        }
+
+        let commentIndex = line.text.indexOf("//");
+        if (commentIndex >= 0 && position.character > commentIndex) {
+          return [];
+        }
+
+        let code = line.text.substring(
+          line.firstNonWhitespaceCharacterIndex,
+          dotIdx
+        );
+        let escapedCode = code.replace(/"/g, '\\"');
+
+        // len
+        let lengthSnippet = new vscode.CompletionItem("len");
+        lengthSnippet.additionalTextEdits = [
+          vscode.TextEdit.delete(
+            new vscode.Range(
+              position.translate(0, -(escapedCode.length + 1)),
+              position
+            )
+          ),
+        ];
+        lengthSnippet.insertText = new vscode.SnippetString(`len(${code})`);
+        lengthSnippet.kind = vscode.CompletionItemKind.Snippet;
+        lengthSnippet.sortText = "\u0000";
+        lengthSnippet.preselect = true;
+      },
+    }
+  );
+
+  context.subscriptions.push(provider2);
 }
