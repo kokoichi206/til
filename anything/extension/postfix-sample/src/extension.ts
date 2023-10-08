@@ -17,90 +17,59 @@ function extractWhitespaceAndText(input: string): {
 }
 
 export function activate(context: vscode.ExtensionContext) {
-  let disposable = vscode.commands.registerCommand(
-    "extension.consoleCommand",
-    (arg1: string, arg2: vscode.Position) => {
-      const words = arg1.split(".");
-      const text = words.slice(0, -1).join(".");
+  // const provider1 = vscode.languages.registerCompletionItemProvider(
+  //   [
+  //     {
+  //       language: "javascript",
+  //       scheme: "file",
+  //     },
+  //     {
+  //       language: "javascript",
+  //       scheme: "untitled",
+  //     },
+  //     {
+  //       language: "typescript",
+  //       scheme: "file",
+  //     },
+  //     {
+  //       language: "typescript",
+  //       scheme: "untitled",
+  //     },
+  //     {
+  //       language: "vue",
+  //       scheme: "file",
+  //     },
+  //   ],
+  //   {
+  //     provideCompletionItems(
+  //       document: vscode.TextDocument,
+  //       position: vscode.Position,
+  //       token: vscode.CancellationToken,
+  //       context: vscode.CompletionContext
+  //     ) {
+  //       console.log("provideCompletionItems of provider1");
+  //       const commitCharacterCompletion = new vscode.CompletionItem("console");
+  //       commitCharacterCompletion.commitCharacters = ["."];
+  //       commitCharacterCompletion.documentation = new vscode.MarkdownString(
+  //         `console.log("VAR: " + VAR) with no lint`
+  //       );
 
-      const editor = vscode.window.activeTextEditor;
+  //       const lineText = document.lineAt(position).text;
+  //       const linePrefix = lineText.substring(0, position.character);
 
-      const { whitespace, variable } = extractWhitespaceAndText(text);
+  //       commitCharacterCompletion.command = {
+  //         title: "Sample Command",
+  //         command: "extension.consoleCommand", // このコマンドは事前に定義されている必要があります
+  //         arguments: [linePrefix, position], // 必要に応じて引数を渡すことができます
+  //       };
 
-      if (editor) {
-        editor.edit((editBuilder) => {
-          const startPosition = new vscode.Position(
-            arg2.line,
-            arg2.character - arg1.length
-          );
-          const endPosition = new vscode.Position(
-            arg2.line,
-            arg2.character + arg1.length
-          );
-          const replaceRange = new vscode.Range(startPosition, endPosition);
+  //       return [commitCharacterCompletion];
+  //     },
+  //   },
+  //   "."
+  // );
 
-          editBuilder.replace(
-            replaceRange,
-            `${whitespace}// eslint-disable-next-line no-console\n${whitespace}console.log('${variable}: ' + JSON.stringify(${variable}));`
-          );
-        });
-      }
-    }
-  );
-
-  context.subscriptions.push(disposable);
-
-  const provider1 = vscode.languages.registerCompletionItemProvider(
-    [
-      {
-        language: "javascript",
-        scheme: "file",
-      },
-      {
-        language: "javascript",
-        scheme: "untitled",
-      },
-      {
-        language: "typescript",
-        scheme: "file",
-      },
-      {
-        language: "typescript",
-        scheme: "untitled",
-      },
-      {
-        language: "vue",
-        scheme: "file",
-      },
-    ],
-    {
-      provideCompletionItems(
-        document: vscode.TextDocument,
-        position: vscode.Position,
-        token: vscode.CancellationToken,
-        context: vscode.CompletionContext
-      ) {
-        const commitCharacterCompletion = new vscode.CompletionItem("console");
-        commitCharacterCompletion.commitCharacters = ["."];
-        commitCharacterCompletion.documentation = new vscode.MarkdownString(
-          `console.log("VAR: " + VAR) with no lint`
-        );
-
-        const lineText = document.lineAt(position).text;
-        const linePrefix = lineText.substring(0, position.character);
-
-        commitCharacterCompletion.command = {
-          title: "Sample Command",
-          command: "extension.consoleCommand", // このコマンドは事前に定義されている必要があります
-          arguments: [linePrefix, position], // 必要に応じて引数を渡すことができます
-        };
-
-        return [commitCharacterCompletion];
-      },
-    }
-  );
-
-  context.subscriptions.push(provider1);
+  // context.subscriptions.push(provider1);
 
   const provider2 = vscode.languages.registerCompletionItemProvider(
     [
@@ -108,6 +77,18 @@ export function activate(context: vscode.ExtensionContext) {
         language: "javascript",
         scheme: "file",
       },
+      {
+        language: "javascript",
+        scheme: "untitled",
+      },
+      {
+        language: "typescript",
+        scheme: "file",
+      },
+      {
+        language: "typescript",
+        scheme: "untitled",
+      },
     ],
     {
       provideCompletionItems(
@@ -116,6 +97,7 @@ export function activate(context: vscode.ExtensionContext) {
         token: vscode.CancellationToken,
         context: vscode.CompletionContext
       ) {
+        console.log("provideCompletionItems");
         let line = document.lineAt(position.line);
         let dotIdx = line.text.lastIndexOf(".", position.character);
         if (dotIdx === -1) {
@@ -147,8 +129,11 @@ export function activate(context: vscode.ExtensionContext) {
         lengthSnippet.kind = vscode.CompletionItemKind.Snippet;
         lengthSnippet.sortText = "\u0000";
         lengthSnippet.preselect = true;
+
+        return [lengthSnippet];
       },
-    }
+    },
+    "."
   );
 
   context.subscriptions.push(provider2);

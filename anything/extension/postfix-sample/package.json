@@ -10,12 +10,7 @@
     "Other"
   ],
   "activationEvents": [
-    "onLanguage:typescript",
-    "onLanguage:vue",
-    "onLanguage:vue-html",
-    "onLanguage:javascript",
-    "onLanguage:typescriptreact",
-    "onView:nodeDependencies"
+    "*"
   ],
   "contributes": {
     "commands": [
