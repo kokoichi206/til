@@ -1,0 +1,21 @@
+{
+  "name": "zenn-samples",
+  "displayName": "zenn-samples",
+  "description": "",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.83.0"
+  },
+  "categories": [
+    "Themes"
+  ],
+  "contributes": {
+    "themes": [
+      {
+        "label": "zenn-samples",
+        "uiTheme": "vs-dark",
+        "path": "./themes/zenn-samples-color-theme.json"
+      }
+    ]
+  }
+}
