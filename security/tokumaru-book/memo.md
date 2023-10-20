@@ -258,6 +258,26 @@ http://example.jp/44/44-001.php?author=author=%27+UNION+SELECT+table_name, colum
 - 入力値の妥当性検討
 - データベースの権限設定
 
+### 4.5
+
+- CSRF
+  - 脆弱性の影響は、アプリケーションの『**重要な処理**』の悪用に限られる
+    - 個人情報などが盗まれることはない
+  - 対策？
+    - セッション変数によりパラメータの受け渡し
+      - iframe を2つ使うことで突破可能
+  - 脆弱性が生まれる原因
+    - form 要素の action 属性にはどのドメインの URL も指定が可能
+    - クッキーに保管されたセッション id は対象サイトに
+  - 対策
+    - トークンの埋め込み
+    - パスワード再入力
+    - Referer のチェック
+- クリックジャッキング
+  - ウェブインテント機能
+  - X-FRAME-OPTIONS
+    - https://developer.mozilla.org/ja/docs/Web/HTTP/Headers/X-Frame-Options
+
 
 ## Links
 
