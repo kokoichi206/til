@@ -68,9 +68,9 @@ int main(int args, char *argv[])
   - 標準 C ライブラリ
 
 ``` sh
-ubuntu@ubuntu:~/work/hutuu$ ls /lib/aarch64-linux-gnu/libc.so.6 
+$ ls /lib/aarch64-linux-gnu/libc.so.6 
 /lib/aarch64-linux-gnu/libc.so.6
-ubuntu@ubuntu:~/work/hutuu$ ls -l /lib/aarch64-linux-gnu/libc.so.6 
+$ ls -l /lib/aarch64-linux-gnu/libc.so.6 
 -rw-r--r-- 1 root root 1641496 Jul  6  2022 /lib/aarch64-linux-gnu/libc.so.6
 ```
 
@@ -78,3 +78,52 @@ ubuntu@ubuntu:~/work/hutuu$ ls -l /lib/aarch64-linux-gnu/libc.so.6
   - C のライブラリの API は関数やマクロ
   - Linux コマンドや設定ファイルが入ることも
 
+## sec3
+
+- ファイルシステム
+- ファイルの区別
+  - 広義のファイル
+    - ディレクトリ
+    - シンボリックリンク
+    - デバイスファイル
+  - 狭義のファイル（regular file）
+  - ストリーム
+- デバイスの後ろ盾がないデバイスファイル
+  - dev null
+  - dev zero
+  - dev random
+- プロセス
+  - 動作中のプログラムのこと
+  - プログラム
+    - ファイルのような形態で存在しているデータも含む
+  - 1つのプログラムがあればプロセスは幾つでも作れる
+- シグナル
+  - Ctrl + C
+    - カーネルが該当プロセスに割り込みシグナルを送る
+- ストリーム
+  - 本書ではバイトストリームのことを指す！
+  - バイト列が出たり入ったりするものであれば何でもストリーム！
+- パイプ
+  - ストリームの両端にプロセスが繋がったもの！！
+  - ステップ
+    - まず各コマンドを独立したプロセスとして同時に実行する
+    - プロセス間をストリームで繋ぐ
+- ネットワーク通信
+  - ストリームが別のコンピュータにまで伸びたもの
+- プロセス間通信
+  - ストリーム
+  - POSIX IPC
+- ３大要素
+  - ファイルシステム
+    - データに名前をつけて保存する場所
+  - プロセス
+    - 活動をする主体
+  - ストリーム
+    - プロセスが他の fs やプロセスとデータをやり取りする手段
+
+``` sh
+$ mount -t ext4
+/dev/mmcblk0p2 on / type ext4 (rw,relatime)
+
+ps -ef
+```
