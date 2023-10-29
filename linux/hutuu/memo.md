@@ -226,3 +226,34 @@ gcc -Wall cat.c
   - scanf
 - バッファリングの操作
   - fflush
+
+## sec7
+
+- head
+  - コマンドライン引数でファイル名を渡すと、そのファイル先頭の数行を出力する
+  - コマンドライン引数でファイル名を渡さなかった場合は標準入力から読み込む
+- コマンドラインオプション
+- Linux において『行』とは『'\n' で終わる文字列』のこと
+- getopt
+  - ショートオプションだけを認識する
+  - 常にループと一緒に使う
+  - 第三引数
+    - オプションを並べて書く
+    - パラメータを取るオプションがある時は、そのオプション文字の次にコロンをつける！！
+  - GNU libc の getopt は仕様がかなり特殊
+- getopt_long もあるよ
+  - **getopt の全ての機能に加えて**、ロングオプションの解析も可能
+  - https://man.freebsd.org/cgi/man.cgi?getopt_long(3)
+
+### gdb
+
+``` sh
+gcc -Wall -g -o head head.c
+
+gdb ./head
+
+(gdb) run -n 5
+(gdb) frame 3
+(gdb) list
+(gdb) print optarg
+```
