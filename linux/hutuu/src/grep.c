@@ -11,10 +11,12 @@ static void do_grep(regex_t *pat, FILE *f);
 static void debug_print(const char *fmt, ...);
 
 static int opt_ignorecase = 0;
+static int opt_invertmatch = 0;
 static int debug = 0;
 
 static struct option longopts[] = {
     {"ignore-case", no_argument, NULL, 'i'},
+    {"invert-match", no_argument, NULL, 'v'},
     {NULL, 0, NULL, 0},
 };
 
@@ -26,12 +28,15 @@ int main(int argc, char *argv[])
 
     int opt;
 
-    while ((opt = getopt_long(argc, argv, "id", longopts, NULL)) != -1)
+    while ((opt = getopt_long(argc, argv, "ivd", longopts, NULL)) != -1)
     {
         switch (opt)
         {
         case 'i':
             opt_ignorecase = 1;
+            break;
+        case 'v':
+            opt_invertmatch = 1;
             break;
         case 'd':
             debug = 1;
@@ -113,11 +118,20 @@ do_grep(regex_t *pat, FILE *src)
 {
     debug_print("%s", "do_grep");
 
+    int matched;
+
     char buf[4096];
 
     while (fgets(buf, sizeof buf, src))
     {
-        if (regexec(pat, buf, 0, NULL, 0) == 0)
+        matched = regexec(pat, buf, 0, NULL, 0) == 0;
+
+        if (opt_invertmatch)
+        {
+            matched = !matched;
+        }
+
+        if (matched)
         {
             fputs(buf, stdout);
         }
