@@ -293,3 +293,35 @@ gdb ./head
   - ユーザーレベル
     - 環境変数 LANG
     - LC_ALL, LC_TIME
+
+slice
+
+こんな感じでやろうとしたけどできなかった。。。
+
+``` c
+matched = regexec(pat, buf, 1, matches, 0) == 0;
+```
+
+## sec9
+
+- FHS: Filesystem Hierarchy Standard
+  - ディレクトリツリーの標準規格
+- ルートディレクトリなしでは Linux はブートすらできない
+- `/bin` と `/usr/bin` はディストリビューションが管理するディレクトリ
+  - 自分でインストールするコマンドは `/usr/local/bin` などに置くべき
+- sbin
+  - 管理者用コマンドを置く
+- lib ディレクトリ
+- usr ディレクトリ
+  - 複数マシンで共有可能なファイルを置く
+  - **User Services and Routines**
+- var
+  - 頻繁に書き換えられるファイルを置くために使う
+  - /var/run
+    - 起動中のサーバプロセスのプロセス ID が保存される
+    - PID file
+- tmp
+  - tmp vs var/tmp
+    - tmp ハリブートしたら消える可能性がある
+    - var tmp はリブートしても消されない
+      - vi のリカバリ用ファイルなど
