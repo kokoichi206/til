@@ -89,7 +89,8 @@ int main(int argc, char **argv)
 
         execlp(argv[2], argv[2], NULL);
 
-        perror("execlp child"); // execlpが失敗した場合。
+        // execlpが失敗した場合。
+        perror("execlp child");
         exit(1);
     }
     else
@@ -104,7 +105,8 @@ int main(int argc, char **argv)
 
         execlp(argv[1], argv[1], NULL);
 
-        perror("execlp parent"); // execlpが失敗した場合。
+        // execlpが失敗した場合。
+        perror("execlp parent");
         exit(1);
     }
 
