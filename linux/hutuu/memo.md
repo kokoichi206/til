@@ -585,3 +585,100 @@ Copy-on-Write
 ``` sh
 trap 'echo signal_SIGCHLD' SIGCHLD;
 ```
+
+## sec14
+
+- プロセスの属性
+  - カレントディレクトリ
+  - くれ電車る
+  - 環境変数
+  - 使用リソース
+- getcwd (3)
+  - library calls
+  - パスが bufsize バイト以上になる時はエラー RANGE を返す
+  - getwd はバッファオーバーフローの危険があるので使わない！
+- chdir
+  - 自プロセスのカレントディレクトリを変更する
+- 環境変数: environment variable
+  - **プロセスの親子関係を通じて伝播するグローバル変数**のようなもの
+  - PATH, EDITOR
+  - **常に設定しておきたいユーザ独自の設定などをプログラムに伝える**
+  - LESS
+    - https://qiita.com/delphinus/items/b04752bb5b64e6cc4ea9#%E7%92%B0%E5%A2%83%E5%A4%89%E6%95%B0-less
+  - MORE, GZIP などにも
+  - プログラムが意識する環境変数はたいてい各コマンドの man ページなどに記載されてる
+  - よくある環境変数
+    - PATH, TERM, LANG, LOGNAME, TEMP, PAGER, EDITOR, MANPATH, DISPLAY
+- environ
+  - 環境変数にはグローバル変数 environ を介してアクセスできる
+  - `char**`
+  - environ, getenv は使いまわしてはいけない
+    - 後で変更される可能性があるため（putenv）
+- set-uid
+  - コマンドを実行するユーザに関係なく、特定のユーザの権限で実行したいケースがある
+    - passwd など
+  - ファイルパーミッションの set-uid ビット
+    - 起動したユーザに関わらず、プログラムファイルのオーナー権限で起動される
+  - real user ID
+    - 起動したユーザーの ID
+  - effective user ID
+    - set-uid プログラムのオーナーの ID
+- 別のクレデンシャルに移行する
+  - setuid, setgid, initgroups の3つをセットで使う
+  - 別ユーザになるステップ
+    - 1. スーパーユーザとしてプログラムを起動する（してもらう）
+    - 2. なりたいユーザのユーザ名と ID, グループ ID を得ておく
+    - 3. setgid
+    - 4. initgroups
+    - 5. setuid
+- プロセスの使うリソース
+  - CPU, メモリ, バスなど
+  - カーネルは各プロセスが使っているリソースの量をつど記録している
+- getrusage
+  - さまざまなリソース使用量が得られる！
+  - man getrusage
+- **時間の概念**
+  - システム時間
+    - **プロセスのためにカーネルが働いた時間**
+    - システムコールを実行した時間
+  - ユーザ時間
+    - システム時間以外の、プロセスが完全に自分で消費した時間
+- 日時と時刻
+  - UNIX エポック
+    - 32 bit 整数で秒を表すと 2038 年までしか表せられない
+
+``` sh
+export LESS='-g -i -M -R -S -W -z-4 -x4'
+
+# set-uid プログラムの例！
+# s がたっている → 誰が起動しても root 権限で起動される。
+$ ls -l /usr/bin/passwd
+-rwsr-xr-x 1 root root 63744 May 28  2020 /usr/bin/passwd
+```
+
+- ログイン
+  - 起きてること
+    - 1. systemd または init が端末の数だけ getty コマンドを起動
+    - 2. getty コマンドは端末からユーザ名が入力されるのを待ち、login コマンドを起動
+    - 3. login コマンドがユーザを認証
+    - 4. シェルを起動
+- systemd
+  - カーネルが直接起動する唯一のプログラム
+    - 全てのプロセスの祖先
+  - **+ getty というプログラムを起動する役割**も持つ
+    - 端末を open, read してユーザ名をタイプするのを待つ
+- 認証？
+  - 現在はパスワードを etc/passwd に直接かかず /etc/shadow に分離したりしてる
+    - シャドウパスワード
+- **PAM**
+  - Pluggable Authentiaction Module
+  - ユーザを認証するという API
+  - 実態は共有ライブラリ
+    - ダイナミックロードを使って分割されている
+- ログインシェル
+  - "/bin/sh", "-sh" など、コマンド名の頭に `-` をつけて起動すること！！
+  - 読み込む設定ファイルが増えたり、起動したりコマンドの扱いが変わったりする！！
+- ログインの記録
+  - w, last のようなコマンド
+
+```
