@@ -681,4 +681,95 @@ $ ls -l /usr/bin/passwd
 - ログインの記録
   - w, last のようなコマンド
 
+## sec15
+
+- **マシン内だろうがネットワーク越しだろうが、相手にするのはストリーム！**
+  - ストリームであれば　read, write で扱える
+- open はどのようにするか
+  - ネットワークにつながるコンピュータには、通信を待ち受けるプロセスが存在
+    - これがファイルに対応する実体
+- インターネット
+  - サーバプロセス
+  - クライアントプロセス
+
+``` sh
+cat /etc/services
+```
+
+- IP
+  - IP の世界にストリームはない
+  - **パケットのみ！**
+    - 自分宛なら受け取る
+    - それ以外なら転送する
+- TCP
+  - IP の上に層を重ねることで、**ストリームに見えるように**している
+- ドメイン
+  - root domain
+  - TLDs
+- リゾルバ
+  - libc にある
+  - /etc/nsswitch.conf
+- ソケット
+  - ネットワーク通信に使うもの
+  - **ストリームをそこに接続することのできる口**
+  - プロセスの先にくっついてるイメージ
+  - 汎用性高い
+    - TCP, UDP, 生の IP
+    - インターネット以外
+    - IPv4, IPv6
+- クライアント側のソケット API
+  - socket(2)
+  - connect(2)
+- connect
+  - ソケット sock からストリームを伸ばし、アドレス addr で示すサーバーにストリームを接続する
+  - **ホスト名ではなく IP アドレスとポート番号！**
+- サーバー側のソケット API
+  - socket(2)
+  - bind(2)
+  - listen(2)
+  - accept(2)
+- bind
+  - 接続を待つアドレス addr をソケット sock に割り当てる
+- listen
+  - ソケット sock がサーバ用のソケット = **接続を待つためのソケットであることをカーネルに伝える！**
+  - コネクションの最大数の設定など
+- accept
+  - sock にクライアントが接続してくるのを待ち、接続が完了したら接続済みストリームの fd を返す
+- 名前解決
+  - getaddrinfo
+    - addinfo は malloc で割り当てられている → 明示的に解放が必要
+  - getnameinfo
+- インターネットスーパーサーバー
+  - inetd, xinetd
+
+``` sh
+sudo apt install xinetd
+
+cat /etc/xinetd.d/daytime
+
+# disable = yes -> no
+vim /etc/xinetd.d/daytime
+
+sudo systemctl reload xinetd
+
+
+grep daytime /etc/services
+
+netstat --tcp --listen
+
+gcc -g -Wall -o daytime daytime.c
+
+$ ./daytime 
+02 NOV 2023 19:37:52 UTC
+$ ./daytime localhost
+02 NOV 2023 19:41:15 UTC
+```
+
+``` sh
+$ telnet localhost 13
+Trying 127.0.0.1...
+Connected to localhost.
+Escape character is '^]'.
+02 NOV 2023 19:58:14 UTC
+Connection closed by foreign host.
 ```
