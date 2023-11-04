@@ -773,3 +773,12 @@ Escape character is '^]'.
 02 NOV 2023 19:58:14 UTC
 Connection closed by foreign host.
 ```
+
+## sec16
+
+- HTTP サーバー
+  - ネットワーク、ストリーム、ファイルシステム、プロセス
+  - HTML の中身を全て渡された時点で TCP ストリームが切断される
+- HTTP
+  - 常に "\r\n" (CR LF) を改行として扱う
+  - ドキュメントルートとドキュメントツリー
