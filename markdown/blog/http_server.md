@@ -131,6 +131,13 @@ func main() {
 
 後ほどの確認により、標準パッケージの偉大さがわかるかと思います。
 
+### 環境
+
+```
+$ uname -a
+Linux ubuntu 5.4.0-1045-raspi #49-Ubuntu SMP PREEMPT Wed Sep 29 17:49:16 UTC 2021 aarch64 aarch64 aarch64 GNU/Linux
+```
+
 ### 必要なシステムコールを意識して実装
 
 **サーバーにとって必要な**システムコールわかるように、雑に Go で書いてみます。
