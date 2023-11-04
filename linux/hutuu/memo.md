@@ -817,3 +817,49 @@ Connection closed by foreign host.
     - ファイルシステムも CPU, memory も io もネットワークも、単独の OS が動作しているように見せさせられる
     - アプリケーションの完全かつポータルな実行環境
   - コンテナの最新の実行形態が Docker
+
+## sec18
+
+- 移植性を高める
+  - API の標準規格
+    - SUSv4
+      - POSIX とほぼ同じ？
+  - autoconf
+- GUI
+  - GUI ツールキット
+    - Gtk+
+    - Qt
+  - ターゲットとする統合デスクトップ環境
+    - GNOME
+      - Gtk+
+      - Ubuntu のデフォルトである Unity は GNOME からの派生なので Gtk+
+    - KDE
+      - Qt
+- X Window System
+  - X と略される
+  - 実際にモニタに画像を出す部分を担当するシステム
+  - クライアント・サーバモデルで設計されている
+- 端末の操作
+  - 端末をストリームとして抽象化して扱うの**ではなく**、端末それ自体に特化した操作をすること
+  - 方法
+    - ioctl
+      - ストリームの先にあるデバイスに特化したシステムコール
+    - ストリームで特定のバイト列を送信する
+  - API
+    - termios
+      - ioctl の抽象化
+      - libc の一部
+      - パスワードを入力するときだけ画面に文字が出ないようにする、など
+    - termcap, terminfo
+      - 端末にとって意味を持つバイト列を収めたデータベース
+      - Linux では terminfo が基本
+    - 両方を扱うのが Curses
+      - ncurses が一般的
+      - new curses
+- make
+  - Makefile にソースコードの処理条件を書いておく
+- シェルスクリプト
+  - **zsh は POSIX シェルに意図的に従ってない部分が多い！**
+- document
+  - man は roff とかで書かれてる
+    - https://linuxjm.osdn.jp/html/GNU_groff/man7/roff.7.html
