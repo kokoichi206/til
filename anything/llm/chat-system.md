@@ -35,3 +35,35 @@
   - Zero-shot Chain of Thought (Zero-shot CoT)
     - 『ステップバイステップで考えてみましょう』と最後につける。
     - 多くのタスクで効果的！
+
+## sec 3
+
+- gpt-4 は 3.5-turbo の 20-30 倍の料金
+- トークン
+  - 必ずしも単語と一致するわけではない
+  - 経験則として、英語のテキストだと 1 トークンは 4-0.75 単語程度
+  - 日本語の方が英語よりも多くなりやすい！
+    - 2倍程度になることも
+
+``` sh
+pip install python-dotenv
+
+pip install openai
+
+export OPENAI_API_KEY='sk-xxxxxx'
+```
+
+- Chat Completions API のパラメータ
+  - model
+  - messages
+  - stream
+  - temperature
+  - n
+  - stop
+    - 登場した時点で生成を停止する文字列
+  - max_tokens
+  - user
+- Function calling
+  - 利用可能な関数を LLM に伝えておいて、LLM に『関数を使いたい』という判断をさせる機能
+  - LLM はどんな関数をどう使いたいかを返してくれるだけ
+    - 関数の実行は python などを使って API の利用者側で実行する必要がある
