@@ -164,6 +164,25 @@ pip install langchain openai
   - PromptTemplate に context として埋め込んで LLM に回答 (QA) してもらいたいケース！
   - [chain_type](https://python.langchain.com/docs/use_cases/question_answering/vector_db_qa#chain-type)
 
+### Agents
+
+- 前回までのは決まった固定の流れがある処理だった
+  - どんな処理を行うべきか、LLM に選択して動いてほしい場合がある
+  - Vector store を使って特定分野のデータを検索して使わせたり、Google などの検索エンジンの API を使わせたりもできる！
+- Function calling の応用？
+  - No, Function calling の前から Agents は存在していた
+- Zero-shot-react-description
+  - **ReAct という仕組み**
+  - 実際に動かしてる？
+    - ls の結果を出力して、という時に、実際にフォルダの結果が送られる
+    - gpt 単体とは明らかに違う
+- Function calling を使った Agents
+- Multi Functions Agent
+
+## Links
+
+- [awesome-langchain: github](https://github.com/kyrolabs/awesome-langchain)
+
 ## 疑問
 
 - デプロイ
