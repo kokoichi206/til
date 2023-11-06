@@ -67,3 +67,60 @@ export OPENAI_API_KEY='sk-xxxxxx'
   - 利用可能な関数を LLM に伝えておいて、LLM に『関数を使いたい』という判断をさせる機能
   - LLM はどんな関数をどう使いたいかを返してくれるだけ
     - 関数の実行は python などを使って API の利用者側で実行する必要がある
+
+## sec 4
+
+- LangChain
+  - LLM を使ったアプリケーションに必要な部品を、抽象化されたモジュールとして提供している
+  - 特定ユースケースに特化した機能の提供
+- ユースケース
+  - ChatGPT のように対話できるチャットぼっと
+  - 文章の要約ツール
+  - 社内文書や PDF ファイルへの Q and A アプリ
+  - AI エージェント
+- LangChain 以外のフレームワーク・ライブラリ
+  - LlamaIndex
+  - Semantic Kernel
+  - Guidance
+- Modules
+  - https://python.langchain.com/docs/get_started/introduction#modules
+
+``` sh
+pip install langchain openai
+```
+
+- Language models
+  - 様々な言語モデルを共通のインタフェースで使用できる
+  - LLM を LangChain 流で使えるようにするらっぱあ
+- Prompts
+  - PromptTemplate
+  - 入力に関するモジュール
+- Output parsers
+  - 出力に関するモジュール
+- Chains
+  - PromptTemplate の穴埋め → Language models に与える
+  - Zero-shot CoT プロンプティング → 要約
+  - LLM の出力結果が、サービスのポリシーに違反しないか
+  - LLM の結果を元に SQL を実行、データを分析させたい
+- 様々な Chains がある
+  - LLMChain
+    - Prompt Template, Language model, Output Parser を繋ぐ
+  - SimpleSequentialChain
+    - Chain と Chain を接続する Chain もある
+  - SequentialChain
+  - LLMRouterChain
+  - 既成の Chain とかもある
+    - OpenAIModerationChain
+      - テキストが OpenAI の利用ポリシーに反していないかチェックする
+    - LLMRequestsChain
+      - 指定した URL に HTTP リクエストを送信し、レスポンスの内容を踏まえて LLM に回答させる
+    - OpenAPIEndpointChain
+      - OpenAPI 仕様を元に LLM が API へのリクエストを生成し、その内容で API を呼び出す
+    - PALChain (Experimental) Program-aided Language Models
+      - LLM がプログラムを生成し、プログラムを実行した結果を返す
+    - SQLDatabaseChain (Experimental)
+      - LLM が SQL を生成し、データベースに対して実行した上で、最終的な回答を出力させる
+- Memory
+  - 記憶に関する機能
+  - 会話履歴の保存など
+  - 
