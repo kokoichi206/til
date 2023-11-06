@@ -123,4 +123,47 @@ pip install langchain openai
 - Memory
   - 記憶に関する機能
   - 会話履歴の保存など
-  - 
+
+## sec 5
+
+### Data Connection
+
+- 外部のデータを接続するための機能
+- 背景に RAG: Retrieval Augmented Generation
+- ハルシネーション (Hallucination) を避ける
+- RAG
+  - 文章を OpenAI の Embeddings API などでベクトル化
+  - 入力に近い文書を検索して context に含める
+- Data Connection では、特に Vector store を使い、文書をベクトル化して保存しておく
+- 機能
+  - Document loaders
+    - データソースからドキュメントを読み込む
+  - Document transformers
+    - 何らかの変換をかける
+  - Text embedding models
+    - ドキュメントをベクトル化する
+  - Vector Stores
+    - ベクトル化したドキュメントの保存先！
+  - Retrievers
+    - 入力のテキストと関連するドキュメントを検索する
+- Document loaders
+  - S3
+  - BigQuery
+  - GoogleDrive
+  - NotionDirectory
+  - ...
+- Vector stores
+  - chromadb
+    - ローカルで使用可能な Vector store
+  - Faiss,
+  - ElasticSearch
+  - Redis,
+  - ...
+- Retrievers
+- RetrievalQA (Chain)
+  - PromptTemplate に context として埋め込んで LLM に回答 (QA) してもらいたいケース！
+  - [chain_type](https://python.langchain.com/docs/use_cases/question_answering/vector_db_qa#chain-type)
+
+## 疑問
+
+- デプロイ
