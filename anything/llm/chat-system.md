@@ -234,6 +234,19 @@ logging.getLogger('openai').setLevel(logging.DEBUG)
 pip install slack_bolt python-dotenv
 ```
 
+- [Momento Cache](https://jp.gomomento.com/)
+  - アプリケーションのキャッシュ
+  - 対話しているスレッドの単位をキーとして履歴を保持しておく！
+  - cf. redis, memcached
+    - インフラ管理を意識する必要がない
+    - API 経由で利用
+    - 従量課金
+  - [console](https://console.gomomento.com/)
+
+``` sh
+pip install moment
+```
+
 ## Links
 
 - [awesome-langchain: github](https://github.com/kyrolabs/awesome-langchain)
