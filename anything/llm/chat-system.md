@@ -198,6 +198,42 @@ pip install dotenv
 pip install python-dotenv
 ```
 
+``` sh
+export OPENAI_API_KEY='sk-xxx'
+export OPENAI_MODEL_NAME=gpt-3.5-turbo
+export OPENAI_TEMPERATURE=0.0
+
+# use python < 3.11
+# https://github.com/langchain-ai/langchain/issues/10314
+pyenv global 3.10.13
+
+streamlit run app.py --server.port 8080
+
+#   `openai` has no `ChatCompletion` attribute, this is likely due to an old version of the openai package.
+# https://github.com/langchain-ai/langchain/issues/12949
+pip install openai==0.28.1
+pip install langchain==0.0.330
+
+pip freeze > requirements.txt
+```
+
+``` python
+import logging
+logging.getLogger('openai').setLevel(logging.DEBUG)
+```
+
+## sec 7
+
+- slack
+  - ソケットモード
+  - Event Subscriptions
+- slack api
+  - https://api.slack.com/apis/connections/events-api#retries
+
+``` sh
+pip install slack_bolt python-dotenv
+```
+
 ## Links
 
 - [awesome-langchain: github](https://github.com/kyrolabs/awesome-langchain)
