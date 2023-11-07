@@ -78,6 +78,13 @@ streamlit run app.py --server.port 8080
 # https://github.com/langchain-ai/langchain/issues/12949
 pip install openai==0.28.1
 pip install langchain==0.0.330
+
+pip freeze > requirements.txt
+```
+
+``` python
+import logging
+logging.getLogger('openai').setLevel(logging.DEBUG)
 ```
 
 ## Links

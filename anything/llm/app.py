@@ -13,6 +13,9 @@ openai.api_key = (os.environ["OPENAI_API_KEY"])
 
 load_dotenv()
 
+import logging
+logging.getLogger('openai').setLevel(logging.DEBUG)
+
 def create_agent_chain():
     chat = ChatOpenAI(
         model_name=os.environ["OPENAI_MODEL_NAME"],
@@ -37,6 +40,7 @@ def create_agent_chain():
         memory=memory,
     )
 
+# Memory が毎回初期化されないよう、初回のみ Agent Chain を作成する。
 if "agent_chain" not in st.session_state:
     st.session_state.agent_chain = create_agent_chain()
 
