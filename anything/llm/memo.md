@@ -87,6 +87,16 @@ import logging
 logging.getLogger('openai').setLevel(logging.DEBUG)
 ```
 
+## sec 7
+
+- slack
+  - ソケットモード
+  - Event Subscriptions
+
+``` sh
+pip install slack_bolt python-dotenv
+```
+
 ## Links
 
 - [Building RAG-based LLM Applications for Production](https://www.anyscale.com/blog/a-comprehensive-guide-for-building-rag-based-llm-applications-part-1)
