@@ -247,6 +247,16 @@ pip install slack_bolt python-dotenv
 pip install moment
 ```
 
+- Lazy リスナー
+  - slack が 3 秒以内に HTTP レスポンスを受け取れないと、リトライしてしまう問題の解決
+  - 3秒以内に単純な応答を返した後で、コールバックで応答を書き込んでいく
+    - 自分の投稿を繰り返し更新する
+  - Bolt for Python で利用可能
+- chat.update
+  - Slack API において Tier 3 のメソッドとなっている
+    - 1分間に50回までのコール制限がある
+- Slack Block Kit
+
 ## Links
 
 - [awesome-langchain: github](https://github.com/kyrolabs/awesome-langchain)

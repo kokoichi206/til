@@ -50,14 +50,41 @@ class SlackStreamingCallbackHandler(BaseCallbackHandler):
             )
 
     def on_llm_end(self, response: LLMResult, **keywargs: Any) -> None:
+        # app.client.chat_update(
+        #     channel=self.channel,
+        #     ts=self.ts,
+        #     text=self.message,
+        # )
+        message_context = "OpenAI API で生成される情報は不正確または不適切な場合があります。"
+        message_blocks = [
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": f"{self.message}",
+                },
+            },
+            {
+                "type": "divider",
+            },
+            {
+                "type": "context",
+                "elements": [
+                    {
+                        "type": "mrkdwn",
+                        "text": message_context,
+                    }
+                ]
+            },
+        ]
         app.client.chat_update(
             channel=self.channel,
             ts=self.ts,
             text=self.message,
+            blocks=message_blocks,
         )
 
-
-@app.event("app_mention")
+# @app.event("app_mention")
 def handle_mention(event, say):
     channel = event["channel"]
     # user = event["user"]
@@ -100,6 +127,11 @@ def handle_mention(event, say):
     print(ai_message)
     print(type(ai_message))
     history.add_ai_message(ai_message.content)
+
+def just_ack(ack):
+    ack()
+
+app.event("app_mention")(ack=just_ack, lazy=[handle_mention])
 
 
 if __name__ == "__main__":
