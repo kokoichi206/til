@@ -63,6 +63,23 @@ wget -e robots=off --recursive --no-clobber --page-requisites \
 - [Ray](https://github.com/ray-project/ray)
   - Ray is a unified framework for scaling AI and Python applications
 
+``` sh
+export OPENAI_API_KEY='sk-xxx'
+export OPENAI_MODEL_NAME=gpt-3.5-turbo
+export OPENAI_TEMPERATURE=0.0
+
+# use python < 3.11
+# https://github.com/langchain-ai/langchain/issues/10314
+pyenv global 3.10.13
+
+streamlit run app.py --server.port 8080
+
+#   `openai` has no `ChatCompletion` attribute, this is likely due to an old version of the openai package.
+# https://github.com/langchain-ai/langchain/issues/12949
+pip install openai==0.28.1
+pip install langchain==0.0.330
+```
+
 ## Links
 
 - [Building RAG-based LLM Applications for Production](https://www.anyscale.com/blog/a-comprehensive-guide-for-building-rag-based-llm-applications-part-1)

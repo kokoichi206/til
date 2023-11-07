@@ -179,6 +179,25 @@ pip install langchain openai
 - Function calling を使った Agents
 - Multi Functions Agent
 
+## sec 6
+
+- 構成要素
+  - Chat Completions API
+  - LangChain
+  - Streamlit
+    - 以外のチャット UI
+      - Gradio
+      - Chainlit
+      - st-chat
+  - DuckDockGo
+
+``` sh
+pip install langchain openai
+pip install streamlit
+pip install dotenv
+pip install python-dotenv
+```
+
 ## Links
 
 - [awesome-langchain: github](https://github.com/kyrolabs/awesome-langchain)
