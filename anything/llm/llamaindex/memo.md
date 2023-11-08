@@ -36,3 +36,13 @@ openai==1.1.1
 - CallbackManager
   - [CBEventType](https://gpt-index.readthedocs.io/en/latest/api_reference/callbacks.html#llama_index.callbacks.CBEventType): 処理フェーズ (ライフサイクル的なやつ)
   - 動作解析やデバッグに役立ちそう
+
+## 埋め込みベクトル
+
+- GPTListIndex
+  - デフォルトの挙動: **埋め込みベクトルは使用せず、すべてのノードを使って**処理
+
+## 疑問
+
+- llamaindex って、どういうアーキテクチャで llm 読んでるんだっけ
+  - 何の2回？
