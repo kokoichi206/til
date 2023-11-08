@@ -33,4 +33,6 @@ openai==1.1.1
     - response_synthesizer
     - response_mode
     - prompt templates
-
+- CallbackManager
+  - [CBEventType](https://gpt-index.readthedocs.io/en/latest/api_reference/callbacks.html#llama_index.callbacks.CBEventType): 処理フェーズ (ライフサイクル的なやつ)
+  - 動作解析やデバッグに役立ちそう
