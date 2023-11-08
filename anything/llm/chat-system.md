@@ -297,6 +297,11 @@ pip install unstructured_inference
   - **そもそも情報源をそのまま表示すればいいケースでは LLM は不要な可能性**もある。
 - pdf
   - 複雑な形式のデータを与える場合には、適切にテキスト化されていることを確認したり
+- 会話履歴を元に追加の質問をしたりする
+  - ConversationalRetrievalChain などの工夫が必要！
+  - HyDE (Hypothetical Document Embeddings)
+    - 質問文に関連するドキュメントの検索ではなく、質問文から LLM が答えを想定し、その答えに関連性の高いドキュメントを検索して答える手法
+  - **ドキュメントへの QA 機能にさらに特化したフレームワークとして LlamaIndex がある**
 
 ## Links
 
