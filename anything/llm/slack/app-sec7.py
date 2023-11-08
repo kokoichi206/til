@@ -12,9 +12,6 @@ from langchain.callbacks.base import BaseCallbackHandler
 from langchain.schema import LLMResult
 from langchain.memory import MomentoChatMessageHistory
 from langchain.schema import HumanMessage, SystemMessage
-from langchain.chains import RetrievalQA
-
-from add_document import initialize_vectorstore
 
 load_dotenv()
 
@@ -53,6 +50,11 @@ class SlackStreamingCallbackHandler(BaseCallbackHandler):
             )
 
     def on_llm_end(self, response: LLMResult, **keywargs: Any) -> None:
+        # app.client.chat_update(
+        #     channel=self.channel,
+        #     ts=self.ts,
+        #     text=self.message,
+        # )
         message_context = "OpenAI API で生成される情報は不正確または不適切な場合があります。"
         message_blocks = [
             {
@@ -85,6 +87,7 @@ class SlackStreamingCallbackHandler(BaseCallbackHandler):
 # @app.event("app_mention")
 def handle_mention(event, say):
     channel = event["channel"]
+    # user = event["user"]
     thread_ts = event["ts"]
     message = re.sub("<@.*>", "", event["text"])
 
@@ -97,7 +100,19 @@ def handle_mention(event, say):
     result = say("\n\nTyping...", thread_ts=thread_ts)
     ts = result["ts"]
 
-    vectorstore = initialize_vectorstore()
+    history = MomentoChatMessageHistory.from_client_params(
+        id_ts,
+        os.environ["MOMENT_CACHE"],
+        timedelta(hours=int(os.environ["MOMENTO_TTL"]))
+    )
+
+    messages = [SystemMessage(content="You are a good assistant.")]
+    messages.extend(history.messages)
+    messages.append(HumanMessage(content=message))
+    print('----------------- messages ---------------------')
+    print(messages)
+
+    history.add_user_message(message)
 
     callback = SlackStreamingCallbackHandler(channel=channel, ts=ts)
     llm = ChatOpenAI(
@@ -107,13 +122,11 @@ def handle_mention(event, say):
         callbacks=[callback]
     )
 
-    qa_chain = RetrievalQA.from_llm(
-        llm=llm,
-        retriever=vectorstore.as_retriever(),
-    )
-
-    qa_chain.run(message)
-
+    ai_message = llm(messages)
+    print("------------------- ai_message -------------------")
+    print(ai_message)
+    print(type(ai_message))
+    history.add_ai_message(ai_message.content)
 
 def just_ack(ack):
     ack()

@@ -257,6 +257,47 @@ pip install moment
     - 1分間に50回までのコール制限がある
 - Slack Block Kit
 
+## sec 8
+
+- ファインチューニング
+- RAG
+  - 社内データの整備
+    - 可能な限り同一の知識が同じチャンク内に収まるように工夫
+- 埋め込み表現: embeddings
+  - 質問文から埋め込みを取得し、独自知識のベクターデータと比較する検索方法がよく使われる
+  - OpenAI の Embeddings API
+    - text-embeddings-ada-002 -> 1536 次元の埋め込み表現
+- [Pinecone](https://www.pinecone.io/)
+  - ベクトルデータのクラウドサービス
+  - Index
+    - ベクトルデータをまとめて扱う単位のこと
+- Pinecone 以外のベクトルデータベース
+  - https://python.langchain.com/docs/integrations/vectorstores
+- sample data
+  - https://www.jdla.org/document/#ai-guideline
+
+``` sh
+pip install pinecone-client tiktoken
+
+# langchain 内で pdf を読み込むため。
+pip install unstructured pdf2image pdfminer.six
+
+# ModuleNotFoundError: No module named 'xxx'
+pip install opencv-python
+pip install unstructured_pytesseract
+pip install unstructured_inference
+```
+
+- Python のパッケージ管理ツールについて
+  - 実際にアプリケーションを作るときは pip は使わないことが多い
+  - Poetry や Pipenv
+- RAG などの注意点
+  - **LLM の応答は、文書の内容通りだと保証することが難しい**
+  - 例えば回答と一緒に情報源を提示するのが役に立つケースがあるが、
+  - **そもそも情報源をそのまま表示すればいいケースでは LLM は不要な可能性**もある。
+- pdf
+  - 複雑な形式のデータを与える場合には、適切にテキスト化されていることを確認したり
+
 ## Links
 
 - [awesome-langchain: github](https://github.com/kyrolabs/awesome-langchain)
