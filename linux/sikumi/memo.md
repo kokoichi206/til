@@ -250,3 +250,114 @@ kernel.sched_latency_ns = 18000000  # 18 msec
   - むやみにプロセス数を増やしてもスループットは上がらない
 - 並列実行の重要性
   - ムーアの法則というかシングルスレッドでの性能向上の限界 → 並列実行の重要性
+
+## sec 4
+
+- メモリ
+- free command
+  - available: 実質的な空きメモリ
+  - used: システムが使用中のメモリから buff/cache を引いたもの
+
+``` sh
+$ python3 memuse.py 
+before memory allocation
+              total        used        free      shared  buff/cache   available
+Mem:        7998744     2969900      423992       66768     4604852     4846532
+Swap:             0           0           0
+after memory allocation
+              total        used        free      shared  buff/cache   available
+Mem:        7998744     2977460      416432       66768     4604852     4838972
+Swap:             0           0           0
+```
+
+- ページキャッシュとバッファキャッシュ
+  - available = 解放可能(カーネルが使用中のうち) + free
+    - 回収可能 = ディスクから読み出してまだ変更していないページキャッシュ
+- OOM: Out Of Memory killer
+
+``` sh
+dmesg | grep oom
+```
+
+- 仮想記憶がない時の課題
+  - メモリの断片化
+  - マルチプロセスの実現が困難
+  - 不正な領域へのアクセス
+- 仮想記憶の機能
+  - 物理アドレス
+    - アドレス空間
+  - 仮想アドレス
+    - 仮想アドレス空間
+  - **ページテーブル**
+    - 仮想アドレスから物理アドレスへの変換
+    - ページテーブルエントリ
+
+``` sh
+# SIGSEGV: segmentation violation -> signal 11
+$ go run segv.go
+不正メモリアクセス前
+panic: runtime error: invalid memory address or nil pointer dereference
+[signal SIGSEGV: segmentation violation code=0x2 addr=0x0 pc=0x1028f7bfc]
+```
+
+- プロセスへの新規メモリの割り当て
+  - すぐに使うわけではなく、獲得してかなり経って使うケースも多い
+    - あらかじめ確保しておくと無駄が多い
+    - → **デマンドページング**
+  - **2つの手順！**
+    - メモリ領域の割り当て
+      - 仮想アドレス空間にメモリ領域をマップ
+    - メモリの割り当て
+      - 上記メモリ領域に物理メモリを割り当てる
+
+``` sh
+$ go run mmap.go 
+新規メモリ領域獲得前のメモリマップ
+00010000-000b0000 r-xp 00000000 b3:02 84071                              /tmp/go-build495116632/b001/exe/mmap
+000b0000-00160000 r--p 000a0000 b3:02 84071                              /tmp/go-build495116632/b001/exe/mmap
+00160000-0017a000 rw-p 00150000 b3:02 84071                              /tmp/go-build495116632/b001/exe/mmap
+0017a000-001b2000 rw-p 00000000 00:00 0 
+4000000000-4000400000 rw-p 00000000 00:00 0 
+4000400000-4004000000 ---p 00000000 00:00 0 
+ffff7f6c5000-ffff8193d000 rw-p 00000000 00:00 0 
+ffff8193d000-ffff821ba000 ---p 00000000 00:00 0 
+ffff821ba000-ffff821bb000 rw-p 00000000 00:00 0 
+ffff821bb000-ffffa214a000 ---p 00000000 00:00 0 
+ffffa214a000-ffffa214b000 rw-p 00000000 00:00 0 
+ffffa214b000-ffffa613c000 ---p 00000000 00:00 0 
+ffffa613c000-ffffa613d000 rw-p 00000000 00:00 0 
+ffffa613d000-ffffa693a000 ---p 00000000 00:00 0 
+ffffa693a000-ffffa693b000 rw-p 00000000 00:00 0 
+ffffa693b000-ffffa6a3a000 ---p 00000000 00:00 0 
+ffffa6a3a000-ffffa6a9a000 rw-p 00000000 00:00 0 
+ffffa6a9a000-ffffa6a9b000 r--p 00000000 00:00 0                          [vvar]
+ffffa6a9b000-ffffa6a9c000 r-xp 00000000 00:00 0                          [vdso]
+ffffc9c57000-ffffc9c79000 rw-p 00000000 00:00 0                          [stack]
+新規メモリ領域: アドレス=0xffff3f6c5000, サイズ=1073741824
+新規メモリ領域獲得後のメモリマップ
+00010000-000b0000 r-xp 00000000 b3:02 84071                              /tmp/go-build495116632/b001/exe/mmap
+000b0000-00160000 r--p 000a0000 b3:02 84071                              /tmp/go-build495116632/b001/exe/mmap
+00160000-0017a000 rw-p 00150000 b3:02 84071                              /tmp/go-build495116632/b001/exe/mmap
+0017a000-001b2000 rw-p 00000000 00:00 0 
+4000000000-4000400000 rw-p 00000000 00:00 0 
+4000400000-4004000000 ---p 00000000 00:00 0 
+ffff3f6c5000-ffff8193d000 rw-p 00000000 00:00 0 
+ffff8193d000-ffff821ba000 ---p 00000000 00:00 0 
+ffff821ba000-ffff821bb000 rw-p 00000000 00:00 0 
+ffff821bb000-ffffa214a000 ---p 00000000 00:00 0 
+ffffa214a000-ffffa214b000 rw-p 00000000 00:00 0 
+ffffa214b000-ffffa613c000 ---p 00000000 00:00 0 
+ffffa613c000-ffffa613d000 rw-p 00000000 00:00 0 
+ffffa613d000-ffffa693a000 ---p 00000000 00:00 0 
+ffffa693a000-ffffa693b000 rw-p 00000000 00:00 0 
+ffffa693b000-ffffa6a3a000 ---p 00000000 00:00 0 
+ffffa6a3a000-ffffa6a9a000 rw-p 00000000 00:00 0 
+ffffa6a9a000-ffffa6a9b000 r--p 00000000 00:00 0                          [vvar]
+ffffa6a9b000-ffffa6a9c000 r-xp 00000000 00:00 0                          [vdso]
+ffffc9c57000-ffffc9c79000 rw-p 00000000 00:00 0 
+```
+
+- デマンドページング
+  - プロセスがページにアクセス
+  - ページフォールと発生
+  - カーネルのページフォールとハンドラが動作して、物理メモリを割り当てる！
