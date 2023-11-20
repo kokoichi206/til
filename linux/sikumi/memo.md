@@ -462,3 +462,129 @@ crw-rw-rw-  1 root      wheel        0x4000017 Nov  8 22:06 ttyq7
 # 今までに起こった割り込みを確認する。
 $ cat /proc/interrupts
 ```
+
+## sec 7
+
+- ファイルシステム
+  - ストレージデバイスなどでは、ほとんどの場合ファイルシステムを介してデバイスにアクセスする
+
+``` sh
+$ cat testfile 
+hello
+
+$ go run filemap.go 
+======== testfile のメモリマップ前のプロセスの仮想アドレス空間 ========
+00010000-000b0000 r-xp 00000000 b3:02 42681                              /tmp/go-build2022718043/b001/exe/filemap
+000b0000-00160000 r--p 000a0000 b3:02 42681                              /tmp/go-build2022718043/b001/exe/filemap
+00160000-0017a000 rw-p 00150000 b3:02 42681                              /tmp/go-build2022718043/b001/exe/filemap
+0017a000-001b2000 rw-p 00000000 00:00 0 
+4000000000-4000400000 rw-p 00000000 00:00 0 
+4000400000-4004000000 ---p 00000000 00:00 0 
+ffff7166a000-ffff73922000 rw-p 00000000 00:00 0 
+ffff73922000-ffff7419f000 ---p 00000000 00:00 0 
+ffff7419f000-ffff741a0000 rw-p 00000000 00:00 0 
+ffff741a0000-ffff9412f000 ---p 00000000 00:00 0 
+ffff9412f000-ffff94130000 rw-p 00000000 00:00 0 
+ffff94130000-ffff98121000 ---p 00000000 00:00 0 
+ffff98121000-ffff98122000 rw-p 00000000 00:00 0 
+ffff98122000-ffff9891f000 ---p 00000000 00:00 0 
+ffff9891f000-ffff98920000 rw-p 00000000 00:00 0 
+ffff98920000-ffff98a1f000 ---p 00000000 00:00 0 
+ffff98a1f000-ffff98a7f000 rw-p 00000000 00:00 0 
+ffff98a7f000-ffff98a80000 r--p 00000000 00:00 0                          [vvar]
+ffff98a80000-ffff98a81000 r-xp 00000000 00:00 0                          [vdso]
+ffffea2e4000-ffffea306000 rw-p 00000000 00:00 0                          [stack]
+
+testfile をマップしたアドレス: 0xffff71669000
+
+======== testfile のメモリマップ後のプロセスの仮想アドレス空間 ========
+00010000-000b0000 r-xp 00000000 b3:02 42681                              /tmp/go-build2022718043/b001/exe/filemap
+000b0000-00160000 r--p 000a0000 b3:02 42681                              /tmp/go-build2022718043/b001/exe/filemap
+00160000-0017a000 rw-p 00150000 b3:02 42681                              /tmp/go-build2022718043/b001/exe/filemap
+0017a000-001b2000 rw-p 00000000 00:00 0 
+4000000000-4000400000 rw-p 00000000 00:00 0 
+4000400000-4004000000 ---p 00000000 00:00 0 
+ffff71669000-ffff7166a000 rw-s 00000000 b3:02 664612                     /home/ubuntu/work/linux/testfile
+ffff7166a000-ffff73922000 rw-p 00000000 00:00 0 
+ffff73922000-ffff7419f000 ---p 00000000 00:00 0 
+ffff7419f000-ffff741a0000 rw-p 00000000 00:00 0 
+ffff741a0000-ffff9412f000 ---p 00000000 00:00 0 
+ffff9412f000-ffff94130000 rw-p 00000000 00:00 0 
+ffff94130000-ffff98121000 ---p 00000000 00:00 0 
+ffff98121000-ffff98122000 rw-p 00000000 00:00 0 
+ffff98122000-ffff9891f000 ---p 00000000 00:00 0 
+ffff9891f000-ffff98920000 rw-p 00000000 00:00 0 
+ffff98920000-ffff98a1f000 ---p 00000000 00:00 0 
+ffff98a1f000-ffff98a7f000 rw-p 00000000 00:00 0 
+ffff98a7f000-ffff98a80000 r--p 00000000 00:00 0                          [vvar]
+ffff98a80000-ffff98a81000 r-xp 00000000 00:00 0                          [vdso]
+ffffea2e4000-ffffea306000 rw-p 00000000 00:00 0                          [stack]
+
+$ cat testfile 
+HELLO
+```
+
+- ファイルシステム
+  - ext4: 過去 Linux でよく使われてきた ext2, 3 からの移行が簡単
+  - XFS: スケーラビリティが良い
+  - Btrfs: 機能が豊富
+- クォータ（quota）
+  - 用途ごとに使用できるファイルシステムの容量を制限する機能
+- ファイルシステムの不整合を防ぐ技術
+  - ジャーナリング
+  - コピーオンライト
+- ジャーナリング
+  - ext4, XFS
+  - ジャーナル領域という特殊なメタデータ領域
+- コピーオンライト
+  - 一旦ファイルにデータを書き込んだ後は、**更新するごとに別の場所にデータを書く！**
+    - **うまくいった場合は、リンクを貼り替える！**
+- tmpfs
+  - メモリベースのファイルシステム
+  - 電源を切るとなくなるが高速
+  - /tmp や /var/run に使われることが多い
+
+``` sh
+$ mount | grep ^tmpfs
+tmpfs on /run type tmpfs (rw,nosuid,nodev,noexec,relatime,size=799876k,mode=755)
+tmpfs on /dev/shm type tmpfs (rw,nosuid,nodev)
+tmpfs on /run/lock type tmpfs (rw,nosuid,nodev,noexec,relatime,size=5120k)
+tmpfs on /sys/fs/cgroup type tmpfs (ro,nosuid,nodev,noexec,mode=755)
+tmpfs on /run/snapd/ns type tmpfs (rw,nosuid,nodev,noexec,relatime,size=799876k,mode=755)
+tmpfs on /run/user/1000 type tmpfs (rw,nosuid,nodev,relatime,size=799872k,mode=700,uid=1000,gid=1000)
+```
+
+- NFS: Network File System
+  - CIFS: Common Internet File SYstem
+- procfs
+  - システムに存在するプロセスについての情報を得るための FS
+  - /proc/pid/配下
+    - maps
+      - プロセスのメモリマップ
+    - cmdline
+      - プロセスのコマンドライン引数
+    - stat
+      - プロセスの状態
+  - /proc/配下
+    - cpuinfo
+    - diskstat
+    - meminfo
+    - ps, sar, free などの情報はここからとっている
+- sysfs
+  - procfs に際限なく雑多な情報が置かれるようになってしまった
+  - **procfs の濫用を防ぐために作られた！**
+    - 
+
+``` sh
+$ ls /proc/$$
+
+$ cat /proc/$$/cmdline 
+/bin/bash--init-file/home/ubuntu/.vscode-server/bin/2b35e1e6d88f1ce073683991d1eff5284a32690f/out/vs/workbench/contrib/terminal/browser/media/shellIntegration-bash.sh
+
+$ cat /proc/$$/stat
+1670980 (bash) S 2835836 1670980 1670980 34822 1885051 4194304 11631 75010 0 10 28 19 174 182 20 0 1 0 250687112 11411456 1580 18446744073709551615 187651032244224 187651033402844 281474956064576 0 0 0 65536 3670020 1266777851 1 0 0 17 1 0 0 0 0 0 187651033472200 187651033522796 187651743268864 281474956068787 281474956068955 281474956068955 281474956070894 0
+
+$ ls /sys/block
+
+$ man 5 sysfs
+```
