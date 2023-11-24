@@ -3,7 +3,7 @@
 ## まとめ
 
 - GitLab の Go module には、リポジトリの終わりに `.git` をつける
-- GitHub のリポジトリには `.git` をつけない
+- GitHub の Go module には `.git` をつけない
 
 ## 遭遇した問題と解決方法
 
