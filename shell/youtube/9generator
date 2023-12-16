@@ -1,0 +1,15 @@
+$(yes | head | sed '$d' | wc -l)}
+$(sed -n '$=' <(yes | head | sed '$d'))
+## jq で json として parse 失敗した場合は exit code 3。
+$(($(jq '...' &>/dev/null; echo $?)*$(jq '...' &>/dev/null; echo $?)))
+$(echo {a..i} | tr -d ' \n' | wc -c)
+$(printf $(date +%Y%m%d%w) | wc -c)
+## 64 bit PC なら。
+$(getconf LONG_BIT | factor | tr -d ' \n' | wc -c)
+## SIGKILL のシグナルが 9 番であることを利用している。
+$(kill -l SIGKILL)
+## signal によりプロセスが終了した時は 128 + signal number が exit code になる。
+## 128 は bash の man ページに書いてある。
+$(nohup bash -c 'kill -KILL $$' &>/dev/null ; echo $(($? - $(man bash | grep -Eo '[[:digit:]]+\+n' | tr -d '+n'))))
+## bash ではコマンドが見つからない時の exit code は 127。
+$(notFoundCommand &>/dev/null; echo $? | factor | wc -c)

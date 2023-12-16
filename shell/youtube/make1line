@@ -1,0 +1,4 @@
+tr -d '\n'
+paste -sd ''
+sed ':a;N;$!ba;s/\n//g'
+sed -z 's@\n@@g'
