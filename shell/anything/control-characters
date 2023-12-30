@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# =================== \r ===================
+# $ man echo | grep '\\r'
+#        \r     carriage return
+
+# pien
+echo -e 'hoge\rpien'
+# pige
+echo -e 'hoge\rpi'
+
+# =================== \c ===================
+# $ man echo | grep '\\c'
+#        \c     produce no further output
+
+# hoge
+echo -e 'hoge\cpienfuga\npaon'
+
+echo -e '1\c'
+
+# 改行文字も出力されない。
+# $ echo -e '1\c' | od -t x1
+# 0000000 31
+# 0000001
+# $ echo -e '1' | od -t x1
+# 0000000 31 0a
+# 0000002
