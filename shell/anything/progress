@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# print_bar prints a progress bar.
+# This function takes a decimal number between 0 and 1 as its 1st argument,
+# representing the percentage of completion.
+print_bar() {
+    # total length of the progress bar to 60 characters.
+    LENGTH=60
+
+    bar='['
+
+    percent="$(echo $1 | awk '{print int($1 * 100)}')"
+    columns="$(echo $1 | awk -v len="$LENGTH" '{print int($1 * len)}')"
+    # Build the filled part of the bar.
+    for (( i=1; i<=$columns; i++ )); do
+        bar=$bar'='
+    done
+    # Complete the bar with spaces to maintain a fixed length.
+    for (( i=1; i<=$(($LENGTH-$columns)); i++ )); do
+        bar=$bar' '
+    done
+
+    bar=$bar"] $percent%"
+    # output the trailing newline ONLY when the job is completed.
+    # \c means 'produce no further output'.
+    if [[ "$percent" != 100 ]]; then
+        bar=$bar"\c"
+    fi
+
+    echo -e "\r$bar"
+}
+
+for i in 0.1 0.2 0.3 0.5 0.7 0.8 0.9 1.00 ; do
+    print_bar $i
+    sleep 0.3
+done
