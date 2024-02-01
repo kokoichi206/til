@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy": "wrangler pages deploy ./public"
+    "deploy": "wrangler pages deploy ./public",
+    "dev": "wrangler pages dev --compatibility-date=2023-12-10 ./public"
   },
   "keywords": [],
   "author": "",

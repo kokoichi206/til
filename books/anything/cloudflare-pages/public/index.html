@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>my-pages</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Hello World!! From pages</h1>
-</body>
+    <div id="counter"></div>
+    <script type="module">
+      const res = await fetch("/counter");
+      const result = await res.json();
+      const counter = document.getElementById("counter");
+      counter.textContent = `Counts: ${result.count}`;
+    </script>
+  </body>
 </html>
