@@ -62,3 +62,113 @@ Entities を束ねるもの
 - [Robert C. Martin さんの講演動画: Clean Architecture and Design](https://www.youtube.com/watch?v=2dKZ-dWaCiU&ab_channel=ITkonekt)
 - [Robert C さんの講演動画: Clean Code](https://www.youtube.com/watch?v=7EmboKQH8lM&ab_channel=UnityCoin)
 - [プログラミング言語とシステムデザイン: Slide share](https://www.slideshare.net/tsutomuyano/ss-250915366)
+
+## 2024
+
+https://www.youtube.com/watch?v=yVPNvfpH_qU&t=10s
+
+**Backend**
+
+- ヘキサゴナルアーキテクチャ
+  - https://nrslib.com/hexagonal-architecture/
+  - Application が中心
+    - ビジネスを中心に見立てて、それ以外を交換可能にする
+  - **Port and Adapter**
+    - **アプリケーションは入力デバイスを知らないし、データストアが何かも知らない**
+  - ビジネスロジックを**点在させない**
+- レイヤーどアーキテクチャ
+  - 昨今では DI 併用
+  - 依存の方向を制御する
+  - 上のオブジェクトが下を知るのはいい
+    - 下が上に依存するのはダメ
+  - DIP を実現するために DI を使ったり
+- クリーンアーキテクチャ
+  - 図をベースとした発表か、本の話なのか
+    - コンテキストを統一する
+  - 今回図の話
+  - クリーンアーキテクチャは思想のイメージ
+  - flow of control, 完全に理解した
+    - controller が input port を使う、依存の関係
+    - input port の実装として usecase interactor が用意されるんだ、汎化の関係
+    - interactor は output port を使うんだ
+    - output port の実態は presenter, 汎化の関係か
+  - **依存の方向は内向き**
+    - **依存関係の方向はプログラマが絶対的に制御できる**
+  - Pros
+    - ヘキサゴナルで達成したいこと**以上を実現する**
+      - 全レイヤーでどこでも単体テスト可能
+  - Cons
+    - かなり冗長
+
+**GUI**
+
+- MVC
+  - Web のためのアーキテクチャではない
+  - より低レイヤーを扱うことが多かった時のもの
+- Classic MVC
+  - GUI Pattern
+- MVC2
+  - Web 上で MVC をガッちゃんこしたもの
+  - **MVC Framework**
+- MVP
+  - ビューをウィジェットとして扱う
+  - **ビュートコントローラの分離を削除**する
+  - ユーザーが view を直接やり取りする！
+    - **昨今のスマホのような**
+  - view, model 間
+    - Supervising Controller
+      - observe
+    - Passive view
+      - 明示的に presenter が view を呼び出す
+      - 後発
+      - **テストがしやすい**
+- MVVM
+  - view と viewmodel の間で data binding させる
+  - MVP とちかい
+  - Angular
+  - React
+    - 単一
+  - Vuew
+    - 双方向
+- MVW
+  - MV, and **Whatever**
+
+**その他**
+
+- サービス間
+  - モノリシックアーキテクチャ
+  - マイクロサービスアーキテクチャ
+    - HTTP 等のネットワーク越しにやり取りする？
+  - モジュラーモノリス
+    - モジュール間の連携で開発者に分別を求める
+    - データの境界の定義とかしんどい
+- クラウドネイティブ
+  - 構成要素
+    - コンテナ
+    - マイクロサービス
+    - サービスメッシュ
+    - 宣言的 API
+    - イミュータブルインフラストラクチャ
+  - 利点
+    - **スケーラビリティ**
+      - うむ
+    - 運用コスト
+    - コスト最適化
+      - オンデマンド
+- リアクティブ宣言
+  - https://www.reactivemanifesto.org/ja
+  - **アプリも形を変えないと、クラウドネイティブにならない**
+  - **CQRS + ES**
+- CQRS + ES
+  - リアクティブシステムを構築くるための1つの解法
+    - 作り方の話
+  - Command Query Responsibility Segregation
+  - Read model updater
+  - Pros
+    - インピーダンスミスマッチを避けられる
+    - コマンドとクエリの異なる要件に応えられる
+  - Cons
+    - 伝統的な実装よりは複雑
+    - システムの数が増える
+- Pub Sub
+  - リアクティブ, スケーラビリティ
