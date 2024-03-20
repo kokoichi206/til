@@ -8,7 +8,11 @@ export default defineConfig({
     build(),
     devServer({
       adapter,
-      entry: 'src/index.tsx'
+      entry: 'src/index.tsx',
+      env: {
+        d1Databases: ['DB'],
+        d1Persist: './wrangler/state/v3/d1'
+      }
     })
   ]
 })

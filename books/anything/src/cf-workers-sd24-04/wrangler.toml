@@ -9,3 +9,7 @@
 # binding = "MY_BUCKET"
 # bucket_name = "my-bucket"
 
+[[d1_databases]]
+binding = "DB" # i.e. available in your Worker on env.DB
+database_name = "posts-app-sd-2404"
+database_id = "e56b919e-8a27-483f-8016-20316593482e"
