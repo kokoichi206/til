@@ -23,6 +23,83 @@
 - インナーソースの考え方
   - Open Source を自社の中に取り入れる
 
+## [Backstage 勉強会: Platform Engineering Meetup Online#1](https://www.youtube.com/watch?v=koMsUFOar88&ab_channel=PlatformEngineeringMeetup)
+
+### Backstage
+
+- https://github.com/backstage/backstage
+- インフラと開発ツールの抽象化
+- ユースケース
+  - Create
+    - Software Template
+      - 環境の準備
+      - マイクロサービスなどを開発するためのベースリポジトリを作成可能
+    - TechDocs
+  - Manage
+    - component を一元管理
+    - Software Catalog
+      - コンテキストの切り替えが不要になる
+    - k8s plugin
+  - Explore
+    - Catalog
+    - Search
+- 開発者ポータルツールの1つ
+  - **開発者にとっての窓口**
+- 哲学
+  - インタフェースとしての一元化
+  - 開発者の自立性の支援
+  - 明確な所有権の確率
+
+### k8s, AWS
+
+- Platform Engineering
+- オンボーディング
+  - ドキュメント
+  - ポータル
+  - テンプレート
+- Backstage の機能
+  - プラグインエコシステム
+  - ソフトウェアカタログ
+  - 検索
+  - 技術ドキュメント
+  - ソフトウェアテンプレート
+- テンプレート
+  - 新しいプロジェクトを素早く立ち上げる
+  - 組織のベストプラクティスでツールを標準化
+- backstage
+  - 初期の k8s に近い雰囲気
+    - 独自プラグイン
+  - プラガブル・エディタブル
+- なるほど
+
+### plugins
+
+- backstage は、プラグインのセットで構成される、シングルページのアプリ
+- プラグイン
+  - frontend-plugin
+  - backend-plugin
+  - web-library
+  - ...
+- **課題**
+  - 開発に必要な情報が色々なところに散らばっている
+- 例
+  - k8s plugin
+  - argo cd plugin
+  - google cloud build plugin
+  - sonarqube plugin
+  - gh pull request plugin
+  - OPA
+    - Orchestrate Platforms and Applications on AWS
+    - https://opaonaws.io/
+- https://backstage.io/plugins/
+- demo site
+  - https://demo.backstage.io
+
+### メモ
+
+- Backstage was created by Spotify but is now hosted by the Cloud Native Computing Foundation (CNCF) as an Incubation level project
+  - an Incubation level project
+
 ## Links
 
 - [CNCF Platforms White Paper](https://tag-app-delivery.cncf.io/whitepapers/platforms/)
