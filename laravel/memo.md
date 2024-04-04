@@ -5,6 +5,28 @@ brew install php
 brew install composer
 
 composer create-project laravel/laravel laravel11-crash-course
+
+# -m indicate creating migration file
+php artisan make:model Note -m
+```
+
+## Command
+
+``` sh
+php artisan serve
+
+php artisan config:publish
+
+pa make:factory NoteFactory --model=Note
+
+pa db:seed
+
+pa make:controller NoteController --resource --model=Note
+
+
+$ pa make:view note.index
+
+   INFO  View [resources/views/note/index.blade.php] created successfully. 
 ```
 
 ## VSCode
