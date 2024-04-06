@@ -40,3 +40,9 @@ pa route:list
 
 pa make:resource ProjectResource
 ```
+
+
+## Links
+
+- https://heroicons.com/
+  - https://github.com/tailwindlabs/heroicons?tab=readme-ov-file#react

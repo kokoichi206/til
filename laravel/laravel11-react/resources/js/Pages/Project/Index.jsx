@@ -4,6 +4,8 @@ import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { PROJECT_STATUS_CLASS_MAP, PROJECT_STATUS_TEXT_MAP } from "@/constants";
 import { Head, Link, router } from "@inertiajs/react";
+import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
+import TableHeading from "@/Components/TableHeading";
 
 export default function Index({ auth, projects, queryParams = null }) {
     queryParams = queryParams || {};
@@ -24,6 +26,22 @@ export default function Index({ auth, projects, queryParams = null }) {
         }
     };
 
+    const sortChanged = (name) => {
+        // if already sorted by the same field
+        if (name === queryParams.sort_field) {
+            if (queryParams.sort_direction === "asc") {
+                queryParams.sort_direction = "desc";
+            } else {
+                queryParams.sort_direction = "asc";
+            }
+        } else {
+            queryParams.sort_field = name;
+            queryParams.sort_direction = "asc";
+        }
+
+        router.get(route("project.index"), queryParams);
+    };
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -42,23 +60,100 @@ export default function Index({ auth, projects, queryParams = null }) {
                             <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                 <thead className="text-xs text-gray-100 uppercase bg-gray-50 dark:bg-gray-700 border-gray-500">
                                     <tr className="text-nowrap">
-                                        <th className="px-3 py-2">ID</th>
-                                        <th className="px-3 py-2">Image</th>
-                                        <th className="px-3 py-2">Name</th>
-                                        <th className="px-3 py-2">Status</th>
-                                        <th className="px-3 py-2">
+                                        <TableHeading
+                                            name="id"
+                                            sort_field={queryParams.sort_field}
+                                            sort_direction={
+                                                queryParams.sort_direction
+                                            }
+                                            sortChanged={sortChanged}
+                                        >
+                                            ID
+                                        </TableHeading>
+
+                                        <TableHeading
+                                            name="image_path"
+                                            sortable={false}
+                                            sort_field={queryParams.sort_field}
+                                            sort_direction={
+                                                queryParams.sort_direction
+                                            }
+                                            sortChanged={sortChanged}
+                                        >
+                                            Image
+                                        </TableHeading>
+
+                                        <TableHeading
+                                            name="name"
+                                            sort_field={queryParams.sort_field}
+                                            sort_direction={
+                                                queryParams.sort_direction
+                                            }
+                                            sortChanged={sortChanged}
+                                        >
+                                            Name
+                                        </TableHeading>
+
+                                        <TableHeading
+                                            name="status"
+                                            sort_field={queryParams.sort_field}
+                                            sort_direction={
+                                                queryParams.sort_direction
+                                            }
+                                            sortChanged={sortChanged}
+                                        >
+                                            Status
+                                        </TableHeading>
+
+                                        <TableHeading
+                                            name="created_at"
+                                            sort_field={queryParams.sort_field}
+                                            sort_direction={
+                                                queryParams.sort_direction
+                                            }
+                                            sortChanged={sortChanged}
+                                        >
                                             Created Date
-                                        </th>
-                                        <th className="px-3 py-2">Due Date</th>
-                                        <th className="px-3 py-2">
+                                        </TableHeading>
+
+                                        <TableHeading
+                                            name="due_date"
+                                            sort_field={queryParams.sort_field}
+                                            sort_direction={
+                                                queryParams.sort_direction
+                                            }
+                                            sortChanged={sortChanged}
+                                        >
+                                            Due Date
+                                        </TableHeading>
+
+                                        <TableHeading
+                                            name="due_date"
+                                            sortable={false}
+                                            sort_field={queryParams.sort_field}
+                                            sort_direction={
+                                                queryParams.sort_direction
+                                            }
+                                            sortChanged={sortChanged}
+                                        >
                                             Created By
-                                        </th>
-                                        <th className="px-3 py-2 text-right">
+                                        </TableHeading>
+
+                                        <TableHeading
+                                            name="due_date"
+                                            sortable={false}
+                                            sort_field={queryParams.sort_field}
+                                            sort_direction={
+                                                queryParams.sort_direction
+                                            }
+                                            sortChanged={sortChanged}
+                                        >
                                             Actions
-                                        </th>
+                                        </TableHeading>
                                     </tr>
                                 </thead>
 
+                                {/* for search */}
                                 <thead className="text-xs text-gray-100 uppercase bg-gray-50 dark:bg-gray-700 border-gray-500">
                                     <tr className="text-nowrap">
                                         <th className="px-3 py-2"></th>
@@ -123,7 +218,10 @@ export default function Index({ auth, projects, queryParams = null }) {
                                                 {project.id}
                                             </td>
                                             <td className="px-3 py-2">
-                                                <img src={project.image_path} />
+                                                <img
+                                                    src={project.image_path}
+                                                    width="69"
+                                                />
                                             </td>
                                             <td className="px-3 py-2">
                                                 {project.name}
