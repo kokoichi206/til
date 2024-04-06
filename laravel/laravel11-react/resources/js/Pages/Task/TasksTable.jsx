@@ -7,6 +7,7 @@ import { Link, router } from "@inertiajs/react";
 
 export default function TasksTable({
     tasks,
+    success,
     queryParams,
     hideProjectColumn = false,
 }) {
@@ -18,6 +19,12 @@ export default function TasksTable({
         }
 
         router.get(route("task.index"), queryParams);
+    };
+
+    const deleteTask = (task) => {
+        if (!window.confirm("Are you sure you want to delete task?")) return;
+
+        router.delete(route("task.destroy", task.id));
     };
 
     const onKeyPress = (name, e) => {
@@ -44,6 +51,12 @@ export default function TasksTable({
 
     return (
         <>
+            {success && (
+                <div className="bg-emerald-500 py-2 px-4 mb-4 text-white">
+                    {success}
+                </div>
+            )}
+
             <div className="overflow-auto">
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-100 uppercase bg-gray-50 dark:bg-gray-700 border-gray-500">
@@ -69,7 +82,7 @@ export default function TasksTable({
 
                             {!hideProjectColumn && (
                                 <TableHeading
-                                    name="project_name"
+                                    name="task_name"
                                     sortable={false}
                                     sort_field={queryParams.sort_field}
                                     sort_direction={queryParams.sort_direction}
@@ -225,12 +238,12 @@ export default function TasksTable({
                                     >
                                         Edit
                                     </Link>
-                                    <Link
-                                        href={route("task.destroy", task.id)}
+                                    <button
+                                        onClick={(e) => deleteTask(task)}
                                         className="font-medium text-red-600 hover:underline mx-1"
                                     >
                                         Delete
-                                    </Link>
+                                    </button>
                                 </td>
                             </tr>
                         ))}
