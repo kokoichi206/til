@@ -25,6 +25,12 @@ export default function Index({ auth, projects, queryParams = null, success }) {
         }
     };
 
+    const deleteProject = (project) => {
+        if (!window.confirm("Are you sure you want to delete project?")) return;
+
+        router.delete(route("project.destroy", project.id));
+    };
+
     const sortChanged = (name) => {
         // if already sorted by the same field
         if (name === queryParams.sort_field) {
@@ -280,15 +286,14 @@ export default function Index({ auth, projects, queryParams = null, success }) {
                                                 >
                                                     Edit
                                                 </Link>
-                                                <Link
-                                                    href={route(
-                                                        "project.destroy",
-                                                        project.id
-                                                    )}
+                                                <button
+                                                    onClick={(e) =>
+                                                        deleteProject(project)
+                                                    }
                                                     className="font-medium text-red-600 hover:underline mx-1"
                                                 >
                                                     Delete
-                                                </Link>
+                                                </button>
                                             </td>
                                         </tr>
                                     ))}
