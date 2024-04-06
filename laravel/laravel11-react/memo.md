@@ -14,8 +14,23 @@ pa tinker
 Laravel、Vue、Tailwind などを繋げる？
 
 
+## tinker
+
+```
+> \App\Models\Project::count()
+= 30
+
+> \App\Models\Task::count()
+= 900
+
+> \App\Models\Task::query()->paginate(5)->all()
+```
+
 ## Commands
 
 ``` sh
 pa make:model Project -fm
+
+pa migrate:refresh
+pa migrate --seed
 ```
