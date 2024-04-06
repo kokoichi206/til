@@ -24,6 +24,8 @@ Laravel、Vue、Tailwind などを繋げる？
 = 900
 
 > \App\Models\Task::query()->paginate(5)->all()
+
+> \App\Models\User::query()->paginate(5)->all()
 ```
 
 ## Commands
