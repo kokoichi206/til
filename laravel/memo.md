@@ -1,3 +1,12 @@
+## TODO
+
+- 外部 API を叩く
+- postgresql との接続
+- テスト
+  - Feature テスト
+  - Unit テスト
+composer create-project laravel/laravel laravel11-crash-course
+
 ## Init
 
 ``` sh
@@ -17,7 +26,7 @@ php artisan serve
 
 php artisan config:publish
 
-pa make:factory NoteFactory --model=Note
+pa make:factory NoteFactory --mtodel=Note
 
 pa db:seed
 
