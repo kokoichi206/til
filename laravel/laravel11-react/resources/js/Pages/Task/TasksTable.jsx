@@ -213,7 +213,11 @@ export default function TasksTable({
                                         {task.project.name}
                                     </td>
                                 )}
-                                <td className="px-3 py-2">{task.name}</td>
+                                <td className="px-3 py-2">
+                                    <Link href={route("task.show", task.id)}>
+                                        {task.name}
+                                    </Link>
+                                </td>
                                 <td className="px-3 py-2">
                                     <span
                                         className={
