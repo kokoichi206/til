@@ -31,6 +31,7 @@ class HandleInertiaRequests extends Middleware
     {
         return [
             ...parent::share($request),
+            // We can use 'auth' in every page
             'auth' => [
                 'user' => $request->user(),
             ],

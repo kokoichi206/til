@@ -33,4 +33,10 @@ pa make:model Project -fm
 
 pa migrate:refresh
 pa migrate --seed
+
+pa make:controller ProjectController --resource --model=Project --requests
+
+pa route:list
+
+pa make:resource ProjectResource
 ```
