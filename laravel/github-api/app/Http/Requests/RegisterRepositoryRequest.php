@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Requests\Type\RegisterRepositoryRequestType;
 use Illuminate\Foundation\Http\FormRequest;
 
 class RegisterRepositoryRequest extends FormRequest
@@ -12,6 +13,11 @@ class RegisterRepositoryRequest extends FormRequest
     public function authorize(): bool
     {
         return true;
+    }
+
+    public function getParams(): RegisterRepositoryRequestType
+    {
+        return new RegisterRepositoryRequestType($this);
     }
 
     /**

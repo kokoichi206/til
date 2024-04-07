@@ -26,8 +26,8 @@ class RepositoryController extends Controller
 
     public function registerRepositories(RegisterRepositoryRequest $request)
     {
-        $page = $request->page ?? 1;
-        $res = Http::get("{$this->base}/users/{$request->name}/repos?page={$page}");
+        $params = $request->getParams();
+        $res = Http::get("{$this->base}/users/{$params->name}/repos?page={$params->page}");
         if ($res->status() !== 200) {
             Log::error("github api error", ["status" => $res->status(), "body" => $res->body()]);
             return response()->json(['message' => 'ERROR'], $res->status());
