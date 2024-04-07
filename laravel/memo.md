@@ -58,3 +58,5 @@ $ pa make:view note.index
 ## Links
 
 - [Youtube: Laravel 11 Tutorial for Beginners - Laravel Crash Course (2024)](https://www.youtube.com/watch?v=eUNWzJUvkCA)
+- db faker
+  - https://fakerphp.github.io/

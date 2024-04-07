@@ -15,3 +15,7 @@ lint:
 .PHONY: test
 test:
 	php artisan test
+
+.PHONY: psql
+psql:
+	docker compose exec postgres psql -U postgres github
