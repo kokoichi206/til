@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Repository extends Model
 {
     use HasFactory;
+
+    public $incrementing = false;
+    protected $keyType = 'string';
 }
