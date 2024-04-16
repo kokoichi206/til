@@ -23,3 +23,14 @@ composer require mll-lab/laravel-graphql-playground
 ```
 
 ![](./docs/playground.png)
+
+## The Models
+
+https://lighthouse-php.com/tutorial/#the-models
+
+``` sh
+php artisan make:model -m Post
+php artisan make:model -m Comment
+
+pa migrate
+```
