@@ -77,10 +77,30 @@ page, first でやる！
 
 ## Mutation
 
-``` sh
+https://lighthouse-php.com/master/eloquent/getting-started.html#create
 
+``` sh
+mutation CreateUser {
+    createUser(name: "piepie", email: "paon@example.com", password: "paopao") {
+        id
+        name
+    }
+}
 ```
 
+![](./docs/mutation.png)
+
+``` sh
+mutation UpdateUser {
+    updateUser(id: "24", name: "hoga") {
+        id
+        name
+        email
+        updated_at
+        created_at
+    }
+}
+```
 
 ## Links
 
