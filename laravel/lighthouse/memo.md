@@ -102,6 +102,18 @@ mutation UpdateUser {
 }
 ```
 
+## Validation
+
+rules
+https://lighthouse-php.com/master/api-reference/directives.html#rules
+
+## memo
+
+- Caveats
+  - 注意事項
+- pitfall
+  - 落とし穴
+
 ## Links
 
 - [Lighthouse tutorial](https://lighthouse-php.com/tutorial/#what-is-graphql)

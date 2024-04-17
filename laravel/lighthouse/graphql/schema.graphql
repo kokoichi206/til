@@ -63,7 +63,16 @@ type Mutation {
   createUser(
     name: String!
     email: String!
+    @rules(
+      apply: ["email","unique:users,email"],
+      messages: { email: "Please provide a valid email address." },
+      attributes: { email: "email address" },
+    )
     password: String!
+    @rules(
+      apply: ["min:8"],
+      messages: { min: "Password must be at least 8 characters long." }
+    )
   ): User! @create
 
   updateUser(id: ID!, name: String): User @update
