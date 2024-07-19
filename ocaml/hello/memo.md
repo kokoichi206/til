@@ -16,6 +16,8 @@
 
 - modules
   - https://ocaml.org/docs/modules
+- let 式
+  - 式の計算中に、一時的に名前をつけられる
 
 ## init
 
@@ -68,3 +70,11 @@ opam exec -- dune exec hello -w
 ``` sh
 opam install sexplib
 ```
+
+- Lwt:
+  - Lightweight Thread
+  - 非同期 I/O 
+
+## pipiline
+
+- https://cs3110.github.io/textbook/chapters/hop/pipelining.html
