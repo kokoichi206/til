@@ -1,0 +1,3 @@
+(library
+ (name server_dream)
+ (libraries dream tyxml tyxml-jsx))
