@@ -1,0 +1,3 @@
+```
+npm create cloudflare@latest
+```
