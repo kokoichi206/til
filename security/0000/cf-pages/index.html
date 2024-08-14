@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Fetch Example</title>
+    <style>
+        body {
+            background-color: black;
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>Fetch Example</h1>
+    <div id="result">Loading...</div>
+    <div id="result-0000">Loading...</div>
+
+    <script>
+        async function fetchData() {
+            try {
+                const res = await fetch('http://localhost:8080', {
+                    method: 'GET',
+                });
+
+                // レスポンスボディをテキストとして取得
+                const bodyText = await res.text();
+
+                // 結果を画面に表示
+                document.getElementById('result').textContent = `${bodyText}! in lh`;
+
+            } catch (error) {
+                // エラーハンドリング
+                document.getElementById('result').textContent = 'Error fetching data';
+                console.error('Fetch error:', error);
+            }
+
+            try {
+                const res = await fetch('http://0.0.0.0:8080', {
+                    method: 'GET',
+                });
+
+                // レスポンスボディをテキストとして取得
+                const bodyText = await res.text();
+
+                // 結果を画面に表示
+                document.getElementById('result').textContent = `${bodyText}! in 0000`;
+
+            } catch (error) {
+                // エラーハンドリング
+                document.getElementById('result-0000').textContent = 'Error fetching data';
+                console.error('Fetch error:', error);
+            }
+        }
+
+        // ページがロードされたらデータを取得
+        window.onload = fetchData;
+    </script>
+</body>
+</html>

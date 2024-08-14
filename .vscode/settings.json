@@ -8,7 +8,7 @@
     ],
     "python.formatting.provider": "black",
     "editor.codeActionsOnSave": {
-        "source.organizeImports": true
+        "source.organizeImports": "explicit"
     },
     "python.linting.mypyEnabled": true
 }
