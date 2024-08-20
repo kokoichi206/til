@@ -1,0 +1,104 @@
+## なんでも
+
+- DNS
+  - プライバシー
+    - ある IP から、特定のドメインの名前解決をしていることは読み取られる
+  - DNSSEC
+    - エンドユーザー側で選択権がない
+  - ENSI
+    - Server Name Indication (SNI)
+    - Encrypted
+    - **SNI のドメイン部分の暗号化**
+  - ECH
+    - Encrypted Client Hello
+    - TLS 開始時の Client Hello を暗号化する
+- Chrome: セキュリティと Spectre
+  - ブラウザは OS と違って他との連携が多い！
+    - → **セキュリティ境界**
+      - **オリジンと Same Origin Policy (SOP)**
+      - origin = schema ~ port
+  - chrome のマルチプロセスアーキテクチャ
+    - **タブごとにサンドボックス化されたレンダラープロセス**
+  - Site Isolation
+    - ブラウザがサイトごとにプロセスを生成し, OS によるプロセス保護機能を利用
+      - サイトのリソースを保護する！
+    - Site
+      - **オリジンよりも少し緩い分け方**
+      - eTLD
+      - エフェクティブトップレベルドメイン
+      - eTLD と1つ前の部分が一致するもののこと！
+  - Spectre
+    - CPU の投機的実行における脆弱性をついたサイドチャネル攻撃の一種
+      - 投機的実行
+      - 分岐が確定する前に、先読みして速度向上を図る
+    - サイドチャネル攻撃
+      - 攻撃対象の挙動を観察するだけでデータを読み取る攻撃
+      - キャッシュを使ってるかなど
+- RDBMS
+  - SQL の処理
+    - parser -> planner/optimizer -> executer
+- Amazon API Gateway
+  - REST, HTTP, WebSocket
+  - other usecase
+    - GraphQL
+      - App Sync
+    - gRPC
+      - ELB
+  - **REST の制限**
+    - 結合タイムアウト 29s max
+    - HTTP ヘッダサイズ 10240 bytes
+    - ペイロードサイズ 10MB
+  - **HTTP の制限** クォータ
+    - https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/limits.html#http-api-quotas
+
+## GitHub Actions
+
+- Container registry
+  - GitHub Packages の1つ
+    - npm, Apache Maven など、様々なパッケージを管理できる
+  - あんまりここにあげた後、うまく活用できるイメージがついてない。。
+- injection 対策に full length commit SHA を指定するのが吉
+  - そこまでやる？
+- **ジョブコンテナの利用**
+  - コレ便利そうだけど流行ってないのはなんでだろ、
+    - ？
+- **サービスコンテナ**
+  - ランナーがジョブの開始時に立ち上げるコンテナ
+- custom actins vs reusable workflows
+  - custom actions
+    - ステップを再利用可能に
+  - reusable workflows
+    - ワークフローを再利用可能に
+
+## セキュリティ・脆弱性診断
+
+- 対策の基本
+  - ファイアウォール
+  - アンチウイルスソフトウェア
+  - パッチ適応
+- 脆弱性診断に必要な知識・スキル
+  - プロトコル
+  - 名前解決
+  - 暗号
+  - 認証
+  - Web ブラウザ
+  - HTML/CSS
+  - js
+  - JSON
+- CTF
+  - SQL injection
+    - `'`
+    - `' and 'a'='a';--`
+    - `' and 'a'='b';--`
+    - `' or sleep(1);--`
+  - `ORDER BY 1` とすると１列目のカラムをソート対象とできる！！
+    - カラム数の特定
+  - 文字列結合
+    - Microsoft SQL Server: 'a'+'b'
+    - PostgreSQL: 'a'||'b'
+    - MySQL: 'a' 'b'
+  - `q=' UNION SELECT table_schema.table_name,null FROM information_schema.tables;--%20'`
+  - CSP Bypass
+    - `unsafe-inline` を消す！！
+    - **CSP Evaluator**
+
