@@ -1,3 +1,3 @@
 pub fn hello() -> String {
-  "Hello, world!"
+  "Hello, moonbit!!!"
 }
