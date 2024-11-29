@@ -37,3 +37,46 @@
     - 試行回数
     - 試行時間
     - 実施期間
+
+## sec 2
+
+- モニタリング
+  - **モニタリングは継続的なテストである**とも呼ばれている
+    - 提供しているサービスが想定している形に動作しているかの確認という性質から
+  - 『高速であること』を保証する
+  - メトリクス
+    - その時の状態を定量的に示した値
+- モニタリング種類
+  - 外形監視
+    - ユーザーと同じ経路でアクセス
+    - Synthetic Monitoring
+    - SaaS:
+      - https://ja.mackerel.io/
+    - シナリオテスト
+  - 内部監視
+    - エージェント
+
+``` sh
+top -cd1
+free --human
+
+vmstat
+sar
+```
+
+- モニタリングツール
+  - Pull 型と Push 型
+    - どちらのアーキテクチャでもエージェントが動作している
+  - Prometheus はプル型
+    - モニタリングアプリケーションがエージェントへメトリクスを要求・取得する
+    - Pull 型の欠点を補う Service Discovery etc...
+  - ツールよりも**何を対象にモニタリング**をするか
+- https://www.nagios.org/
+- **OpenMetrics**
+  - Evolving the Prometheus exposition format into a standard.
+    - https://www.cncf.io/projects/openmetrics/
+  - **Prometheus が利用していたフォーマットを標準化したもの**
+  - **エージェントの実装が非常に楽になり、さまざまなミドルウェア向けの exporter 開発が進んだ！**
+- ベンチマーク
+  - プロファイラ
+    - ラインプロファイラ
