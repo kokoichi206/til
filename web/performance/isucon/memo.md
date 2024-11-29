@@ -300,3 +300,103 @@ dstat --cpu
   - 任意の HTTP ヘッダの設定
 - プロトコル
   - HTTP/1.1, HTTP/2, WebSocket, gRPC
+
+## sec 5
+
+- MariaDB
+  - MySQL から派生
+- **NewSQL**
+  - **一貫性と分散を両立**
+    - c.f. NoSQL は一貫性を犠牲にして分散を実現。
+  - いいな
+    - https://www.climb.co.jp/blog_dbmoto/archives/5077
+  - Cloud Spanner, TiDB, Cockroach DB
+
+``` sql
+mysql> SHOW PROCESSLIST;
+
++------+-----------------+-----------------+---------+---------+------+------------------------+------------------+
+| Id   | User            | Host            | db      | Command | Time | State                  | Info             |
++------+-----------------+-----------------+---------+---------+------+------------------------+------------------+
+|    5 | event_scheduler | localhost       | NULL    | Daemon  | 9087 | Waiting on empty queue | NULL             |
+|   15 | isuconp         | localhost       | isuconp | Sleep   | 7370 |                        | NULL             |
+| 7925 | isuconp         | localhost:47254 | isuconp | Sleep   | 1535 |                        | NULL             |
+| 7927 | isuconp         | localhost:47272 | isuconp | Sleep   |  652 |                        | NULL             |
+| 7928 | isuconp         | localhost       | isuconp | Query   |    0 | init                   | SHOW PROCESSLIST |
++------+-----------------+-----------------+---------+---------+------+------------------------+------------------+
+5 rows in set, 1 warning (0.00 sec)
+
+
+
+mysql> SHOW FULL PROCESSLIST;
+```
+
+### pt-query-digest
+
+``` sh
+sudo apt update
+sudo apt install percona-toolkit -y
+
+pt-query-digest --version
+
+sudo pt-query-digest /var/log/mysql/mysql-slow.log
+```
+
+``` sh
+MYSQL_PWD='isuconp' mysql -u isuconp -e "SHOW TABLES;" isuconp
+
+
+MYSQL_PWD='isuconp' mysql -u isuconp -e "SET GLOBAL slow_query_log = 1;" isuconp
+DATETIME=$(date "+%Y%m%d-%H%M%S")
+MYSQL_PWD='isuconp' mysql -u isuconp -e "SET GLOBAL slow_query_log_file = '/var/log/mysql/mysql-slow-$DATETIME.log';"
+MYSQL_PWD='isuconp' mysql -u isuconp -e "SET GLOBAL long_query_time = 0;" isuconp
+
+# 諸々の試験を行う。。。
+
+# slow query log を閉じる。
+MYSQL_PWD='isuconp' mysql -u isuconp -e "SET GLOBAL slow_query_log = 0;" isuconp
+
+
+sudo pt-query-digest /var/log/mysql/mysql-slow-.log
+pt-query-digest /var/log/mysql/mysql-slow-.log
+
+ALTER TABLE `comments` DROP INDEX `post_id_idx`;
+ALTER TABLE `comments` ADD INDEX `post_id_created_at_idx`(`post_id`, `created_at`);
+```
+
+``` sql
+EXPLAIN SELECT COUNT(*) AS `count` FROM `comments` WHERE `post_id` = 10001 ORDER BY `created_at` DESC LIMIT 3\G
+```
+
+### Install Golang
+
+``` sh
+curl -LO https://go.dev/dl/go1.23.3.linux-amd64.tar.gz
+# rm -rf /usr/local/go
+sudo tar -C /usr/local -xvzf go1.23.3.linux-amd64.tar.gz
+export PATH=$PATH:/usr/local/go/bin
+```
+
+
+``` sh
+sudo systemctl start isu-go
+sudo systemctl enable isu-go
+
+
+sudo systemctl restart isu-go
+```
+
+### ADMIN PREPARE
+
+``` diff
+-		"%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=true&loc=Local",
++		"%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=true&loc=Local&interpolateParams=true",
+```
+
+### IO 負荷が DB にかかってる場合
+
+そもそもこれどう検知するのか
+
+- データサイズの確認・Buffer Pool の活用
+- バイナリログの向こうか
+- ログのフラッシュタイミングの調整
