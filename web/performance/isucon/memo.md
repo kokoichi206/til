@@ -290,3 +290,13 @@ sudo apt install dstat -y
 
 dstat --cpu
 ```
+
+## sec 4
+
+### k6
+
+- シナリオ可能
+  - Cookie の解釈
+  - 任意の HTTP ヘッダの設定
+- プロトコル
+  - HTTP/1.1, HTTP/2, WebSocket, gRPC
