@@ -1,0 +1,8 @@
+services:
+  # ubuntu
+  ubuntu:
+    image: ubuntu:latest
+    container_name: ubuntu
+    tty: true
+    stdin_open: true
+    restart: always
