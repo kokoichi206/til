@@ -5,11 +5,14 @@ set -euo pipefail
 true > /var/log/nginx/access.log
 nginx -s reopen
 
-MYSQL_PWD='isuconp' mysql -u isuconp -e "SET GLOBAL slow_query_log = 1;" isuconp
-DATETIME=$(date "+%Y%m%d-%H%M%S")
-MYSQL_PWD='isuconp' mysql -u isuconp -e "SET GLOBAL slow_query_log_file = '/var/log/mysql/mysql-slow-$DATETIME.log';"
-MYSQL_PWD='isuconp' mysql -u isuconp -e "SET GLOBAL long_query_time = 0;" isuconp
+# MYSQL_PWD='isuconp' mysql -u isuconp -e "SET GLOBAL slow_query_log = 1;" isuconp
+# DATETIME=$(date "+%Y%m%d-%H%M%S")
+# MYSQL_PWD='isuconp' mysql -u isuconp -e "SET GLOBAL slow_query_log_file = '/var/log/mysql/mysql-slow-$DATETIME.log';"
+# MYSQL_PWD='isuconp' mysql -u isuconp -e "SET GLOBAL long_query_time = 0;" isuconp
 # ==================== reset ====================
+# OS 側のユーザー名と DB 側のユーザー名が同じであれば UnixSocket を使って認証することでパスワードなしで通せるらしい。
+sudo mysql -e "set global slow_query_log_file = '$(MYSQL_LOG)'; set global long_query_time = 0; set global slow_query_log = ON;"
+sudo mysql -e "show variables like 'slow%';"
 
 # 諸々の試験を行う。。。
 k6 run integrated.js
@@ -19,7 +22,7 @@ MYSQL_PWD='isuconp' mysql -u isuconp -e "SET GLOBAL slow_query_log = 0;" isuconp
 
 cp /var/log/nginx/access.log "/var/log/nginx/access.log.$DATETIME"
 nginx -s reopen
-
+sudo mysql -e "select 1;"
 
 # Profile
 # Rank Query ID                      Response time Calls R/Call V/M   Item

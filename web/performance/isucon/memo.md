@@ -400,3 +400,81 @@ sudo systemctl restart isu-go
 - データサイズの確認・Buffer Pool の活用
 - バイナリログの向こうか
 - ログのフラッシュタイミングの調整
+
+## sec 6
+
+- PHP, unicorn (Ruby)
+  - マルチプロセス・**シングルスレッド**
+  - プロセスあたり数十~数百 MB のメモリを消費
+  - C10K 問題
+- C10 K 問題の対策
+  - goroutine
+    - m:n スケジューリング
+  - Java Virtual Threads
+  - イベント駆動
+    - nginx
+
+``` sh
+$ nginx -version
+nginx version: nginx/1.24.0 (Ubuntu)
+
+
+$cat /etc/nginx/nginx.conf
+```
+
+``` sh
+# デフォルトは前方一致のため / だと全てのリクエストがマッチする。
+$ cat /etc/nginx/sites-available/isucon.conf 
+server {
+  listen 80;
+
+  client_max_body_size 10m;
+  root /home/isucon/private_isu/webapp/public/;
+
+  location / {
+    proxy_set_header Host $host;
+    proxy_pass http://localhost:8080;
+  }
+}
+
+# static file は nginx で返すようにする。
+server {
+  listen 80;
+
+  client_max_body_size 10m;
+  root /home/isucon/private_isu/webapp/public/;
+
+  location /css/ {
+          root /home/isucon/private_isu/webapp/public/;
+          expires 1d;
+  } 
+  location /js/ {
+          root /home/isucon/private_isu/webapp/public/;
+          expires 1d;
+  }
+  location / {
+    proxy_set_header Host $host;
+    proxy_pass http://localhost:8080;
+  }
+}
+```
+
+- ノンブロッキング I/O, 非同期 I/O
+  - 非同期は通知が返ってくる
+  - ノンブロッキングは自分でポーリングする
+- 多重 I/O
+  - 複数の FD を渡していずれかが I/O 可能になったら通知を受け取る
+- nginx
+  - ノンブロッキング I/O と多重 I/O を使っている
+- **gzip 圧縮**
+  - おおよそ 1/5 になるくらいの圧縮率がありそう
+  - 小さいファイルだと逆に大きくなることも
+  - **圧縮レベル**
+    - Zlib のデフォルトの圧縮レベルは 6,
+    - nginx の gzip_comp_level は 1~9 でデフォルトは 1
+- **Brotli**
+  - Google が 2015 に公開した圧縮アルゴリズム
+  - **Web での利用を念頭において、Web でよく使われる単語が多く登録されている！**
+- nginx
+  - **デフォルトでは、アップストリームサーバーとのコネクションをつど切る設定**
+    - キープアライブしたいなら HTTP/1.1 にするのと Connection ヘッダーを空にする
