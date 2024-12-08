@@ -343,18 +343,21 @@ sudo pt-query-digest /var/log/mysql/mysql-slow.log
 ```
 
 ``` sh
-MYSQL_PWD='isuconp' mysql -u isuconp -e "SHOW TABLES;" isuconp
+MYSQL_PWD='isucon' mysql -u isucon -e "SHOW TABLES;" isuride
 
 
-MYSQL_PWD='isuconp' mysql -u isuconp -e "SET GLOBAL slow_query_log = 1;" isuconp
+MYSQL_PWD='isucon' mysql -u isucon -e "SET GLOBAL slow_query_log = 1;" isuride
 DATETIME=$(date "+%Y%m%d-%H%M%S")
-MYSQL_PWD='isuconp' mysql -u isuconp -e "SET GLOBAL slow_query_log_file = '/var/log/mysql/mysql-slow-$DATETIME.log';"
-MYSQL_PWD='isuconp' mysql -u isuconp -e "SET GLOBAL long_query_time = 0;" isuconp
+MYSQL_PWD='isucon' mysql -u isucon -e "SET GLOBAL slow_query_log_file = '/var/log/mysql/mysql-slow-$DATETIME.log';"
+MYSQL_PWD='isucon' mysql -u isucon -e "SET GLOBAL long_query_time = 0;" isuride
 
 # 諸々の試験を行う。。。
 
 # slow query log を閉じる。
-MYSQL_PWD='isuconp' mysql -u isuconp -e "SET GLOBAL slow_query_log = 0;" isuconp
+MYSQL_PWD='isucon' mysql -u isucon -e "SET GLOBAL slow_query_log = 0;" isuride
+
+
+sudo pt-query-digest /var/log/mysql/mysql-slow-20241208-024757.log
 
 
 sudo pt-query-digest /var/log/mysql/mysql-slow-.log
@@ -374,7 +377,7 @@ EXPLAIN SELECT COUNT(*) AS `count` FROM `comments` WHERE `post_id` = 10001 ORDER
 curl -LO https://go.dev/dl/go1.23.3.linux-amd64.tar.gz
 # rm -rf /usr/local/go
 sudo tar -C /usr/local -xvzf go1.23.3.linux-amd64.tar.gz
-export PATH=$PATH:/usr/local/go/bin
+echo export PATH=$PATH:/usr/local/go/bin > ~/.bashrc
 ```
 
 
@@ -538,3 +541,51 @@ server {
     - **Jumbo Frame**
   - `ip link`
   - `ip link show ens3`
+
+## そのほか
+
+``` sh
+.
+├── backup
+│   └── mysqldump.sql.bz2
+├── env.sh
+└── private_isu
+    ├── benchmarker
+    │   ├── bin
+    │   ├── cache
+    │   ├── checker
+    │   ├── cli.go
+    │   ├── cli_test.go
+    │   ├── Dockerfile
+    │   ├── go.mod
+    │   ├── go.sum
+    │   ├── main.go
+    │   ├── Makefile
+    │   ├── run.sh
+    │   ├── scenario.go
+    │   ├── score
+    │   ├── sql
+    │   ├── userdata
+    │   ├── userdata.go
+    │   ├── util
+    │   └── version.go
+    ├── LICENSE
+    ├── Makefile
+    ├── manual.md
+    ├── public_manual.md
+    ├── renovate.json
+    └── webapp
+        ├── docker-compose.yml
+        ├── etc
+        ├── golang
+        ├── node
+        ├── php
+        ├── public
+        └── ruby
+```
+
+## Appendix
+
+``` sh
+./bin/benchmarker -u ./userdata -t http://52.195.230.121
+```
