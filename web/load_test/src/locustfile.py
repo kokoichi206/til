@@ -17,3 +17,7 @@ class APIAccess(HttpUser):
             # status code 403 is expected.
             if response.status_code == HTTPStatus.FORBIDDEN:
                 response.success()
+
+    @task
+    def without_apikey(self):
+        self.client.get("imgs/example/0.png")

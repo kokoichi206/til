@@ -35,6 +35,8 @@ scapy
 ```
 $ ftp
 
+ftp> open
+
 Remote system type is UNIX.
 Using binary mode to transfer files.
 ftp> passive
