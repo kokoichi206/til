@@ -1,0 +1,32 @@
+#!/bin/bash
+set -eu
+
+# https://formulae.brew.sh/formula/llm
+genai() {
+  llm "$1"
+}
+
+trap 'echo "[Error]:" >&2; cat tmp.txt >&2' ERR
+trap 'rm -f tmp.json tmp.txt' EXIT
+
+git diff --cached --quit && {
+  echo "No changes to commit"
+  exit 0
+}
+
+diff_detail=$(git diff --minimal --cached)
+prompt="Please generate a Git commit message in JSON FORMAT based on the following 'git diff' output.
+The JSON should have two keys: 'summary' for the summary, and 'details' for the detailed explanation.
+-- Here is the 'git diff' output --
+$diff_detail
+"
+
+echo "Generating a commit message with AI..."
+genai "$prompt" > tmp.txt
+
+tr -d '\n' < tmp.txt | grep -m 1 -Eo '\{\s*"(summary|details)".+}' > tmp.json
+
+summary=$(jq -r '.summary' tmp.json)
+details=$(jq -r '.details' tmp.json)
+
+git commit --edit -m "$summary" -m "$details"
