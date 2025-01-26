@@ -10,3 +10,13 @@ services:
       POSTGRES_DB: test-db
     ports:
       - 31367:5432
+
+  postgres17:
+    image: postgres:17
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: test-db
+    ports:
+      - 41673:5432
