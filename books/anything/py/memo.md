@@ -14,10 +14,17 @@ Python 3.11.11
 
 
 uv add langchain-core==0.3.19 langchain-anthropic==0.3.0 langchain-openai==0.2.8 langchain-community==0.3.7 langgraph==0.2.50 tavily-python==0.5.0
+
+
+uv add langgraph-cli==0.1.56 --dev
 ```
 
 ## Links
 
+- langgraph
+  - langchain のツール群の1つ
 - [Tavily](https://tavily.com/)
   - AI エージェント専用に構築された検索エンジン
   - リアルタイムで正確かつ事実に基づいた情報を提供
+- [LangSmith](https://docs.smith.langchain.com/)
+  - LLM 実行のログ分析ツール
