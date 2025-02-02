@@ -1,0 +1,18 @@
+services:
+  dkron:
+    ports:
+      - "7904:8080"
+    container_name: dkron
+    image: "dkron/dkron:latest"
+    command: "agent --server --bootstrap-expect=1 --node-name=node1"
+    volumes:
+      - dkron_data:/dkron/data
+    networks:
+      - dkron
+
+networks:
+  dkron:
+    driver: bridge
+
+volumes:
+  dkron_data:
