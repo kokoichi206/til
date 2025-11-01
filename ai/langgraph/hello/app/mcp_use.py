@@ -19,6 +19,7 @@ mcp_client = None
 tools = None
 llm_with_tools = None
 
+
 async def initialize_llm():
     """MCP クライアントとツールを初期化する"""
     global mcp_client, tools, llm_with_tools
@@ -46,7 +47,7 @@ async def initialize_llm():
         },
     )
     tools = await mcp_client.get_tools()
-    
+
     # LLM の初期化。
     llm_with_tools = init_chat_model(
         model="claude-sonnet-4-5-20250929",
@@ -56,16 +57,20 @@ async def initialize_llm():
 class AgentState(BaseModel):
     messages: Annotated[list[AnyMessage], operator.add]
 
+
 system_prompt = """
 あなたの責務は AWS ドキュメントを検索し Markdown 形式としてファイル出力することです。
 - 検索後 Markdown 形式に変換すること
 - 検索は最大 2 回までとし、その時点での情報を出力すること
 """
+
+
 async def agent(state: AgentState) -> Dict[str, list[AIMessage]]:
     response = await llm_with_tools.ainvoke(
         [SystemMessage(system_prompt)] + state.messages,
     )
     return {"messages": [response]}
+
 
 # ルーティング関数:
 # tools node か end node に遷移する。
@@ -77,26 +82,26 @@ def route_node(state: AgentState) -> str:
         return END
     return "tools"
 
+
 async def main():
     await initialize_llm()
 
     builder = StateGraph(AgentState)
     builder.add_node("agent", agent)
     builder.add_node("tools", ToolNode(tools))
-    
+
     builder.add_edge(START, "agent")
     builder.add_conditional_edges("agent", route_node)
     builder.add_edge("tools", "agent")
-    
+
     graph = builder.compile(name="ReAct Agent")
 
     with open("graph.mmd", "w") as f:
         f.write(graph.get_graph().draw_mermaid())
     question = "Bedrock で利用可能なモデルプロバイダーって何？"
-    response = await graph.ainvoke(
-        {"messages": [HumanMessage(question)]}
-    )
+    response = await graph.ainvoke({"messages": [HumanMessage(question)]})
     print(response)
     return response
+
 
 asyncio.run(main())
