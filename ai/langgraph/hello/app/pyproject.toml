@@ -11,6 +11,7 @@ dependencies = [
     "langchain>=1.0.3",
     "langchain-anthropic>=1.0.1",
     "langchain-aws>=1.0.0",
+    "langchain-mcp-adapters>=0.1.12",
     "langchain-tavily>=0.2.12",
     "langgraph>=1.0.2",
     "pydantic>=2.12.3",
