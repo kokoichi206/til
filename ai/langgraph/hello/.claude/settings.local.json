@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(fd:*)",
+      "Bash(terraform init:*)",
+      "Bash(terraform:*)",
+      "Bash(afplay:*)",
+      "Bash(asdf install:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
