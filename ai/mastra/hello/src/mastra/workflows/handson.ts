@@ -7,16 +7,19 @@ import {
 } from "../tools/conflienceTool";
 import z from "zod";
 import { assistantAgent } from "../agents/assistantAgent";
-import { create } from "domain";
+import { githubCreateIssueTool } from "../tools/githubTool";
 
 const confluenceSearchPageStep = createStep(confluenceSearchPagesTool);
 const confluenceGetPageStep = createStep(confluenceGetPageTool);
+const githubCreateIssueStep = createStep(githubCreateIssueTool);
 
 export const handsonWorkflow = createWorkflow({
   id: "handson-workflow",
   description: "Confluence のページを検索して内容を取得するワークフロー",
   inputSchema: z.object({
     query: z.string().describe("検索したい内容を自然言語で入力してください。"),
+    owner: z.string().describe("GitHub リポジトリの所有者のユーザー名"),
+    repo: z.string().describe("GitHub リポジトリ名"),
   }),
   outputSchema: z.object({
     text: z.string().describe("要約された回答"),
@@ -26,7 +29,9 @@ export const handsonWorkflow = createWorkflow({
     createStep({
       id: "confluence-cql-step",
       inputSchema: z.object({
-        query: z.string().describe("検索クエリ"),
+        query: z.string(),
+        owner: z.string(),
+        repo: z.string(),
       }),
       outputSchema: z.object({
         cql: z.string().describe("生成された CQL クエリ"),
@@ -94,7 +99,7 @@ CQL クエリ:
   .then(
     createStep({
       id: "prepare-prompt",
-      inputSchema: confluenceGetPageToolOutputSchema,
+      inputSchema: confluenceGetPageStep.outputSchema,
       outputSchema: z.object({
         prompt: z.string().describe("AI アシスタントへの最終プロンプト"),
         originalQuery: z.string(),
