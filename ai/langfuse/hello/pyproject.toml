@@ -1,0 +1,15 @@
+[project]
+name = "hello"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "dotenv>=0.9.9",
+    "langchain>=1.0.5",
+    "langchain-anthropic>=1.0.2",
+    "langchain-tavily>=0.2.13",
+    "langfuse>=3.9.1",
+    "langgraph>=1.0.2",
+    "tavily>=1.1.0",
+]
