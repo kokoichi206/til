@@ -97,3 +97,63 @@ https://github.com/minorun365/agent-book
     - Python での Web アプリ開発
   - Amplify Gen2
   - Vercel
+
+## エージェント開発
+
+- Agentic Workflow
+  - LLM に行動選択を任せる部分とプログラムでワークフローを事前定義する部分の組み合わせ
+- Multi Agent Sysmtem: MAS
+  - 複数の AI エージェントでチームを構成するアプローチ
+- https://github.com/humanlayer/12-factor-agents/
+  - BAML: https://boundaryml.com/
+    - The First Language for Building Agents
+- Agent2Agent: A2A
+  - AI エージェント同士のコミュニケーションを標準化する規格
+  - JSON-RPC というプロトコル
+- アンビエント・エージェント
+  - ユーザーからの支持を受けて動作するチャットボット型の場合、人からの支持出しが作業のオーバーヘッドとなる
+  - AI エージェントが周囲の環境を自ら察知し、シグナルを検知して自動で仕事する
+  - **Human-in-the-Loop で品質を保つ**
+    - 人間が**いつ**介入するか
+      - 通知
+      - 質問
+      - レビュー
+    - 人間が**どのように**介入するか
+      - Agent Inbox
+      - https://github.com/langchain-ai/agent-inbox
+
+## LLMOps
+
+- 開発フェーズ
+  - LLM 選択
+  - プロンプトエンジニアリング
+    - ドメインエキスパートからのフィードバック
+  - 実験管理
+    - トレースとその可視化
+  - オフライン評価
+    - **事前に準備したテストデータセット**で LLM アプリケーションの性能評価をする
+    - LLM-as-a-Judge
+      - **自然言語の意味も事前学習してるので、人と近い感覚で評価可能**
+  - データセット管理
+    - LLM アプリケーション評価に利用するデータセットの管理プロセス
+- 運用フェーズ
+
+ツール
+
+- LangSmith
+  - LangChain 社が開発
+- **Langfuse**
+  - OSS
+  - https://github.com/langfuse/langfuse
+- **Ragas**
+  - https://github.com/explodinggradients/ragas
+- DeepEval
+
+プロンプト管理
+
+- LLM への指示テキストであるプロンプトを体系的に管理するプロセスのこと
+- **プロンプトを実装コードから分離して、バージョン管理をすることが必要となる**
+  - プロンプト変更時の改善サイクルを効率化できる
+  - エンジニア以外のユーザーがプロンプトを用意に変更できる
+  - プロンプトの変更履歴を管理できる
+  - プロンプトの流用性が高まる
