@@ -9,11 +9,15 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@ai-sdk/anthropic": "^2.0.41",
+    "@mastra/core": "^0.23.3",
+    "mastra": "^0.17.7",
     "next": "16.0.1",
     "react": "19.2.0",
     "react-dom": "19.2.0"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.3.4",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20.19.24",
     "@types/react": "^19",

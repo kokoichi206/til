@@ -21,9 +21,7 @@ export const handsonWorkflow = createWorkflow({
     owner: z.string().describe("GitHub リポジトリの所有者のユーザー名"),
     repo: z.string().describe("GitHub リポジトリ名"),
   }),
-  outputSchema: z.object({
-    text: z.string().describe("要約された回答"),
-  }),
+  outputSchema: githubCreateIssueTool.outputSchema,
 })
   .then(
     createStep({
@@ -68,7 +66,7 @@ CQL クエリ:
           return { cql: fallbackCql };
         }
       },
-    })
+    }),
   )
   .then(confluenceSearchPageStep)
   .then(
@@ -86,82 +84,97 @@ CQL クエリ:
         }
         if (!pages || pages.length === 0) {
           throw new Error(
-            "Confluence で該当するページが見つかりませんでした。"
+            "Confluence で該当するページが見つかりませんでした。",
           );
         }
 
         const firstPage = pages[0];
         return { pageId: firstPage.id, expand: "body.storage" };
       },
-    })
+    }),
   )
   .then(confluenceGetPageStep)
   .then(
     createStep({
-      id: "prepare-prompt",
-      inputSchema: confluenceGetPageStep.outputSchema,
-      outputSchema: z.object({
-        prompt: z.string().describe("AI アシスタントへの最終プロンプト"),
-        originalQuery: z.string(),
-        pageTitle: z.string(),
-        pageUrl: z.string(),
-      }),
+      id: "create-development-tasks",
+      // Confluenceページ取得ツールのoutputSchemaをそのまま指定
+      inputSchema: confluenceGetPageTool.outputSchema,
+      // GitHub Issues作成ツールのinputSchemaをそのまま指定
+      outputSchema: githubCreateIssueTool.inputSchema,
       execute: async ({ inputData, getInitData }) => {
+        // 前のステップから受け渡されるConfluenceのページ情報
         const { page, error } = inputData;
-        // ワークフローの最初に設定されたデータに簡単にアクセスできる！
-        // getInitData, getStepResult, etc...
-        const initData = getInitData();
+        // GitHubのリポジトリ情報はワークフローの初期データから取得
+        const { owner, repo, query } = getInitData();
 
+        // いずれかの情報が取れない場合はエラーメッセージを送信
         if (error || !page || !page.content) {
           return {
-            prompt: "ページの内容が取得できませんでした。。。",
-            originalQuery: initData.query,
-            pageTitle: page?.title || "不明",
-            pageUrl: page?.url || "不明",
+            owner: owner || "",
+            repo: repo || "",
+            issues: [
+              {
+                title: "エラー: ページの内容が取得できませんでした",
+                body: "Confluenceページの内容を取得できませんでした。",
+              },
+            ],
           };
         }
-
-        const prompt = `以下の Confluence ページの内容に基づいて、ユーザーの質問に答えてください。
-ユーザーの質問: ${initData.query}
-
+        // エージェントからの出力フォーマットを規定
+        const outputSchema = z.object({
+          issues: z.array(
+            z.object({
+              title: z.string(),
+              body: z.string(),
+            }),
+          ),
+        });
+        // プロンプト
+        const analysisPrompt = `以下のConfluenceページの内容は要件書です。この要件書を分析して、開発バックログのGitHub Issueを複数作成するための情報を生成してください。
+ユーザーの質問: ${query}
 ページタイトル: ${page.title}
 ページ内容:
 ${page.content}
+重要：
+- 要件書の内容を機能やコンポーネント単位で分割
+- 各Issueのtitleは簡潔で分かりやすく
+- bodyはMarkdown形式で構造化
+- フォーマットはJSON配列形式で、必ず出力。枕詞は不要。トップの配列は必ず角括弧で囲む。
+- \`\`\`jsonのようなコードブロックは不要
+- 2つIssueを作成
+- 曖昧な部分は「要確認」として記載`;
 
-回答は簡潔でわかりやすく、必要に応じて箇条書きを使用してください。`;
-
-        return {
-          prompt,
-          originalQuery: initData.query,
-          pageTitle: page.title,
-          pageUrl: page.url,
-        };
-      },
-    })
-  )
-  .then(
-    createStep({
-      id: "assistant-response",
-      inputSchema: z.object({
-        prompt: z.string().describe("AI アシスタントへの最終プロンプト"),
-        originalQuery: z.string(),
-        pageTitle: z.string(),
-        pageUrl: z.string(),
-      }),
-      // ワークフローの outputSchema と一致させる必要がある。
-      outputSchema: z.object({
-        text: z.string(),
-      }),
-      execute: async ({ inputData }) => {
         try {
-          const result = await assistantAgent.generate(inputData.prompt);
-          return { text: result.text };
+          const result = await assistantAgent.generate(analysisPrompt, {
+            output: outputSchema, // エージェントからの出力フォーマットを指定
+          });
+          // JSONからIssueの配列を取り出す
+          const parsedResult = JSON.parse(result.text);
+          const issues = parsedResult.issues.map(
+            (issue: { title: string; body: string }) => ({
+              title: issue.title,
+              body: issue.body,
+            }),
+          );
+          return {
+            owner: owner || "",
+            repo: repo || "",
+            issues: issues,
+          };
         } catch (error) {
           return {
-            text: "エラーが発生しました: " + String(error),
+            owner: owner,
+            repo: repo,
+            issues: [
+              {
+                title: "エラー: Issue作成に失敗",
+                body: "エラーが発生しました: " + String(error),
+              },
+            ],
           };
         }
       },
-    })
+    }),
   )
+  .then(githubCreateIssueStep)
   .commit();
