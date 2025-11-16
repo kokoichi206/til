@@ -157,3 +157,51 @@ https://github.com/minorun365/agent-book
   - エンジニア以外のユーザーがプロンプトを用意に変更できる
   - プロンプトの変更履歴を管理できる
   - プロンプトの流用性が高まる
+
+## Security
+
+- OWASP for LLM Applications
+  - https://genai.owasp.org/llm-top-10/
+- ガードレールによる検証
+  - **ユーザーの入力・LLM への入力を事前に検証**
+  - output も
+  - AWS Bedrock Guardrails
+- **関連性(Grounding)のチェック**
+
+## 評価
+
+- 何を評価
+  - LLM 単体
+  - LLM アプリケーション
+- 何を用いて
+  - オフライン評価
+    - 事前に用意したテストデータセット
+    - ここの評価値の改善が、必ずしもユーザーの満足度にはつながらない
+  - オンライン評価
+    - ユーザーが実際に LLM アプリケーションを使用した際のデータを用いたもの
+    - Good/Bad ボタン
+- HOW
+  - 人による評価
+  - 定量的指標
+    - プログラム実装可能な定量指標で評価する方法
+  - LLM による評価 (LLM-as-a-Judge)
+    - 評価基準をプロンプトで定義
+    - 評価プロンプト自体の改善が必要
+- LLM-as-a-Judge のメリット
+  - 自然言語の意味を捉えられる
+    - LLM 出力の揺らぎに対応可能
+  - 評価の自動化
+  - Ground Truth (正解データ) 無しでの評価が可能
+- LLM as a Judge
+  - Pairwise Comparision
+    - 2つの出力を比較して、どちらが良いかを判断する
+  - Single answer grading
+    - 1つのデータに対して、プロンプトで指定した基準に従って評価
+    - 結果の定量化も可能
+  - Reference guided granding
+    - 生成結果に加え、参照データもつかして比較
+
+フィードバック
+
+- LLM-as-a-Judge は評価プロセスの自動化が可能
+- 
