@@ -24,6 +24,8 @@
 - 配列とスライス
 - 組み込み関数
   - https://ziglang.org/documentation/master/#Builtin-Functions
+- 文 statement => `;`
+  - 式 expression
 
 ## command
 
