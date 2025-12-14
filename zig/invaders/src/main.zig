@@ -35,12 +35,60 @@ const GameConfig = struct {
     invaderSpacingY: f32,
 };
 
+// const Example = struct {
+//     value: i32,
+
+//     pub fn init(starting_value: i32) @This() {
+//         return .{
+//             .value = starting_value,
+//         };
+//     }
+
+//     // to modify data, use pointer with *.
+//     pub fn update(self: *@This()) void {
+//         self.value += 1;
+//     }
+// };
+
+const Player = struct {
+    position_x: f32,
+    position_y: f32,
+    width: f32,
+    height: f32,
+    speed: f32,
+
+    pub fn init(
+        pos_x: f32,
+        pos_y: f32,
+        width: f32,
+        height: f32,
+    ) @This() {
+        return .{
+            .position_x = pos_x,
+            .position_y = pos_y,
+            .width = width,
+            .height = height,
+            .speed = 5.0,
+        };
+    }
+};
+
 pub fn main() void {
     const screenWidth = 800;
     const screenHeight = 600;
 
     rl.initWindow(screenWidth, screenHeight, "Zig Invaders");
     defer rl.closeWindow();
+
+    const playerWidth = 50.0;
+    const playerHeight = 30.0;
+    
+    var player = Player.init(
+        @as(f32, @floatFromInt(screenWidth)) / 2 - playerWidth / 2,
+        @as(f32, @floatFromInt(screenHeight)) - 60.0,
+        playerWidth,
+        playerHeight,
+    );
 
     rl.setTargetFPS(60);
 
