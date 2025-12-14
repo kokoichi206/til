@@ -1,27 +1,20 @@
-const std = @import("std");
-const invaders = @import("invaders");
+const rl = @import("raylib");
 
-pub fn main() !void {
-    // Prints to stderr, ignoring potential errors.
-    std.debug.print("All your {s} are belong to us.\n", .{"codebase"});
-    try invaders.bufferedPrint();
-}
+pub fn main() void {
+    const screenWidth = 800;
+    const screenHeight = 600;
 
-test "simple test" {
-    const gpa = std.testing.allocator;
-    var list: std.ArrayList(i32) = .empty;
-    defer list.deinit(gpa); // Try commenting this out and see if zig detects the memory leak!
-    try list.append(gpa, 42);
-    try std.testing.expectEqual(@as(i32, 42), list.pop());
-}
+    rl.initWindow(screenWidth, screenHeight, "Zig Invaders");
+    defer rl.closeWindow();
 
-test "fuzz example" {
-    const Context = struct {
-        fn testOne(context: @This(), input: []const u8) anyerror!void {
-            _ = context;
-            // Try passing `--fuzz` to `zig build test` and see if it manages to fail this test case!
-            try std.testing.expect(!std.mem.eql(u8, "canyoufindme", input));
-        }
-    };
-    try std.testing.fuzz(Context{}, Context.testOne, .{});
+    rl.setTargetFPS(60);
+
+    while (!rl.windowShouldClose()) {
+        rl.beginDrawing();
+        // zig の defer はここで閉じる。
+        defer rl.endDrawing();
+
+        rl.clearBackground(rl.Color.black);
+        rl.drawText("Zig invaders", 300, 250, 40, rl.Color.green);
+    }
 }
