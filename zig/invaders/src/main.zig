@@ -79,6 +79,12 @@ const Player = struct {
         if (rl.isKeyDown(rl.KeyboardKey.left)) {
             self.position_x -= self.speed;
         }
+        if (self.position_x < 0) {
+            self.position_x = 0;
+        }
+        if (self.position_x + self.width > @as(f32, @floatFromInt(rl.getScreenWidth()))) {
+            self.position_x = @as(f32, @floatFromInt(rl.getScreenWidth())) - self.width;
+        }
     }
 
     pub fn getRect(self: @This()) Rectangle {
@@ -102,6 +108,52 @@ const Player = struct {
     }
 };
 
+const Bullet = struct {
+    position_x: f32,
+    position_y: f32,
+    width: f32,
+    height: f32,
+    speed: f32,
+    active: bool,
+
+    pub fn init(
+        position_x: f32,
+        position_y: f32,
+        width: f32,
+        height: f32,
+    ) @This() {
+        return .{
+            .position_x = position_x,
+            .position_y = position_y,
+            .width = width,
+            .height = height,
+            .speed = 10.0,
+            .active = false,
+        };
+    }
+
+    pub fn update(self: *@This()) void {
+        if (self.active) {
+            self.position_y -= self.speed;
+            if (self.position_y < 0) {
+                self.active = false;
+            }
+        }
+    }
+
+    pub fn draw(self: @This()) void {
+        if (self.active) {
+            rl.drawRectangle(
+                @intFromFloat(self.position_x),
+                @intFromFloat(self.position_y),
+                @intFromFloat(self.width),
+                @intFromFloat(self.height),
+                rl.Color.red,
+            );
+        }
+    }
+};
+
 pub fn main() void {
     const screenWidth = 800;
     const screenHeight = 600;
@@ -119,6 +171,16 @@ pub fn main() void {
         playerHeight,
     );
 
+    const maxBullets = 10;
+    const bulletWidth = 5.0;
+    const bulletHeight = 10.0;
+
+    var bullets: [maxBullets]Bullet = undefined;
+    for (&bullets) |*bullet| { // capture group
+        // dereference.
+        bullet.* = Bullet.init(0.0, 0.0, bulletWidth, bulletHeight);
+    }
+
     rl.setTargetFPS(60);
 
     while (!rl.windowShouldClose()) {
@@ -128,7 +190,25 @@ pub fn main() void {
 
         rl.clearBackground(rl.Color.black);
         player.update();
+        if (rl.isKeyPressed(rl.KeyboardKey.space)) {
+            for (&bullets) |*bullet| {
+                if (!bullet.active) {
+                    bullet.position_x = player.position_x + player.width / 2 - bullet.width / 2;
+                    bullet.position_y = player.position_y;
+                    bullet.active = true;
+                    break;
+                }
+            }
+        }
+        for (&bullets) |*bullet| {
+            bullet.update();
+        }
+
         player.draw();
+        for (&bullets) |*bullet| {
+            bullet.draw();
+        }
+
         rl.drawText("Zig invaders", 300, 250, 40, rl.Color.green);
     }
 }
