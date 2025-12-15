@@ -154,9 +154,74 @@ const Bullet = struct {
     }
 };
 
+const Invader = struct {
+    position_x: f32,
+    position_y: f32,
+    width: f32,
+    height: f32,
+    speed: f32,
+    alive: bool,
+
+    pub fn init(
+        position_x: f32,
+        position_y: f32,
+        width: f32,
+        height: f32,
+    ) @This() {
+        return .{
+            .position_x = position_x,
+            .position_y = position_y,
+            .width = width,
+            .height = height,
+            .speed = 5.0,
+            .alive = true,
+        };
+    }
+
+    pub fn draw(self: @This()) void {
+        if (self.alive) {
+            rl.drawRectangle(
+                @intFromFloat(self.position_x),
+                @intFromFloat(self.position_y),
+                @intFromFloat(self.width),
+                @intFromFloat(self.height),
+                rl.Color.green,
+            );
+        }
+    }
+
+    pub fn update(self: *@This(), dx: f32, dy: f32) void {
+        if (self.alive) {
+            self.position_x += dx;
+            self.position_y += dy;
+        }
+    }
+};
+
 pub fn main() void {
+    // constant はキャメルケースで書きがち。
     const screenWidth = 800;
     const screenHeight = 600;
+
+    const maxBullets = 10;
+    const bulletWidth = 5.0;
+    const bulletHeight = 10.0;
+
+    const invaderRows = 5;
+    const invaderCols = 11;
+    const invaderWidth = 40.0;
+    const invaderHeight = 30.0;
+    const invaderStartX = 80.0;
+    const invaderStartY = 20.0;
+    const invaderSpacingX = 60.0;
+    const invaderSpacingY = 50.0;
+    const invaderSpeed = 3.0;
+    // how many frames to wait before moving invaders.
+    const invaderMoveDelay = 30;
+    const invaderDropDistance = 20.0;
+
+    var invader_direction: f32 = 1.0;
+    var move_timer: i32 = 0;
 
     rl.initWindow(screenWidth, screenHeight, "Zig Invaders");
     defer rl.closeWindow();
@@ -171,14 +236,19 @@ pub fn main() void {
         playerHeight,
     );
 
-    const maxBullets = 10;
-    const bulletWidth = 5.0;
-    const bulletHeight = 10.0;
-
     var bullets: [maxBullets]Bullet = undefined;
     for (&bullets) |*bullet| { // capture group
         // dereference.
         bullet.* = Bullet.init(0.0, 0.0, bulletWidth, bulletHeight);
+    }
+
+    var invaders: [invaderRows][invaderCols]Invader = undefined;
+    for (&invaders, 0..) |*row, i| {
+        for (row, 0..) |*invader, j| {
+            const x = invaderStartX + @as(f32, @floatFromInt(j)) * invaderSpacingX;
+            const y = invaderStartY + @as(f32, @floatFromInt(i)) * invaderSpacingY;
+            invader.* = Invader.init(x, y, invaderWidth, invaderHeight);
+        }
     }
 
     rl.setTargetFPS(60);
@@ -204,9 +274,45 @@ pub fn main() void {
             bullet.update();
         }
 
+        move_timer += 1;
+        if (move_timer >= invaderMoveDelay) {
+            move_timer = 0;
+
+            var hit_edge = false;
+            for (&invaders) |*row| {
+                for (row) |*invader| {
+                    if (invader.alive) {
+                        const next_x = invader.position_x + (invaderSpeed * invader_direction);
+                        if (next_x < 0 or next_x + invader.width > @as(f32, @floatFromInt(screenWidth))) {
+                            hit_edge = true;
+                        }
+                    }
+                }
+            }
+            if (hit_edge) {
+                invader_direction *= -1.0;
+                for (&invaders) |*row| {
+                    for (row) |*invader| {
+                        invader.update(0, invaderDropDistance);
+                    }
+                }
+            } else {
+                for (&invaders) |*row| {
+                    for (row) |*invader| {
+                        invader.update(invaderSpeed * invader_direction, 0);
+                    }
+                }
+            }
+        }
+
         player.draw();
         for (&bullets) |*bullet| {
             bullet.draw();
+        }
+        for (&invaders) |*row| {
+            for (row) |*invader| {
+                invader.draw();
+            }
         }
 
         rl.drawText("Zig invaders", 300, 250, 40, rl.Color.green);
