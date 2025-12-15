@@ -311,6 +311,44 @@ const Shield = struct {
     }
 };
 
+fn resetGame(
+    player: *Player,
+    bullets: []Bullet,
+    enemy_bullets: []EnemyBullet,
+    invaders: anytype,
+    invader_direction: *f32,
+    shields: []Shield,
+    score: *i32,
+    config: GameConfig,
+) void {
+    score.* = 0;
+    player.* = Player.init(
+        @as(f32, @floatFromInt(config.screenWidth)) / 2 - config.playerWidth / 2,
+        config.playerStartY,
+        config.playerWidth,
+        config.playerHeight,
+    );
+    for (bullets) |*bullet| {
+        bullet.active = false;
+    }
+    for (enemy_bullets) |*bullet| {
+        bullet.active = false;
+    }
+    for (shields, 0..) |*shield, i| {
+        const x = config.shieldStartX + @as(f32, @floatFromInt(i)) * config.shieldSpacing;
+        shield.* = Shield.init(x, config.shieldY, config.shieldWidth, config.shieldHeight);
+    }
+    for (invaders, 0..) |*row, i| {
+        for (row, 0..) |*invader, j| {
+            const x = config.invaderStartX + @as(f32, @floatFromInt(j)) * config.invaderSpacingX;
+            const y = config.invaderStartY + @as(f32, @floatFromInt(i)) * config.invaderSpacingY;
+            invader.* = Invader.init(x, y, config.invaderWidth, config.invaderHeight);
+        }
+    }
+
+    invader_direction.* = 1.0;
+}
+
 pub fn main() void {
     // constant はキャメルケースで書きがち。
     const screenWidth = 800;
@@ -345,17 +383,39 @@ pub fn main() void {
     const shieldY = 450.0;
     const shieldSpacing = 150.0;
 
+    const playerWidth = 50.0;
+    const playerHeight = 30.0;
+
     var game_over: bool = false;
+    var game_won: bool = false;
     var invader_direction: f32 = 1.0;
     var move_timer: i32 = 0;
     var enemy_shoot_timer: i32 = 100;
     var score: i32 = 0;
 
+    const config = GameConfig{
+        .screenWidth = screenWidth,
+        .screenHeight = screenHeight,
+        .playerWidth = playerWidth,
+        .playerHeight = playerHeight,
+        .playerStartY = @as(f32, @floatFromInt(screenHeight)) - 60.0,
+        .bulletWidth = bulletWidth,
+        .bulletHeight = bulletHeight,
+        .shieldStartX = shieldStartX,
+        .shieldY = shieldY,
+        .shieldWidth = shieldWidth,
+        .shieldHeight = shieldHeight,
+        .shieldSpacing = shieldSpacing,
+        .invaderStartX = invaderStartX,
+        .invaderStartY = invaderStartY,
+        .invaderWidth = invaderWidth,
+        .invaderHeight = invaderHeight,
+        .invaderSpacingX = invaderSpacingX,
+        .invaderSpacingY = invaderSpacingY,
+    };
+
     rl.initWindow(screenWidth, screenHeight, "Zig Invaders");
     defer rl.closeWindow();
-
-    const playerWidth = 50.0;
-    const playerHeight = 30.0;
 
     var player = Player.init(
         @as(f32, @floatFromInt(screenWidth)) / 2 - playerWidth / 2,
@@ -408,7 +468,38 @@ pub fn main() void {
 
             if (rl.isKeyPressed(rl.KeyboardKey.enter)) {
                 game_over = false;
-                score = 0;
+                resetGame(
+                    &player,
+                    &bullets,
+                    &enemy_bullets,
+                    &invaders,
+                    &invader_direction,
+                    &shields,
+                    &score,
+                    config,
+                );
+            }
+            continue;
+        }
+
+        if (game_won) {
+            rl.drawText("YOU WIN!", 300, 250, 40, rl.Color.green);
+            const score_text = rl.textFormat("Final Score %d", .{score});
+            rl.drawText(score_text, 290, 320, 30, rl.Color.white);
+            rl.drawText("Press ENTER to Restart", 240, 400, 20, rl.Color.green);
+
+            if (rl.isKeyPressed(rl.KeyboardKey.enter)) {
+                game_won = false;
+                resetGame(
+                    &player,
+                    &bullets,
+                    &enemy_bullets,
+                    &invaders,
+                    &invader_direction,
+                    &shields,
+                    &score,
+                    config,
+                );
             }
             continue;
         }
@@ -523,6 +614,29 @@ pub fn main() void {
                     }
                 }
             }
+
+            for (&invaders) |*row| {
+                for (row) |*invader| {
+                    if (invader.alive) {
+                        if (invader.position_y + invader.height >= player.position_y) {
+                            game_over = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        var all_invaders_dead: bool = true;
+        outer_loop: for (&invaders) |*row| {
+            for (row) |*invader| {
+                if (invader.alive) {
+                    all_invaders_dead = false;
+                    break :outer_loop;
+                }
+            }
+        }
+        if (all_invaders_dead) {
+            game_won = true;
         }
 
         for (&shields) |*shield| { // capture shield
