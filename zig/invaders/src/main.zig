@@ -216,6 +216,61 @@ const Invader = struct {
     }
 };
 
+const EnemyBullet = struct {
+    position_x: f32,
+    position_y: f32,
+    width: f32,
+    height: f32,
+    speed: f32,
+    active: bool,
+
+    pub fn init(
+        position_x: f32,
+        position_y: f32,
+        width: f32,
+        height: f32,
+    ) @This() {
+        return .{
+            .position_x = position_x,
+            .position_y = position_y,
+            .width = width,
+            .height = height,
+            .speed = 5.0,
+            .active = false,
+        };
+    }
+
+    pub fn update(self: *@This(), screen_height: i32) void {
+        if (self.active) {
+            self.position_y += self.speed;
+            if (self.position_y > @as(f32, @floatFromInt(screen_height))) {
+                self.active = false;
+            }
+        }
+    }
+
+    pub fn draw(self: @This()) void {
+        if (self.active) {
+            rl.drawRectangle(
+                @intFromFloat(self.position_x),
+                @intFromFloat(self.position_y),
+                @intFromFloat(self.width),
+                @intFromFloat(self.height),
+                rl.Color.yellow,
+            );
+        }
+    }
+
+    pub fn getRect(self: @This()) Rectangle {
+        return .{
+            .x = self.position_x,
+            .y = self.position_y,
+            .width = self.width,
+            .height = self.height,
+        };
+    }
+};
+
 pub fn main() void {
     // constant はキャメルケースで書きがち。
     const screenWidth = 800;
@@ -238,8 +293,15 @@ pub fn main() void {
     const invaderMoveDelay = 30;
     const invaderDropDistance = 20.0;
 
+    const maxEnemyBullets = 20;
+    const enemyShootDelay = 50;
+    // percentage chance (0-100) of an invader shooting when it's their turn (depending on enemyShootDelay).
+    const enemyShootChance = 5;
+
+    var game_over: bool = false;
     var invader_direction: f32 = 1.0;
     var move_timer: i32 = 0;
+    var enemy_shoot_timer: i32 = 100;
     var score: i32 = 0;
 
     rl.initWindow(screenWidth, screenHeight, "Zig Invaders");
@@ -261,6 +323,12 @@ pub fn main() void {
         bullet.* = Bullet.init(0.0, 0.0, bulletWidth, bulletHeight);
     }
 
+    var enemy_bullets: [maxEnemyBullets]EnemyBullet = undefined;
+    for (&enemy_bullets) |*bullet| { // capture group
+        // dereference.
+        bullet.* = EnemyBullet.init(0.0, 0.0, bulletWidth, bulletHeight);
+    }
+
     var invaders: [invaderRows][invaderCols]Invader = undefined;
     for (&invaders, 0..) |*row, i| {
         for (row, 0..) |*invader, j| {
@@ -278,6 +346,20 @@ pub fn main() void {
         defer rl.endDrawing();
 
         rl.clearBackground(rl.Color.black);
+
+        if (game_over) {
+            rl.drawText("GAME OVER", 270, 250, 40, rl.Color.red);
+            const score_text = rl.textFormat("Final Score %d", .{score});
+            rl.drawText(score_text, 290, 320, 30, rl.Color.white);
+            rl.drawText("Press ENTER to Restart", 240, 400, 20, rl.Color.green);
+
+            if (rl.isKeyPressed(rl.KeyboardKey.enter)) {
+                game_over = false;
+                score = 0;
+            }
+            continue;
+        }
+
         player.update();
         if (rl.isKeyPressed(rl.KeyboardKey.space)) {
             for (&bullets) |*bullet| {
@@ -303,6 +385,37 @@ pub fn main() void {
                                 score += 10;
                                 break;
                             }
+                        }
+                    }
+                }
+            }
+        }
+        for (&enemy_bullets) |*bullet| {
+            bullet.update(screenHeight);
+            if (bullet.active) {
+                if (bullet.getRect().intersects(player.getRect())) {
+                    bullet.active = false;
+                    game_over = true;
+                }
+            }
+        }
+        enemy_shoot_timer += 1;
+        if (enemy_shoot_timer >= enemyShootDelay) {
+            enemy_shoot_timer = 0;
+            for (&invaders) |*row| {
+                for (row) |*invader| {
+                    if (invader.alive) {
+                        const shoot_roll = rl.getRandomValue(0, 100);
+                        if (shoot_roll < enemyShootChance) {
+                            for (&enemy_bullets) |*bullet| {
+                                if (!bullet.active) {
+                                    bullet.position_x = invader.position_x + invader.width / 2 - bullet.width / 2;
+                                    bullet.position_y = invader.position_y + invader.height;
+                                    bullet.active = true;
+                                    break;
+                                }
+                            }
+                            break;
                         }
                     }
                 }
@@ -347,6 +460,9 @@ pub fn main() void {
             for (row) |*invader| {
                 invader.draw();
             }
+        }
+        for (&enemy_bullets) |*bullet| {
+            bullet.draw();
         }
 
         const score_text = rl.textFormat("Score: %d", .{score});
