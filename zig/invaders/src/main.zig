@@ -152,6 +152,15 @@ const Bullet = struct {
             );
         }
     }
+
+    pub fn getRect(self: @This()) Rectangle {
+        return .{
+            .x = self.position_x,
+            .y = self.position_y,
+            .width = self.width,
+            .height = self.height,
+        };
+    }
 };
 
 const Invader = struct {
@@ -196,6 +205,15 @@ const Invader = struct {
             self.position_y += dy;
         }
     }
+
+    pub fn getRect(self: @This()) Rectangle {
+        return .{
+            .x = self.position_x,
+            .y = self.position_y,
+            .width = self.width,
+            .height = self.height,
+        };
+    }
 };
 
 pub fn main() void {
@@ -212,7 +230,7 @@ pub fn main() void {
     const invaderWidth = 40.0;
     const invaderHeight = 30.0;
     const invaderStartX = 80.0;
-    const invaderStartY = 20.0;
+    const invaderStartY = 50.0;
     const invaderSpacingX = 60.0;
     const invaderSpacingY = 50.0;
     const invaderSpeed = 3.0;
@@ -222,6 +240,7 @@ pub fn main() void {
 
     var invader_direction: f32 = 1.0;
     var move_timer: i32 = 0;
+    var score: i32 = 0;
 
     rl.initWindow(screenWidth, screenHeight, "Zig Invaders");
     defer rl.closeWindow();
@@ -273,7 +292,22 @@ pub fn main() void {
         for (&bullets) |*bullet| {
             bullet.update();
         }
-
+        for (&bullets) |*bullet| {
+            if (bullet.active) {
+                for (&invaders) |*row| {
+                    for (row) |*invader| {
+                        if (invader.alive) {
+                            if (bullet.getRect().intersects(invader.getRect())) {
+                                invader.alive = false;
+                                bullet.active = false;
+                                score += 10;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
         move_timer += 1;
         if (move_timer >= invaderMoveDelay) {
             move_timer = 0;
@@ -315,6 +349,8 @@ pub fn main() void {
             }
         }
 
-        rl.drawText("Zig invaders", 300, 250, 40, rl.Color.green);
+        const score_text = rl.textFormat("Score: %d", .{score});
+        rl.drawText(score_text, 20, screenHeight - 20, 20, rl.Color.white);
+        rl.drawText("Zig invaders - SPACE to shoot, ESC to quit", 20, 20, 20, rl.Color.green);
     }
 }
