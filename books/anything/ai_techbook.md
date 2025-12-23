@@ -1,0 +1,58 @@
+## power of LLM
+
+- **機械学習の民主化**
+  - 誰もが機械学習のアルゴリズムを作れる時代になった
+- 進化の**仮説**
+  - 今の技術の性能だけをみてたら遅すぎる
+  - 仮説たち
+    - パラメータサイズ・性能は向上し続ける
+    - 実行コストは劇的に低下する
+      - 蒸留、量子化、効率化アーキテクチャ
+      - ハードウェア
+    - **今の最高性能は明日の標準になる**
+- **コストをペイする付加価値を生み出せる領域はどこか**
+  - エンタープライズ領域 e.t.c.
+- **否定しないこと**
+- すてっぷ
+  - 技術を深く理解する
+  - 制約を加えて解像度を上げる
+  - 顧客と対話し続ける
+
+## other
+
+- Devin Search
+  - 複数リポジトリ跨いで質問可能
+- Devin by Cognition
+  - Agentic Search => Agentic RAG
+    - https://www.youtube.com/watch?v=KfXq9s96tPU
+- TTFT: Time To First Token
+  - LLM が最初のトークン生成までにかかった時間
+  - レスポンスの体感速度を左右する
+- LLM のファインチューニング
+  - Flash Attention
+    - Attention 層を近似なしで高速かつ省メモリに
+    - 従来, Attention 層のメモリ消費量はシーケンス長の二乗に比例していて、長い文章を扱う際のボトルネックになっていた
+  - XFormers
+  - Unsloth
+- Langfuse
+  - ClickHouse と合わせてセルフホスト
+  - ECS on Fargate
+- 決定的 vs 非決定的
+  - 非決定的なシステム × 非構造化データ
+- AWS MCP server
+  - 現在の推定費用とコスト最適化の提案をしてください
+- [Terragrunt](https://terragrunt.gruntwork.io/)
+- 社内の疑問を素早く解決できる slack bot
+  - n8n のサブワークフローの再利用性
+  - S3 vectors => RAG
+  - tomd: https://github.com/docling-project/docling
+  - 1Password
+  - Bedrock Knowledge Bases
+    - metadata でのフィルタリング！
+- より一般的で、スケールが効く方法
+  - at 生成 AI => 基盤モデル
+  - **基盤モデルの性能向上の恩恵を受けるための実装**
+  - **リンクしすぎていても結局負ける**
+  - RL によるファインチューニング
+  - **Tool for AGI**
+    - AGI のために、実行が簡単・低コスト・高精度 の道具を用意する
