@@ -73,3 +73,38 @@
     - 一般に結合テストは 1 or 2 個のプロセス外依存を扱う
     - E2E は全てのプロセス外依存を扱う
 - **著者は古典学派の方が better だと考えている**
+
+## Structure of Unit tests
+
+- AAA パターン
+  - Arrange
+  - Act
+  - Assert
+- **単体テストで、同じフェーズが複数あるケースは許されない**
+  - 結合テストなら可能性ある
+- if 文をテストケースで書くのはダメ
+  - 何もいいことないね
+- **不変条件 invariant の侵害**
+  - カプセル化で守る
+- **テスト対象システムとその依存の区別**
+  - SUT: System Under Test
+    - sut 変数
+- **テストはプロダクションコードが解決しようとしている物語 (story) について語るべき！**
+- テストの命名
+  - Bad
+    - 実装の詳細に目をつけた命名
+    - `Sum_TwoNumbers_ReturnsSum`
+    - `IsDeliveryValid_InvalidDate_ReturnsFalse`
+  - Good
+    - 問題領域のことに精通している**非開発者**に対してどのような検証をするのか伝わる
+    - `_` を使って単語を区切る
+    - `Delivery_with_invalid_date_should_be_considered_invalid`
+- テスト関数名にメソッド名を含めない
+  - **コードをテストしてるのではなく、アプリケーションの振る舞いをテストしてるから**
+  - SUT は振る舞いを起動するための単なる入り口に過ぎない
+- `Delivery_with_invalid_date_should_be_considered_invalid` をより改善する
+  - invalid??
+    - => `past`
+  - **should be は良くあるアンチパターン**
+    - シナリオを伝えるべきではなく、希望や要望を含めるべきではないww
+    - => `is_invalid`
