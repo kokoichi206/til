@@ -1,0 +1,18 @@
+$ telnet ip port
+<POST
+<line
+<line
+<line
+<SUBMIT
+>CHALLENGE <string>
+<ACCEPTED <suffix>
+>SENT <id>
+**CONNECTION CLOSED**
+---
+$ telnet ip port
+<GET <id>
+>line
+>line
+>line
+>line
+**CONNECTION CLOSED**

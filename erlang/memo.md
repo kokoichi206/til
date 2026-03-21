@@ -16,6 +16,7 @@
   - Concurrency model
   - **No type but specs**
     - dynamic typing
+  - Any green threads..?
 - Erlang/OTP
   - 高可用性、並行性、耐障害性に優れたリアルタイムシステム向けに設計されたプログラミング言語Erlangと、その設計パターン（ライブラリ）であるOTP（Open Telecom Platform）を統合した環境
 
@@ -55,6 +56,8 @@ cd("/Users/kokoichi206/ghq/github.com/kokoichi206/til/erlang/chat").
 
 c(pastebeam).
 
+Pid = pastebeam:start().
+
 f() ->
   expr1,
   expr2,
@@ -78,4 +81,8 @@ ok
 
 ``` sh
 telnet localhost 5016
+```
+
+```
+13,10 => \r\n
 ```
