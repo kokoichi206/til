@@ -1,6 +1,6 @@
 -module(pastebeam).
 % -export([start/0, loop/1]).
--export([start/0]).
+-export([start/0, accepter/1]).
 
 % loop(X) when X =< 0 ->
 %     ok;
@@ -10,7 +10,8 @@
 
 start() ->
     {ok, LSock} = gen_tcp:listen(5016, [binary, {packet, 0}, {reuseaddr, true}]),
-    accepter(LSock).
+    % run esparate threads)
+    spawn(pastebeam, accepter, [LSock]).
 
 accepter(LSock) ->
     {ok, Sock} = gen_tcp:accept(LSock),
