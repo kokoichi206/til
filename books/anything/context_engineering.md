@@ -124,3 +124,48 @@
   - **Reasoning モデルによる Agentic なツール活用**
     - Agentic Loop を API の処理内で自動実行！
       - Function Calling だとツール実行後の再リクエストが必要だった..
+
+## Prompting
+
+- 指針
+  - Prompt engineering (OpenAI)
+    - https://developers.openai.com/api/docs/guides/prompt-engineering/
+  - Prompt engineering overview (Anthropic)
+    - https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview
+  - GPT-5.2 Prompting Guide
+    - https://developers.openai.com/cookbook/examples/gpt-5/gpt-5-2_prompting_guide/
+- 設計
+  - **具体的かつ誰がみてもそうとしか判断できない記述**
+    - 曖昧性の排除
+  - 英語の活用
+  - 否定系を避ける
+  - 支持を矛盾させない
+    - **『どこに何が書かれるべきか』を明確にする**
+- **コンテキストに乗る順番（非公式）**
+  - 1. 出力スキーマ
+  - 2. 指示プロンプト system prompt
+  - 3. ツール定義
+  - 4. 対話履歴
+  - 5. ユーザーからの入力 user prompt
+- **How より What を重視する**
+- Emotion Prompt
+- プロンプトの記法による制度の違いはほとんどない
+  - 人間側の整理のしやすさに寄与してるだけ
+- **指示プロンプトの基本構造**
+  - Role
+  - Task
+    - 目的・背景
+    - スコープ手順
+    - 完了条件
+  - Guidelines
+  - Prohibited Actions
+    - 全ての項目で禁止である旨を繰り返し書いて強調しても良い
+  - Knowledge Base: KB
+    - LLM が常に参照できるようにしておくことが重要
+- CoT
+  - **解法の探索空間を狭め、誤りの混入を減らす**
+  - 応用
+    - 内部知識の活用
+    - **再帰修正**
+    - **指示の Recall**
+  - **Structured Output のフィールドに中間表現としての内容を出力させる**
