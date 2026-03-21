@@ -85,3 +85,42 @@
 - **Reasoning model**
   - 回答を出すまでに**思考過程を出力しながら、コンテキストを充実化させつつ論理を磨いていく**
   - Reasoning モデルは比較的ロングコンテキストに強い
+
+## LLM API
+
+- Responses API
+  - OpenAI API
+    - Chat Completion API
+    - Responses API
+    - Embeddings API
+    - Realtime API
+  - 今後一般的になる API
+- 会話の履歴
+  - 配列で渡す方法
+    - Reasoning モデルを用いた際の思考トークンは履歴には含まれない
+- **Reasoning モデルにおいて思考トークンも重要なコンテキスト**
+  - `previous_response_id` 等で引き継げる
+  - Conversations API
+- **画像が入力に含まれることでテキストの指示追従性に影響を及ぼす？？**
+- **temperature を 0 にしても完全に決定論的になるわけではない**
+  - トークン生成時の計算のバッチサイズに依存？
+- `max_output_tokens`
+  - **思考過程に出力したトークンも含めた制限**
+  - それがきたら強制的に閉じるだけ
+- **reasoning**
+  - 2つのパラメータ
+    - effort
+    - summary
+      - 思考過程の要約の詳細度を制御
+  - **注意**
+    - 思考トークンもコストに含まれる
+    - 待機時間の長さにダイレクトにつながる
+- Function Calling
+  - ツール選択とパラメータ抽出の機能化
+    - => **ツールアクセス側はアプリケーション実行**
+  - **組み込みツール使用時の Reasoning モデルの挙動**
+    - 勝手に実行してもらえる
+- MCP
+  - **Reasoning モデルによる Agentic なツール活用**
+    - Agentic Loop を API の処理内で自動実行！
+      - Function Calling だとツール実行後の再リクエストが必要だった..
