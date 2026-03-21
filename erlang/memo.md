@@ -17,6 +17,12 @@
   - **No type but specs**
     - dynamic typing
   - Any green threads..?
+  - Erlang Police
+  - type specs
+    - `-type`
+  - types PLTs
+    - Persistent Lookup Table
+  - BIF
 - Erlang/OTP
   - 高可用性、並行性、耐障害性に優れたリアルタイムシステム向けに設計されたプログラミング言語Erlangと、その設計パターン（ライブラリ）であるOTP（Open Telecom Platform）を統合した環境
 
@@ -57,6 +63,9 @@ cd("/Users/kokoichi206/ghq/github.com/kokoichi206/til/erlang/chat").
 c(pastebeam).
 
 Pid = pastebeam:start().
+
+% Pid を解放する。
+f(Pid).
 
 f() ->
   expr1,
