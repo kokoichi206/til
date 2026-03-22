@@ -2,6 +2,8 @@
 % -export([start/0, loop/1]).
 -export([start/0, accepter/1, session/2]).
 
+% TODO: use prefix challenge instead of suffix
+
 % loop(X) when X =< 0 ->
 %     ok;
 % loop(X) ->
@@ -74,6 +76,7 @@ session({accepted, Lines, Challenge}, Sock) ->
             case binary:encode_hex(crypto:hash(sha256, Blob)) of
                 <<"00000", _/binary>> ->
                     Id = binary:encode_hex(crypto:strong_rand_bytes(32)),
+                    file:write_file(Id, Lines),
                     gen_tcp:send(Sock, [<<"SENT ">>, Id, <<"\r\n">>]),
                     gen_tcp:close(Sock),
                     ok;
