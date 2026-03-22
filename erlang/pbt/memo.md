@@ -18,7 +18,9 @@ rebar3 help proper
 %% rebar3 に "proper" サブコマンドを追加
 {project_plugins, [rebar3_proper]}.
 
+
 %% test プロファイル時のみ proper ライブラリを依存に追加
+
 {profiles, [{test, [{deps, [proper]}]}]}.
 ```
 
