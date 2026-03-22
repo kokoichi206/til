@@ -40,7 +40,7 @@ fail_session(Sock, Reason) ->
                 {challenge, binary()} |
                 {accepted, binary(), binary()} |
                 {post, binary()} |
-                {get, unicode:chardata()},
+                {get, file:name_all()},
       Sock :: gen_tcp:socket().
 session(command, Sock) ->
     case gen_tcp:recv(Sock, 0) of
@@ -85,7 +85,7 @@ session({accepted, Lines, Challenge}, Sock) ->
                     gen_tcp:close(Sock),
                     ok
             end;
-        {ok, _} -> 
+        {ok, _} ->
             gen_tcp:send(Sock, "INVALID COMMAND\r\n"),
             gen_tcp:close(Sock),
             ok;
@@ -93,9 +93,14 @@ session({accepted, Lines, Challenge}, Sock) ->
             fail_session(Sock, Reason)
     end;
 session({get, Id}, Sock) ->
-    io:format("TODO: GET MODE~s\n", [Id]),
-    gen_tcp:close(Sock),
-    ok.
+    case file:read_file(Id) of
+        {ok, Blob} ->
+            gen_tcp:send(Sock, Blob),
+            gen_tcp:close(Sock),
+            ok;
+        {error, Reason} ->
+            fail_session(Sock, Reason)
+    end.
 
 accepter(LSock) ->
     {ok, Sock} = gen_tcp:accept(LSock),
