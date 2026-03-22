@@ -10,9 +10,11 @@
 
 start() ->
     % active false?
-    {ok, LSock} = gen_tcp:listen(5016, [binary, {packet, 0}, {active, false}, {reuseaddr, true}]),
+    {ok, LSock} = gen_tcp:listen(5016, [binary, {packet, line}, {active, false}, {reuseaddr, true}]),
     % run esparate threads)
-    spawn(?MODULE, accepter, [LSock]).
+    Pid = spawn(?MODULE, accepter, [LSock]),
+    gen_tcp:controlling_process(LSock, Pid),
+    Pid.
 
 % server(Message) ->
 %     receive
@@ -33,15 +35,15 @@ fail_session(Sock, Reason) ->
 
 -spec session(State, Sock) -> ok when
       State :: command |
-                {challenge, list(binary())} |
-                {accepted, list(binary()), binary()} |
-                {post, list(binary())} |
+                {challenge, binary()} |
+                {accepted, binary(), binary()} |
+                {post, binary()} |
                 {get, unicode:chardata()},
       Sock :: gen_tcp:socket().
 session(command, Sock) ->
     case gen_tcp:recv(Sock, 0) of
         {ok, <<"POST\r\n">>} ->
-            session({post, []}, Sock);
+            session({post, <<"">>}, Sock);
         {ok, <<"GET ", Id/binary>>} ->
             session({get, string:trim(Id)}, Sock);
         {ok, _} ->
@@ -54,19 +56,32 @@ session(command, Sock) ->
 session({post, Lines}, Sock) ->
     case gen_tcp:recv(Sock, 0) of
         {ok, <<"SUBMIT\r\n">>} ->
+            io:format("submit"),
             session({challenge, Lines}, Sock);
         {ok, Line} ->
-            session({post, [Line|Lines]}, Sock);
+            session({post, <<Lines/binary, Line/binary>>}, Sock);
         {error, Reason} ->
             fail_session(Sock, Reason)
     end;
 session({challenge, Lines}, Sock) ->
     Challenge = binary:encode_hex(crypto:strong_rand_bytes(32)),
-    gen_tcp:send(Sock, [<<"CHALLENGE: ">>, Challenge, <<"\r\n">>]),
+    gen_tcp:send(Sock, [<<"CHALLENGE ">>, Challenge, <<"\r\n">>]),
     session({accepted, Lines, Challenge}, Sock);
 session({accepted, Lines, Challenge}, Sock) ->
     case gen_tcp:recv(Sock, 0) of
-        {ok, <<"ACCEPTED ", Id/binary>>} -> 'TODO';
+        {ok, <<"ACCEPTED ", Suffix/binary>>} -> 
+            Blob = <<Lines/binary, Challenge/binary, <<"\r\n">>/binary, Suffix/binary>>,
+            case binary:encode_hex(crypto:hash(sha256, Blob)) of
+                <<"00000", _/binary>> ->
+                    Id = binary:encode_hex(crypto:strong_rand_bytes(32)),
+                    gen_tcp:send(Sock, [<<"SENT ">>, Id, <<"\r\n">>]),
+                    gen_tcp:close(Sock),
+                    ok;
+                _ ->
+                    gen_tcp:send(Sock, <<"CHALLENGED FAILED\r\n">>),
+                    gen_tcp:close(Sock),
+                    ok
+            end;
         {ok, _} -> 
             gen_tcp:send(Sock, "INVALID COMMAND\r\n"),
             gen_tcp:close(Sock),

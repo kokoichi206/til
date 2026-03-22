@@ -89,6 +89,8 @@ ok
 ```
 
 ``` sh
+erlc pastebeam.erl && erl -noshell -s pastebeam start
+
 telnet localhost 5016
 ```
 
