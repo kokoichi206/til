@@ -2,8 +2,6 @@
 % -export([start/0, loop/1]).
 -export([start/0, accepter/1, session/2]).
 
-% TODO: use prefix challenge instead of suffix
-
 % loop(X) when X =< 0 ->
 %     ok;
 % loop(X) ->
@@ -71,8 +69,8 @@ session({challenge, Lines}, Sock) ->
     session({accepted, Lines, Challenge}, Sock);
 session({accepted, Lines, Challenge}, Sock) ->
     case gen_tcp:recv(Sock, 0) of
-        {ok, <<"ACCEPTED ", Suffix/binary>>} -> 
-            Blob = <<Lines/binary, Challenge/binary, <<"\r\n">>/binary, Suffix/binary>>,
+        {ok, <<"ACCEPTED ", Prefix/binary>>} -> 
+            Blob = <<Prefix/binary, Lines/binary, Challenge/binary, <<"\r\n">>/binary>>,
             case binary:encode_hex(crypto:hash(sha256, Blob)) of
                 <<"00000", _/binary>> ->
                     Id = binary:encode_hex(crypto:strong_rand_bytes(32)),
