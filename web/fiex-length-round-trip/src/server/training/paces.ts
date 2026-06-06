@@ -81,14 +81,19 @@ export function trainingPaces(vdot: number): TrainingPaces {
 export function estimateCurrentVdot(
   activities: Activity[],
   nowMs: number,
+  maxHr: number | null = null,
 ): number | null {
-  const recent = activities.filter(
-    (a) =>
-      a.distanceKm >= 2 &&
-      a.durationSec > 0 &&
-      nowMs - parseYmd(isoToYmdLocal(a.date)) <= 56 * 86_400_000,
+  const base = activities.filter((a) => a.distanceKm >= 2 && a.durationSec > 0);
+  const recent = base.filter(
+    (a) => nowMs - parseYmd(isoToYmdLocal(a.date)) <= 56 * 86_400_000,
   );
-  const pool = recent.length > 0 ? recent : activities.filter((a) => a.distanceKm >= 2 && a.durationSec > 0);
+  let pool = recent.length > 0 ? recent : base;
+  // 最大心拍が分かるなら、本当に追い込んだ走(avgHr ≥ 80%HRmax)に絞って
+  // 過小/過大評価を減らす。該当が無ければ全体にフォールバック。
+  if (maxHr) {
+    const hard = pool.filter((a) => a.avgHr !== null && a.avgHr >= 0.8 * maxHr);
+    if (hard.length > 0) pool = hard;
+  }
   if (pool.length === 0) return null;
   let best = 0;
   for (const a of pool) {

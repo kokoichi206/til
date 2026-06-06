@@ -1,4 +1,5 @@
 import { isoToYmdLocal, parseYmd } from "@/server/training/date";
+import { observedMaxHr } from "@/server/training/heart-rate";
 import { estimateCurrentVdot } from "@/server/training/paces";
 import type { Activity, Fitness } from "@/shared/types/training";
 
@@ -8,6 +9,7 @@ const FALLBACK: Fitness = {
   longestKm: 5,
   easyPaceSecPerKm: 360, // 6:00/km
   currentVdot: null,
+  maxHrObserved: null,
 };
 
 /**
@@ -49,10 +51,13 @@ export function estimateFitness(
   // イージーペース = 平均の +8%（楽に走れるペース）。
   const easyPaceSecPerKm = Math.round(avgPace * 1.08);
 
+  const maxHrObserved = observedMaxHr(runs);
+
   return {
     weeklyKm: Math.round(weeklyKm * 10) / 10,
     longestKm: Math.round(longestKm * 10) / 10,
     easyPaceSecPerKm,
-    currentVdot: estimateCurrentVdot(runs, nowMs),
+    currentVdot: estimateCurrentVdot(runs, nowMs, maxHrObserved),
+    maxHrObserved,
   };
 }

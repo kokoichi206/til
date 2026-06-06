@@ -47,7 +47,13 @@ describe("estimateFitness", () => {
 
 const RACE: Race = { id: "r1", name: "テストレース", date: "2026-08-24", distanceKm: 21.1 };
 const START = "2026-06-01"; // 月曜
-const fitness = { weeklyKm: 20, longestKm: 8, easyPaceSecPerKm: 360, currentVdot: 40 };
+const fitness = {
+  weeklyKm: 20,
+  longestKm: 8,
+  easyPaceSecPerKm: 360,
+  currentVdot: 40,
+  maxHrObserved: 185,
+};
 
 describe("generatePlan", () => {
   it("開始日からレース日まで毎日分を出力", () => {

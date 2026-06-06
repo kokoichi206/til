@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { useTrainingStore } from "@/client/hooks/useTrainingStore";
 import { parseActivities } from "@/client/lib/parse-activities";
@@ -82,6 +82,9 @@ export function TrainingPlanner(): React.JSX.Element {
   const store = useTrainingStore();
   const [today, setToday] = useState(todayYmd());
   const [csvError, setCsvError] = useState<string | null>(null);
+  const [strava, setStrava] = useState({ configured: false, connected: false });
+  const [stravaMsg, setStravaMsg] = useState<string | null>(null);
+  const [stravaBusy, setStravaBusy] = useState(false);
 
   // レース入力フォーム。
   const [raceName, setRaceName] = useState("");
@@ -92,6 +95,69 @@ export function TrainingPlanner(): React.JSX.Element {
   useEffect(() => {
     setToday(todayYmd());
   }, []);
+
+  const importFromStrava = useCallback(async () => {
+    setStravaBusy(true);
+    try {
+      const res = await fetch("/api/strava/activities");
+      const j = await res.json();
+      if (!res.ok) {
+        setStravaMsg(j?.error ?? "Strava から取得できませんでした。");
+        return;
+      }
+      store.setActivities(j.activities ?? []);
+      setStrava((s) => ({ ...s, connected: true }));
+      setStravaMsg(`Strava から ${j.count ?? (j.activities?.length ?? 0)} 件取り込みました。`);
+    } catch {
+      setStravaMsg("Strava 取得に失敗しました。");
+    } finally {
+      setStravaBusy(false);
+    }
+  }, [store.setActivities]);
+
+  const disconnectStrava = useCallback(async () => {
+    try {
+      await fetch("/api/strava/activities", { method: "DELETE" });
+    } catch {
+      // ベストエフォート
+    }
+    setStrava((s) => ({ ...s, connected: false }));
+    setStravaMsg("Strava 連携を解除しました。");
+  }, []);
+
+  // Strava の設定/連携状態を取得し、OAuth リダイレクト戻りを処理する。
+  useEffect(() => {
+    let cancelled = false;
+    const init = async () => {
+      try {
+        const res = await fetch("/api/strava/status");
+        const j = await res.json();
+        if (!cancelled) {
+          setStrava({ configured: !!j.configured, connected: !!j.connected });
+        }
+      } catch {
+        // 状態取得失敗は無視（未設定扱い）
+      }
+      const s = new URLSearchParams(window.location.search).get("strava");
+      if (s) {
+        if (s === "connected") {
+          setStravaMsg("Strava と連携しました。取り込み中…");
+          void importFromStrava();
+        } else if (s === "unconfigured") {
+          setStravaMsg("Strava が未設定です（.env.local にキーを設定）。");
+        } else if (s === "denied") {
+          setStravaMsg("Strava 連携がキャンセルされました。");
+        } else {
+          setStravaMsg("Strava 連携でエラーが発生しました。");
+        }
+        window.history.replaceState({}, "", "/training");
+      }
+    };
+    void init();
+    return () => {
+      cancelled = true;
+    };
+  }, [importFromStrava]);
 
   const fitness = useMemo(
     () => estimateFitness(store.activities, new Date(`${today}T00:00:00`).getTime()),
@@ -191,9 +257,42 @@ export function TrainingPlanner(): React.JSX.Element {
         <div className="flex flex-col gap-5">
           {/* 練習履歴 */}
           <section className="rounded-lg border border-slate-200 p-3">
-            <h2 className="text-sm font-bold text-slate-800">1. 練習履歴（CSV）</h2>
+            <h2 className="text-sm font-bold text-slate-800">1. 練習履歴（CSV / Strava）</h2>
+            <div className="mt-2">
+              {!strava.configured ? (
+                <p className="text-[11px] text-slate-400">
+                  Strava 連携は未設定（.env.local に STRAVA_CLIENT_ID / STRAVA_CLIENT_SECRET を設定で有効化）。
+                </p>
+              ) : strava.connected ? (
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => void importFromStrava()}
+                    disabled={stravaBusy}
+                    className="rounded border border-orange-400 bg-orange-50 px-2 py-1 text-xs font-semibold text-orange-700 hover:bg-orange-100 disabled:opacity-50"
+                  >
+                    {stravaBusy ? "取り込み中…" : "Strava から取り込む"}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => void disconnectStrava()}
+                    className="text-[11px] text-slate-400 underline hover:text-slate-600"
+                  >
+                    解除
+                  </button>
+                </div>
+              ) : (
+                <a
+                  href="/api/strava/auth"
+                  className="inline-block rounded border border-orange-400 bg-orange-50 px-2 py-1 text-xs font-semibold text-orange-700 hover:bg-orange-100"
+                >
+                  Strava と連携
+                </a>
+              )}
+              {stravaMsg && <p className="mt-1 text-[11px] text-blue-600">{stravaMsg}</p>}
+            </div>
             <label className="mt-2 block text-xs text-slate-600">
-              Garmin の Activities.csv をアップロード
+              または Garmin の Activities.csv をアップロード
               <input
                 type="file"
                 accept=".csv,text/csv"
@@ -213,6 +312,10 @@ export function TrainingPlanner(): React.JSX.Element {
                 <p className="mt-1 text-slate-700">
                   推定: 週{fitness.weeklyKm}km・最長{fitness.longestKm}km・
                   Eペース {paceLabel(fitness.easyPaceSecPerKm)}
+                </p>
+                <p className="text-slate-700">
+                  推定VO2max(VDOT) {fitness.currentVdot ?? "—"}・最大HR{" "}
+                  {fitness.maxHrObserved ?? "—"}
                 </p>
                 <div className="mt-2 max-h-40 overflow-y-auto rounded border border-slate-100">
                   <table className="w-full text-[11px]">
@@ -611,6 +714,15 @@ function PlanView({
                           {d.paceSecPerKm && (
                             <span className="ml-1 text-slate-400">
                               @{paceLabel(d.paceSecPerKm)}
+                            </span>
+                          )}
+                          {d.hrZone && (
+                            <span
+                              className="ml-1 text-rose-500"
+                              title={d.hrBpmRange ? `${d.hrBpmRange} bpm` : undefined}
+                            >
+                              Z{d.hrZone}
+                              {d.hrBpmRange ? `(${d.hrBpmRange})` : ""}
                             </span>
                           )}
                           {d.cappedByTime && (

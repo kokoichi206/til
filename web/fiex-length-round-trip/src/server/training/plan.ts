@@ -1,4 +1,5 @@
 import { addDays, diffDays, weekday } from "@/server/training/date";
+import { bpmRange, zoneForWorkout } from "@/server/training/heart-rate";
 import { trainingPaces, vdotFromPerformance } from "@/server/training/paces";
 import type {
   PlanInput,
@@ -267,6 +268,7 @@ export function generatePlan(input: PlanInput): PlannedWorkout[] {
       }
     }
 
+    const hrZone = type === "rest" ? undefined : zoneForWorkout(type);
     out.push({
       date,
       weekIndex: w,
@@ -275,6 +277,9 @@ export function generatePlan(input: PlanInput): PlannedWorkout[] {
       distanceKm: round1(distanceKm),
       estMinutes: Math.round(estMinutes),
       paceSecPerKm: type === "rest" ? undefined : Math.round(pace),
+      hrZone,
+      hrBpmRange:
+        hrZone && fitness.maxHrObserved ? bpmRange(fitness.maxHrObserved, hrZone) : undefined,
       title: workoutTitle(type),
       note,
       cappedByTime: cappedByTime || undefined,

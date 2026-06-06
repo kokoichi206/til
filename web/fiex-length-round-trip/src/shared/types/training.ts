@@ -61,6 +61,10 @@ export interface PlannedWorkout {
   estMinutes: number;
   /** 指定ペース（秒/km）。rest は省略。 */
   paceSecPerKm?: number;
+  /** 推奨心拍ゾーン（1..5）。最大心拍が分かる場合のみ。 */
+  hrZone?: number;
+  /** 推奨心拍ゾーンの bpm 範囲（例 "132–145"）。 */
+  hrBpmRange?: string;
   title: string;
   note?: string;
   /** 確保時間の上限により距離を短縮したか。 */
@@ -79,6 +83,8 @@ export interface Fitness {
   easyPaceSecPerKm: number;
   /** 現在の推定 VDOT（直近ベスト走から）。不明なら null。 */
   currentVdot: number | null;
+  /** 観測上の最大心拍。不明なら null。 */
+  maxHrObserved: number | null;
 }
 
 export interface PlanInput {
