@@ -149,6 +149,17 @@ VDOT     = VO2(v) / %max(t)
 
 ---
 
+## I. 心拍(HR)・VO2max の利用 — `heart-rate.ts` / `fitness.ts`
+
+CSV の `平均心拍数`/`最大心拍数` を使う（Strava 不要。CSV に既にある）。
+- **最大HRの自動検出** `observedMaxHr`: 取り込んだ活動の最大心拍の最大値。
+- **HRゾーン** `hrZones`(%HRmax 5ゾーン): Z1 50-60% / Z2 60-70% / Z3 70-80% / Z4 80-90% / Z5 90-100%。
+  各練習に推奨ゾーンを併記（easy=Z2, long=Z2, tempo=Z4, interval=Z5, race=Z4）。
+- **現状VDOT推定の精度UP** `estimateCurrentVdot(…, maxHr)`: 最大HRが分かるとき、
+  `avgHr ≥ 80%HRmax` の「本当に追い込んだ走」だけを VDOT 推定に採用（過小/過大を低減）。
+- **推定VO2max** = VDOT（有効VO2max）。UI のサマリと「目標と伸ばし方」に表示。
+- 注意: VO2max は数値では取得できない（Strava/CSV とも）ため**推定**。最大HRは実測テスト無しの**観測値**で近似。
+
 ## 注意
 
 - 自動生成は一般的なヒューリスティック（VDOTは確立モデルだが個人差大）で、**医学的・専門的助言ではない**。体調に応じて調整前提。
