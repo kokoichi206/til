@@ -1,0 +1,38 @@
+## 圏: Category
+
+- 抽象度の順
+  - 数 -> 集合, 群, 環, 体 -> 圏
+- 圏 1945
+  - Haskell 1987
+  - monad 1992 => Haskell
+- 圏
+  - 点と点の間の矢印
+    - 有向グラフ？
+  - X - f -> Y - g -> Z
+    - X, Y, Z: 対象 (object)
+    - f, g: 射 (morphism, arrow, map)
+      - しゃ
+    - g ∘ f: 合成 (composition)
+      - f いって g いく
+      - f: X -> Y, g: Y -> Z
+      - g ∘ f: X -> Z
+  - X -> X: 自己射
+    - 恒等射 (identity morphism)
+    - id_X: X -> X
+  - 必ず合成は存在する
+- def: 圏
+  - 次の3つからなり
+    - 対象の集まり: ob(C)
+    - 任意の対象 X,Y に対して射の集まり: C(X,Y) hom(X,Y)
+    - 合成と呼ばれる二項演算: ∘: C(Y,Z) × C(X,Y) -> C(X,Z)
+      - (g, f) ↦ g ∘ f : g after f
+  - 2つの条件を満たす（公理）
+    - identity
+      - 任意の対象 X <- ob(C) は 1_X をもち, f ∈ C(X,Y) に対して f ∘ 1_X = f = 1_Y ∘ f
+    - associativity: 結合律
+      - 任意の対象 X,Y,Z,W <- ob(C) と射 f ∈ C(X,Y), g ∈ C(Y,Z), h ∈ C(Z,W) に対して h ∘ (g ∘ f) = (h ∘ g) ∘ f
+- 推移律
+  - 結合律と一緒
+- 順序圏
+- モノイド
+  - 単一対象の圏
