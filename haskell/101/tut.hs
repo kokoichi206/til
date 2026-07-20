@@ -211,3 +211,112 @@ adds3 = getAddFunc 3
 
 lmbdTo10 = map (\x -> x * 3) [1,2,3,4,5]
 
+
+{-
+    enumeration type
+    https://hackage.haskell.org/package/enumerate-0.2.2/docs/Enumerate-Types.html
+
+    BaseballPlayer という型の定義
+    集合のイメージ。
+    Pitcher, ... => データコンストラクタ, 値の生成子。
+    代数的データ型。
+-}
+data BaseballPlayer = Pitcher
+                    | Catcher
+                    | Infielder
+                    | Outfielder
+            deriving Show
+
+barryBonds :: BaseballPlayer -> Bool
+barryBonds Outfielder = True
+barryInOF = print(barryBonds Outfielder)
+
+
+data Customer = Customer String String Double
+    deriving Show
+tomSmith :: Customer
+tomSmith = Customer "Tom Smith" "123 Main" 25.50
+
+getBalance :: Customer -> Double
+getBalance (Customer _ _ b) = b
+
+data RPS = Rock | Paper | Scissors
+shoot :: RPS -> RPS -> String
+shoot Rock Scissors = "Rock beats Scissors"
+shoot Paper Rock = "Paper beats Rock"
+shoot Scissors Paper = "Scissors beats Paper"
+shoot Scissors Rock = "Scissors lose to Rock"
+shoot Rock Paper = "Rock lose to Paper"
+shoot Paper Scissors = "Paper lose to Scissors"
+shoot _ _ = "Error: invalid input"
+
+data Shape = Circle Float Float Float
+            | Rectangle Float Float Float Float
+            deriving Show
+area :: Shape -> Float
+area (Circle _ _ r) = pi * r ^ 2
+area (Rectangle x1 y1 x2 y2) = (abs $ x2 - x1) * (abs $ y2 - y1)
+-- area (Rectangle x1 y1 x2 y2) = (abs (x2 - x1)) * (abs (y2 - y1))
+sumValue = putStrLn (show (1 + 2))
+
+areaOfCircle = area (Circle 10 20 10)
+areaOfRect = area (Rectangle 10 20 30 40)
+
+
+-- type classes
+-- (+) Num
+data Employee = Employee {
+    name :: String,
+    position :: String,
+    idNum :: Int
+} deriving (Eq, Show)
+samSmith = Employee {name = "Sam Smith", position = "Manager", idNum = 1001}
+pam = Employee {name = "Pam", position = "Sales", idNum = 1002}
+isSamPam = samSmith == pam
+
+data ShirtSize = S | M | L
+instance Eq ShirtSize where
+    S == S = True
+    M == M = True
+    L == L = True
+    _ == _ = False
+instance Show ShirtSize where
+    show S = "Small"
+    show M = "Medium"
+    show L = "Large"
+smallAvailable = S `elem` [S,M,L]
+theSize = show S
+
+
+class MyEq a where
+    areEqual :: a -> a -> Bool
+instance MyEq ShirtSize where
+    areEqual S S = True
+    areEqual M M = True
+    areEqual L L = True
+    areEqual _ _ = False
+
+sayHello = do
+    putStrLn "Hello, what's your name?"
+    name <- getLine
+    putStrLn ("Hey " ++ name ++ ", you rock!")
+
+fileName = "haskell-test.txt"
+writeToFile = do
+    theFile <- openFile fileName WriteMode
+    hPutStrLn theFile "Random line of text"
+    hClose theFile
+readFromFile = do
+    theFile <- openFile fileName ReadMode
+    contents <- hGetContents theFile
+    putStr contents
+    hClose theFile
+
+
+{-
+    fib = [1,1,2,3,5,8,...]
+    => tail fib = [1,2,3,5,8,...]
+-}
+fib = 1 : 1 : [a + b | (a, b) <- zip fib (tail fib)]
+-- take 300th fib number
+fib300 = fib !! 300
