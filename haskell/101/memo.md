@@ -49,3 +49,19 @@ ghci> :t (+)
 ghci> :t truncate
 truncate :: (RealFrac a, Integral b) => a -> b
 ```
+
+## compile
+
+``` sh
+til/haskell/101  main [!?]                                                                             1h29m37s
+❯ ghc --make tut    
+[1 of 2] Compiling Main             ( tut.hs, tut.o )
+[2 of 2] Linking tut
+ld: warning: -U option is redundant when using -undefined dynamic_lookup
+
+til/haskell/101  main [!?]                                                                                     
+❯ ./tut 
+ur name?
+s
+hi, s, how are you?
+```

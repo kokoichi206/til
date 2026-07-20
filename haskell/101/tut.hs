@@ -83,4 +83,131 @@ evensUpTo20 = takeWhile (<=20) [2,4..]
 -}
 multiOfList = foldl (*) 1 [2,3,4,5]
 
+pow3List = [3^n | n <- [1..10]]
+
+multiTable = [[x * y | y <- [1..10]] | x <- [1..10]]
+
+randTuple = (1, "Random Tuple")
+bobSmith = ("Bob Smith", 52)
+
+bobsName = fst bobSmith
+bobsAge = snd bobSmith
+
+names = ["Bob", "Mary", "Tom"]
+addresses = ["123 Main", "234 North", "567 South"]
+
+-- ghci> namesNAddress
+-- [("Bob","123 Main"),("Mary","234 North"),("Tom","567 South")]
+namesNAddress = zip names addresses
+
+-- ghci> :t zip
+-- zip :: [a] -> [b] -> [(a, b)]
+--
+{-
+    要素の長さは違ってもいい？
+    => min(length a, length b) までの要素がペアになりそう。
+
+    ghci> ab
+    [(1,'a'),(2,'b'),(3,'c')]
+-}
+a = [1,2,3]
+b = ['a','b','c','d','e','f']
+ab = zip a b
+
+
+main = do
+    putStrLn "ur name?"
+    name <- getLine
+    putStrLn ("hi, " ++ name ++ ", how are you?")
+
+
+addMe :: Int -> Int -> Int
+
+-- funcName param1 param2 = operation (returned value)
+
+-- ghci> :l tut
+-- [1 of 2] Compiling Main             ( tut.hs, interpreted )
+-- Ok, one module loaded.
+-- ghci> :t addMe
+-- addMe :: Int -> Int -> Int
+addMe x y = x + y
+
+sumMe x y = x + y
+
+-- addTuples :: (Int, Int) -> (Int, Int) -> (Int, Int)
+
+whatAge :: Int -> String
+whatAge 16 = "You can drive"
+whatAge 18 = "You can vote"
+whatAge 21 = "You can drink"
+whatAge x = "Nothing Important"
+-- whatAge _ = "Nothing Important"
+
+
+factorial :: Int -> Int
+factorial 0 = 1
+factorial n = n * factorial (n - 1)
+
+-- 1 upto n
+prodFact n = product [1..n]
+
+isOdd :: Int -> Bool
+isOdd n
+    | n `mod` 2 == 0 = False
+    | otherwise = True
+
+isEven n = n `mod` 2 == 0 
+
+whatGrade :: Int -> String
+whatGrade age
+    | (age >= 5) && (age <= 6) = "tttttt"
+    | (age > 6) && (age <= 10) = "elementary"
+    | (age > 10) && (age <= 15) = "middle"
+    | (age > 15) && (age <= 18) = "high"
+    | otherwise = "college?"
+
+batAvgRating :: Double -> Double -> String
+batAvgRating hits atBats
+    | avg <= 0.200 = "Terrible Batting Average"
+    | avg <= 0.250 = "Average Player"
+    | otherwise = "You're doing great!"
+    where avg = hits / atBats
+
+getListItems :: [Int] -> String
+getListItems [] = "list is empty."
+getListItems (x:[]) = "list starts with " ++ show x
+getListItems (x:y:[]) = "list contains " ++ show x ++ " and " ++ show y
+getListItems (x:xs) = "1st item is " ++ show x ++ " and rest are " ++ show xs
+
+getFirstItem :: String -> String
+getFirstItem [] = "empty string"
+getFirstItem all@(x:xs) = "The first letter in " ++ all ++ " is " ++ [x]
+
+times4 :: Int -> Int
+times4 x = x * 4
+listTimes4 = map times4 [1,2,3,4,5]
+
+mulBy4 :: [Int] -> [Int]
+mulBy4 [] = []
+mulBy4 (x:xs) = times4 x : mulBy4 xs
+
+
+areStringsEq :: [Char] -> [Char] -> Bool
+areStringsEq [] [] = True
+areStringsEq (x:xs) (y:ys) = (x == y) && areStringsEq xs ys
+areStringsEq _ _ = False
+
+-- the input is a function that takes an Int and returns an Int
+doMult :: (Int -> Int) -> Int
+doMult func = func 3
+
+num3Times4 = doMult times4
+
+
+-- Int -> Int -> Int と区別ってつく？
+getAddFunc :: Int -> (Int -> Int)
+getAddFunc x y = x + y
+adds3 = getAddFunc 3
+
+lmbdTo10 = map (\x -> x * 3) [1,2,3,4,5]
 
