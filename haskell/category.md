@@ -58,6 +58,34 @@
       - F(g ∘ f) = F(g) ∘ F(f)
         - 構造を保っている
 
+### 自然変換: natural transformation
+
+- 圏は関手が欲しくて定義してる
+- 関手は自然変換が欲しくて定義してる
+- 圏の圏 Cat
+  - 集合の圏 Set
+  - 大きい圏があって圏が複数入ってる
+- 関手
+  - 恒等変換
+  - 圏から圏への関手は複数 F,G 等ある
+    - 看守から関手への矢印が自然変換
+    - 圏Dにおける射の集まりを自然変換α
+- def
+  - 登場人物
+    - f: X -> Y (C の射)
+    - F: C -> D (関手)
+    - α: F => G (自然変換)
+      - α_x を α の成分 (component) と呼ぶ
+  - 関手 F,G: C->D に対する自然変換 α: F=>G とは ∀ X ∈ ob(C) に対して D の射 α_X: F(X) -> G(X) の族（集まり） `(α_X)_{X ∈ ob(C)}` であり、次の条件を満たす
+    - α_Y ∘ F(f) = G(f) ∘ α_X
+      - f: X -> Y (C の射)
+      - F(f): F(X) -> F(Y) (D の射)
+      - G(f): G(X) -> G(Y) (D の射)
+      - α_X: F(X) -> G(X) (D の射)
+      - α_Y: F(Y) -> G(Y) (D の射)
+- 可換である
+  - 全経路で同じものにたどり着く
+
 ## programming?
 
 - 対象
@@ -139,3 +167,15 @@ class Functor f where
 instance Functor [] where
   fmap = map
 ```
+
+### 自然変換
+
+- 型の圏
+  - Int -f-> Bool
+- 別の型の圏
+  - 1_type: Int -f-> Bool
+  - 2_type: [Int] -F(f)-> [Bool]
+    - F ([], map)
+  - η_int: Int -> [Int]
+    - η_int(x) = [x]
+- 可換であること
