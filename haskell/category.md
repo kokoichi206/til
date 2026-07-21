@@ -86,6 +86,46 @@
 - 可換である
   - 全経路で同じものにたどり着く
 
+### モナド
+
+- 副作用を純粋関数の世界で扱う
+  - impure, pure
+  - Shall I be pure or impure?
+- 不純
+  - 標準出力への書き込み、db への書き込み、ファイルへの書き込み、ネットワーク通信、インスタンスの値の変更
+- ts, haskell
+  - console.log: 
+    - hello: Str -> Str
+      - 不純
+  - Haskell:
+    - hello :: String -> IO String
+      - **純粋**
+    - IO: 計算
+      - **作用を及ぼして Str を返す**
+      - **計画**の段階でしかないので、純粋、と言い張ってる
+      - IO モナド
+    - 型構築子: Type Constructor
+    - 困りごと
+      - IO で包んだはいいけど、中身を使うために繋げられない
+      - bind operator (>>=) で繋げる
+        - IO a -> (a -> IO b) -> IO b
+        - IO a の中身を取り出して、a を使って、IO b を返す関数に渡す
+        - bind 演算子も、モナドの一部
+- モナドは関手である必要がある
+  - 関手
+    - IO, [], Mabye, etc
+      - 型構築子
+      - 共通の振る舞い
+        - 型クラス (インターフェースみたいなもの)
+
+```
+-- m => IO などにインスタンス化される
+-- return の部分は自然変換
+class Monad m where
+  return :: a -> m a
+  (>>=) :: m a -> (a -> m b) -> m b
+```
+
 ## programming?
 
 - 対象
