@@ -36,6 +36,28 @@
 - モノイド
   - 単一対象の圏
 
+### 関手: Functor
+
+- 関手（かんしゅ）
+- 圏自体も、数学的対象になる
+  - 圏C -> 圏D
+    - 関手
+      - 射とは別のもの
+- def
+  - 圏 C,D の関手 F とは、次の2つの対応からなる
+    - F: ob(C) -> ob(D)
+      - X |-> F(X)
+    - F: C(X, Y) -> D(F(X), F(Y))
+      - f |-> F(f)
+  - そして次の2つの条件を満たす
+    - identity の保存
+      - 1x |-> F(1X) これが恒等射担っててほしい
+      - F(1x) = 1F(X)
+        - 構造を保っている
+    - 合成の保存
+      - F(g ∘ f) = F(g) ∘ F(f)
+        - 構造を保っている
+
 ## programming?
 
 - 対象
@@ -78,3 +100,42 @@ add(x){(y) => x+y}
 これは発見されたもの、他の言語は発明されたもの
 
 **無名関数 = lambda 式**
+
+### 関手
+
+- 圏C Int -f-> Bool
+- 圏D [Int] -F(f)-> [Bool]
+  - F(X) = [X]
+  - 関数もデータ、
+    - F(f) = ? map が良さそう
+    - F(f) = map(f)
+- Haskell
+  - map f arr
+  - map :: (a -> b) -> [a] -> [b]
+    - 1つの関数を受け取って1つの関数を返す
+      - 圏C の関数を圏D の関数に変換する
+
+```
+(F(f))(arr: [Int]) -> [Bool] {
+  arr.map(x => f(x))
+}
+```
+
+- Haskell の Fanctor
+  - IO
+  - Maybe
+  - `[]`
+  - 型構築子
+  - Type Constructor
+- Type class
+  - インタフェース
+
+``` haskell
+-- interface
+class Functor f where
+  fmap :: (a -> b) -> fa -> fb
+
+-- impl
+instance Functor [] where
+  fmap = map
+```
