@@ -1,0 +1,105 @@
+## なんでも
+
+- WebXR
+  - plane-detection: 平面検知
+    - 現実空間から平面と見做せるものを検出 => その情報を取得
+  - usecase
+    - plane-detection の結果からの mesh オブジェクト
+      - => Sphere との反発ゲーム
+    - meta 情報により、平面 > 天井 と判定
+      - => 天井をくり抜いて
+- io domain
+  - ccTLD
+    - country code top-level domain
+    - 運営に対する統制が緩め
+      - 委任と信頼
+    - 独立性と**ガバナンス上のリスク**
+    - .tv
+      - ツバル
+      - ドメイン名の売上が国家予算の 8-10%
+    - .ai
+      - 英国領アンギラ
+      - **ドメイン名の売上が国家予算の 47% (2025)**
+  - gTLD
+    - generic Top-Level Domain
+    - 違反があれば管理権限が剥奪される
+  - io
+    - イギリス領インド洋地域
+  - whether 国 or not?
+    - ICANN/IANA が判断するのはセンシティブ
+    - => 発行さきを ISO 3166-1 に依存
+      - https://ja.wikipedia.org/wiki/ISO_3166-1
+  - グルーレコード
+- copilot
+  - GitHub Organization
+    - プロジェクト単位 or 組織単位？
+    - => 基本組織単位で切って、顧客協会・機密区分が難しい案件だけを独立 Org にすることが多い
+    - シャドー AI
+- reputation of AI
+  - 評価
+    - リリース時の品質・安全性
+    - 継続運用
+    - ビジネス目標との整合
+  - **ML エンジニアの1番の仕事は ML を使わないでいい場所を見極めること**
+    - AI でもそう！
+  - オフライン・オンライン評価
+  - Trace の仕込み
+  - 能力評価と回帰評価を分ける
+  - Langfuse
+    - Experiment Runn
+- AI サービス
+  - which LLM
+    - API
+    - GPU LLM
+    - CPU LLM
+  - キュー
+    - **テナント公平キュー**
+      - Noisy Neighbor Problem
+  - AI コアロジックをパッケージとして開発・公開
+  - AI 処理の大半を非同期ジョブとして実行
+- ACP:
+  - Agent Client Protocol
+    - LSP にのっとればどのエディタでも動かせたのと同様
+  - ACP
+    - JSON-RPC 2.0
+      - https://www.jsonrpc.org/specification
+    - editor が client
+  - protocol
+    - transport
+      - stdio
+      - streamable http
+    - method
+      - baseline
+      - notification
+      - optional
+- security
+  - セキュリティソフト
+    - パターンマッチング
+    - 振る舞い検知
+    - EDR
+      - Endpoint Detection and Response
+  - **ClickFix**
+    - xxxFix
+    - BSOD
+    - FileFix
+    - JackFix
+- **要注意ワード**
+  - みんな、ちゃんと、難しい、感がない、リスク
+
+## AI coding
+
+### mutation testing
+
+- **グッドハートの法則**
+  - ある指標が目標になると、その時点でその指標は "良い指標" ではなくなる
+- Mutation Testing
+  - プログラムの一部を意図的に書き換えるテスト
+  - **テストをテストする**目的
+- Go
+  - overlay files
+
+### testing for ai driven development
+
+- テストピラミッドから不具合の質の観点で
+  - テストトロフィー
+  - テストダイヤモンド
