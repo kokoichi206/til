@@ -1,0 +1,185 @@
+## なんでも
+
+- Turso
+  - たーそ
+  - エッジ環境でも使えるようにした SQLite
+    - 従来ローカル用途に強みを持っていた SQLite の拡張
+  - libSQL
+    - websocket, wasm, etc
+      - => 分散 db
+  - 拡張機能なしでのベクトル検索
+- cloudflare
+  - cloudflare access
+  - better auth
+  - workos
+    - no JPN region
+- dns
+  - .local RFC 6762
+    - mDNS
+      - Multicast DNS
+  - Reserved Top Level DNS Names
+    - RFC 2606
+      - .example
+      - .invalid
+      - .localhost
+      - .test
+    - .internal
+      - ICANN
+- BPKI
+  - BGP の正当性
+- インターネットのセキュリティの難しさ
+  - **自立分散型で中央管理者が存在しないこと**
+
+## infra
+
+- fastfetch
+- 仮想マシン
+  - ホスト型仮想化
+    - Virtual Box, VMware
+  - ハイパーバイザー型仮想化
+    - ハイパーバイザー（仮想化ソフトウェア）が仮想マシンの管理
+    - Microsoft Hyper-V
+- コンテナ型
+  - ホスト OS のカーネルを共有
+    - => カーネルが異なるコンテナを起動できない
+- IaC
+  - cdk
+    - fromAsset とか使うと、宣言的の場合は
+  - tf
+    - **docker provider 良さそう！？**
+      - https://registry.terraform.io/providers/kreuzwerker/docker/latest/docs/resources/image?utm_source=chatgpt.com#build
+- マイクロサービス
+  - 小さくすることではない！**独立性**を持たせること
+  - 注力する機能と実行単位
+  - ネットワークを介した連携
+- 可用性
+- **前提条件**
+  - 想定トラフィック（平常・ピーク）
+  - 許容する遅延・エラー率
+  - 許容する停止時間
+    - RTO, RPO
+  - 公開範囲と保護対象
+  - 運用体制
+    - 対応者・対応時間帯
+    - 通知先
+    - 変更手順
+- 冗長性
+  - 切り替え条件の判定
+    - **health check が適切か**
+- セキュリティ
+  - **観点**
+    - 入り口（通信）
+    - 権限（操作）
+    - データ（保管）
+- 監視
+  - **目的**
+    - 障害検知
+    - 性能監視
+    - セキュリティ監視
+  - 監視分類
+    - 死活監視
+    - 容量監視
+    - 体験監視
+      - 応答速度
+      - エラー率
+- security
+  - gha
+    - https://docs.github.com/en/actions/concepts/security/script-injections
+    - https://docs.github.com/en/actions/reference/security/secure-use#good-practices-for-mitigating-script-injection-attacks
+- Durable Execution
+  - 性質
+    - どこまで進んだか を失わない
+    - 完了済みをリトライしない
+    - 未完了だけを安全に実行
+    - 最終的に完遂させる
+  - ミドルウェア
+    - Temporal
+      - Trigger.dev
+      - Inngest
+      - etc
+  - Resumable
+    - 途中の処理結果の記録 => Replay
+    - 冪等性
+      - 冪等キー
+  - Temporal + AI Agent
+  - Agentic Loop の処理
+    - LLM 呼び出し
+    - 外部とのやりとりや副作用を伴う Tool Use
+      - API call, DB 更新, 通知
+- Deep Agents
+  - エージェントハーネス
+    - AI モデルを包み込んで長時間のタスク実行を管理するインフラ
+    - 役割
+      - コンテキスト管理
+      - ツール実行管理
+      - タスク管理
+  - Deep Agents
+    - LangChain, OSS, エージェントハーネス sdk
+
+## data
+
+### architecture
+
+- 世代
+  - DWH
+  - ビッグデータ、データレイク
+  - クラウドデータ基盤、モダンデータスタック
+- DWH
+  - データサイロ
+  - => 中央集権的なデータ統合, DWH
+    - 大規模
+    - RDBMS に合わせるための ETL 地獄
+- ビッグデータ時代
+  - 多種多様なデータ
+    - 非構造も含まれる
+  - => **データレイク**
+    - とりあえずそのまま Raw データ で格納
+  - 下支えした技術
+    - Hadoop, Hive, Spark, Presto
+- クラウドデータ基盤
+  - クラウド型 DWH
+    - BigQuery
+    - Redshift, Databricks, Snowflake,..
+- レイクハウス
+  - **データレイクの柔軟性** と **DWH の信頼性**
+    - **保存と活用を1つの基盤上で扱う**
+  - オープンデータフォーマット
+- データメッシュ
+  - 中央集権 => 分散・シェアリング
+  - 再サイロ化してる？
+    - => データ基盤の技術にささせられている
+      - BigQuery Sharing
+      - Secure Data Sharing
+      - etc
+    - アクセス権の共有
+    - ベンダーロックインされない工夫
+      - Apache Iceberg
+      - オープンなテーブルフォーマット
+- **FinOps**
+
+### snowflake
+
+- 思想
+  - ストレージとコンピュートの分離
+  - リソース分割
+  - 環境の独立性
+- データ基盤の層構造
+  - インフラ層
+    - Database/Schema/Role
+    - **頻繁に変更しない**
+  - 境界層
+    - 外部 Storage/Volume
+  - データアプリケーション層
+    - Table/View/変換ロジック
+    - **変わり続ける**
+- dbt
+  - データパイプラインを**アプリケーションとして管理するための基盤**
+  - marts
+    - 定義が確定した信頼できる成果物
+  - **marts_sandbox**
+    - KPI の施策や探索的な分析
+    - dbt の管理外
+- 全体
+  - terraform で土台を固定
+  - dbt が変化を受け止める
+
