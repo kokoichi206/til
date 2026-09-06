@@ -104,3 +104,90 @@ Web ブラウザのレンダラプロセスの概要
     - Sec-Fetch-Site ヘッダ
     - Sec-Fetch-User ヘッダ
 
+## sec 4
+
+- 匿名性
+  - アプリケーション層 の情報だけから個人を一意にはできない
+    - 一般に
+    - stateless 性
+- Cookie 属性
+  - Expires
+  - Max-Age
+    - Expires と機能は同じ、こちらが優先される
+    - **Expires や Max-Age を過去にすると削除が可能**
+  - Domain
+    - Public Suffix に対して Cookie のセットは不可
+  - Path
+  - Secure
+  - HttpOnly
+    - セッションハイジャッキング
+      - XSS 脆弱性 (の一部) => HttpOnly
+      - 通信経路の盗聴 => Secure
+    - セッション固定攻撃
+      - 任意のセッションをユーザーのブラウザで使わせる
+      - **Cookie の数やサイズに上限があることを利用して１回溢れさせて HttpOnly の Cookie を消す**
+      - => HttpOnly false の Cookie を同名で新たに作成し直せる
+  - SameSite
+- 3rd-party Cookie
+  - eTLD + 1 が一致**しない**ホストに対するリクエストに付与される Cookie
+  - 1st-party Cookie
+    - eTLD + 1 が一致**する**ホストに対するリクエストに付与される Cookie
+  - DNT: Do Not Track
+    - DNT ヘッダ
+  - **simple な禁止は『不透明なやり方』を助長することにもつながる**
+    - 不透明なやり方
+      - ブラウザフィンガープリント
+      - **SuperCookie**
+    - Chrome
+      - https://privacysandbox.google.com/blog/privacy-sandbox-next-steps?hl=ja
+- CSRF 攻撃
+  - 原因
+    - **正規の遷移を経たことを保証してくれる情報がリクエスト中にないこと**
+  - CSRF トークンによる対策
+- Cookie と Origin のセキュリティ境界の違い
+  - Cookie のセキュリティ境界
+    - ホスト名
+    - パス
+    - スキーム
+  - Origin のセキュリティ境界
+    - スキーム
+    - ホスト名
+    - ポート
+  - e.g.
+    - **ポートを分けてプロセスを立ち上げてても、片方のサイトが脆弱であれば両方の Cookie がもれる！**
+
+## sec 5
+
+- HTTPS
+  - Secure
+  - **改ざんのに対する耐性**
+- HSTS
+  - HTTP Strict Transport Security
+  - **TOFU: Trust On First Use** のセキュリティモデル
+- SRI: Subresource Integrity
+  - **最初に読み出す Web ページの完全性を認めた上で、そこから読み出されるリソースの完全性を検証する**
+  - https://developer.mozilla.org/ja/docs/Web/Security/Defenses/Subresource_Integrity
+- Secure Content
+  - Service Worker API
+  - Storage API
+  - Payment Request API
+
+## sec 6
+
+- Content Injection 脆弱性
+  - e.g.
+    - XSS
+    - HTML Injection
+  - CSP
+  - 方法の1つ
+    - 任意の JavaScript の実行を達成する、ことを目的にしてる
+  - Scriptless Attack
+    - CSS Injection でコンテンツのリーク
+- サイドチャネル攻撃
+  - XS-Leak
+    - COSI: Cross-Origin State Inference の1つ
+    - 相対性
+      - TTFB 等
+    - 絶対性を持つ
+      - length 等
+
