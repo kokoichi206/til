@@ -178,3 +178,27 @@
     - 対応
     - 復旧
 
+## 4
+
+- 脆弱性診断
+  - ブラックボックス診断
+  - ホワイトボックス診断
+- 基礎知識
+  - プロトコル
+  - 名前解決
+  - 暗号
+  - 認証
+  - URL/URI
+  - Web ブラウザ
+  - HTML/CSS
+  - JavaScript
+  - JSON
+- ツール
+  - Burp Suite
+  - ZAP
+- SQL インジェクション
+  - **インジェクション系の脆弱性は『命令とデータの分離の失敗』が本質**
+- CSP Bypass (self)
+  - CSP Evaluator
+    - https://www.google.com/search?q=CSP+Evaluator&rlz=1C5OZZY_enJP1136JP1136&oq=CSP+Evaluator&gs_lcrp=EgZjaHJvbWUyBggAEEUYOdIBBzMyOGowajeoAgCwAgA&sourceid=chrome&source=chrome.ob&ie=UTF-8
+- CORS 設定
